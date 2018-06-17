@@ -16,5 +16,8 @@
         'views/sale_order.xml',
         'views/sale_order_type.xml',
     ],
+    'demo': [
+        'demo/sale_order_type.xml',
+    ],
     'installable': True,
 }

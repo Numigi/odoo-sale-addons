@@ -2,14 +2,15 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from collections import defaultdict
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class SaleOrderWithIsRental(models.Model):
 
     _inherit = 'sale.order'
 
-    is_rental = fields.Boolean('Is Rental', related='type_id.is_rental', readonly=True)
+    is_rental = fields.Boolean(
+        'Is Rental', related='type_id.is_rental', readonly=True, store=True)
 
 
 class SaleOrderWithComputeRental(models.Model):
@@ -73,18 +74,11 @@ class SaleOrderWithComputeRental(models.Model):
         self.order_line |= rental_line
 
 
-class SaleOrderLineWithStartDate(models.Model):
+class SaleOrderWithComputeRentalOnOrderLineChange(models.Model):
 
-    _inherit = 'sale.order.line'
+    _inherit = 'sale.order'
 
-    date_from = fields.Date('Rental Date')
-    date_to = fields.Date('Expected Return Date')
-
-    def _get_number_of_rental_days(self):
-        if not self.date_from or not self.date_to:
-            return 0
-
-        date_from = fields.Date.from_string(self.date_from)
-        date_to = fields.Date.from_string(self.date_to)
-
-        return max((date_to - date_from).days, 0) * self.product_uom_qty
+    @api.onchange('order_line', 'is_rental')
+    def _onchange_order_line_compute_rental(self):
+        if self.is_rental:
+            self.compute_rental()

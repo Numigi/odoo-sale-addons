@@ -4,25 +4,97 @@
     <record id="sale_order_form_with_is_rental" model="ir.ui.view">
         <field name="name">Sale Order With Is Rental</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_order_type.sot_view_order_form"/>
+        <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <field name="type_id" position="after">
+            <form position="inside">
                 <field name="is_rental" invisible="1"/>
-            </field>
+            </form>
         </field>
     </record>
 
-    <record id="sale_order_form_with_compute_rental_button" model="ir.ui.view">
-        <field name="name">Sale Order With Compute Rental Button</field>
+    <record id="sale_order_form_with_is_rented_product" model="ir.ui.view">
+        <field name="name">Sale Order With Is Rental</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_order_form_with_is_rental"/>
+        <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <field name="order_line" position="before">
-                <div class="oe_right oe_button_box" name="buttons">
-                    <button type="object" name="compute_rental" string="Compute Rental"
-                        states="draft,sent,sale" class="oe_stat_button" icon="fa-clock-o"/>
-                </div>
-            </field>
+            <xpath expr="//field[@name='order_line']/tree" position="inside">
+                <field name="is_rented_product" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form" position="inside">
+                <field name="is_rented_product" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_form_with_date_from_and_date_to" model="ir.ui.view">
+        <field name="name">Sale Order With Date From And Date To</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_form_with_is_rented_product"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="after">
+                <field name="rental_date_from" attrs="{
+                    'readonly': [('is_rented_product', '=', False)],
+                    'required': [('is_rented_product', '=', True)],
+                    'column_invisible': [('parent.is_rental', '=', False)],
+                }"/>
+                <field name="rental_date_to" attrs="{
+                    'readonly': [('is_rented_product', '=', False)],
+                    'required': [('is_rented_product', '=', True)],
+                    'column_invisible': [('parent.is_rental', '=', False)],
+                }"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_uom']" position="after">
+                <field name="rental_date_from" attrs="{
+                    'readonly': [('is_rented_product', '=', False)],
+                    'required': [('is_rented_product', '=', True)],
+                }"/>
+                <field name="rental_date_to" attrs="{
+                    'readonly': [('is_rented_product', '=', False)],
+                    'required': [('is_rented_product', '=', True)],
+                }"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_form_with_is_rental_on_lines" model="ir.ui.view">
+        <field name="name">Sale Order With Is Rental</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree" position="inside">
+                <field name="is_rental" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form" position="inside">
+                <field name="is_rental" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_form_with_day_not_changeable_on_rental_lines" model="ir.ui.view">
+        <field name="name">Sale Order With Day Uom Not Changeable On Rental Lines</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_form_with_is_rental_on_lines"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                <attribute name="attrs">{
+                    'readonly': [
+                        '|',
+                        ('state', 'in', ('sale','done', 'cancel')),
+                        ('is_rental', '=', True),
+                    ],
+                }</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_uom']" position="attributes">
+                <attribute name="attrs">{
+                    'readonly': [
+                        '|',
+                        ('state', 'in', ('sale','done', 'cancel')),
+                        ('is_rental', '=', True),
+                    ],
+                }</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
         </field>
     </record>
 

@@ -53,8 +53,8 @@ class TestComputeRental(SavepointCase):
                 'product_id': product.id,
                 'name': product.name,
                 'product_uom_qty': quantity,
-                'date_from': date_from,
-                'date_to': date_to,
+                'rental_date_from': date_from,
+                'rental_date_to': date_to,
             })]
         })
 
@@ -128,3 +128,14 @@ class TestComputeRental(SavepointCase):
 
         rental_line = self._get_rental_lines(self.rental_product_a)
         assert sum(rental_line.mapped('product_uom_qty')) == 6  # 2 units * 3 days
+
+    def test_onComputeRental_thenUnitPriceIsSetOnRentalLine(self):
+        self._add_rented_product_line(self.product_a, quantity=2, days=3)
+
+        self.rental_product_a.list_price = 10
+        self._compute_rental()
+
+        assert len(self.order.order_line) == 2
+
+        rental_line = self._get_rental_lines(self.rental_product_a)
+        assert rental_line.price_unit == 10
