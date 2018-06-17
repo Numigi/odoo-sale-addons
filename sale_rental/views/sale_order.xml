@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form_with_is_rental" model="ir.ui.view">
+        <field name="name">Sale Order With Is Rental</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_type.sot_view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="type_id" position="after">
+                <field name="is_rental" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="sale_order_form_with_compute_rental_button" model="ir.ui.view">
+        <field name="name">Sale Order With Compute Rental Button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_form_with_is_rental"/>
+        <field name="arch" type="xml">
+            <field name="order_line" position="before">
+                <div class="oe_right oe_button_box" name="buttons">
+                    <button type="object" name="compute_rental" string="Compute Rental"
+                        states="draft,sent,sale" class="oe_stat_button" icon="fa-clock-o"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>
