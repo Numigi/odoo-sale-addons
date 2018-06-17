@@ -21,17 +21,16 @@ class SaleOrderWithComputeRental(models.Model):
         rental_days = self._get_rental_days()
 
         for product, quantity in required_rental_days.items():
-            missing_days = quantity - rental_days.get(product)
+            missing_days = quantity - rental_days[product]
 
             editable_rental_lines = self.order_line.filtered(
                 lambda l: l.product_id == product and not l.qty_invoiced)
 
             if editable_rental_lines:
                 rental_line = editable_rental_lines[0]
+                rental_line.product_uom_qty += missing_days
             else:
-                rental_line = self._create_rental_line()
-
-            rental_line.product_uom_qty += missing_days
+                rental_line = self._add_rental_line(product, days=missing_days)
 
     def _get_required_rental_days(self):
         required_rental_days = defaultdict(int)
@@ -42,6 +41,8 @@ class SaleOrderWithComputeRental(models.Model):
         for line in rented_product_lines:
             rental_product = line.product_id.rental_product_id
             required_rental_days[rental_product] += line._get_number_of_rental_days()
+
+        return required_rental_days
 
     def _get_rental_days(self):
         rental_days = defaultdict(int)
@@ -54,32 +55,36 @@ class SaleOrderWithComputeRental(models.Model):
 
         return rental_days
 
-    def _create_rental_line(self, product):
+    def _add_rental_line(self, product, days):
+        uom_day = self.env.ref('product.product_uom_day')
+
         rental_line = self.env['sale.order.line'].new({
             'product_id': product.id,
+            'name': '/',
+            'product_uom_id': uom_day.id,
+            'product_uom_qty': 0,
         })
         rental_line.product_id_change()
 
-        rental_line.product_uom = self.env.ref('product.product_uom_day')
+        rental_line.product_uom_qty = days
+        rental_line.product_uom = uom_day
         rental_line.product_uom_change()
 
         self.order_line |= rental_line
-
-        return rental_line
 
 
 class SaleOrderLineWithStartDate(models.Model):
 
     _inherit = 'sale.order.line'
 
-    start_date = fields.Date('Rental Date')
-    return_date = fields.Date('Expected Return Date')
+    date_from = fields.Date('Rental Date')
+    date_to = fields.Date('Expected Return Date')
 
     def _get_number_of_rental_days(self):
-        if not self.start_date or not self.return_date:
+        if not self.date_from or not self.date_to:
             return 0
 
-        start_date = fields.Date.from_string(self.start_date)
-        return_date = fields.Date.from_string(self.return_date)
+        date_from = fields.Date.from_string(self.date_from)
+        date_to = fields.Date.from_string(self.date_to)
 
-        return max((return_date - start_date).days, 0)
+        return max((date_to - date_from).days, 0) * self.product_uom_qty

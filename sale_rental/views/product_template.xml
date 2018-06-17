@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="product_template_form_with_rental_ok">
+    <record id="product_template_form_with_rental_ok" model="ir.ui.view">
         <field name="name">Product Template Form With Rental Checkbox</field>
         <field name="model">product.template</field>
-        <field name="inhherit_id" ref="product_template_form_view"/>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <div name="options" position="inside">
                 <div>
