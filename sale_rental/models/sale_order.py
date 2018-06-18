@@ -31,7 +31,7 @@ class SaleOrderWithComputeRental(models.Model):
                 rental_line = editable_rental_lines[0]
                 rental_line.product_uom_qty += missing_days
             else:
-                rental_line = self._add_rental_line(product, days=missing_days)
+                self._add_rental_line(product, days=missing_days)
 
     def _get_required_rental_days(self):
         required_rental_days = defaultdict(int)
@@ -59,19 +59,19 @@ class SaleOrderWithComputeRental(models.Model):
     def _add_rental_line(self, product, days):
         uom_day = self.env.ref('product.product_uom_day')
 
-        rental_line = self.env['sale.order.line'].new({
+        self.order_line |= self.env['sale.order.line'].new({
             'product_id': product.id,
             'name': '/',
             'product_uom_id': uom_day.id,
             'product_uom_qty': 0,
         })
+        rental_line = self.order_line.filtered(
+            lambda l: l.product_id == product and not l.qty_invoiced)[0]
         rental_line.product_id_change()
 
         rental_line.product_uom_qty = days
         rental_line.product_uom = uom_day
         rental_line.product_uom_change()
-
-        self.order_line |= rental_line
 
 
 class SaleOrderWithComputeRentalOnOrderLineChange(models.Model):

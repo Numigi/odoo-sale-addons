@@ -33,6 +33,31 @@ class ProductTemplateWithRentalOK(models.Model):
                     'Therefore, its unit of measure must be {uom_unit}.'
                 ).format(product=product, uom_unit=uom_unit.display_name))
 
+    @api.onchange('rental_ok')
+    def _onchange_rental_ok_set_invoice_policy_to_delivered_quantity(self):
+        if self.rental_ok:
+            self.invoice_policy = 'delivery'
+
+    @api.onchange('rental_ok')
+    def _onchange_rental_ok_set_type_to_stockable_product(self):
+        if self.rental_ok:
+            self.type = 'product'
+
+
+class ProductWithRentalOK(models.Model):
+
+    _inherit = 'product.product'
+
+    @api.onchange('rental_ok')
+    def _onchange_rental_ok_set_invoice_policy_to_delivered_quantity(self):
+        if self.rental_ok:
+            self.invoice_policy = 'delivery'
+
+    @api.onchange('rental_ok')
+    def _onchange_rental_ok_set_type_to_stockable_product(self):
+        if self.rental_ok:
+            self.type = 'product'
+
 
 class ProductTemplateWithIsRental(models.Model):
 
