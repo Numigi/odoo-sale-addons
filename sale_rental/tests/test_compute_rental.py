@@ -12,16 +12,22 @@ class TestComputeRental(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.uom_day = cls.env.ref('product.product_uom_day')
+
         cls.rental_product_a = cls.env['product.product'].create({
             'name': 'Rental Service A',
             'type': 'service',
-            'product_uom': cls.env.ref('product.product_uom_day').id,
+            'uom_id': cls.uom_day.id,
+            'uom_po_id': cls.uom_day.id,
+            'is_rental': True,
         })
 
         cls.rental_product_b = cls.env['product.product'].create({
             'name': 'Rental Service B',
             'type': 'service',
-            'product_uom': cls.env.ref('product.product_uom_day').id,
+            'uom_id': cls.uom_day.id,
+            'uom_po_id': cls.uom_day.id,
+            'is_rental': True,
         })
 
         cls.product_a = cls.env['product.product'].create({
@@ -41,8 +47,6 @@ class TestComputeRental(SavepointCase):
         cls.order = cls.env['sale.order'].create({
             'partner_id': cls.env.ref('base.res_partner_1').id,
         })
-
-        cls.uom_day = cls.env.ref('product.product_uom_day')
 
     def _add_rented_product_line(self, product, quantity, days):
         date_from = datetime.now().date()
@@ -113,10 +117,10 @@ class TestComputeRental(SavepointCase):
         self.order._add_rental_line(self.rental_product_a, days=4)
         self._compute_rental()
 
-        assert len(self.order.order_line) == 2
+        self.assertEqual(len(self.order.order_line), 2)
 
         rental_line = self._get_rental_lines(self.rental_product_a)
-        assert rental_line.product_uom_qty == 6  # 2 units * 3 days
+        self.assertEqual(rental_line.product_uom_qty, 6)  # 2 units * 3 days
 
     def test_onComputeRental_withTwoExistingRentalLine_thenNoSaleLineIsAdded(self):
         self._add_rented_product_line(self.product_a, quantity=2, days=3)
@@ -124,10 +128,10 @@ class TestComputeRental(SavepointCase):
         self.order._add_rental_line(self.rental_product_a, days=2)
         self._compute_rental()
 
-        assert len(self.order.order_line) == 3
+        self.assertEqual(len(self.order.order_line), 3)
 
         rental_line = self._get_rental_lines(self.rental_product_a)
-        assert sum(rental_line.mapped('product_uom_qty')) == 6  # 2 units * 3 days
+        self.assertEqual(sum(rental_line.mapped('product_uom_qty')), 6)  # 2 units * 3 days
 
     def test_onComputeRental_thenUnitPriceIsSetOnRentalLine(self):
         self._add_rented_product_line(self.product_a, quantity=2, days=3)
@@ -135,7 +139,23 @@ class TestComputeRental(SavepointCase):
         self.rental_product_a.list_price = 10
         self._compute_rental()
 
-        assert len(self.order.order_line) == 2
+        self.assertEqual(len(self.order.order_line), 2)
 
         rental_line = self._get_rental_lines(self.rental_product_a)
-        assert rental_line.price_unit == 10
+        self.assertEqual(rental_line.price_unit, 10)
+
+    def test_onComputeRental_thenUnrequiredRentalLinesAreEmptied(self):
+        self._add_rented_product_line(self.product_a, quantity=2, days=3)
+        self._compute_rental()
+
+        self.assertEqual(len(self.order.order_line), 2)
+        self.assertTrue(self._get_rental_lines(self.rental_product_a))
+
+        # Replace product a with product b
+        self.order.order_line.filtered(lambda l: l.product_id == self.product_a).unlink()
+        self._add_rented_product_line(self.product_b, quantity=2, days=3)
+
+        self._compute_rental()
+        self.assertEqual(len(self.order.order_line), 2)
+        self.assertTrue(self._get_rental_lines(self.rental_product_b))
+        self.assertFalse(self._get_rental_lines(self.rental_product_a))

@@ -1,3 +1,7 @@
 - url: https://github.com/OCA/sale-workflow
   branch: "11.0"
   commit: b511d5fd9c0242660a10d4b29a64a3c449a73348
+
+- url: https://github.com/OCA/web
+  branch: "11.0"
+  commit: 6feb307ccbf9d420629fac4e720d4c3a4da90a38

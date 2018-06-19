@@ -10,11 +10,16 @@
     'license': 'LGPL-3',
     'category': 'Sale',
     'summary': 'Add rental sale type.',
-    'depends': ['sale_stock', 'sale_order_type'],
+    'depends': [
+        'sale_stock',
+        'sale_order_type',
+        'web_timeline',
+    ],
     'data': [
         'views/product_template.xml',
         'views/sale_order.xml',
         'views/sale_order_type.xml',
+        'views/stock_move_line.xml',
     ],
     'demo': [
         'demo/sale_order_type.xml',
