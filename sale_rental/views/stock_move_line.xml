@@ -61,7 +61,6 @@
         <field name="view_mode">timeline,tree,pivot,form</field>
         <field name="view_id" ref="stock_move_line_rented_product_timeline"/>
         <field name="context">{
-            'search_default_done': 1,
             'search_default_rented_products': 1,
         }</field>
     </record>
