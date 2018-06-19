@@ -3,6 +3,7 @@
 
 from collections import defaultdict
 from odoo import api, fields, models, _
+from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
 
 
@@ -57,3 +58,31 @@ class SaleOrderLineWithRentalDates(models.Model):
                     line=line.display_name,
                     date_from=line.rental_date_from,
                     date_to=line.rental_date_to))
+
+
+class SaleOrderLineWithRentedAndReturnedQuantity(models.Model):
+
+    _inherit = 'sale.order.line'
+
+    rented_quantity = fields.Float(
+        string='Delivered Qty', compute='_compute_rented_quantity',
+        digits=dp.get_precision('Product Unit of Measure'))
+
+    rental_returned_quantity = fields.Float(
+        string='Returned Qty', compute='_compute_rented_quantity',
+        digits=dp.get_precision('Product Unit of Measure'))
+
+    @api.depends('move_ids.state')
+    def _compute_rented_quantity(self):
+        rented_products = self.filtered(lambda l: l.is_rented_product)
+
+        for line in rented_products:
+            line.rented_quantity = sum(
+                move.quantity_done for move in line.move_ids
+                if move.state == 'done' and move.location_dest_id.usage == 'customer'
+            )
+
+            line.rental_returned_quantity = sum(
+                move.quantity_done for move in line.move_ids
+                if move.state == 'done' and move.location_dest_id.usage != 'customer'
+            )

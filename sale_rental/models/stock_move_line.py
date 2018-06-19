@@ -38,8 +38,8 @@ class StockMoveLineWithLinkBetweenRentedProducts(models.Model):
             line._link_to_origin_rental_delivery_line()
 
     def _link_to_origin_rental_delivery_line(self):
-        origin_line = self.move_id.move_orig_ids.move_line_ids.filtered(
-            lambda l: l.lot_id == self.lot_id)
+        origin_move = self.move_id.origin_returned_move_id
+        origin_line = origin_move.move_line_ids.filtered(lambda l: l.lot_id == self.lot_id)
         origin_line.rental_return_id = self
 
 
@@ -87,3 +87,21 @@ class StockMoveLineWithRentalState(models.Model):
     def _compute_rental_state(self):
         for line in self:
             line.rental_state = 'returned' if line.rental_return_id.state == 'done' else line.state
+
+
+class StockMoveLineWithSerialNumberInDisplayName(models.Model):
+    """Improve the display name of stock.move.line to make the odoo timeline more intuitive."""
+
+    _inherit = 'stock.move.line'
+
+    def name_get(self):
+        lines_with_serial = self.filtered(lambda l: l.lot_id)
+        lines_without_serial = self.filtered(lambda l: not l.lot_id)
+        res = super(StockMoveLineWithSerialNumberInDisplayName, lines_without_serial).name_get()
+        return res + [
+            (l.id, l._get_display_name_with_serial_number()) for l in lines_with_serial
+        ]
+
+    def _get_display_name_with_serial_number(self):
+        return "{product} ({serial})".format(
+            product=self.product_id.display_name, serial=self.lot_id.name)

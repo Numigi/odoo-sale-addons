@@ -11,6 +11,7 @@
                 colors="#ec7063: rental_state == 'cancelled'; #2ecb71: rental_state == 'returned';"
                 date_start="date"
                 date_stop="rental_date_to"
+                editable="false"
                 default_group_by="product_id"
                 event_open_popup="true"
                 />

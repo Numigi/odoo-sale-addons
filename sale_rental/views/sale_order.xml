@@ -56,6 +56,30 @@
         </field>
     </record>
 
+    <record id="sale_order_form_with_rented_and_returned_quantity" model="ir.ui.view">
+        <field name="name">Sale Order With Rented And Returned Quantities</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_form_with_is_rented_product"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
+                <field name="rented_quantity" attrs="{
+                    'column_invisible': [('parent.is_rental', '=', False)],
+                }"/>
+                <field name="rental_returned_quantity" attrs="{
+                    'column_invisible': [('parent.is_rental', '=', False)],
+                }"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="attributes">
+                <attribute name="attrs">{
+                    'column_invisible': ['|', ('parent.is_rental', '=', True),
+                                              ('parent.state', 'not in', ['sale', 'done'])],
+                    'readonly': [('qty_delivered_updateable', '=', False)],
+                }</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
     <record id="sale_order_form_with_is_rental_on_lines" model="ir.ui.view">
         <field name="name">Sale Order With Is Rental</field>
         <field name="model">sale.order</field>
