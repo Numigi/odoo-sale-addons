@@ -8,7 +8,6 @@ services:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
       - ./sale_rental:/mnt/extra-addons/sale_rental
-      - ../odoo/addons/sale:/usr/lib/python3/dist-packages/odoo/addons/sale
     ports:
       - "8069:8069"
       - "8071:8071"
