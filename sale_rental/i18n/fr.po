@@ -63,7 +63,7 @@ msgstr "Date de retour"
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_rented_quantity
 msgid "Delivered Qty"
-msgstr "Quantité livrée"
+msgstr "Qté livrée"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_display_name
