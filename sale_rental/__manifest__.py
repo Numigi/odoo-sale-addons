@@ -20,6 +20,8 @@
         'views/sale_order.xml',
         'views/sale_order_type.xml',
         'views/stock_move_line.xml',
+        'views/stock_picking.xml',
+        'wizard/rental_return.xml',
     ],
     'demo': [
         'demo/sale_order_type.xml',

@@ -8,4 +8,5 @@ from . import (
     sale_order_line,
     sale_order_type,
     stock_move_line,
+    stock_picking,
 )

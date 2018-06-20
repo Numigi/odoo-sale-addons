@@ -31,7 +31,8 @@
                 <field name="lot_id"/>
                 <field name="reference" string="Reference"/>
                 <field name="date"/>
-                <field name="rental_date_to"/>
+                <field name="rental_expected_return_date"/>
+                <field name="rental_return_date"/>
                 <field name="location_id"/>
                 <field name="location_dest_id"/>
                 <field name="product_uom_id" invisible="1"/>

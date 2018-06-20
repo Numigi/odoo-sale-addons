@@ -13,35 +13,6 @@ class ProductTemplateWithRentalOK(models.Model):
     rental_ok = fields.Boolean('Can be Rented', track_visibility='onchange')
 
 
-class ProductTemplateWithRentalOKMustBeInvoicedOnDelivery(models.Model):
-    """A product that can be rented must be invoiced based on delivered quantities.
-
-    The invoiced amount on a rented product is an insurance deposit in case the
-    the product is broken or not returned.
-
-    When the product is returned, it must be refund. Therefore, the invoicing must
-    be based on delivery.
-    """
-
-    _inherit = 'product.template'
-
-    @api.constrains('invoice_policy', 'rental_ok')
-    def _check_rentable_product_is_invoiced_based_on_delivered_quantities(self):
-        rentable_products = self.filtered(lambda l: l.rental_ok)
-
-        for product in rentable_products:
-            if product.invoice_policy != 'delivery':
-                raise ValidationError(_(
-                    '{product} can be rented. '
-                    'Therefore, it must be invoiced based on delivered quantities.'
-                ).format(product=product))
-
-    @api.onchange('rental_ok')
-    def _onchange_rental_ok_set_invoice_policy_to_delivered_quantity(self):
-        if self.rental_ok:
-            self.invoice_policy = 'delivery'
-
-
 class ProductTemplateWithRentalOkMustHaveUnitUom(models.Model):
     """Prevent rental of products in custom units of measure."""
 

@@ -33,6 +33,7 @@ class TestReturnRental(SavepointCase):
             'rental_ok': True,
             'rental_product_id': cls.rental_product_a.id,
             'tracking': 'serial',
+            'invoice_policy': 'delivery',
         })
 
         cls.sn_1 = cls.env['stock.production.lot'].create({
@@ -88,34 +89,17 @@ class TestReturnRental(SavepointCase):
         picking.action_done()
 
     def _return_serial_numbers(self, serial_numbers):
-        wizard_fields = [
-            'product_return_moves',
-            'move_dest_exists',
-            'parent_location_id',
-            'original_location_id',
-            'location_id',
-        ]
-        wizard_defaults = (
-            self.env['stock.return.picking']
-            .with_context(active_id=self.delivery.id).default_get(wizard_fields)
-        )
-        wizard = self.env['stock.return.picking'].create(wizard_defaults)
-        wizard.product_return_moves.quantity = len(serial_numbers)
-        wizard.product_return_moves.to_refund = True
-
-        return_picking_id = wizard.create_returns()['res_id']
-        return_picking = self.env['stock.picking'].browse(return_picking_id)
-
-        move = return_picking.move_lines
-
-        for sn in serial_numbers:
-            move.move_line_ids |= self.env['stock.move.line'].create(dict(
-                move._prepare_move_line_vals(), qty_done=1, lot_id=sn.id))
+        move_lines = self.delivery.move_line_ids.filtered(lambda l: l.lot_id in serial_numbers)
 
         with freeze_time(self.four_days_later):
-            return_picking.action_done()
+            return_lines = self.env['rental.return.line']
 
-        return return_picking
+            for line in move_lines:
+                return_lines |= self.env['rental.return.line'].create({'origin_line_id': line.id})
+
+            return_pickings = return_lines.process_rental_return()
+
+        return return_pickings
 
     def test_whenProductIsReturned_thenReturnMoveIsLinkedToRentalMove(self):
         self.assertEqual(self.rented_product_line.qty_delivered, 3)
@@ -151,9 +135,17 @@ class TestReturnRental(SavepointCase):
         delivery_line_1 = self.delivery.move_line_ids.filtered(lambda l: l.lot_id == self.sn_1)
 
         # Before returning the product, the rental date to is the expected date of return.
-        self.assertEqual(delivery_line_1.rental_date_to, self.seven_days_later)
+        self.assertEqual(delivery_line_1.rental_date_to[:10], self.seven_days_later)
 
         self._return_serial_numbers(self.sn_1)
 
         # After returning the product, the rental date to is the effective date of return.
-        self.assertEqual(delivery_line_1.rental_date_to, self.four_days_later)
+        self.assertEqual(delivery_line_1.rental_date_to[:10], self.four_days_later)
+
+    def test_whenProductIsReturned_thenRentalStateIsSetToReturned(self):
+        delivery_line_1 = self.delivery.move_line_ids.filtered(lambda l: l.lot_id == self.sn_1)
+        self.assertEqual(delivery_line_1.rental_state, 'done')
+
+        self._return_serial_numbers(self.sn_1)
+
+        self.assertEqual(delivery_line_1.rental_state, 'returned')

@@ -47,17 +47,19 @@ class StockMoveLineWithRentalReturnDate(models.Model):
 
     _inherit = 'stock.move.line'
 
-    rental_date_to = fields.Date(
-        'Expected Return Date', compute='_compute_rental_date_to', store=True)
+    rental_expected_return_date = fields.Date(
+        'Expected Return Date', related='move_id.sale_line_id.rental_date_to', store=True)
 
-    @api.depends('move_id', 'rental_return_id.date')
+    rental_return_date = fields.Datetime(
+        'Effective Return Date', related='rental_return_id.date', store=True)
+
+    rental_date_to = fields.Datetime(
+        'Date of Return', compute='_compute_rental_date_to', store=True)
+
+    @api.depends('rental_return_date', 'rental_expected_return_date')
     def _compute_rental_date_to(self):
         for line in self:
-            expected_return_date = (
-                line.rental_return_id.date or
-                line.move_id.sale_line_id.rental_date_to
-            )
-            line.rental_date_to = max(expected_return_date, line.date)
+            line.rental_date_to = line.rental_return_date or line.rental_expected_return_date
 
 
 class StockMoveLineWithRentalState(models.Model):
@@ -83,7 +85,7 @@ class StockMoveLineWithRentalState(models.Model):
         'Rental State', compute='_compute_rental_state', store=True
     )
 
-    @api.depends('state', 'rental_return_id')
+    @api.depends('state', 'rental_return_id.state')
     def _compute_rental_state(self):
         for line in self:
             line.rental_state = 'returned' if line.rental_return_id.state == 'done' else line.state

@@ -35,6 +35,8 @@ class TestComputeRental(SavepointCase):
             'type': 'product',
             'rental_ok': True,
             'rental_product_id': cls.rental_product_a.id,
+            'invoice_policy': 'delivery',
+            'tracking': 'serial',
         })
 
         cls.product_b = cls.env['product.product'].create({
@@ -42,6 +44,8 @@ class TestComputeRental(SavepointCase):
             'type': 'product',
             'rental_ok': True,
             'rental_product_id': cls.rental_product_b.id,
+            'invoice_policy': 'delivery',
+            'tracking': 'serial',
         })
 
         cls.order = cls.env['sale.order'].create({

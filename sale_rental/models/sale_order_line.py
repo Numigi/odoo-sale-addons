@@ -86,3 +86,25 @@ class SaleOrderLineWithRentedAndReturnedQuantity(models.Model):
                 move.quantity_done for move in line.move_ids
                 if move.state == 'done' and move.location_dest_id.usage != 'customer'
             )
+
+
+class SaleOrderLineWithInvoiceBasedOnRentedQuantities(models.Model):
+    """A rented product must be invoiced based on the ordered qty minus the returned qty."""
+
+    _inherit = 'sale.order.line'
+
+    @api.depends('qty_invoiced', 'qty_delivered', 'product_uom_qty', 'order_id.state',
+                 'rental_returned_quantity')
+    def _get_to_invoice_qty(self):
+        rented_products = self.filtered(lambda l: l.is_rented_product)
+
+        for line in rented_products:
+            if line.order_id.state in ['sale', 'done']:
+                line.qty_to_invoice = (
+                    line.product_uom_qty - line.rental_returned_quantity - line.qty_invoiced
+                )
+            else:
+                line.qty_to_invoice = 0
+
+        other_lines = self - rented_products
+        super(SaleOrderLineWithInvoiceBasedOnRentedQuantities, other_lines)._get_to_invoice_qty()

@@ -7,7 +7,6 @@ from odoo.exceptions import ValidationError
 from .product_template import (
     ProductTemplateWithIsRentalMustBeService,
     ProductTemplateWithIsRentalMustHaveDayUom,
-    ProductTemplateWithRentalOKMustBeInvoicedOnDelivery,
     ProductTemplateWithRentalOKMustBeStockableProduct,
 )
 
@@ -20,11 +19,6 @@ class ProductWithExtraOnchangeMethods(models.Model):
     """
 
     _inherit = 'product.product'
-
-    _onchange_rental_ok_set_invoice_policy_to_delivered_quantity = (
-        ProductTemplateWithRentalOKMustBeInvoicedOnDelivery
-        ._onchange_rental_ok_set_invoice_policy_to_delivered_quantity
-    )
 
     _onchange_rental_ok_set_type_to_stockable_product = (
         ProductTemplateWithRentalOKMustBeStockableProduct
