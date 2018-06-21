@@ -7,6 +7,8 @@ from .product_template import (
     ProductTemplateWithIsRentalMustBeService,
     ProductTemplateWithIsRentalMustHaveDayUom,
     ProductTemplateWithRentalOKMustBeStockableProduct,
+    ProductTemplateWithRentalOKMustBeTrackedBySerialNumber,
+    ProductTemplateWithRentalOkMustHaveUnitUom,
 )
 
 
@@ -18,6 +20,11 @@ class ProductWithExtraOnchangeMethods(models.Model):
     """
 
     _inherit = 'product.product'
+
+    _onchange_rental_ok_set_uom_unit = (
+        ProductTemplateWithRentalOkMustHaveUnitUom
+        ._onchange_rental_ok_set_uom_unit
+    )
 
     _onchange_rental_ok_set_type_to_stockable_product = (
         ProductTemplateWithRentalOKMustBeStockableProduct
@@ -32,4 +39,9 @@ class ProductWithExtraOnchangeMethods(models.Model):
     _onchange_is_rental_set_days_as_product_uom = (
         ProductTemplateWithIsRentalMustHaveDayUom
         ._onchange_is_rental_set_days_as_product_uom
+    )
+
+    _onchange_rental_ok_set_tracking_with_serial_number = (
+        ProductTemplateWithRentalOKMustBeTrackedBySerialNumber
+        ._onchange_rental_ok_set_tracking_with_serial_number
     )

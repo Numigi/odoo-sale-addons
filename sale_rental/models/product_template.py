@@ -28,7 +28,7 @@ class ProductTemplateWithRentalOkMustHaveUnitUom(models.Model):
                 raise ValidationError(_(
                     '{product} can be rented. '
                     'Therefore, its unit of measure must be {uom_unit}.'
-                ).format(product=product, uom_unit=uom_unit.display_name))
+                ).format(product=product.display_name, uom_unit=uom_unit.display_name))
 
     @api.onchange('rental_ok')
     def _onchange_rental_ok_set_uom_unit(self):
@@ -145,7 +145,7 @@ class ProductTemplateWithIsRentalMustHaveDayUom(models.Model):
                 raise ValidationError(_(
                     '{product} is a rental product. '
                     'Therefore, its unit of measure must be {uom_day}.'
-                ).format(product=product, uom_day=uom_day.display_name))
+                ).format(product=product.display_name, uom_day=uom_day.display_name))
 
     @api.onchange('is_rental')
     def _onchange_is_rental_set_days_as_product_uom(self):
