@@ -1,7 +1,7 @@
 # © 2018 Numigi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockPickingWithOpenRentalReturnWizard(models.Model):
@@ -28,11 +28,21 @@ class StockPickingWithIsRentalDelivery(models.Model):
 
     _inherit = 'stock.picking'
 
-    is_rental_delivery = fields.Boolean('Rental Delivery', compute='_compute_is_rental_delivery')
+    is_rental_delivery = fields.Boolean(
+        'Rental Delivery', compute='_compute_is_rental_delivery', store=True)
 
+    is_rental_return = fields.Boolean(
+        'Rental Return', compute='_compute_is_rental_delivery', store=True)
+
+    @api.depends('sale_id.type_id.is_rental', 'location_dest_id')
     def _compute_is_rental_delivery(self):
         for picking in self:
             picking.is_rental_delivery = (
                 picking.sale_id.type_id.is_rental and
                 picking.location_dest_id.usage == 'customer'
+            )
+
+            picking.is_rental_return = (
+                picking.sale_id.type_id.is_rental and
+                picking.location_dest_id.usage != 'customer'
             )

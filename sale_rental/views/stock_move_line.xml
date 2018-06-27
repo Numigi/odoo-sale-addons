@@ -9,8 +9,8 @@
         <field name="arch" type="xml">
             <timeline
                 colors="#ec7063: rental_state == 'cancelled'; #2ecb71: rental_state == 'returned';"
-                date_start="date"
-                date_stop="rental_date_to"
+                date_start="rental_expected_delivery_date"
+                date_stop="rental_expected_return_date"
                 editable="false"
                 delete="false"
                 default_group_by="product_id"

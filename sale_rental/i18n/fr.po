@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 00:21-0400\n"
-"PO-Revision-Date: 2018-06-20 00:36-0400\n"
+"POT-Creation-Date: 2018-06-26 22:16-0400\n"
+"PO-Revision-Date: 2018-06-26 22:16-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "X-Generator: Poedit 1.8.7.1\n"
-"Language: fr\n"
 
 #. module: sale_rental
 #: selection:stock.move.line,rental_state:0
@@ -80,6 +80,11 @@ msgstr "Livré"
 #: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_return_date
 msgid "Effective Return Date"
 msgstr "Date de retour effective"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_expected_delivery_date
+msgid "Expected Delivery Date"
+msgstr "Date de retour attendue"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_rental_date_to
@@ -206,6 +211,8 @@ msgid "Rental Date"
 msgstr "Date de location"
 
 #. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_is_rental_delivery
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_is_rental_delivery
 #: model:ir.model.fields,field_description:sale_rental.field_stock_picking_is_rental_delivery
 msgid "Rental Delivery"
 msgstr "Livraison de location"
@@ -218,6 +225,7 @@ msgstr "Article loué"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_return_id
+#: model:ir.model.fields,field_description:sale_rental.field_stock_picking_is_rental_return
 msgid "Rental Return"
 msgstr "Retour de location"
 
@@ -264,6 +272,11 @@ msgid "Returned Qty"
 msgstr "Qté retournée"
 
 #. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_rental_returned_quantity
+msgid "Returned Quantity"
+msgstr "Quantité retournée"
+
+#. module: sale_rental
 #: model:ir.model,name:sale_rental.model_sale_order_line
 msgid "Sales Order Line"
 msgstr ""
@@ -274,16 +287,29 @@ msgid "Serial Number"
 msgstr "Numéro de série"
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/sale_order_line.py:54
-#, python-format
-msgid "The order line {line} can not have a date of rental {date_from} after its expected date of return {date_to}."
-msgstr "La ligne de commande {line} ne peut pas avoir une date de location {date_from} postérieure à sa date de retour prévue {date_to}."
+#: model:ir.model,name:sale_rental.model_stock_move
+msgid "Stock Move"
+msgstr ""
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/product_template.py:203
+#: code:addons/sale_rental/models/sale_order_line.py:53
 #, python-format
-msgid "The rental service {service} on the product {product} must be tagged as a rental service."
-msgstr "Le service de location {service} sur l'article {product} doit être identifié comme service de location."
+msgid ""
+"The order line {line} can not have a date of rental {date_from} after its "
+"expected date of return {date_to}."
+msgstr ""
+"La ligne de commande {line} ne peut pas avoir une date de location "
+"{date_from} postérieure à sa date de retour prévue {date_to}."
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:174
+#, python-format
+msgid ""
+"The rental service {service} on the product {product} must be tagged as a "
+"rental service."
+msgstr ""
+"Le service de location {service} sur l'article {product} doit être identifié "
+"comme service de location."
 
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_stock_picking
@@ -311,37 +337,45 @@ msgid "Wizard"
 msgstr "Assistant"
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/product_template.py:84
+#: code:addons/sale_rental/models/product_template.py:55
 #, python-format
 msgid "{product} can be rented. Therefore, it must be a stockable product."
 msgstr "{product} peut être loué. Il doit donc être un article stockable."
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/product_template.py:34
+#: code:addons/sale_rental/models/product_template.py:81
 #, python-format
-msgid "{product} can be rented. Therefore, it must be invoiced based on delivered quantities."
-msgstr "{product} peut être loué. Il doit donc être facturé en se basant sur les quantités livrées."
-
-#. module: sale_rental
-#: code:addons/sale_rental/models/product_template.py:110
-#, python-format
-msgid "{product} can be rented. Therefore, it must be tracked with a serial number."
+msgid ""
+"{product} can be rented. Therefore, it must be tracked with a serial number."
 msgstr "{product} peut être loué. Il doit donc être suivi par numéro de série."
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/product_template.py:57
+#: code:addons/sale_rental/models/product_template.py:28
 #, python-format
-msgid "{product} can be rented. Therefore, its unit of measure must be {uom_unit}."
-msgstr "{product} peut être loué. Il doit donc avoir l'unité de mesure {uom_unit}."
+msgid ""
+"{product} can be rented. Therefore, its unit of measure must be {uom_unit}."
+msgstr ""
+"{product} peut être loué. Il doit donc avoir l'unité de mesure {uom_unit}."
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/product_template.py:145
+#: code:addons/sale_rental/models/product_template.py:116
 #, python-format
 msgid "{product} is a rental product. Therefore, it must be a service."
 msgstr "{product} est un une location. Il doit donc être un service."
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/product_template.py:174
+#: code:addons/sale_rental/models/product_template.py:145
 #, python-format
-msgid "{product} is a rental product. Therefore, its unit of measure must be {uom_day}."
-msgstr "{product} est un une location. Il doit donc avoir l'unité de mesure {uom_day}."
+msgid ""
+"{product} is a rental product. Therefore, its unit of measure must be "
+"{uom_day}."
+msgstr ""
+"{product} est un une location. Il doit donc avoir l'unité de mesure "
+"{uom_day}."
+
+#~ msgid ""
+#~ "{product} can be rented. Therefore, it must be invoiced based on "
+#~ "delivered quantities."
+#~ msgstr ""
+#~ "{product} peut être loué. Il doit donc être facturé en se basant sur les "
+#~ "quantités livrées."

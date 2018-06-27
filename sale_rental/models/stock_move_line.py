@@ -4,6 +4,13 @@
 from odoo import api, fields, models
 
 
+class StockMoveLineWithIsRentalDelivery(models.Model):
+
+    _inherit = 'stock.move.line'
+
+    is_rental_delivery = fields.Boolean('Rental Delivery', related='move_id.is_rental_delivery')
+
+
 class StockMoveLineWithIsRentalReturn(models.Model):
 
     _inherit = 'stock.move.line'
@@ -45,6 +52,9 @@ class StockMoveLineWithLinkBetweenRentedProducts(models.Model):
 class StockMoveLineWithRentalReturnDate(models.Model):
 
     _inherit = 'stock.move.line'
+
+    rental_expected_delivery_date = fields.Date(
+        'Expected Delivery Date', related='move_id.sale_line_id.rental_date_from', store=True)
 
     rental_expected_return_date = fields.Date(
         'Expected Return Date', related='move_id.sale_line_id.rental_date_to', store=True)
