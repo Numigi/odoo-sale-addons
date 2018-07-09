@@ -2,18 +2,17 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Main Module',
+    'name': 'Sale Stock Analytic',
     'version': '1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://www.numigi.com',
     'license': 'LGPL-3',
-    'category': 'Other',
-    'summary': 'Install all addons required for testing.',
+    'category': 'Sale',
+    'summary': 'Propagate the analytic account from a sale order to the stock moves.',
     'depends': [
-        'mrp_repair_analytic',
-        'sale_rental',
-        'sale_stock_analytic',
+        'sale_stock',
+        'stock_analytic',
     ],
     'installable': True,
 }

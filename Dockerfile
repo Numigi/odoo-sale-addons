@@ -16,7 +16,9 @@ RUN gitoo install_all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
+COPY mrp_repair_analytic /mnt/extra-addons/mrp_repair_analytic
 COPY sale_rental /mnt/extra-addons/sale_rental
+COPY sale_stock_analytic /mnt/extra-addons/sale_stock_analytic
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo

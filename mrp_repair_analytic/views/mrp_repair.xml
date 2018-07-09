@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_repair_order_form_with_analytic_account" model="ir.ui.view">
+        <field name="name">Repair Order Form With Analytic Account</field>
+        <field name="model">mrp.repair</field>
+        <field name="inherit_id" ref="mrp_repair.view_repair_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="analytic_account_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

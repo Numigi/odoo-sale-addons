@@ -1,7 +1,20 @@
+- url: https://github.com/OCA/account-analytic
+  branch: "11.0"
+  commit: ca73d58da77ed1ac53deec7b4cf2854e2e153b42
+  patches:
+    # https://github.com/OCA/account-analytic/pull/162
+    - url: https://github.com/hibou-io/account-analytic
+      branch: 11.0-mig-stock_analytic
+      commit: 7e06779e239d05bdeeccd52ac3de21942ef2b48b
+
 - url: https://github.com/OCA/sale-workflow
   branch: "11.0"
   commit: b511d5fd9c0242660a10d4b29a64a3c449a73348
 
 - url: https://github.com/OCA/web
   branch: "11.0"
-  commit: 6feb307ccbf9d420629fac4e720d4c3a4da90a38
+  commit: 0cefee21dc6695b7307b9b419e9cd5b98a3d3bc5
+
+- url: https://{{GIT_TOKEN}}@github.com/numigi/odoo-enterprise
+  branch: "11.0"
+  commit: 77fbec71228cadcd4cde3fc7a1a119ad589d9b66
