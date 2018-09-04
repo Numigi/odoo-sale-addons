@@ -1,0 +1,381 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_rental
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-26 22:16-0400\n"
+"PO-Revision-Date: 2018-06-26 22:16-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "Available"
+msgstr "Disponible"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_product_product_rental_ok
+#: model:ir.model.fields,field_description:sale_rental.field_product_template_rental_ok
+msgid "Can be Rented"
+msgstr "Peut être loué"
+
+#. module: sale_rental
+#: model:ir.ui.view,arch_db:sale_rental.rental_return_wizard_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: sale_rental
+#: model:ir.model.fields,help:sale_rental.field_rental_return_line_origin_move_id
+msgid "Change to a better name"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_create_uid
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_create_date
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_date_to
+msgid "Date of Return"
+msgstr "Date de retour"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_rented_quantity
+msgid "Delivered Qty"
+msgstr "Qté livrée"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_display_name
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "Done"
+msgstr "Livré"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_return_date
+msgid "Effective Return Date"
+msgstr "Date de retour effective"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_expected_delivery_date
+msgid "Expected Delivery Date"
+msgstr "Date de retour attendue"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_rental_date_to
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_expected_return_date
+msgid "Expected Return Date"
+msgstr "Date de retour prévue"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_id
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard_id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_product_product_is_rental
+#: model:ir.model.fields,field_description:sale_rental.field_product_template_is_rental
+msgid "Is A Rental Service"
+msgstr "Est un service de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_is_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_is_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_type_is_rental
+msgid "Is Rental"
+msgstr "Est une location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_is_rental_return
+msgid "Is Rental Return"
+msgstr "Est un retour de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_is_rented_product
+msgid "Is Rented Product"
+msgstr "Est un article loué"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line___last_update
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_write_uid
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard_write_uid
+msgid "Last Updated by"
+msgstr "Mise à jour par"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_write_date
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard_write_date
+msgid "Last Updated on"
+msgstr "Mis à jour le"
+
+#. module: sale_rental
+#: model:ir.ui.view,arch_db:sale_rental.stock_move_line_rented_product_tree
+msgid "Move Lines"
+msgstr "Mouvements de stock"
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "New"
+msgstr "Nouveau"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_origin_move_id
+msgid "Origin Move"
+msgstr "Mouvements d'origine"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_origin_line_id
+msgid "Origin Move Line"
+msgstr "Lignes de mouvement d'origine"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_stock_move_line
+msgid "Packing Operation"
+msgstr ""
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "Partially Available"
+msgstr "Partiellement disponible"
+
+#. module: sale_rental
+#: model:ir.ui.view,arch_db:sale_rental.rental_return_wizard_form
+msgid "Process Return"
+msgstr "Effectuer le retour"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_product_product
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_wizard_line_ids
+msgid "Products To Return"
+msgstr "Articles à retourner"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_sale_order
+msgid "Quotation"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.ui.view,arch_db:sale_rental.stock_move_line_rented_product_tree
+msgid "Reference"
+msgstr "Référence"
+
+#. module: sale_rental
+#: model:sale.order.type,name:sale_rental.sale_order_type_rental
+msgid "Rental"
+msgstr "Location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_rental_date_from
+msgid "Rental Date"
+msgstr "Date de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_is_rental_delivery
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_is_rental_delivery
+#: model:ir.model.fields,field_description:sale_rental.field_stock_picking_is_rental_delivery
+msgid "Rental Delivery"
+msgstr "Livraison de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_product_product_rental_product_id
+#: model:ir.model.fields,field_description:sale_rental.field_product_template_rental_product_id
+msgid "Rental Product"
+msgstr "Article loué"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_return_id
+#: model:ir.model.fields,field_description:sale_rental.field_stock_picking_is_rental_return
+msgid "Rental Return"
+msgstr "Retour de location"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_rental_return_wizard
+msgid "Rental Return Wizard"
+msgstr "Assistant de retour de livraison"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_rental_return_line
+msgid "Rental Return Wizard Line"
+msgstr "Ligne de retour de livraison"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_line_rental_state
+msgid "Rental State"
+msgstr "État de la location"
+
+#. module: sale_rental
+#: model:ir.actions.act_window,name:sale_rental.stock_move_line_action
+#: model:ir.ui.menu,name:sale_rental.menu_stock_move_line_action
+#: model:ir.ui.view,arch_db:sale_rental.stock_move_line_search_with_rented_products_filter
+msgid "Rented Products"
+msgstr "Articles loués"
+
+#. module: sale_rental
+#: model:ir.ui.view,arch_db:sale_rental.view_picking_form_with_rental_return_button
+msgid "Return Products"
+msgstr "Retourner les articles"
+
+#. module: sale_rental
+#: model:ir.ui.view,arch_db:sale_rental.rental_return_wizard_form
+msgid "Return Rented Products"
+msgstr "Retourner les articles loués"
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "Returned"
+msgstr "Retourné"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line_rental_returned_quantity
+msgid "Returned Qty"
+msgstr "Qté retournée"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move_rental_returned_quantity
+msgid "Returned Quantity"
+msgstr "Quantité retournée"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_lot_id
+msgid "Serial Number"
+msgstr "Numéro de série"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/sale_order_line.py:53
+#, python-format
+msgid ""
+"The order line {line} can not have a date of rental {date_from} after its "
+"expected date of return {date_to}."
+msgstr ""
+"La ligne de commande {line} ne peut pas avoir une date de location "
+"{date_from} postérieure à sa date de retour prévue {date_to}."
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:174
+#, python-format
+msgid ""
+"The rental service {service} on the product {product} must be tagged as a "
+"rental service."
+msgstr ""
+"Le service de location {service} sur l'article {product} doit être identifié "
+"comme service de location."
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_stock_picking
+msgid "Transfer"
+msgstr "Transférer"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_sale_order_type
+msgid "Type of sale order"
+msgstr ""
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "Waiting Another Move"
+msgstr "En attente d'un autre mouvement"
+
+#. module: sale_rental
+#: selection:stock.move.line,rental_state:0
+msgid "Waiting Availability"
+msgstr "En attente de disponibilité"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_rental_return_line_wizard_id
+msgid "Wizard"
+msgstr "Assistant"
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:55
+#, python-format
+msgid "{product} can be rented. Therefore, it must be a stockable product."
+msgstr "{product} peut être loué. Il doit donc être un article stockable."
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:81
+#, python-format
+msgid ""
+"{product} can be rented. Therefore, it must be tracked with a serial number."
+msgstr "{product} peut être loué. Il doit donc être suivi par numéro de série."
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:28
+#, python-format
+msgid ""
+"{product} can be rented. Therefore, its unit of measure must be {uom_unit}."
+msgstr ""
+"{product} peut être loué. Il doit donc avoir l'unité de mesure {uom_unit}."
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:116
+#, python-format
+msgid "{product} is a rental product. Therefore, it must be a service."
+msgstr "{product} est un une location. Il doit donc être un service."
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:145
+#, python-format
+msgid ""
+"{product} is a rental product. Therefore, its unit of measure must be "
+"{uom_day}."
+msgstr ""
+"{product} est un une location. Il doit donc avoir l'unité de mesure "
+"{uom_day}."
+
+#~ msgid ""
+#~ "{product} can be rented. Therefore, it must be invoiced based on "
+#~ "delivered quantities."
+#~ msgstr ""
+#~ "{product} peut être loué. Il doit donc être facturé en se basant sur les "
+#~ "quantités livrées."

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_type_form_with_is_rental" model="ir.ui.view">
+        <field name="name">Sale Order Type Form With Is Rental Checkbox</field>
+        <field name="model">sale.order.type</field>
+        <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
+        <field name="arch" type="xml">
+            <field name="sequence_id" position="after">
+                <field name="is_rental"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

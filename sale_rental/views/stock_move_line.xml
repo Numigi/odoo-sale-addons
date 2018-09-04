@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_move_line_rented_product_timeline" model="ir.ui.view">
+        <field name="name">Rented Product Timeline</field>
+        <field name="model">stock.move.line</field>
+        <field name="type">timeline</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <timeline
+                colors="#ec7063: rental_state == 'cancelled'; #2ecb71: rental_state == 'returned';"
+                date_start="rental_expected_delivery_date"
+                date_stop="rental_expected_return_date"
+                editable="false"
+                delete="false"
+                default_group_by="product_id"
+                event_open_popup="true"
+                />
+        </field>
+    </record>
+
+    <record id="stock_move_line_rented_product_tree" model="ir.ui.view">
+        <field name="name">stock.move.line.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <tree string="Move Lines" create="0" default_order="date"
+                decoration-muted="rental_state == 'cancel'"
+                decoration-danger="rental_state not in ('cancel', 'returned')"
+                >
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="reference" string="Reference"/>
+                <field name="date"/>
+                <field name="rental_expected_return_date"/>
+                <field name="rental_return_date"/>
+                <field name="location_id"/>
+                <field name="location_dest_id"/>
+                <field name="product_uom_id" invisible="1"/>
+                <field name="state" invisible="1"/>
+                <field name="rental_state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_move_line_search_with_rented_products_filter" model="ir.ui.view">
+        <field name="name">stock.move.line.search</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
+        <field name="arch" type="xml">
+            <filter name="manufacturing" position="after">
+                <filter name="rented_products" string="Rented Products"
+                    domain="[('move_id.sale_line_id.is_rented_product','=',True),
+                             ('location_dest_id.usage', '=', 'customer')]"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="stock_move_line_action" model="ir.actions.act_window">
+        <field name="name">Rented Products</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">timeline,tree,pivot,form</field>
+        <field name="view_id" ref="stock_move_line_rented_product_timeline"/>
+        <field name="context">{
+            'search_default_rented_products': 1,
+        }</field>
+    </record>
+
+    <record id="stock_move_line_action_tree" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="stock_move_line_rented_product_tree"/>
+        <field name="act_window_id" ref="stock_move_line_action"/>
+        <field name="sequence" eval="2"/>
+    </record>
+
+    <menuitem id="menu_stock_move_line_action" name="Rented Products"
+        action="stock_move_line_action" parent="sale.sale_order_menu" sequence="3"/>
+
+</odoo>

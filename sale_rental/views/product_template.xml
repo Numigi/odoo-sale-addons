@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_template_form_with_rental_ok" model="ir.ui.view">
+        <field name="name">Product Template Form With Rental Checkbox</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <div name="options" position="inside">
+                <div>
+                    <field name="rental_ok"/>
+                    <label for="rental_ok"/>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="product_template_form_with_rental_product" model="ir.ui.view">
+        <field name="name">Product Template Form With Rental Product</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="rental_product_id"
+                    attrs="{'invisible': [('rental_ok', '=', False)], 'required': [('rental_ok', '=', True)]}"
+                    domain="[('is_rental', '=', True)]"
+                    context="{
+                        'default_type': 'service',
+                        'default_sale_ok': True,
+                        'default_purchase_ok': False,
+                        'default_rental_ok': False,
+                        'default_is_rental': True,
+                    }"
+                    />
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_form_with_is_rental" model="ir.ui.view">
+        <field name="name">Product Template Form With Rental Product</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="is_rental" attrs="{'invisible': [('type', '!=', 'service')]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
