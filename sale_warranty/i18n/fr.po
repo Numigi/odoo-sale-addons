@@ -18,6 +18,13 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: sale_warranty
+#: code:addons/sale_warranty/models.py:113
+#, python-format
+msgid "A product must be tracked by unique serial number in order to support warranties. You may activate serial numbers for a product in the `Inventory` tab under `Traceability`."
+msgstr "Un article doit être tracé par numéro de série pour supporter les garanties. Vous pouvez activer les numéros de série pour un article "
+"dans l'onglet `Inventaire`, sous `Traçabilité`."
+
+#. module: sale_warranty
 #: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty__message_needaction
 msgid "Action Needed"
 msgstr "Nécessite une action"

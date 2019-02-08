@@ -1,8 +1,10 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import timedelta
 from dateutil.relativedelta import relativedelta
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class WarrantyType(models.Model):
@@ -77,7 +79,7 @@ class Warranty(models.Model):
         if self.activation_date and self.type_id:
             self.expiry_date = (
                 self.activation_date +
-                relativedelta(months=self.type_id.duration_in_months)
+                relativedelta(months=self.type_id.duration_in_months) - timedelta(1)
             )
 
     def action_activate(self):
@@ -101,6 +103,18 @@ class ProductTemplateWithWarranty(models.Model):
         'warranty_type_id',
         'Warranties',
     )
+
+    @api.constrains('warranty_type_ids', 'tracking')
+    def _check_if_has_warranties_then_is_serialized(self):
+        invalid_products = self.filtered(
+            lambda p: p.warranty_type_ids and not p.tracking == 'serial'
+        )
+        if invalid_products:
+            raise ValidationError(_(
+                'A product must be tracked by unique serial number in order to support warranties. '
+                'You may activate serial numbers for a product in the `Inventory` tab '
+                'under `Traceability`.'
+            ))
 
 
 class SaleOrderWithWarrantiesSmartButton(models.Model):
