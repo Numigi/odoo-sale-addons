@@ -1,7 +1,7 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class SaleOrderLine(models.Model):
@@ -38,7 +38,7 @@ class SaleOrderLine(models.Model):
                 lambda w: w.type_id == warranty_type and w.state != 'cancelled')
         )
         missing_warranty_count = required_warranty_count - warranty_count
-        for i in range(missing_warranty_count):
+        for _ in range(missing_warranty_count):
             self.env['sale.warranty'].create(self._prepare_warranty_values(warranty_type))
 
     def _generate_missing_warranties(self):
