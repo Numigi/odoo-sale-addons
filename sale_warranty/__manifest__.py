@@ -20,6 +20,7 @@
         'views/warranty.xml',
         'views/product.xml',
         'views/sale_order.xml',
+        'data/ir_cron.xml',
         'data/ir_sequence.xml',
     ],
     "installable": True,
