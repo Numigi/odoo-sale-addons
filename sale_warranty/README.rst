@@ -105,6 +105,14 @@ When cancelling a sale order, the warranties attached to the order are cancelled
 If the sale order is reconfirmed after the cancellation, new warranties are generated.
 The warranties previously cancelled are ignored.
 
+Known Issues
+------------
+
+Delivering More Products Than Ordered
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If delivering more products than ordered, only a subset of the delivered serial numbers will be attached to a warranty.
+No blocking message will alert the user from such anomaly.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

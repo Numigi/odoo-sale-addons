@@ -29,9 +29,31 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     def _activate_warranty_for_delivered_products(self):
-        """Activate the warranties for the delivered products."""
-        pending_warranties = self.warranty_ids.filtered(
-            lambda w: w.state == 'pending' and not w.lot_id)
+        """Activate the warranties for the delivered products.
+
+        The matching between delivered serial numbers and pending warranties has 3 possible cases:
+
+        1. Same number of warranties and serial numbers.
+
+            Warranty 1 --> Serial 1
+            Warranty 2 --> Serial 2
+
+        2. More warranties than serial numbers.
+
+            Warranty 1 --> Serial 1
+            Warranty 2 --> Serial 2
+            Warranty 3 --> Empty
+
+        2. More serial numbers than pending warranties.
+
+            This case is unexpected. This likely means that more products were shipped than ordered.
+            In such rare case, a manual action from the sales manager is expected to fix the issue.
+
+            Warranty 1 --> Serial 1
+            Warranty 2 --> Serial 2
+                           Serial 3 is not attached to a warranty.
+        """
+        pending_warranties = self.warranty_ids.filtered(lambda w: w.state == 'pending')
 
         activated_serial_numbers = self.mapped('warranty_ids.lot_id')
         delivery_lines = self.move_ids.filtered(lambda m: m.picking_type_id.code == 'outgoing')
