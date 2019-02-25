@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="warranty_list" model="ir.ui.view">
+        <field name="name">Warranty List</field>
+        <field name="model">sale.warranty</field>
+        <field name="arch" type="xml">
+            <tree string="Warranties" decoration-muted="state in ('cancelled', 'expired')">
+                <field name="reference"/>
+                <field name="sale_order_id"/>
+                <field name="partner_id"/>
+                <field name="lot_id"/>
+                <field name="product_id"/>
+                <field name="activation_date"/>
+                <field name="expiry_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="warranty_form" model="ir.ui.view">
+        <field name="name">Warranty Form</field>
+        <field name="model">sale.warranty</field>
+        <field name="arch" type="xml">
+            <form string="Warranty">
+                <header>
+                    <button
+                        name="action_activate" type="object" string="Activate" class="oe_highlight" states="pending"
+                        groups="sale_warranty.group_user"
+                        />
+                    <button
+                        name="action_set_to_pending" type="object" string="Set To Pending" states="active"
+                        groups="sale_warranty.group_user"
+                        />
+                    <button
+                        name="action_cancel" type="object" string="Cancel" states="pending,active"
+                        groups="sale_warranty.group_user"
+                        />
+                    <field name="state" widget="statusbar" statusbar_visible="pending,active,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="partner_id"/>
+                        <field name="type_id"/>
+                        <field name="activation_date"/>
+                        <field name="expiry_date" readonly="1" force_save="1"/>
+                        <field name="sale_order_id" readonly="1"/>
+                        <field name="sale_order_line_id" readonly="1"/>
+                        <field name="product_id"
+                               domain="[('type', '=', 'product'), ('tracking', '=', 'serial')]"
+                               context="{'default_type': 'product', 'default_tracking': 'serial'}"/>
+                        <field name="lot_id"
+                               attrs="{'readonly': ['|', ('sale_order_id', '!=', False), ('product_id', '=', False)]}"
+                               domain="[('product_id', '=', product_id)]"
+                               context="{'default_product_id': product_id}"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="warranty_search" model="ir.ui.view">
+        <field name="name">Warranty Search</field>
+        <field name="model">sale.warranty</field>
+        <field name="arch" type="xml">
+            <search string="Search Warranties">
+                <field name="lot_id"/>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="sale_order_id"/>
+                <field name="type_id"/>
+                <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                <filter string="Expired" name="expired" domain="[('state', '=', 'expired')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+           </search>
+        </field>
+    </record>
+
+    <record id="action_warranty" model="ir.actions.act_window">
+        <field name="name">Warranties</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.warranty</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="warranty_list"/>
+        <field name="search_view_id" ref="warranty_search"/>
+        <field name="context">{'search_default_pending': 1, 'search_default_active': 1}</field>
+    </record>
+
+    <menuitem
+        id="menu_warranty_list"
+        name="Warranties"
+        action="action_warranty"
+        parent="menu_warranty_warranty"
+        sequence="1"
+        />
+
+</odoo>
