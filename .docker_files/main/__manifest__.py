@@ -12,6 +12,7 @@
     'summary': 'Install all addons required for testing.',
     'depends': [
         'sale_warranty',
+        'sale_warranty_extension',
     ],
     'installable': True,
 }
