@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from odoo.tests.common import SavepointCase
 
 
-class TestExpiredWarrantiesCron(SavepointCase):
+class ExpiredWarrantiesCronCase(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -35,11 +35,14 @@ class TestExpiredWarrantiesCron(SavepointCase):
             'product_id': cls.product_a.id,
             'type_id': cls.warranty_6_months.id,
             'state': 'active',
-            'activation_date': cls.today,
+            'activation_date': cls.today - timedelta(90),
         })
 
     def run_cron(self):
         self.env.ref('sale_warranty.expired_warranties_cron').method_direct_trigger()
+
+
+class TestExpiredWarrantiesCron(ExpiredWarrantiesCronCase):
 
     def test_if_expiration_date_after_today_then_warranty_active(self):
         self.warranty.expiry_date = self.today + timedelta(1)

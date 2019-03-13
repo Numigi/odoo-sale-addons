@@ -6,22 +6,25 @@ from dateutil.relativedelta import relativedelta
 from odoo import models
 
 
-def activate_warranty(warranty, serial_number):
-    """Activate a given warranty.
+class SaleWarranty(models.Model):
 
-    :param warranty: the sale.warranty to activate
-    :param serial_number: the stock.production.lot to link to the warranty
-    """
-    today = datetime.now().date()
-    expiry_date = (
-        today + relativedelta(months=warranty.type_id.duration_in_months) - timedelta(1)
-    )
-    warranty.write({
-        'state': 'active',
-        'lot_id': serial_number.id,
-        'expiry_date': expiry_date,
-        'activation_date': today,
-    })
+    _inherit = 'sale.warranty'
+
+    def _activate_warranty(self, serial_number):
+        """Activate the warranty.
+
+        :param serial_number: the stock.production.lot to link to the warranty
+        """
+        today = datetime.now().date()
+        expiry_date = (
+            today + relativedelta(months=self.type_id.duration_in_months) - timedelta(1)
+        )
+        self.write({
+            'state': 'active',
+            'lot_id': serial_number.id,
+            'expiry_date': expiry_date,
+            'activation_date': today,
+        })
 
 
 class SaleOrderLine(models.Model):
@@ -61,7 +64,7 @@ class SaleOrderLine(models.Model):
         serial_numbers_to_activate = delivered_serial_numbers - activated_serial_numbers
 
         for warranty, serial_number in zip(pending_warranties, serial_numbers_to_activate):
-            activate_warranty(warranty, serial_number)
+            warranty._activate_warranty(serial_number)
 
 
 class StockMove(models.Model):

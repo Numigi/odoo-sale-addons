@@ -10,11 +10,17 @@ class SaleWarranty(models.Model):
 
     _inherit = 'sale.warranty'
 
+    def _find_warranties_to_set_expired(self):
+        """Find active warranties that must be set to expired.
+
+        :rtype: sale.warranty recordset
+        """
+        return self.env['sale.warranty'].search([
+            ('state', '=', 'active'),
+            ('expiry_date', '<', datetime.now().date()),
+        ])
+
     def expired_warranties_cron(self):
         """Update the state of warranties that are expired."""
-        today = datetime.now().date()
-        warranties_to_end = self.env['sale.warranty'].search([
-            ('state', '=', 'active'),
-            ('expiry_date', '<', today),
-        ])
+        warranties_to_end = self._find_warranties_to_set_expired()
         warranties_to_end.write({'state': 'expired'})

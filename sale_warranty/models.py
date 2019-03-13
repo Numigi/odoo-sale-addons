@@ -82,6 +82,22 @@ class Warranty(models.Model):
                 relativedelta(months=self.type_id.duration_in_months) - timedelta(1)
             )
 
+    @api.constrains('activation_date', 'expiry_date')
+    def _check_activation_prior_to_expiry(self):
+        for warranty in self:
+            if (
+                warranty.activation_date and warranty.expiry_date and
+                warranty.activation_date > warranty.expiry_date
+            ):
+                raise ValidationError(_(
+                    "The activation date ({activation_date}) of the warranty ({warranty}) "
+                    "must be prior to its expiry date ({expiry_date})."
+                ).format(
+                    activation_date=warranty.activation_date,
+                    expiry_date=warranty.expiry_date,
+                    warranty=warranty.display_name,
+                ))
+
     def action_activate(self):
         self.write({'state': 'active'})
 
