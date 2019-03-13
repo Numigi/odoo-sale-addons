@@ -17,6 +17,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 USER odoo
 
 COPY sale_warranty /mnt/extra-addons/sale_warranty
+COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
