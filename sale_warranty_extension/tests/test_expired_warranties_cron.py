@@ -2,8 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-from freezegun import freeze_time
 from odoo.addons.sale_warranty.tests.test_expired_warranties_cron import (
     ExpiredWarrantiesCronCase
 )
