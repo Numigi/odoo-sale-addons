@@ -29,8 +29,8 @@ class TestSaleOrderWithSingleProductAndWarranty(SaleWarrantyCase):
     def test_sale_line_propagated_to_warranty(self):
         assert self.sale_order.warranty_ids.sale_order_line_id == self.sale_order.order_line
 
-    def test_partner_propagated_to_warranty(self):
-        assert self.sale_order.warranty_ids.partner_id == self.customer
+    def test_commercial_partner_propagated_to_warranty(self):
+        assert self.sale_order.warranty_ids.partner_id == self.customer_company
 
     def test_one_warranty_created_per_product_unit(self):
         self.sale_order.order_line.product_uom_qty = 3

@@ -4,39 +4,10 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
-from .common import SaleWarrantyCase
+from .common import WarrantyActivationCase
 
 
-class TestWarrantyActivatedOnDelivery(SaleWarrantyCase):
-
-    def _select_serial_number_on_stock_picking(self, serial_number, picking):
-        move = next(m for m in picking.move_lines if m.product_id == serial_number.product_id)
-        move_line_vals = {
-            'location_dest_id': move.location_dest_id.id,
-            'location_id': move.location_id.id,
-            'lot_id': serial_number.id,
-            'product_id': move.product_id.id,
-            'product_uom_id': self.env.ref('uom.product_uom_unit').id,
-            'qty_done': 1,
-        }
-        line_without_serial = next((l for l in move.move_line_ids if not l.lot_id), None)
-        if line_without_serial:
-            line_without_serial.write(move_line_vals)
-        else:
-            move.write({'move_line_ids': [(0, 0, move_line_vals)]})
-
-    def _deliver_products(self, picking, serial_numbers):
-        for serial in serial_numbers:
-            self._select_serial_number_on_stock_picking(serial, picking)
-        picking.sudo(self.stock_user).action_done()
-
-        # Verify that the stock.picking was properly processed.
-        assert picking.state == 'done'
-        move_lines = picking.mapped('move_lines.move_line_ids')
-        assert len(move_lines) == len(serial_numbers)
-        assert move_lines.mapped('lot_id') == serial_numbers
-        for line in move_lines:
-            assert line.qty_done == 1
+class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
 
     def test_on_delivery_serial_number_is_propagated_to_warranty(self):
         self._confirm_sale_order()

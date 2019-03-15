@@ -29,7 +29,7 @@
                         groups="sale_warranty.group_user"
                         />
                     <button
-                        name="action_set_to_pending" type="object" string="Set To Pending" states="active"
+                        name="action_set_to_pending" type="object" string="Set To Pending" states="active,cancelled"
                         groups="sale_warranty.group_user"
                         />
                     <button
@@ -44,21 +44,31 @@
                             <field name="reference" readonly="1"/>
                         </h1>
                     </div>
-                    <group>
-                        <field name="company_id" groups="base.group_multi_company"/>
-                        <field name="partner_id"/>
-                        <field name="type_id"/>
-                        <field name="activation_date"/>
-                        <field name="expiry_date" readonly="1" force_save="1"/>
-                        <field name="sale_order_id" readonly="1"/>
-                        <field name="sale_order_line_id" readonly="1"/>
-                        <field name="product_id"
-                               domain="[('type', '=', 'product'), ('tracking', '=', 'serial')]"
-                               context="{'default_type': 'product', 'default_tracking': 'serial'}"/>
-                        <field name="lot_id"
-                               attrs="{'readonly': ['|', ('sale_order_id', '!=', False), ('product_id', '=', False)]}"
-                               domain="[('product_id', '=', product_id)]"
-                               context="{'default_product_id': product_id}"/>
+                    <group name="main_group">
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="partner_id"/>
+                            <field name="type_id"/>
+                        </group>
+                        <group>
+                            <field name="activation_date"/>
+                            <field name="expiry_date" readonly="1" force_save="1"/>
+                        </group>
+                    </group>
+                    <group name="detail_group" string="Details">
+                        <group>
+                            <field name="sale_order_id" readonly="1"/>
+                            <field name="sale_order_line_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="product_id"
+                                   domain="[('type', '=', 'product'), ('tracking', '=', 'serial')]"
+                                   context="{'default_type': 'product', 'default_tracking': 'serial'}"/>
+                            <field name="lot_id"
+                                   attrs="{'readonly': ['|', ('sale_order_id', '!=', False), ('product_id', '=', False)]}"
+                                   domain="[('product_id', '=', product_id)]"
+                                   context="{'default_product_id': product_id}"/>
+                        </group>
                         <field name="description"/>
                     </group>
                 </sheet>

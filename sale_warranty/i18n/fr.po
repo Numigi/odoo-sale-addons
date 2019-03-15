@@ -6,23 +6,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-08 15:50+0000\n"
-"PO-Revision-Date: 2019-02-08 10:55-0500\n"
+"POT-Creation-Date: 2019-03-13 19:56+0000\n"
+"PO-Revision-Date: 2019-03-13 15:58-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: fr\n"
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: sale_warranty
-#: code:addons/sale_warranty/models.py:113
+#: code:addons/sale_warranty/models.py:129
 #, python-format
-msgid "A product must be tracked by unique serial number in order to support warranties. You may activate serial numbers for a product in the `Inventory` tab under `Traceability`."
-msgstr "Un article doit être tracé par numéro de série pour supporter les garanties. Vous pouvez activer les numéros de série pour un article "
-"dans l'onglet `Inventaire`, sous `Traçabilité`."
+msgid ""
+"A product must be tracked by unique serial number in order to support "
+"warranties. You may activate serial numbers for a product in the `Inventory` "
+"tab under `Traceability`."
+msgstr ""
+"Un article doit être tracé par numéro de série pour supporter les garanties. "
+"Vous pouvez activer les numéros de série pour un article dans l'onglet "
+"`Inventaire`, sous `Traçabilité`."
 
 #. module: sale_warranty
 #: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty__message_needaction
@@ -85,7 +90,9 @@ msgstr "Société"
 
 #. module: sale_warranty
 #: model:ir.ui.menu,name:sale_warranty.menu_warranty_config
-msgid "Configurations"
+#, fuzzy
+#| msgid "Configurations"
+msgid "Configuration"
 msgstr "Configuration"
 
 #. module: sale_warranty
@@ -110,6 +117,11 @@ msgstr "Client"
 #: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty_type__description
 msgid "Description"
 msgstr "Description"
+
+#. module: sale_warranty
+#: model_terms:ir.ui.view,arch_db:sale_warranty.warranty_form
+msgid "Details"
+msgstr ""
 
 #. module: sale_warranty
 #: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty__display_name
@@ -189,7 +201,6 @@ msgstr "Est un abonné"
 #: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty_type____last_update
 msgid "Last Modified on"
 msgstr "Dernière Modification le"
-
 
 #. module: sale_warranty
 #: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty__write_uid
@@ -325,6 +336,13 @@ msgid "Sale Order"
 msgstr ""
 
 #. module: sale_warranty
+#: model:ir.actions.server,name:sale_warranty.expired_warranties_cron_ir_actions_server
+#: model:ir.cron,cron_name:sale_warranty.expired_warranties_cron
+#: model:ir.cron,name:sale_warranty.expired_warranties_cron
+msgid "Sale Warranties: update status of expired warranties"
+msgstr "Garanties de vente: mise à jour du statut des garanties expirées"
+
+#. module: sale_warranty
 #: model:ir.model,name:sale_warranty.model_sale_warranty
 msgid "Sale Warranty"
 msgstr "Garantie de vente"
@@ -381,6 +399,16 @@ msgstr ""
 #: model:ir.model,name:sale_warranty.model_stock_move
 msgid "Stock Move"
 msgstr ""
+
+#. module: sale_warranty
+#: code:addons/sale_warranty/models.py:92
+#, python-format
+msgid ""
+"The activation date ({activation_date}) of the warranty ({warranty}) must be "
+"prior to its expiry date ({expiry_date})."
+msgstr ""
+"La date d'activation ({activation_date}) de la garantie ({warranty}) doit "
+"être inférieure à la date d'expiration ({expiry_date})."
 
 #. module: sale_warranty
 #: selection:sale.warranty,activity_state:0
