@@ -3,6 +3,7 @@
 
 from decimal import Decimal, ROUND_HALF_UP
 from odoo import api, fields, models
+from odoo.addons import decimal_precision as dp
 
 ROUNDING_AMOUNTS = [
     '0.01',
@@ -37,35 +38,133 @@ class Product(models.Model):
 
     _inherit = 'product.product'
 
-    price_type = fields.Selection([
-        ('fixed', 'Fixed'),
-        ('dynamic', 'Dynamic'),
-    ], default='fixed')
+    standard_price = fields.Float(track_visibility='onchange')
+    lst_price = fields.Float(track_visibility='onchange')
 
-    margin = fields.Float()
-    margin_amount = fields.Float(compute='_compute_margin_amount')
+    price_type = fields.Selection(
+        [
+            ('fixed', 'Fixed'),
+            ('dynamic', 'Dynamic'),
+        ],
+        default='fixed',
+        track_visibility='onchange',
+    )
+
+    margin = fields.Float(track_visibility='onchange')
+    margin_amount = fields.Float(
+        track_visibility='onchange',
+        digits=dp.get_precision('Product Price'),
+    )
     price_rounding = fields.Selection([
         (a, a) for a in ROUNDING_AMOUNTS
-    ])
-    price_surcharge = fields.Float()
+    ], track_visibility='onchange')
+    price_surcharge = fields.Float(
+        track_visibility='onchange',
+        digits=dp.get_precision('Product Price'),
+    )
 
-    @api.depends('standard_price', 'margin')
     def _compute_margin_amount(self):
-        for product in self:
-            margin_ratio = 1 - (product.margin or 0)
-            if margin_ratio:
-                cost = product.standard_price or 0
-                cost_plus_margin = cost / margin_ratio
-                product.margin_amount = cost_plus_margin - cost
+        margin_ratio = 1 - (self.margin or 0)
+        if margin_ratio:
+            cost = self.standard_price or 0
+            cost_plus_margin = cost / margin_ratio
+            return cost_plus_margin - cost
+        else:
+            return 0
 
-    def compute_sale_price_from_cost(self):
+    @api.onchange('standard_price', 'margin')
+    def _onchange_set_margin_amount(self):
+        self.margin_amount = self._compute_margin_amount()
+
+    def _compute_sale_price_from_cost(self):
+        cost = self.standard_price or 0
+        price = cost + self.margin_amount
+
+        rounding = self.price_rounding
+        if rounding:
+            price = round_price(price, rounding)
+
+        surcharge = self.price_surcharge or 0
+        return price + surcharge
+
+    def update_sale_price_from_cost(self):
         """Compute the sale price based on the product cost.
 
         The computation is only done on products with dynamic price.
         """
         products_with_dynamic_price = self.filtered(lambda p: p.price_type == 'dynamic')
         for product in products_with_dynamic_price:
-            cost = product.standard_price or 0
-            price = cost + product.margin_amount
-            surcharge = product.price_surcharge or 0
-            product.list_price = round_price(price, product.price_rounding) + surcharge
+            product.lst_price = product._compute_sale_price_from_cost()
+
+    @api.onchange('margin_amount', 'price_rounding', 'price_surcharge')
+    def _onchange_compute_dynamic_price(self):
+        self.lst_price = self._compute_sale_price_from_cost()
+
+
+class ProductTemplate(models.Model):
+
+    _inherit = 'product.template'
+
+    standard_price = fields.Float(track_visibility='onchange')
+    list_price = fields.Float(track_visibility='onchange')
+
+    price_type = fields.Selection(
+        related='product_variant_ids.price_type',
+        readonly=False,
+        store=True,
+    )
+    margin = fields.Float(
+        related='product_variant_ids.margin',
+        readonly=False,
+        store=True,
+    )
+    margin_amount = fields.Float(
+        related='product_variant_ids.margin_amount',
+        readonly=False,
+        store=True,
+    )
+    price_rounding = fields.Selection(
+        related='product_variant_ids.price_rounding',
+        readonly=False,
+        store=True,
+    )
+    price_surcharge = fields.Float(
+        related='product_variant_ids.price_surcharge',
+        readonly=False,
+        store=True,
+    )
+
+    @api.model
+    def create(self, vals):
+        template = super().create(vals)
+
+        fields_to_propagate = (
+            'price_type',
+            'margin',
+            'margin_amount',
+            'price_rounding',
+            'price_surcharge',
+        )
+
+        vals_to_propagate = {k: v for k, v in vals.items() if k in fields_to_propagate}
+
+        for variant in template.product_variant_ids:
+            # Only write values that are different from the variant's default value.
+            changed_values_to_propagate = {
+                k: v for k, v in vals_to_propagate.items()
+                if (v or variant[k]) and v != variant[k]
+            }
+            variant.write(changed_values_to_propagate)
+
+        return template
+
+    _compute_margin_amount = Product._compute_margin_amount
+    _compute_sale_price_from_cost = Product._compute_sale_price_from_cost
+
+    @api.onchange('standard_price', 'margin')
+    def _onchange_set_margin_amount(self):
+        self.margin_amount = self._compute_margin_amount()
+
+    @api.onchange('margin_amount', 'price_rounding', 'price_surcharge')
+    def _onchange_compute_dynamic_price(self):
+        self.list_price = self._compute_sale_price_from_cost()

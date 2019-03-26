@@ -12,7 +12,7 @@
     "summary": "Compute sale prices based on product cost",
     "depends": ['sale_stock'],
     "data": [
-
+        'views/product.xml',
     ],
     "installable": True,
 }

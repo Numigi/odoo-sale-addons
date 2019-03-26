@@ -71,14 +71,14 @@ class TestDynamicPrice(SavepointCase):
         (12345.67, 0, '1000', 0, 12000),
     )
     @unpack
-    def test_compute_sale_price_from_cost(self, cost, margin, rounding, surcharge, expected_price):
+    def test_update_sale_price_from_cost(self, cost, margin, rounding, surcharge, expected_price):
         self.product.write({
             'standard_price': cost,
             'margin': margin,
             'price_rounding': rounding,
             'price_surcharge': surcharge,
         })
-        self.product.compute_sale_price_from_cost()
+        self.product.update_sale_price_from_cost()
         self.product.refresh()
         assert round(self.product.list_price, 10) == expected_price
 
@@ -86,7 +86,7 @@ class TestDynamicPrice(SavepointCase):
         expected_price = 999
         self.product.price_type = 'fixed'
         self.product.list_price = expected_price
-        self.product.compute_sale_price_from_cost()
+        self.product.update_sale_price_from_cost()
         self.product.refresh()
         assert self.product.list_price == expected_price
 
@@ -98,6 +98,18 @@ class TestDynamicPrice(SavepointCase):
             'price_rounding': '1',
             'price_surcharge': 0,
         })
-        self.product.compute_sale_price_from_cost()
+        self.product.update_sale_price_from_cost()
         self.product.refresh()
         assert self.product.list_price == expected_price
+
+    def test_if_rounding_not_set__no_rounding_applied(self):
+        expected_price = 123.45
+        self.product.write({
+            'standard_price': expected_price,
+            'margin': 0,
+            'price_rounding': False,
+            'price_surcharge': 0,
+        })
+        self.product.update_sale_price_from_cost()
+        self.product.refresh()
+        assert round(self.product.list_price, 2) == expected_price
