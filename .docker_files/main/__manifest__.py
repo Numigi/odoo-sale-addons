@@ -11,6 +11,7 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
+        'sale_dynamic_price',
         'sale_warranty',
         'sale_warranty_extension',
     ],
