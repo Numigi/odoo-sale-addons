@@ -3,7 +3,6 @@
 
 from decimal import Decimal, ROUND_HALF_UP
 from odoo import api, fields, models
-from odoo.tools.float_utils import float_round
 
 ROUNDING_AMOUNTS = [
     '0.01',

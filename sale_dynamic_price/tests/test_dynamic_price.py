@@ -1,7 +1,7 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from ddt import data, ddt
+from ddt import data, ddt, unpack
 from odoo.tests.common import SavepointCase
 from odoo.tools.float_utils import float_round
 
@@ -56,9 +56,22 @@ class TestDynamicPrice(SavepointCase):
         (53.47, 0, '0.05', 0, 53.45),
         (53.48, 0, '0.05', 0, 53.50),
         (12345.67, 0, '500', -0.01, 12499.99),
+
+        # Test rounding for all precisions
+        (12345.67, 0, '0.01', 0, 12345.67),
+        (12345.67, 0, '0.05', 0, 12345.65),
+        (12345.67, 0, '0.1', 0, 12345.70),
+        (12345.67, 0, '0.5', 0, 12345.50),
+        (12345.67, 0, '1', 0, 12346),
+        (12345.67, 0, '5', 0, 12345),
+        (12345.67, 0, '10', 0, 12350),
+        (12345.67, 0, '50', 0, 12350),
+        (12345.67, 0, '100', 0, 12300),
+        (12345.67, 0, '500', 0, 12500),
+        (12345.67, 0, '1000', 0, 12000),
     )
-    def test_compute_sale_price_from_cost(self, data_):
-        cost, margin, rounding, surcharge, expected_price = data_
+    @unpack
+    def test_compute_sale_price_from_cost(self, cost, margin, rounding, surcharge, expected_price):
         self.product.write({
             'standard_price': cost,
             'margin': margin,
@@ -82,7 +95,7 @@ class TestDynamicPrice(SavepointCase):
         self.product.write({
             'standard_price': expected_price,
             'margin': 0,
-            'price_rounding': 1,
+            'price_rounding': '1',
             'price_surcharge': 0,
         })
         self.product.compute_sale_price_from_cost()
