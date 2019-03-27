@@ -114,3 +114,18 @@ class TestDynamicPrice(SavepointCase):
         self.product.update_sale_price_from_cost()
         self.product.refresh()
         assert round(self.product.list_price, 2) == expected_price
+
+    def test_sale_price_update_cron(self):
+        self.product.standard_price = 70
+        self.product.margin = 0.3
+        self.env['product.product'].sale_price_update_cron()
+        self.product.refresh()
+        assert round(self.product.list_price, 2) == 100
+
+    def test_if_fixed_price__sale_price_not_updated_by_cron(self):
+        expected_price = 999
+        self.product.list_price = expected_price
+        self.product.price_type = 'fixed'
+        self.env['product.product'].sale_price_update_cron()
+        self.product.refresh()
+        assert round(self.product.list_price, 2) == expected_price

@@ -13,6 +13,7 @@
     "depends": ['sale_stock'],
     "data": [
         'views/product.xml',
+        'data/sale_price_update_cron.xml',
     ],
     "installable": True,
 }

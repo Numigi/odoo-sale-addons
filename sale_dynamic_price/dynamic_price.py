@@ -1,6 +1,7 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import logging
 from decimal import Decimal, ROUND_HALF_UP
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
@@ -18,6 +19,9 @@ ROUNDING_AMOUNTS = [
     '500',
     '1000',
 ]
+
+
+_logger = logging.getLogger(__name__)
 
 
 def round_price(price: float, rounding: str) -> str:
@@ -78,7 +82,8 @@ class Product(models.Model):
 
     def _compute_sale_price_from_cost(self):
         cost = self.standard_price or 0
-        price = cost + self.margin_amount
+        margin = self._compute_margin_amount()
+        price = cost + margin
 
         rounding = self.price_rounding
         if rounding:
@@ -98,8 +103,39 @@ class Product(models.Model):
         """
         products_with_dynamic_price = self.filtered(lambda p: p.price_type == 'dynamic')
         for product in products_with_dynamic_price:
-            product.margin_amount = self._compute_margin_amount()
-            product.lst_price = product._compute_sale_price_from_cost()
+            product.write({
+                'margin_amount': product._compute_margin_amount(),
+                'lst_price': product._compute_sale_price_from_cost(),
+            })
+
+    def _get_products_with_dynamic_price_to_update(self):
+        """Get all products to update with the dynamic price cron.
+
+        If the margin of a product and its sale price are unchanged,
+        do not update the sale price. This makes the cron much faster because
+        the number of insert/update queries to the database is reduced.
+
+        :rtype: product.product recordset
+        """
+        products_with_dynamic_price = self.env['product.product'].search([
+            ('price_type', '=', 'dynamic'),
+        ])
+        return products_with_dynamic_price.filtered(
+            lambda p: (
+                p.margin_amount != p._compute_margin_amount() or
+                p.lst_price != p._compute_sale_price_from_cost()
+            )
+        )
+
+    def sale_price_update_cron(self):
+        """Cron to update dynamic sale prices on all products."""
+        products = self._get_products_with_dynamic_price_to_update()
+        _logger.info(
+            "Updating the dynamic sale prices of {} products."
+            .format(len(products))
+        )
+        for prod in products:
+            prod.update_sale_price_from_cost()
 
 
 class ProductTemplate(models.Model):
