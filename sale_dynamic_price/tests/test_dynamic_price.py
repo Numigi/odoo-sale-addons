@@ -33,6 +33,7 @@ class TestDynamicPrice(SavepointCase):
         cost, margin, expected_margin_amount = data_
         self.product.standard_price = cost
         self.product.margin = margin
+        self.product._onchange_set_margin_amount()
         self.product.refresh()
         assert float_round(self.product.margin_amount, 2) == expected_margin_amount
 

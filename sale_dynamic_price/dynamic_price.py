@@ -87,6 +87,10 @@ class Product(models.Model):
         surcharge = self.price_surcharge or 0
         return price + surcharge
 
+    @api.onchange('margin_amount', 'price_rounding', 'price_surcharge')
+    def _onchange_compute_dynamic_price(self):
+        self.lst_price = self._compute_sale_price_from_cost()
+
     def update_sale_price_from_cost(self):
         """Compute the sale price based on the product cost.
 
@@ -94,11 +98,8 @@ class Product(models.Model):
         """
         products_with_dynamic_price = self.filtered(lambda p: p.price_type == 'dynamic')
         for product in products_with_dynamic_price:
+            product.margin_amount = self._compute_margin_amount()
             product.lst_price = product._compute_sale_price_from_cost()
-
-    @api.onchange('margin_amount', 'price_rounding', 'price_surcharge')
-    def _onchange_compute_dynamic_price(self):
-        self.lst_price = self._compute_sale_price_from_cost()
 
 
 class ProductTemplate(models.Model):
