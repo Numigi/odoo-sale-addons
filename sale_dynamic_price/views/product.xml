@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_template_form_with_dynamic_price" model="ir.ui.view">
+        <field name="name">Product Template Form: Add the dynamic price fields</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="list_price" position="replace"/>
+            <label for="standard_price" position="replace"/>
+            <div name="standard_price_uom" position="replace"/>
+
+            <xpath expr="//group[@name='group_general']/.." position="inside">
+                <group name="group_dynamic_price" col="3"
+                       attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}">
+                    <field name="standard_price"
+                           widget="monetary"
+                           />
+                    <newline/>
+                    <field name="price_type" widget="radio" options="{'horizontal': true}"
+                           required="1"/>
+                    <newline/>
+                    <field name="margin"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                                   'required': [('price_type', '=', 'dynamic')]}"
+                           widget="percentage"
+                           />
+                    <field name="margin_amount"
+                           nolabel="1"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')]}"
+                           readonly="1"
+                           force_save="1"
+                           widget="monetary"
+                           />
+                    <newline/>
+                    <field name="price_rounding"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                                   'required': [('price_type', '=', 'dynamic')]}"
+                           />
+                    <field name="price_surcharge" nolabel="1"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                                   'required': [('price_type', '=', 'dynamic')]}"
+                           widget="monetary"
+                           />
+                    <newline/>
+                    <field name="list_price"
+                           string="Sales Price"
+                           widget="monetary"
+                           options="{'field_digits': True}"
+                           attrs="{'readonly': [('price_type', '=', 'dynamic')]}"
+                           force_save="1"
+                           />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_variant_form_with_dynamic_price" model="ir.ui.view">
+        <field name="name">Product Variant Form: Add the dynamic price fields</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <group name="pricing" position="replace">
+                <group name="pricing" string="Pricing" col="3">
+                    <field name="product_variant_count" invisible="1"/>
+                    <field name="currency_id" invisible='1'/>
+
+                    <field name="standard_price"
+                           widget="monetary"
+                           />
+
+                    <field name="price_type" widget="radio" options="{'horizontal': true}"
+                           required="1"/>
+                    <newline/>
+                    <field name="margin"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                                   'required': [('price_type', '=', 'dynamic')]}"
+                           widget="percentage"
+                           />
+                    <field name="margin_amount"
+                           nolabel="1"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')]}"
+                           readonly="1"
+                           force_save="1"
+                           widget="monetary"
+                           />
+                    <newline/>
+                    <field name="price_rounding"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                                   'required': [('price_type', '=', 'dynamic')]}"
+                           />
+                    <field name="price_surcharge" nolabel="1"
+                           attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                                   'required': [('price_type', '=', 'dynamic')]}"
+                           widget="monetary"
+                           />
+                    <newline/>
+                    <field name="lst_price"
+                           string="Sales Price"
+                           widget="monetary"
+                           options="{'field_digits': True}"
+                           attrs="{'readonly': [('price_type', '=', 'dynamic')]}"
+                           force_save="1"
+                           />
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>
