@@ -13,7 +13,7 @@ class WarrantyType(models.Model):
     _description = 'Sale Warranty Type'
 
     company_id = fields.Many2one(
-        'res.company', 'Company', required=True,
+        'res.company', 'Company',
         default=lambda s: s.env.user.company_id
     )
     name = fields.Char(required=True)

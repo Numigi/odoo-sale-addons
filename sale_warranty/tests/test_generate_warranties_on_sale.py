@@ -74,3 +74,19 @@ class TestSaleOrderWithCustomNumberOfWarranties(SaleWarrantyCase):
         self.product_a.warranty_type_ids = False
         self._confirm_sale_order()
         assert not self.sale_order.warranty_ids
+
+    def test_company_warranties_are_applied(self):
+        self.product_a.warranty_type_ids = self.warranty_6_months | self.warranty_2_years
+        new_company = self.env['res.company'].create({
+            'name': 'New Company',
+        })
+        self.warranty_6_months.company_id = new_company
+        self._confirm_sale_order()
+        assert len(self.sale_order.warranty_ids) == 1
+        assert self.sale_order.warranty_ids.mapped('type_id') == self.warranty_2_years
+
+    def test_if_no_specific_company_on_warranty_type__warranty_is_applied(self):
+        self.product_a.warranty_type_ids = self.warranty_6_months | self.warranty_2_years
+        self.warranty_6_months.company_id = False
+        self._confirm_sale_order()
+        assert len(self.sale_order.warranty_ids) == 2

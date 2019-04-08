@@ -45,7 +45,10 @@ class SaleOrderLine(models.Model):
         """Generate all missing warranties for the given sale order lines."""
         lines_with_serialized_product = self.filtered(lambda l: l.product_id.tracking == 'serial')
         for line in lines_with_serialized_product:
-            for warranty_type in line.product_id.warranty_type_ids:
+            warranties_with_same_company = line.product_id.warranty_type_ids.filtered(
+                lambda w: not w.company_id or w.company_id == line.company_id
+            )
+            for warranty_type in warranties_with_same_company:
                 line._generate_missing_warranties_of_given_type(warranty_type)
 
     @api.multi
