@@ -81,8 +81,6 @@ The module does not affect how pricelists work. Thus, there is nothing specific 
 
 However, there are a few things to keep in mind when configuring a pricelist.
 
-.. image:: static/description/product_surcharge_field.png
-
 The pricelist should be based on the `Public Price` so that the dynamic price is used.
 
 .. image:: static/description/pricelist_public_price.png
