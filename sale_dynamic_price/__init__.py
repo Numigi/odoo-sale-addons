@@ -3,4 +3,5 @@
 
 from . import (
     dynamic_price,
+    pricelist,
 )
