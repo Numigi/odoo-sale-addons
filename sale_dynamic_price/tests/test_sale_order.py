@@ -3,7 +3,6 @@
 
 from ddt import data, ddt, unpack
 from odoo.tests.common import SavepointCase
-from odoo.tools.float_utils import float_round
 
 
 @ddt
