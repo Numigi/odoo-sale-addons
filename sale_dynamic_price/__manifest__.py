@@ -12,7 +12,8 @@
     "summary": "Compute sale prices based on product cost",
     "depends": ['sale_stock'],
     "data": [
-        'views/product.xml',
+        'views/hide_variant_extra_price.xml',
+        'views/product_with_dynamic_price.xml',
         'data/sale_price_update_cron.xml',
     ],
     "installable": True,

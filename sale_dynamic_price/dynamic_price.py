@@ -61,7 +61,7 @@ class Product(models.Model):
     )
     price_rounding = fields.Selection([
         (a, a) for a in ROUNDING_AMOUNTS
-    ], track_visibility='onchange')
+    ], string="Rounding", track_visibility='onchange')
     price_surcharge = fields.Float(
         track_visibility='onchange',
         digits=dp.get_precision('Product Price'),
