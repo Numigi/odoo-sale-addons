@@ -14,6 +14,7 @@
         'sale_dynamic_price',
         'sale_warranty',
         'sale_warranty_extension',
+        'sale_warranty_lead_on_expiry',
     ],
     'installable': True,
 }
