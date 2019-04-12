@@ -16,7 +16,7 @@ class WarrantyType(models.Model):
     )
 
     sales_team_id = fields.Many2one(
-        'sales.team', 'Sales Team', ondelete='restrict'
+        'crm.team', 'Sales Team', ondelete='restrict',
     )
 
     automated_action_delay = fields.Integer('Days To Trigger Action')
@@ -56,14 +56,16 @@ class CrmLead(models.Model):
 
     _inherit = 'crm.lead'
 
-    generated_from_warranty = fields.Boolean()
+    generated_from_warranty = fields.Boolean(copy=False)
 
 
 class Warranty(models.Model):
 
     _inherit = 'sale.warranty'
 
-    lead_id = fields.Many2one('crm.lead', 'Warranty End Action', ondelete='restrict')
+    lead_id = fields.Many2one(
+        'crm.lead', 'Warranty End Action', ondelete='restrict',
+        copy=False)
 
     def _is_days_to_trigger_exceeded(self):
         """Check whether the days to trigger the actions have been exceeded.
@@ -89,14 +91,17 @@ class Warranty(models.Model):
     def _find_last_generated_lead_for_partner(self):
         return self.env['crm.lead'].search([
             ('generated_from_warranty', '=', True),
-            ('partner_id', '=', self.partner_id.id),
+            ('partner_id', 'child_of', self.partner_id.id),
         ], limit=1, order='id desc')
 
     def _is_delay_between_leads_exceeded(self):
         today = datetime.now().date()
         delay_in_days = self._get_delay_between_leads()
         previous_lead = self._find_last_generated_lead_for_partner()
-        return previous_lead.create_date.date() + timedelta(delay_in_days) <= today
+        return (
+            not previous_lead or
+            previous_lead.create_date.date() + timedelta(delay_in_days) <= today
+        )
 
     def _format_lead_name(self):
         return "End Of Warranty {}".format(self.reference)
@@ -106,7 +111,28 @@ class Warranty(models.Model):
             'name': self._format_lead_name(),
             'partner_id': self.partner_id.id,
             'team_id': self.type_id.sales_team_id.id,
+            'generated_from_warranty': True,
         })
+        new_lead.message_post_with_view(
+            'mail.message_origin_link',
+            values={'self': new_lead, 'origin': self},
+            subtype_id=self.env.ref('mail.mt_note').id
+        )
+        self.lead_id = new_lead
+        self.message_post_with_view(
+            'sale_warranty_lead_on_expiry.lead_created_message',
+            values={'lead': new_lead},
+            subtype_id=self.env.ref('mail.mt_note').id
+        )
+
+    def _bind_warranty_to_last_generated_lead(self):
+        existing_lead = self._find_last_generated_lead_for_partner()
+        self.lead_id = existing_lead
+        self.message_post_with_view(
+            'sale_warranty_lead_on_expiry.lead_already_exist_message',
+            values={'lead': existing_lead, 'partner': self.partner_id},
+            subtype_id=self.env.ref('mail.mt_note').id
+        )
 
     def lead_on_expiry_cron(self):
         expired_warranties_to_process = self.search([
@@ -116,8 +142,8 @@ class Warranty(models.Model):
         ])
 
         for warranty in expired_warranties_to_process:
-            days_to_trigger_exceeded = self._is_days_to_trigger_exceeded()
-            delay_between_leads_exceeded = self._is_delay_between_leads_exceeded()
+            days_to_trigger_exceeded = warranty._is_days_to_trigger_exceeded()
+            delay_between_leads_exceeded = warranty._is_delay_between_leads_exceeded()
 
             if days_to_trigger_exceeded and delay_between_leads_exceeded:
                 warranty._generate_new_lead()

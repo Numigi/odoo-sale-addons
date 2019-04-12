@@ -10,9 +10,12 @@
     'license': 'LGPL-3',
     "category": "Sales",
     "summary": "Generate a lead when a sale warranty expires",
-    "depends": ['sale_stock'],
+    "depends": ['sale_warranty', 'crm'],
     "data": [
-
+        'data/ir_cron.xml',
+        'views/config_settings.xml',
+        'views/warranty_to_lead_link_message.xml',
+        'views/warranty_type.xml',
     ],
     "installable": True,
 }

@@ -24,8 +24,8 @@ class SaleWarranty(models.Model):
     _inherit = 'sale.warranty'
 
     use_warranty_extension = fields.Boolean(track_visibility='onchange')
-    extension_start_date = fields.Date(track_visibility='onchange')
-    extension_expiry_date = fields.Date(track_visibility='onchange')
+    extension_start_date = fields.Date(track_visibility='onchange', copy=False)
+    extension_expiry_date = fields.Date(track_visibility='onchange', copy=False)
     extension_template_id = fields.Many2one(related='type_id.extension_template_id')
     extension_subscription_id = fields.Many2one(
         'sale.subscription',

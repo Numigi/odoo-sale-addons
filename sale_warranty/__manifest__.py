@@ -16,6 +16,7 @@
         'security/rules.xml',
         'security/ir.model.access.csv',
         'views/menu.xml',
+        'views/config_settings.xml',
         'views/warranty_type.xml',
         'views/warranty.xml',
         'views/product.xml',
@@ -24,4 +25,5 @@
         'data/ir_sequence.xml',
     ],
     "installable": True,
+    "application": True,
 }

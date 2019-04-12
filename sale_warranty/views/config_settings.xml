@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_warranty_settings_form" model="ir.ui.view">
+        <field name="name">Config Settings: add sale warranty section</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div
+                    class="app_settings_block" data-string="Warranties" string="Warranties"
+                    groups="sale_warranty.group_manager"
+                    data-key="sale_warranty"
+                    >
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_sale_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="sale_warranty_settings_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'sale_warranty'}</field>
+    </record>
+
+    <menuitem
+        id="menu_warranty_general_settings"
+        name="Settings"
+        parent="menu_warranty_config"
+        sequence="0"
+        action="action_sale_config_settings"
+        />
+
+</odoo>

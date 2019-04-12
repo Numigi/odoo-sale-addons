@@ -47,16 +47,24 @@ class Warranty(models.Model):
         ('active', 'Active'),
         ('expired', 'Expired'),
         ('cancelled', 'Cancelled'),
-    ], required=True, default='pending', track_visibility='onchange')
-    reference = fields.Char(track_visibility='onchange')
-    activation_date = fields.Date(track_visibility='onchange')
-    expiry_date = fields.Date(track_visibility='onchange')
+    ], required=True, default='pending', track_visibility='onchange', copy=False)
+    reference = fields.Char(track_visibility='onchange', copy=False)
+    activation_date = fields.Date(
+        track_visibility='onchange',
+        copy=False
+    )
+    expiry_date = fields.Date(
+        track_visibility='onchange',
+        copy=False
+    )
     sale_order_id = fields.Many2one(
         'sale.order', 'Order', index=True, ondelete='restrict',
         track_visibility='onchange',
+        copy=False
     )
     sale_order_line_id = fields.Many2one(
         'sale.order.line', 'Order Line', index=True, ondelete='restrict',
+        copy=False
     )
     product_id = fields.Many2one(
         'product.product', 'Product', index=True, ondelete='restrict',
@@ -65,6 +73,7 @@ class Warranty(models.Model):
     lot_id = fields.Many2one(
         'stock.production.lot', 'Serial Number', index=True, ondelete='restrict',
         track_visibility='onchange',
+        copy=False,
     )
     description = fields.Text(track_visibility='onchange')
 
