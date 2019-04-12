@@ -67,14 +67,14 @@ class Warranty(models.Model):
         'crm.lead', 'Warranty End Action', ondelete='restrict',
         copy=False)
 
-    def _is_days_to_trigger_exceeded(self):
-        """Check whether the days to trigger the actions have been exceeded.
+    def _is_days_to_trigger_reached(self):
+        """Check whether the days to trigger the actions have been reached.
 
         If the warranty has an extension, the extension date is used.
         Extensions are enabled by the module `sale_warranty_extension`,
         which is not a dependency for the current module.
 
-        :rtype: Bool
+        :rtype: bool
         """
         today = datetime.now().date()
         extension_expiry_date = getattr(self, 'extension_expiry_date', False)
@@ -83,18 +83,31 @@ class Warranty(models.Model):
         return expiry_date + timedelta(delay_in_days) <= today
 
     def _get_delay_between_leads(self):
+        """Get the delay in days between 2 actions for the same customer.
+
+        :rtype: int
+        """
         return (
             self.env.user.company_id.warranty_delay_between_leads or
             DEFAULT_DELAY_BETWEEN_LEADS
         )
 
     def _find_last_generated_lead_for_partner(self):
+        """Find the last lead generated from a warranty for this customer.
+
+        :rtype: crm.lead record
+        """
         return self.env['crm.lead'].search([
             ('generated_from_warranty', '=', True),
             ('partner_id', 'child_of', self.partner_id.id),
+            ('company_id', '=', self.company_id.id),
         ], limit=1, order='id desc')
 
-    def _is_delay_between_leads_exceeded(self):
+    def _is_delay_between_leads_reached(self):
+        """Determine if the minimum delay between 2 leads for the customer was reached.
+
+        :rtype: bool
+        """
         today = datetime.now().date()
         delay_in_days = self._get_delay_between_leads()
         previous_lead = self._find_last_generated_lead_for_partner()
@@ -104,14 +117,20 @@ class Warranty(models.Model):
         )
 
     def _format_lead_name(self):
+        """Format the name of the lead generated for this warranty.
+
+        :rtype: str
+        """
         return "End Of Warranty {}".format(self.reference)
 
     def _generate_new_lead(self):
+        """Generate a new lead for this warranty."""
         new_lead = self.env['crm.lead'].create({
             'name': self._format_lead_name(),
             'partner_id': self.partner_id.id,
             'team_id': self.type_id.sales_team_id.id,
             'generated_from_warranty': True,
+            'company_id': self.company_id.id,
         })
         new_lead.message_post_with_view(
             'mail.message_origin_link',
@@ -126,6 +145,7 @@ class Warranty(models.Model):
         )
 
     def _bind_warranty_to_last_generated_lead(self):
+        """Bind the current warranty to the previous generated action."""
         existing_lead = self._find_last_generated_lead_for_partner()
         self.lead_id = existing_lead
         self.message_post_with_view(
@@ -135,6 +155,7 @@ class Warranty(models.Model):
         )
 
     def lead_on_expiry_cron(self):
+        """Generate leads from expired warranties."""
         expired_warranties_to_process = self.search([
             ('type_id.automated_action', '=', True),
             ('lead_id', '=', False),
@@ -142,13 +163,13 @@ class Warranty(models.Model):
         ])
 
         for warranty in expired_warranties_to_process:
-            days_to_trigger_exceeded = warranty._is_days_to_trigger_exceeded()
-            delay_between_leads_exceeded = warranty._is_delay_between_leads_exceeded()
+            days_to_trigger_reached = warranty._is_days_to_trigger_reached()
+            delay_between_leads_reached = warranty._is_delay_between_leads_reached()
 
-            if days_to_trigger_exceeded and delay_between_leads_exceeded:
+            if days_to_trigger_reached and delay_between_leads_reached:
                 warranty._generate_new_lead()
 
-            if days_to_trigger_exceeded and not delay_between_leads_exceeded:
+            if days_to_trigger_reached and not delay_between_leads_reached:
                 warranty._bind_warranty_to_last_generated_lead()
 
         return True

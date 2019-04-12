@@ -12,6 +12,8 @@ class LeadOnExpiryCronCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.company_id.warranty_delay_between_leads = LEAD_DELAY
+
         cls.customer = cls.env['res.partner'].create({
             'name': 'My Customer',
             'customer': True,
@@ -32,7 +34,6 @@ class LeadOnExpiryCronCase(SavepointCase):
             'name': 'My Product',
             'tracking': 'serial',
             'type': 'product',
-            'warranty_type_ids': [(4, cls.warranty_6_months.id)]
         })
 
         cls.warranty = cls._create_warranty()
@@ -91,6 +92,30 @@ class TestLeadOnExpiryCron(LeadOnExpiryCronCase):
 
     def test_if_days_to_trigger_reached__new_lead_created(self):
         self.warranty_6_months.automated_action_delay = 30
+        self._run_cron()
+        assert self.warranty.lead_id
+
+
+class TestWarrantiesWithExtension(LeadOnExpiryCronCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        today = datetime.now().date()
+        cls.warranty.write({
+            'activation_date': today - timedelta(150),
+            'expiry_date': today - timedelta(120),
+            'extension_start_date': today - timedelta(90),
+            'extension_expiry_date': today - timedelta(60),
+        })
+
+    def test_if_days_to_trigger_not_reached__no_lead_created(self):
+        self.warranty_6_months.automated_action_delay = 61
+        self._run_cron()
+        assert not self.warranty.lead_id
+
+    def test_if_days_to_trigger_reached__new_lead_created(self):
+        self.warranty_6_months.automated_action_delay = 60
         self._run_cron()
         assert self.warranty.lead_id
 
