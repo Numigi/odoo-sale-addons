@@ -86,11 +86,13 @@ class TestLeadOnExpiryCron(LeadOnExpiryCronCase):
         assert new_warranty.lead_id != previous_lead
 
     def test_if_days_to_trigger_not_reached__no_lead_created(self):
+        self.warranty.expiry_date = datetime.now().date() - timedelta(30)
         self.warranty_6_months.automated_action_delay = 31
         self._run_cron()
         assert not self.warranty.lead_id
 
     def test_if_days_to_trigger_reached__new_lead_created(self):
+        self.warranty.expiry_date = datetime.now().date() - timedelta(30)
         self.warranty_6_months.automated_action_delay = 30
         self._run_cron()
         assert self.warranty.lead_id
