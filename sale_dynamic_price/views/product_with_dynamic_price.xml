@@ -51,6 +51,9 @@
                            force_save="1"
                            />
                 </group>
+                <group attrs="{'invisible': ['|', ('product_variant_count', '&lt;=', 1), ('is_product_variant', '=', True)]}">
+                    <b>The sale price is managed on product variants.</b>
+                </group>
             </xpath>
         </field>
     </record>
