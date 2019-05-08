@@ -181,6 +181,7 @@ class ProductTemplate(models.Model):
             'margin_amount',
             'price_rounding',
             'price_surcharge',
+            'list_price',
         )
 
         vals_to_propagate = {k: v for k, v in vals.items() if k in fields_to_propagate}

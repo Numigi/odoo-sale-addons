@@ -4,4 +4,5 @@
 from . import (
     dynamic_price,
     pricelist,
+    variant_specific_price,
 )
