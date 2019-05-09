@@ -2,8 +2,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
-from ddt import data, ddt, unpack
-from odoo.exceptions import ValidationError, UserError
+from ddt import data, ddt
+from odoo.exceptions import ValidationError
 from odoo.tests.common import SavepointCase
 
 

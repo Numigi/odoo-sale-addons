@@ -1,9 +1,8 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models, _
+from odoo import api, models, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare, float_round
 
 
 def _get_minimum_margin_error_title(context: dict):
