@@ -25,7 +25,7 @@ def _get_minimum_margin_error_message(product: models.Model, context: dict):
 
 def _get_minimum_margin_bypass_message(product: models.Model, context: dict):
     return _(
-        'The margin rate ({margin:.2f})% was saved even though '
+        'The margin rate ({margin:.2f}%) was saved even though '
         'it is lower than the minimum margin ({minimum_margin:.2f}%) of the product category '
         '({category}).'
     ).format(
