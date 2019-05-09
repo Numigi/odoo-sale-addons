@@ -13,13 +13,9 @@ Product Category Configuration
 ------------------------------
 As member of the group `Sales / Manager`, I go to the form view of a product category.
 
-I notice a new field `Minimum Margin Rate`.
+I notice a new field `Minimum Margin Rate`. I set this field to 30%.
 
 .. image:: static/description/product_category_form.png
-
-I set this field to 30%.
-
-.. image:: static/description/product_category_margin_filled.png
 
 When I click on save, the system iterates over all products in the category.
 
@@ -45,15 +41,15 @@ As member of the group `Sales / Manager`, I go to the form view of a product.
 
 I set the margin to a value below the minimum margin.
 
-.. image:: static/description/product_form_with_lower_margin.png
-
 After filling the new margin, a warning message appears:
 
 .. image:: static/description/product_lower_margin_warning.png
 
 I am able to bypass this warning and save anyway. Only members of `Sales / Manager` are able to do so.
 
-Other users are clocked when clicking on save.
+.. image:: static/description/product_lower_margin_saved.png
+
+Other users are blocked when clicking on save.
 
 Contributors
 ------------

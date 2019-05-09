@@ -1,9 +1,9 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_round
 
 
 def _get_minimum_margin_error_title(context: dict):
@@ -12,26 +12,26 @@ def _get_minimum_margin_error_title(context: dict):
 
 def _get_minimum_margin_error_message(product: models.Model, context: dict):
     return _(
-        'The margin rate ({margin}) of '
+        'The margin rate ({margin:.2f}%) of '
         'the product ({product}) must be greater or equal '
         'to the minimum margin rate defined on the product category '
-        '({minimum_margin}).'
+        '({minimum_margin:.2f}%).'
     ).format(
-        margin=product.margin,
-        product=product.display_name,
-        minimum_margin=product.minimum_margin,
+        margin=product.margin * 100,
+        product=product.name,
+        minimum_margin=product.minimum_margin * 100,
     )
 
 
 def _get_minimum_margin_bypass_message(product: models.Model, context: dict):
     return _(
-        'The margin rate ({margin}) was saved even though '
-        'it is lower than the minimum margin ({minimum_margin}) of the product category '
+        'The margin rate ({margin:.2f})% was saved even though '
+        'it is lower than the minimum margin ({minimum_margin:.2f}%) of the product category '
         '({category}).'
     ).format(
-        margin=product.margin,
-        minimum_margin=product.minimum_margin,
-        category=product.category_id.display_name,
+        margin=product.margin * 100,
+        minimum_margin=product.minimum_margin * 100,
+        category=product.categ_id.name,
     )
 
 
@@ -39,7 +39,7 @@ def _is_product_margin_lower_than_minimum_margin(product: models.Model):
     if product.margin is None or product.minimum_margin is None:
         return False
 
-    return float_compare(product.margin product.minimum_margin, -1)
+    return float_compare(product.margin, product.minimum_margin, 4) == -1
 
 
 class Product(models.Model):
@@ -49,8 +49,8 @@ class Product(models.Model):
     @api.onchange('margin')
     def _check_margin_is_not_lower_than_minimum_margin(self):
         if _is_product_margin_lower_than_minimum_margin(self):
-            title = _get_minimum_margin_error_title(self.context)
-            message = _get_minimum_margin_error_message(self, self.context)
+            title = _get_minimum_margin_error_title(self._context)
+            message = _get_minimum_margin_error_message(self, self._context)
             return {
                 'warning': {
                     'title': title,
@@ -58,19 +58,19 @@ class Product(models.Model):
                 }
             }
 
-    @api.constrains('minimum_margin', 'margin')
+    @api.constrains('minimum_margin', 'margin', 'categ_id')
     def _constraint_margin_not_lower_than_minimum_margin(self):
-        is_sale_manager = self.env.user.has_group('sale.group_sale_manager')
+        is_sale_manager = self.env.user.has_group('sales_team.group_sale_manager')
         products_with_lower_margin = self.filtered(
             lambda p: _is_product_margin_lower_than_minimum_margin(p)
         )
         for product in products_with_lower_margin:
             if is_sale_manager:
-                message = _get_minimum_margin_error_message(product, product.context)
-                raise ValidationError(message)
-            else:
-                message = _get_minimum_margin_bypass_message(product, product.context)
+                message = _get_minimum_margin_bypass_message(product, product._context)
                 product.message_post(body=message)
+            else:
+                message = _get_minimum_margin_error_message(product, product._context)
+                raise ValidationError(message)
 
 
 class ProductTemplate(models.Model):

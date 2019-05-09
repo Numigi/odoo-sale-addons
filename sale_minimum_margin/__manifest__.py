@@ -11,6 +11,9 @@
     "category": "Sales",
     "summary": "Set a minimum sale price margin on product categories",
     "depends": ['sale_dynamic_price'],
-    "data": [],
+    "data": [
+        'views/product.xml',
+        'views/product_category.xml',
+    ],
     "installable": True,
 }
