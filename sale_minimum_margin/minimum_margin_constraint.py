@@ -3,6 +3,7 @@
 
 from odoo import api, models, _
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 
 def _get_minimum_margin_error_title(context: dict):

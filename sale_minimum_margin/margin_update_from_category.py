@@ -19,7 +19,7 @@ class Product(models.Model):
         ).format(
             rate_before=rate_before * 100,
             rate_after=self.margin * 100,
-            category=self.display_name,
+            category=self.categ_id.display_name,
         )
         self.message_post(body=message)
 
