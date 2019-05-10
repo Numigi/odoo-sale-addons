@@ -12,6 +12,7 @@
     'summary': 'Install all addons required for testing.',
     'depends': [
         'sale_dynamic_price',
+        'sale_minimum_margin',
         'sale_warranty',
         'sale_warranty_extension',
         'sale_warranty_lead_on_expiry',
