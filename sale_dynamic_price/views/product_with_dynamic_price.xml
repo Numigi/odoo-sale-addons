@@ -58,6 +58,17 @@
         </field>
     </record>
 
+    <record id="product_normal_form_with_fixed_price_editable" model="ir.ui.view">
+        <field name="name">Product Normal Form: Make fixed sale price editable</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="attributes">
+                <attribute name="attrs">{'readonly': [('price_type', '=', 'dynamic')]}</attribute>
+            </field>
+        </field>
+    </record>
+
     <record id="product_variant_form_with_dynamic_price" model="ir.ui.view">
         <field name="name">Product Variant Form: Add the dynamic price fields</field>
         <field name="model">product.product</field>
