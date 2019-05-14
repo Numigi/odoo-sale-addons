@@ -53,7 +53,7 @@ class LeadOnExpiryCronCase(SavepointCase):
             'partner_id': cls.customer.id,
             'product_id': cls.product_a.id,
             'type_id': cls.warranty_6_months.id,
-            'state': 'expired',
+            'state': 'pending',
             'activation_date': today - timedelta(90),
             'expiry_date': today - timedelta(30),
         })
@@ -86,19 +86,24 @@ class TestLeadOnExpiryCron(LeadOnExpiryCronCase):
         assert new_warranty.lead_id != previous_lead
 
     def test_if_days_to_trigger_not_reached__no_lead_created(self):
-        self.warranty.expiry_date = datetime.now().date() - timedelta(30)
-        self.warranty_6_months.automated_action_delay = 31
+        self.warranty.expiry_date = datetime.now().date() + timedelta(30)
+        self.warranty_6_months.automated_action_delay = 29
         self._run_cron()
         assert not self.warranty.lead_id
 
     def test_if_days_to_trigger_reached__new_lead_created(self):
-        self.warranty.expiry_date = datetime.now().date() - timedelta(30)
+        self.warranty.expiry_date = datetime.now().date() + timedelta(30)
         self.warranty_6_months.automated_action_delay = 30
         self._run_cron()
         assert self.warranty.lead_id
 
 
 class TestWarrantiesWithExtension(LeadOnExpiryCronCase):
+    """Test the warranties end in case of a warranty extension.
+
+    This test class requires the module sale_warranty_extension
+    to be installed.
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -107,17 +112,17 @@ class TestWarrantiesWithExtension(LeadOnExpiryCronCase):
         cls.warranty.write({
             'activation_date': today - timedelta(150),
             'expiry_date': today - timedelta(120),
-            'extension_start_date': today - timedelta(90),
-            'extension_expiry_date': today - timedelta(60),
+            'extension_start_date': today + timedelta(60),
+            'extension_expiry_date': today + timedelta(90),
         })
 
     def test_if_days_to_trigger_not_reached__no_lead_created(self):
-        self.warranty_6_months.automated_action_delay = 61
+        self.warranty_6_months.automated_action_delay = 89
         self._run_cron()
         assert not self.warranty.lead_id
 
     def test_if_days_to_trigger_reached__new_lead_created(self):
-        self.warranty_6_months.automated_action_delay = 60
+        self.warranty_6_months.automated_action_delay = 90
         self._run_cron()
         assert self.warranty.lead_id
 

@@ -80,7 +80,7 @@ class Warranty(models.Model):
         extension_expiry_date = getattr(self, 'extension_expiry_date', False)
         expiry_date = extension_expiry_date or self.expiry_date
         delay_in_days = self.type_id.automated_action_delay or 0
-        return expiry_date + timedelta(delay_in_days) <= today
+        return today + timedelta(delay_in_days) >= expiry_date
 
     def _get_delay_between_leads(self):
         """Get the delay in days between 2 actions for the same customer.
@@ -155,11 +155,11 @@ class Warranty(models.Model):
         )
 
     def lead_on_expiry_cron(self):
-        """Generate leads from expired warranties."""
+        """Generate leads from pending warranties."""
         expired_warranties_to_process = self.search([
             ('type_id.automated_action', '=', True),
             ('lead_id', '=', False),
-            ('state', '=', 'expired'),
+            ('state', '=', 'pending'),
         ])
 
         for warranty in expired_warranties_to_process:
