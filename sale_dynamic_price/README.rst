@@ -2,6 +2,8 @@ Sales Dynamic Price
 ===================
 This module allows to compute the sale price of a product based on the product cost.
 
+.. contents:: Table of Contents
+
 Product Configuration
 ---------------------
 As member of the group `Sales / Manager`, I go to the form view of a product.

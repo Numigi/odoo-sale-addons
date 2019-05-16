@@ -13,13 +13,18 @@ class WarrantyType(models.Model):
 
     automated_action = fields.Boolean(
         'Automated Warranty End Action',
+        help="If active, an opportunity is created for each "
+        "expired warranty or warranty extension, if applicable."
     )
 
     sales_team_id = fields.Many2one(
         'crm.team', 'Sales Team', ondelete='restrict',
     )
 
-    automated_action_delay = fields.Integer('Days To Trigger Action')
+    automated_action_delay = fields.Integer(
+        'Days To Trigger Action',
+        help="Number of days before triggering a follow up action."
+    )
 
 
 class Company(models.Model):

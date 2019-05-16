@@ -2,6 +2,8 @@ Sales Warranty Lead On Expiry
 =============================
 This module allows to generate automatically a lead when a sale warranty expires.
 
+.. contents:: Table of Contents
+
 Configuration
 -------------
 As member of the group `Warranty / Manager`, I go to the form view of a warranty type.
