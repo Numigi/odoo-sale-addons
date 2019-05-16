@@ -2,6 +2,8 @@ Sales Warranty
 ==============
 This module allows to manage warranties on sold products.
 
+.. contents:: Table of Contents
+
 Types of Warranty
 -----------------
 As member of the group `Warranties / Manager`, you may edit / create new types of warranties.
