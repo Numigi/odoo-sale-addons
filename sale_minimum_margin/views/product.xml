@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="sale_dynamic_price.product_template_form_with_dynamic_price"/>
         <field name="arch" type="xml">
             <field name="margin" position="before">
-                <field name="minimum_margin" widget="percentage"/>
+                <field name="minimum_margin" widget="percentage"
+                    attrs="{'invisible': [('price_type', '!=', 'dynamic')]}"/>
             </field>
         </field>
     </record>
@@ -18,7 +19,8 @@
         <field name="inherit_id" ref="sale_dynamic_price.product_variant_form_with_dynamic_price"/>
         <field name="arch" type="xml">
             <field name="margin" position="before">
-                <field name="minimum_margin" widget="percentage"/>
+                <field name="minimum_margin" widget="percentage"
+                    attrs="{'invisible': [('price_type', '!=', 'dynamic')]}"/>
             </field>
         </field>
     </record>
