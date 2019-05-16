@@ -4,6 +4,8 @@ This module extends the module sale_warranty. It adds extensions to warranties.
 
 Warranties extensions are managed with sale subscriptions (from Odoo Enterprise).
 
+.. contents:: Table of Contents
+
 Configuration
 -------------
 As member of the group `Sales / Manager`, I go to `Warranties / Configuration / Warranty Types`.
