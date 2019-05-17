@@ -32,7 +32,6 @@ class Product(models.Model):
             category=self.categ_id.display_name,
         )
         self.message_post(body=message)
-
         only_one_variant = (
             self.product_tmpl_id.product_variant_ids == self
         )
