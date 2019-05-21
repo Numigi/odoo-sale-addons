@@ -85,7 +85,7 @@ class Product(models.Model):
                 }
             }
 
-    @api.constrains('margin', 'categ_id')
+    @api.constrains('margin', 'categ_id', 'price_type')
     def _constraint_margin_not_lower_than_minimum_margin(self):
         """Apply the constraint when saving the margin.
 

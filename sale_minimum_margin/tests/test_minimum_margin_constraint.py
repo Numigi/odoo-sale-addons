@@ -70,6 +70,14 @@ class TestMinimumMarginConstrains(SavepointCase):
         self.product.sudo(self.sales_manager).write({'margin': 0.29})
         assert self.product.margin == 0.29
 
+    def test_on_write__if_dynamic_price_set_and_margin_not_set__error_raised(self):
+        """Case where the price is set to dynamic without setting a margin."""
+        self.product.price_type = 'fixed'
+        self.category.minimum_margin = 0.30
+
+        with pytest.raises(ValidationError):
+            self.product.sudo(self.stock_manager).write({'price_type': 'dynamic'})
+
     @data(0.30, 0.31)
     def test_on_write__if_margin_not_lower_and_sale_manager__error_not_raised(self, margin):
         self.category.minimum_margin = 0.30
@@ -92,6 +100,15 @@ class TestMinimumMarginConstrains(SavepointCase):
         product_obj = self.env[self.product._name]
         new_product = product_obj.sudo(self.sales_manager).create(values)
         assert new_product.margin == 0.29
+
+    def test_on_create__if_not_dynamic_price__error_not_raised(self):
+        self.category.minimum_margin = 0.30
+        values = self._get_product_vals()
+        values['margin'] = 0.29
+        values['price_type'] = 'fixed'
+        product_obj = self.env[self.product._name]
+        new_product = product_obj.sudo(self.stock_manager).create(values)
+        assert new_product.price_type == 'fixed'
 
     @data(0.30, 0.31)
     def test_on_create__if_margin_not_lower_and_not_sale_manager__error_not_raised(self, margin):
