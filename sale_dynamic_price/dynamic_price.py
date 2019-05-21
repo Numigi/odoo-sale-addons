@@ -150,6 +150,7 @@ class ProductTemplate(models.Model):
         related='product_variant_ids.price_type',
         readonly=False,
         store=True,
+        default='fixed',
     )
     margin = fields.Float(
         related='product_variant_ids.margin',
