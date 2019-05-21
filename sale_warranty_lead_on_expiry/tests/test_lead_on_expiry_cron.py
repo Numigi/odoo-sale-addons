@@ -53,7 +53,7 @@ class LeadOnExpiryCronCase(SavepointCase):
             'partner_id': cls.customer.id,
             'product_id': cls.product_a.id,
             'type_id': cls.warranty_6_months.id,
-            'state': 'pending',
+            'state': 'active',
             'activation_date': today - timedelta(90),
             'expiry_date': today - timedelta(30),
         })

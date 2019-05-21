@@ -160,11 +160,11 @@ class Warranty(models.Model):
         )
 
     def lead_on_expiry_cron(self):
-        """Generate leads from pending warranties."""
+        """Generate leads from active warranties."""
         expired_warranties_to_process = self.search([
             ('type_id.automated_action', '=', True),
             ('lead_id', '=', False),
-            ('state', '=', 'pending'),
+            ('state', '=', 'active'),
         ])
 
         for warranty in expired_warranties_to_process:
