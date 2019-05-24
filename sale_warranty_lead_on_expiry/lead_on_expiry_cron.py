@@ -128,15 +128,20 @@ class Warranty(models.Model):
         """
         return "End Of Warranty {}".format(self.reference)
 
-    def _generate_new_lead(self):
-        """Generate a new lead for this warranty."""
-        new_lead = self.env['crm.lead'].create({
+    def _get_crm_lead_values(self):
+        return {
             'name': self._format_lead_name(),
             'partner_id': self.partner_id.id,
             'team_id': self.type_id.sales_team_id.id,
             'generated_from_warranty': True,
             'company_id': self.company_id.id,
-        })
+            'type': 'opportunity',
+        }
+
+    def _generate_new_lead(self):
+        """Generate a new lead for this warranty."""
+        lead_vals = self._get_crm_lead_values()
+        new_lead = self.env['crm.lead'].create(lead_vals)
         new_lead.message_post_with_view(
             'mail.message_origin_link',
             values={'self': new_lead, 'origin': self},
