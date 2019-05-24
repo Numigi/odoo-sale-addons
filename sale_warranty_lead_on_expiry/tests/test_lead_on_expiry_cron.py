@@ -97,6 +97,11 @@ class TestLeadOnExpiryCron(LeadOnExpiryCronCase):
         self._run_cron()
         assert self.warranty.lead_id
 
+    def test_generated_lead_type_is_opportunity(self):
+        self._run_cron()
+        lead = self._find_lead()
+        assert lead.type == 'opportunity'
+
 
 class TestWarrantiesWithExtension(LeadOnExpiryCronCase):
     """Test the warranties end in case of a warranty extension.
