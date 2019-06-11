@@ -68,7 +68,7 @@ class Product(models.Model):
 
     _inherit = 'product.product'
 
-    @api.onchange('margin')
+    @api.onchange('margin', 'categ_id')
     def _check_margin_is_not_lower_than_minimum_margin(self):
         """Check whether the margin is not lower than the minimum margin.
 
