@@ -25,7 +25,7 @@ Usage
 -----
 As ``Sale / User``, I go to a sale order.
 
-I click to create an invoice.
+I click on ``Create Invoice``.
 
 .. image:: static/description/sale_order_form.png
 
@@ -43,7 +43,7 @@ A new draft invoice is created.
 
 Without validating the invoice, I go back to the sale order.
 
-I notice that the order is invoiced.
+I notice that the order is fully invoiced.
 
 .. image:: static/description/sale_order_invoiced.png
 
