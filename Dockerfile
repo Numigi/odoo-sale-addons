@@ -21,6 +21,7 @@ COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
+COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
