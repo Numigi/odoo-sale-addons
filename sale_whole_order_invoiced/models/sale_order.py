@@ -8,7 +8,7 @@ class SaleOrder(models.Model):
 
     _inherit = 'sale.order'
 
-    whole_order_invoiced = fields.Boolean()
+    whole_order_invoiced = fields.Boolean(copy=False)
 
     @api.depends(
         'state', 'order_line.invoice_status', 'order_line.invoice_lines',
