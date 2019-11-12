@@ -72,3 +72,8 @@ class TestSaleOrder(SavepointCase):
         assert self.sale_order.mapped('order_line.invoice_status') == ['to invoice', 'to invoice']
         self.sale_order.whole_order_invoiced = True
         assert self.sale_order.mapped('order_line.invoice_status') == ['invoiced', 'invoiced']
+
+    def test_on_copy__whole_order_invoiced_not_propagated(self):
+        self.sale_order.whole_order_invoiced = True
+        new_order = self.sale_order.copy()
+        assert not new_order.whole_order_invoiced
