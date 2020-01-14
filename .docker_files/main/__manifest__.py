@@ -11,7 +11,7 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
-        'base',
+        'sale_stock_move_no_merge',
     ],
     'installable': True,
 }
