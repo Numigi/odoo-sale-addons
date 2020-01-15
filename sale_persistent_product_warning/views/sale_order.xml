@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form_with_product_warning" model="ir.ui.view">
+        <field name="name">Sale Order Form: Add persistent product warning</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='product_id']" position="before">
+                <field name="product_warning" widget="sale_persistent_product_warning"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
