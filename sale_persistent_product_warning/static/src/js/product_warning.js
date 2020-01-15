@@ -16,7 +16,7 @@ var ProductWarning = AbstractField.extend({
         "click": "_onClick"
     }),
 
-    _render: function () {
+    _render() {
         if (this.value) {
             this.$el.addClass("fa fa-exclamation");
         }
