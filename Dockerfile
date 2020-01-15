@@ -18,6 +18,7 @@ USER odoo
 
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
+COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
