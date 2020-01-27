@@ -3,20 +3,7 @@
 
 from odoo import api, models
 from odoo.addons.product.models.product import ProductProduct as Product
-from .dynamic_price import round_price
-
-
-def _apply_rounding_and_surcharge_to_price(product: Product, price: float) -> float:
-    """Apply the rounding and surcharge of the product to the given price.
-
-    :param product: the product for which to compute the price.
-    :param price: the price before rounding and surcharge.
-    :return: the computed price.
-    """
-    rounding = product.price_rounding
-    rounded_price = round_price(price, rounding)
-    surcharge = (product.price_surcharge or 0)
-    return rounded_price + surcharge
+from ..rounding import round_price
 
 
 class PricelistWithDynamicPrice(models.Model):
@@ -40,3 +27,11 @@ class PricelistWithDynamicPrice(models.Model):
                 result[product_id] = (new_price, suitable_rule)
 
         return result
+
+
+def _apply_rounding_and_surcharge_to_price(product: 'product.product', price: float) -> float:
+    """Apply the rounding and surcharge of the product to the given price."""
+    rounding = product.price_rounding
+    rounded_price = round_price(price, rounding)
+    surcharge = (product.price_surcharge or 0)
+    return rounded_price + surcharge

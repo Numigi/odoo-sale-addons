@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_normal_form_with_fixed_price_editable" model="ir.ui.view">
+        <field name="name">Product Normal Form: Make fixed sale price editable</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="attributes">
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    [('price_type', '=', 'dynamic')]
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_variant_form_with_fixed_price_editable" model="ir.ui.view">
+        <field name="name">Product Variant Form: make sale price readonly if price type is dynamic</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="attributes">
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    [('price_type', '=', 'dynamic')]
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_variant_form_with_dynamic_price" model="ir.ui.view">
+        <field name="name">Product Variant Form: Add the dynamic price fields</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="0"/>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <group name="pricing" position="attributes">
+                <attribute name="col">3</attribute>
+            </group>
+
+            <field name="standard_price" position="before">
+                <newline/>
+            </field>
+
+            <field name="standard_price" position="after">
+                <field name="price_type" widget="radio" options="{'horizontal': true}"
+                       required="1"/>
+                <newline/>
+                <field name="margin"
+                       attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                               'required': [('price_type', '=', 'dynamic')]}"
+                       widget="percentage"
+                       />
+                <field name="margin_amount"
+                       nolabel="1"
+                       attrs="{'invisible': [('price_type', '!=', 'dynamic')]}"
+                       readonly="1"
+                       force_save="1"
+                       widget="monetary"
+                       />
+                <newline/>
+                <field name="price_rounding"
+                       attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                               'required': [('price_type', '=', 'dynamic')]}"
+                       />
+                <field name="price_surcharge" nolabel="1"
+                       attrs="{'invisible': [('price_type', '!=', 'dynamic')],
+                               'required': [('price_type', '=', 'dynamic')]}"
+                       widget="monetary"
+                       />
+                <newline/>
+                <field name="lst_price" position="move"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
