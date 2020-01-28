@@ -58,14 +58,15 @@
                 <newline/>
                 <field name="lst_price" position="move"/>
             </field>
+
+            <field name="lst_price" position="attributes">
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    [('price_type', '=', 'dynamic')]
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
         </field>
 
-        <field name="lst_price" position="attributes">
-            <attribute name="attrs" operation="python_dict" key="readonly">
-                [('price_type', '=', 'dynamic')]
-            </attribute>
-            <attribute name="force_save">1</attribute>
-        </field>
     </record>
 
 </odoo>
