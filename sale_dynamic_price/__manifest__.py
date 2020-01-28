@@ -15,8 +15,8 @@
         'product',
     ],
     "data": [
-        'views/product_product.xml',
         'views/product_template.xml',
+        'views/product_product.xml',
         'views/product_template_attribute_value.xml',
         'data/ir_cron.xml',
     ],
