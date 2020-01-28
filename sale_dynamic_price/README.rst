@@ -38,7 +38,7 @@ The sale price is now read-only and that 4 new fields have appeared:
 
 ..
 
-    The `Margin` field allows to enter a markup rate.
+    The `Margin` field allows to enter a margin rate.
 
     The amount can be either expressed as a:
 

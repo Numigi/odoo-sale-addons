@@ -13,6 +13,7 @@
     'depends': [
         'sale_dynamic_price',
         'sale_minimum_margin',
+        'sale_order_margin_percent',
         'sale_persistent_product_warning',
         'sale_warranty',
         'sale_warranty_extension',
