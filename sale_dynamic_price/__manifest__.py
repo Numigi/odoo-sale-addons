@@ -10,11 +10,15 @@
     'license': 'LGPL-3',
     "category": "Sales",
     "summary": "Compute sale prices based on product cost",
-    "depends": ['sale_stock'],
+    "depends": [
+        'base_view_inheritance_extension',
+        'product',
+    ],
     "data": [
-        'views/hide_variant_extra_price.xml',
-        'views/product_with_dynamic_price.xml',
-        'data/sale_price_update_cron.xml',
+        'views/product_template.xml',
+        'views/product_product.xml',
+        'views/product_template_attribute_value.xml',
+        'data/ir_cron.xml',
     ],
     "installable": True,
 }

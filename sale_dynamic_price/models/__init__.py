@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from . import (
-    models,
-    variant_specific_price,
+    product_pricelist,
+    product_product,
+    product_template,
 )

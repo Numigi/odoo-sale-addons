@@ -2,40 +2,12 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
-from decimal import Decimal, ROUND_HALF_UP
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
-
-ROUNDING_AMOUNTS = [
-    '0.01',
-    '0.05',
-    '0.1',
-    '0.5',
-    '1',
-    '5',
-    '10',
-    '50',
-    '100',
-    '500',
-    '1000',
-]
+from ..rounding import ROUNDING_AMOUNTS, round_price
 
 
 _logger = logging.getLogger(__name__)
-
-
-def round_price(price: float, rounding: str) -> str:
-    """Round the given price using a rounding amount.
-
-    The rounding amount can be any of the values of ROUNDING_AMOUNTS.
-
-    :param price: the price to round
-    :param rounding: the rounding amount to apply
-    :return: the rounded price
-    """
-    factor = (Decimal(price) / Decimal(rounding)).quantize(Decimal('1.'), rounding=ROUND_HALF_UP)
-    result_decimal = factor * Decimal(rounding)
-    return float(result_decimal)
 
 
 class Product(models.Model):
@@ -97,6 +69,16 @@ class Product(models.Model):
         if self.price_type == 'dynamic':
             self.lst_price = self._compute_sale_price_from_cost()
 
+    def sale_price_update_cron(self):
+        """Cron to update dynamic sale prices on all products."""
+        products = self._get_products_with_dynamic_price_to_update()
+        _logger.info(
+            "Updating the dynamic sale prices of {} products."
+            .format(len(products))
+        )
+        for prod in products:
+            prod.update_sale_price_from_cost()
+
     def update_sale_price_from_cost(self):
         """Compute the sale price based on the product cost.
 
@@ -127,85 +109,3 @@ class Product(models.Model):
                 p.lst_price != p._compute_sale_price_from_cost()
             )
         )
-
-    def sale_price_update_cron(self):
-        """Cron to update dynamic sale prices on all products."""
-        products = self._get_products_with_dynamic_price_to_update()
-        _logger.info(
-            "Updating the dynamic sale prices of {} products."
-            .format(len(products))
-        )
-        for prod in products:
-            prod.update_sale_price_from_cost()
-
-
-class ProductTemplate(models.Model):
-
-    _inherit = 'product.template'
-
-    standard_price = fields.Float(track_visibility='onchange')
-    list_price = fields.Float(track_visibility='onchange')
-
-    price_type = fields.Selection(
-        related='product_variant_ids.price_type',
-        readonly=False,
-        store=True,
-        default='fixed',
-    )
-    margin = fields.Float(
-        related='product_variant_ids.margin',
-        readonly=False,
-        store=True,
-    )
-    margin_amount = fields.Float(
-        related='product_variant_ids.margin_amount',
-        readonly=False,
-        store=True,
-    )
-    price_rounding = fields.Selection(
-        related='product_variant_ids.price_rounding',
-        readonly=False,
-        store=True,
-    )
-    price_surcharge = fields.Float(
-        related='product_variant_ids.price_surcharge',
-        readonly=False,
-        store=True,
-    )
-
-    @api.model
-    def create(self, vals):
-        template = super().create(vals)
-
-        fields_to_propagate = (
-            'price_type',
-            'margin',
-            'margin_amount',
-            'price_rounding',
-            'price_surcharge',
-            'list_price',
-        )
-
-        vals_to_propagate = {k: v for k, v in vals.items() if k in fields_to_propagate}
-
-        for variant in template.product_variant_ids:
-            # Only write values that are different from the variant's default value.
-            changed_values_to_propagate = {
-                k: v for k, v in vals_to_propagate.items()
-                if (v or variant[k]) and v != variant[k]
-            }
-            variant.write(changed_values_to_propagate)
-
-        return template
-
-    _compute_margin_amount = Product._compute_margin_amount
-    _compute_sale_price_from_cost = Product._compute_sale_price_from_cost
-
-    @api.onchange('standard_price', 'margin')
-    def _onchange_set_margin_amount(self):
-        self.margin_amount = self._compute_margin_amount()
-
-    @api.onchange('margin_amount', 'price_rounding', 'price_surcharge', 'price_type')
-    def _onchange_compute_dynamic_price(self):
-        if self.price_type == 'dynamic':
-            self.list_price = self._compute_sale_price_from_cost()
