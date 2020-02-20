@@ -11,6 +11,7 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
+        'sale_default_term_on_company',
         'sale_dynamic_price',
         'sale_minimum_margin',
         'sale_order_margin_percent',
