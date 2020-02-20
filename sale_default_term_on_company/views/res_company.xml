@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="company_form_with_sale_note" model="ir.ui.view">
+        <field name="name">Company Form: Add sale terms and conditions</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field name="sale_note"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
