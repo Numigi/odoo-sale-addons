@@ -1,25 +1,10 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from odoo import _, api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-
-
-class WarrantyType(models.Model):
-
-    _name = 'sale.warranty.type'
-    _description = 'Sale Warranty Type'
-
-    company_id = fields.Many2one(
-        'res.company', 'Company',
-        default=lambda s: s.env.user.company_id
-    )
-    name = fields.Char(required=True)
-    duration_in_months = fields.Integer(required=True)
-    description = fields.Text()
-    active = fields.Boolean(default=True)
 
 
 class Warranty(models.Model):
@@ -107,8 +92,32 @@ class Warranty(models.Model):
                     warranty=warranty.display_name,
                 ))
 
-    def action_activate(self):
-        self.write({'state': 'active'})
+    def expired_warranties_cron(self):
+        """Update the state of warranties that are expired."""
+        warranties_to_end = self.find_warranties_to_set_expired()
+        warranties_to_end.action_set_expired()
+
+    def find_warranties_to_set_expired(self):
+        return self.env['sale.warranty'].search([
+            ('state', '=', 'active'),
+            ('expiry_date', '<', datetime.now().date()),
+        ])
+
+    def action_activate(self, serial_number=None):
+        """Activate the warranty.
+
+        :param serial_number: the stock.production.lot to link to the warranty
+        """
+        today = datetime.now().date()
+        expiry_date = (
+            today + relativedelta(months=self.type_id.duration_in_months) - timedelta(1)
+        )
+        self.write({
+            'state': 'active',
+            'lot_id': serial_number.id if serial_number else None,
+            'expiry_date': expiry_date,
+            'activation_date': today,
+        })
 
     def action_set_to_pending(self):
         self.write({'state': 'pending'})
@@ -116,59 +125,5 @@ class Warranty(models.Model):
     def action_cancel(self):
         self.write({'state': 'cancelled'})
 
-
-class ProductTemplateWithWarranty(models.Model):
-
-    _inherit = 'product.template'
-
-    warranty_type_ids = fields.Many2many(
-        'sale.warranty.type',
-        'product_template_warranty_type_rel',
-        'product_id',
-        'warranty_type_id',
-        'Warranties',
-    )
-
-    @api.constrains('warranty_type_ids', 'tracking')
-    def _check_if_has_warranties_then_is_serialized(self):
-        invalid_products = self.filtered(
-            lambda p: p.warranty_type_ids and not p.tracking == 'serial'
-        )
-        if invalid_products:
-            raise ValidationError(_(
-                'A product must be tracked by unique serial number in order to support warranties. '
-                'You may activate serial numbers for a product in the `Inventory` tab '
-                'under `Traceability`.'
-            ))
-
-
-class SaleOrderWithWarrantiesSmartButton(models.Model):
-
-    _inherit = 'sale.order'
-
-    warranty_ids = fields.One2many(
-        'sale.warranty',
-        'sale_order_id',
-        'Warranties',
-    )
-
-    warranty_count = fields.Integer(
-        compute='_compute_warranty_count'
-    )
-
-    @api.multi
-    def _compute_warranty_count(self):
-        for order in self:
-            warranties_not_cancelled = order.warranty_ids.filtered(lambda w: w.state != 'cancelled')
-            order.warranty_count = len(warranties_not_cancelled)
-
-
-class SaleOrderLineWithWarranties(models.Model):
-
-    _inherit = 'sale.order.line'
-
-    warranty_ids = fields.One2many(
-        'sale.warranty',
-        'sale_order_line_id',
-        'Warranties',
-    )
+    def action_set_expired(self):
+        self.write({'state': 'expired'})

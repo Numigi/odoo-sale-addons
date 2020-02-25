@@ -28,7 +28,7 @@ class TestExtensionOnWarrantyActivation(WarrantyActivationCase):
             'extension_template_id': cls.extension_template.id,
         })
 
-        cls._confirm_sale_order()
+        cls.confirm_sale_order()
         cls.warranty = cls.sale_order.warranty_ids
 
         cls.extension_start_date = (
@@ -39,9 +39,10 @@ class TestExtensionOnWarrantyActivation(WarrantyActivationCase):
         )
 
     def _trigger_warranty_activation(self):
-        serial = self._generate_serial_number(self.product_a, '000001')
+        serial = self.generate_serial_number(self.product_a, '000001')
         picking = self.sale_order.picking_ids
-        self._deliver_products(picking, serial)
+        self.select_serial_numbers_on_picking(picking, serial)
+        self.validate_picking(picking)
 
     def test_if_subscription_in_progress__extension_is_applied(self):
         self._trigger_warranty_activation()

@@ -1,6 +1,8 @@
 # © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import pytest
+from odoo.exceptions import ValidationError
 from .common import SaleWarrantyCase
 
 
@@ -9,7 +11,7 @@ class TestSaleOrderWithSingleProductAndWarranty(SaleWarrantyCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls._confirm_sale_order()
+        cls.confirm_sale_order()
 
     def test_on_sale_order_confirm_warranty_is_created(self):
         assert len(self.sale_order.warranty_ids) == 1
@@ -62,17 +64,39 @@ class TestSaleOrderWithSingleProductAndWarranty(SaleWarrantyCase):
         assert len(self.sale_order.warranty_ids) == 2
 
 
+class TestNonSerializedProducts(SaleWarrantyCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.warranty_6_months.allow_non_serialized_products = True
+        cls.product_a.tracking = 'none'
+
+    def test_non_serialized_product_allowed(self):
+        self.confirm_sale_order()
+        assert len(self.sale_order.warranty_ids) == 1
+
+    def test_add_quantity_to_non_serialized_product(self):
+        self.confirm_sale_order()
+        self.sale_order.order_line.product_uom_qty = 3
+        assert len(self.sale_order.warranty_ids) == 3
+
+    def test_if_not_allowed__raise_error(self):
+        with pytest.raises(ValidationError):
+            self.warranty_6_months.allow_non_serialized_products = False
+
+
 class TestSaleOrderWithCustomNumberOfWarranties(SaleWarrantyCase):
 
     def test_if_product_has_multiple_warranties_then_each_warranty_created(self):
         self.product_a.warranty_type_ids = self.warranty_6_months | self.warranty_2_years
         self.sale_order.order_line.product_uom_qty = 3
-        self._confirm_sale_order()
+        self.confirm_sale_order()
         assert len(self.sale_order.warranty_ids) == 6
 
     def test_if_product_not_warranteed_no_warranty_created(self):
         self.product_a.warranty_type_ids = False
-        self._confirm_sale_order()
+        self.confirm_sale_order()
         assert not self.sale_order.warranty_ids
 
     def test_company_warranties_are_applied(self):
@@ -81,12 +105,12 @@ class TestSaleOrderWithCustomNumberOfWarranties(SaleWarrantyCase):
             'name': 'New Company',
         })
         self.warranty_6_months.company_id = new_company
-        self._confirm_sale_order()
+        self.confirm_sale_order()
         assert len(self.sale_order.warranty_ids) == 1
         assert self.sale_order.warranty_ids.mapped('type_id') == self.warranty_2_years
 
     def test_if_no_specific_company_on_warranty_type__warranty_is_applied(self):
         self.product_a.warranty_type_ids = self.warranty_6_months | self.warranty_2_years
         self.warranty_6_months.company_id = False
-        self._confirm_sale_order()
+        self.confirm_sale_order()
         assert len(self.sale_order.warranty_ids) == 2

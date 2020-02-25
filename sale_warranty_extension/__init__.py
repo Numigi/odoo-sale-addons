@@ -3,6 +3,4 @@
 
 from . import (
     models,
-    expired_warranties_cron,
-    warranty_activation,
 )
