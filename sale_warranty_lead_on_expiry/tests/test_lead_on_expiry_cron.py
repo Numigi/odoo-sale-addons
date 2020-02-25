@@ -4,7 +4,7 @@
 from datetime import datetime, timedelta
 from freezegun import freeze_time
 from odoo.tests.common import SavepointCase
-from ..lead_on_expiry_cron import DEFAULT_DELAY_BETWEEN_LEADS as LEAD_DELAY
+from ..models.common import DEFAULT_DELAY_BETWEEN_LEADS as LEAD_DELAY
 
 
 class LeadOnExpiryCronCase(SavepointCase):

@@ -61,9 +61,14 @@ class SaleWarrantyCase(SavepointCase):
             'parent_id': cls.customer_company.id,
         })
 
+        cls.warehouse = cls.env['stock.warehouse'].search([
+            ('company_id', '=', cls.env.user.company_id.id),
+        ])
+
         cls.sale_order = cls.env['sale.order'].create({
             'partner_id': cls.customer.id,
             'user_id': cls.salesman.id,
+            'warehouse_id': cls.warehouse.id,
             'order_line': [
                 (0, 0, {
                     'product_id': cls.product_a.id,
@@ -75,64 +80,58 @@ class SaleWarrantyCase(SavepointCase):
         })
 
     @classmethod
-    def _confirm_sale_order(cls):
+    def confirm_sale_order(cls):
         cls.sale_order.sudo(cls.salesman).action_confirm()
 
     @classmethod
-    def _generate_serial_number(cls, product, number):
+    def generate_serial_number(cls, product, number):
         serial = cls.env['stock.production.lot'].create({
             'number': number,
             'product_id': product.id,
         })
+        cls.add_product_to_stock(product, 1, serial)
+        return serial
+
+    @classmethod
+    def add_product_to_stock(cls, product, qty, serial=None):
         inventory = cls.env['stock.inventory'].create({
-            'name': 'Add serial number',
+            'name': 'Add product',
         })
         inventory.action_start()
-
-        warehouse = cls.env['stock.warehouse'].search([
-            ('company_id', '=', cls.env.user.company_id.id),
-        ])
         inventory.write({
             'line_ids': [(0, 0, {
                 'product_id': product.id,
-                'product_qty': 1,
-                'prod_lot_id': serial.id,
-                'location_id': warehouse.lot_stock_id.id,
+                'product_qty': qty,
+                'prod_lot_id': serial.id if serial else None,
+                'location_id': cls.warehouse.lot_stock_id.id,
             })]
         })
         inventory.action_validate()
-        return serial
 
 
 class WarrantyActivationCase(SaleWarrantyCase):
 
+    def validate_picking(cls, picking):
+        picking.sudo(cls.stock_user).action_done()
+
     @classmethod
-    def _select_serial_number_on_stock_picking(cls, serial_number, picking):
-        move = next(m for m in picking.move_lines if m.product_id == serial_number.product_id)
+    def select_serial_numbers_on_picking(cls, picking, serial_numbers):
+        for serial in serial_numbers:
+            cls.select_product_on_picking(picking, serial.product_id, 1, serial)
+
+    @classmethod
+    def select_product_on_picking(cls, picking, product, qty, serial_number=None):
+        move = picking.move_lines.filtered(lambda m: m.product_id == product)[:1]
         move_line_vals = {
             'location_dest_id': move.location_dest_id.id,
             'location_id': move.location_id.id,
-            'lot_id': serial_number.id,
-            'product_id': move.product_id.id,
-            'product_uom_id': cls.env.ref('uom.product_uom_unit').id,
+            'lot_id': serial_number.id if serial_number else None,
+            'product_id': product.id,
+            'product_uom_id': move.product_uom.id,
             'qty_done': 1,
         }
-        line_without_serial = next((l for l in move.move_line_ids if not l.lot_id), None)
-        if line_without_serial:
-            line_without_serial.write(move_line_vals)
+        line_without_qty = move.move_line_ids.filtered(lambda l: not l.qty_done)[:1]
+        if line_without_qty:
+            line_without_qty.write(move_line_vals)
         else:
             move.write({'move_line_ids': [(0, 0, move_line_vals)]})
-
-    @classmethod
-    def _deliver_products(cls, picking, serial_numbers):
-        for serial in serial_numbers:
-            cls._select_serial_number_on_stock_picking(serial, picking)
-        picking.sudo(cls.stock_user).action_done()
-
-        # Verify that the stock.picking was properly processed.
-        assert picking.state == 'done'
-        move_lines = picking.mapped('move_lines.move_line_ids')
-        assert len(move_lines) == len(serial_numbers)
-        assert move_lines.mapped('lot_id') == serial_numbers
-        for line in move_lines:
-            assert line.qty_done == 1
