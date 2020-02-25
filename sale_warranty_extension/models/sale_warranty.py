@@ -74,7 +74,7 @@ class SaleWarranty(models.Model):
             )
         )
 
-    def action_activate(self, serial_number):
+    def action_activate(self, serial_number=None):
         """Extend the warranty on activation if it meets the requirements.
 
         In order to extend the warranty:
