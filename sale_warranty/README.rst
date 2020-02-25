@@ -18,7 +18,15 @@ As member of the group `Sales / Manager`, you may select warranties on a product
 
 .. image:: static/description/product_form.png
 
-Warranties are only selectable on products with unique serial numbers.
+Non-serialized Products
+~~~~~~~~~~~~~~~~~~~~~~~
+By default, warranties are only selectable on products with unique serial numbers.
+
+Since version ``1.1.0`` of the module, non-serialized products can be enabled per warranty type.
+
+.. image:: static/description/warranty_type_enable_non_serialized.png
+
+In that case, no serial number will be attributed to the warranty when activating it.
 
 Variants
 ~~~~~~~~
