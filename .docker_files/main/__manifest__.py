@@ -12,6 +12,7 @@
     "summary": "Install all addons required for testing.",
     "depends": [
         "sale_default_term_on_company",
+        "sale_delivery_completion",
         "sale_dynamic_price",
         "sale_minimum_margin",
         "sale_order_available_qty_popover",
