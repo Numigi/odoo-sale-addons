@@ -17,6 +17,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 USER odoo
 
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
+COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
