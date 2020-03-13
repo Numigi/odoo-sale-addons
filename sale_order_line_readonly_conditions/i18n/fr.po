@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_order_line_readonly_conditions
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-13 20:36+0000\n"
+"PO-Revision-Date: 2020-03-13 20:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_order_line_readonly_conditions
+#: model:ir.model.fields,field_description:sale_order_line_readonly_conditions.field_sale_order_line__handle_widget_invisible
+msgid "Handle Widget Invisible"
+msgstr "Widget handle invisible"
+
+#. module: sale_order_line_readonly_conditions
+#: model:ir.model.fields,field_description:sale_order_line_readonly_conditions.field_sale_order_line__product_readonly
+msgid "Product Readonly"
+msgstr "Article - lecture seule"
+
+#. module: sale_order_line_readonly_conditions
+#: model:ir.model.fields,field_description:sale_order_line_readonly_conditions.field_sale_order_line__product_uom_qty_readonly
+msgid "Product Uom Qty Readonly"
+msgstr "Quantité commandée - lecture seule"
+
+#. module: sale_order_line_readonly_conditions
+#: model:ir.model.fields,field_description:sale_order_line_readonly_conditions.field_sale_order_line__product_uom_readonly
+msgid "Product Uom Readonly"
+msgstr "Unités de mesure - lecture seule"
+
+#. module: sale_order_line_readonly_conditions
+#: model:ir.model,name:sale_order_line_readonly_conditions.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_order_line_readonly_conditions
+#: model:ir.model.fields,field_description:sale_order_line_readonly_conditions.field_sale_order_line__trash_widget_invisible
+msgid "Trash Widget Invisible"
+msgstr "Widget de suppression invisible"

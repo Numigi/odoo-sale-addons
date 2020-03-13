@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">Sale Order Form: Add readonly condition fields</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree" position="inside">
+                <field name="handle_widget_invisible" invisible="1"/>
+                <field name="trash_widget_invisible" invisible="1"/>
+                <field name="product_readonly" invisible="1"/>
+                <field name="product_uom_qty_readonly" invisible="1"/>
+                <field name="product_uom_readonly" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    ['|', ('product_updatable', '=', False), ('product_readonly', '=', True)]
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    [('product_uom_qty_readonly', '=', True)]
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_qty_readonly', '=', True)]
+                </attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
