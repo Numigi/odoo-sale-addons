@@ -183,6 +183,11 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Si actif, certains messages ont une erreur de livraison."
 
 #. module: sale_warranty
+#: model:ir.model.fields,help:sale_warranty.field_sale_warranty_type__allow_non_serialized_products
+msgid "If checked, this warranty type is selectable on non-serialized products."
+msgstr "Si coché, ce type de garantie est sélectionnable sur des articles non-sérialisés."
+
+#. module: sale_warranty
 #: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty__message_is_follower
 msgid "Is Follower"
 msgstr "Est un abonné"
