@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <tree string="Warranty Types">
                 <field name="name"/>
+                <field name="allow_non_serialized_products"/>
                 <field name="duration_in_months"/>
                 <field name="active"/>
             </tree>
