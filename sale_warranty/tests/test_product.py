@@ -3,7 +3,6 @@
 
 import pytest
 from odoo.exceptions import ValidationError
-from datetime import datetime, timedelta
 from odoo.addons.sale_warranty.tests.common import SaleWarrantyCase
 
 
