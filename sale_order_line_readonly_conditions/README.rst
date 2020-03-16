@@ -12,10 +12,10 @@ The module defines 5 new boolean fields:
 * ``product_uom_qty_readonly``: Makes the ordered quantity readonly
 * ``product_uom_readonly``: Makes the unit of measure readonly
 
-.. image:: static/description/sale_order_form.png
-
 However, this module does not define how these flags are checked.
 Multiple modules can inherit this module and add their specific use case.
+
+For an example of usage, see the module ``sale_kit`` from the same repository.
 
 Contributors
 ------------
