@@ -11,7 +11,7 @@ const KitReferenceField = SelectionField.extend({
     },
 
     _getAvailableKitReferences() {
-    	const references = this.recordData.available_kit_references;
+        const references = this.recordData.available_kit_references;
         return references ? references.split(",") : [];
     },
 });
