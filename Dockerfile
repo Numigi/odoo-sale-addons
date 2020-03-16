@@ -19,8 +19,10 @@ USER odoo
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
+COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
+COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
 COPY sale_warranty /mnt/extra-addons/sale_warranty
