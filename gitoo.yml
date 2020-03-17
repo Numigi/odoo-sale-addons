@@ -1,2 +1,13 @@
 - url: https://{{GIT_TOKEN}}@github.com/Numigi/odoo-enterprise
   branch: "12.0"
+
+- url: https://github.com/Numigi/odoo-product-addons
+  branch: "12.0"
+  includes:
+    - product_kit
+
+- url: https://github.com/Numigi/odoo-web-addons
+  branch: "12.0"
+  includes:
+    - web_handle_condition
+    - web_trash_condition

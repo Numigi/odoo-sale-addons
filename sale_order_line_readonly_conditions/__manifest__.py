@@ -2,16 +2,20 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    "name": "Sale Order Available Qty Popover",
+    "name": "Sale Order Line Readonly Conditions",
     "version": "1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Sales",
-    "summary": "Add a widget to view the available quantity of a product",
-    "depends": ["sale_stock"],
-    "data": ["views/assets.xml", "views/sale_order.xml"],
-    "qweb": ["static/src/xml/popover.xml"],
+    "summary": "Adds predicates to make fields readonly on a sale order line.",
+    "depends": [
+        "sale",
+        "web_trash_condition",
+        "web_handle_condition",
+        "base_view_inheritance_extension",
+    ],
+    "data": ["views/sale_order.xml"],
     "installable": True,
 }

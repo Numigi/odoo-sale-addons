@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_backend" name="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/sale_kit/static/src/js/kit_reference.js"></script>
+            <script type="text/javascript" src="/sale_kit/static/src/js/product_field.js"></script>
+            <link rel="stylesheet" href="/sale_kit/static/src/css/product_field.css"/>
+        </xpath>
+    </template>
+
+</odoo>
