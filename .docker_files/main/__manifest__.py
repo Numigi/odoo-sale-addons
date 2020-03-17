@@ -20,6 +20,7 @@
         "sale_order_line_readonly_conditions",
         "sale_order_margin_percent",
         "sale_persistent_product_warning",
+        "sale_rental",
         "sale_warranty",
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",

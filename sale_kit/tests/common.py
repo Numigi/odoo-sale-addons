@@ -34,8 +34,13 @@ class SaleOrderLineCase(SavepointCase):
             }
         )
 
-        cls.order = cls.env["sale.order"].new(
-            {"partner_id": cls.env.user.partner_id.id}
+    def setUp(self):
+        super().setUp()
+        self.order = self.env["sale.order"].new(
+            {
+                "partner_id": self.env.user.partner_id.id,
+                "pricelist_id": self.env.ref("product.list0").id,
+            }
         )
 
     @staticmethod
@@ -46,16 +51,16 @@ class SaleOrderLineCase(SavepointCase):
     def new_so_line(cls, vals=None):
         return cls.env["sale.order.line"].new(vals or {})
 
+    def add_kit_on_sale_order(self):
+        kit_line = self.new_so_line()
+        kit_line.is_rental_order = self.order.is_rental
+        self.select_product(kit_line, self.kit)
+        self.order.order_line |= kit_line
+        kit_line.order_id = self.order
+        self.order.initialize_kits()
+        return kit_line
+
     @staticmethod
     def select_product(line, product):
         line.product_id = product
         line.product_id_change()
-
-    @classmethod
-    def add_kit_on_sale_order(cls):
-        kit_line = cls.new_so_line()
-        cls.select_product(kit_line, cls.kit)
-        cls.order.order_line |= kit_line
-        kit_line.order_id = cls.order
-        cls.order.initialize_kits()
-        return kit_line

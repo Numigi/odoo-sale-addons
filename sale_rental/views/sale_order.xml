@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">Sale Order Form: Add rental</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+        	<field name="partner_shipping_id" position="after">
+        		<field name="is_rental"/>
+        	</field>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="context" operation="python_dict" key="default_is_rental_order">is_rental</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="before">
+                <field name="is_rental_order" invisible="1"/>
+                <field name="is_rental_service" invisible="1"/>
+                <field name="rental_date_from_editable" invisible="1"/>
+                <field name="rental_date_from_required" invisible="1"/>
+                <field name="rental_date_to_editable" invisible="1"/>
+                <field name="rental_date_from" string="Date From" force_save="1" attrs="{
+                    'readonly': [('rental_date_from_editable', '=', False)],
+                    'required': [('rental_date_from_required', '=', True)],
+                    'column_invisible': [('parent.is_rental', '=', False)],
+                }"/>
+                <field name="rental_date_to" string="Date To" force_save="1" attrs="{
+                    'readonly': [('rental_date_to_editable', '=', False)],
+                    'column_invisible': [('parent.is_rental', '=', False)],
+                }"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_uom_qty']" position="before">
+                <field name="is_rental_order" invisible="1"/>
+                <field name="is_rental_service" invisible="1"/>
+                <field name="rental_date_from_editable" invisible="1"/>
+                <field name="rental_date_from_required" invisible="1"/>
+                <field name="rental_date_to_editable" invisible="1"/>
+                <field name="rental_date_from" force_save="1" attrs="{
+                    'readonly': [('rental_date_from_editable', '=', False)],
+                    'required': [('rental_date_from_required', '=', True)],
+                }"/>
+                <field name="rental_date_to" force_save="1" attrs="{
+                    'readonly': [('rental_date_to_editable', '=', False)],
+                }"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,13 +1,13 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from collections import defaultdict
 from odoo import api, fields, models
 
 
 class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
-    _order = "order_id, sequence, kit_sequence, id"
 
     is_kit = fields.Boolean()
     kit_sequence = fields.Integer()
@@ -52,18 +52,23 @@ class SaleOrderLine(models.Model):
 
     def _set_kit_component_product_and_quantity(self, new_line, kit_line):
         uom = self.env.ref("uom.product_uom_unit")
-        quantity = 1
-        new_line.product_id = kit_line.component_id
+        new_line.set_product_and_quantity(
+            order=self.order_id, product=kit_line.component_id, uom=uom, qty=1
+        )
+
+    def set_product_and_quantity(self, order, product, uom, qty):
+        self.product_id = product
+        self.product_uom = uom
+        self.product_uom_qty = qty
+        self.order_id = order
         context = {
-            "partner_id": self.order_id.partner_id.id,
-            "quantity": quantity,
-            "pricelist": self.order_id.pricelist_id.id,
+            "partner_id": order.partner_id.id,
+            "quantity": qty,
+            "pricelist": order.pricelist_id.id,
             "uom": uom.id,
-            "company_id": self.order_id.company_id.id,
+            "company_id": order.company_id.id,
         }
-        new_line.with_context(**context).product_id_change()
-        new_line.product_uom = uom
-        new_line.product_uom_qty = quantity
+        self.with_context(**context).product_id_change()
 
     def _set_kit_component_readonly_conditions(self, new_line, kit_line):
         is_important = kit_line.is_important
@@ -73,3 +78,28 @@ class SaleOrderLine(models.Model):
         new_line.product_uom_qty_readonly = is_important
         new_line.product_uom_readonly = is_important
         new_line.kit_reference_readonly = is_important
+
+    def recompute_sequences(self):
+        next_sequence = 1
+        for line in self:
+            line.sequence = next_sequence
+            next_sequence += 1
+
+    def recompute_kit_sequences(self, kits):
+        kit_sequences = {l.kit_reference: l.sequence for l in kits}
+        next_sequences = defaultdict(lambda: 1)
+
+        for line in self:
+            kit_ref = line.kit_reference
+            line.sequence = kit_sequences.get(kit_ref)
+            line.kit_sequence = next_sequences[kit_ref]
+            next_sequences[kit_ref] += 1
+
+    def sorted_by_sequence(self):
+        return self.sorted(key=lambda l: l.sequence)
+
+    def sorted_by_kit_sequence(self):
+        return self.sorted(key=lambda l: l.kit_sequence)
+
+    def sorted_by_importance(self):
+        return self.sorted(key=lambda l: 0 if l.is_important_kit_component else 1)
