@@ -2,7 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import re
-from collections import defaultdict
 from odoo import api, fields, models
 
 
@@ -46,54 +45,45 @@ class SaleOrder(models.Model):
 
     @api.onchange("order_line")
     def unlink_dangling_kit_components(self):
-        available_kit_refs = {
-            line.kit_reference for line in self.order_line if line.is_kit
-        }
+        kits = self.get_kits_per_reference()
         dangling_lines = self.order_line.filtered(
-            lambda l: l.kit_reference and l.kit_reference not in available_kit_refs
+            lambda l: l.kit_reference and l.kit_reference not in kits
         )
         self.order_line -= dangling_lines
 
     @api.onchange("order_line")
     def update_kit_component_sequences(self):
-        kits = self.order_line.filtered(lambda l: l.is_kit)
-        components = self.order_line.filtered(
-            lambda l: not l.is_kit and l.kit_reference
-        )
+        self.recompute_order_line_sequences()
+        self.order_line = self.order_line.sorted(lambda l: l.sequence)
+
+    def recompute_order_line_sequences(self):
+        kits = self.get_kits()
+        components = self.get_kit_components()
         other_lines = self.order_line - components - kits
 
-        _recompute_sequences(kits | other_lines)
-        _recompute_kit_sequences(kits, components)
+        (kits | other_lines).sorted_by_sequence().recompute_sequences()
 
-        self.order_line = self.order_line.sorted(lambda l: (l.sequence, l.kit_sequence))
+        kits.update({"kit_sequence": 0})
 
+        sorted_components = (
+            components.sorted_by_sequence()
+            .sorted_by_kit_sequence()
+            .sorted_by_importance()
+        )
+        sorted_components.recompute_kit_sequences(kits)
 
-def _recompute_sequences(lines):
-    next_sequence = 1
-    for line in lines.sorted(lambda l: l.sequence):
-        line.sequence = next_sequence
-        next_sequence += 1
+        all_lines = kits | components | other_lines
+        all_lines_sorted = all_lines.sorted(lambda l: (l.sequence, l.kit_sequence))
+        all_lines_sorted.recompute_sequences()
 
+    def get_kits_per_reference(self):
+        return {l.kit_reference: l for l in self.get_kits()}
 
-def _recompute_kit_sequences(kits, component_lines):
-    kit_sequences = {
-        l.kit_reference: l.sequence for l in kits.filtered(lambda l: l.is_kit)
-    }
-    component_sequences = defaultdict(int)
+    def get_kits(self):
+        return self.order_line.filtered(lambda l: l.is_kit)
 
-    def _set_line_sequence(kit_reference):
-        line.sequence = kit_sequences.get(line.kit_reference)
-        line.kit_sequence = component_sequences[line.kit_reference]
-        component_sequences[line.kit_reference] += 1
-
-    important_lines = component_lines.filtered(lambda l: l.is_important_kit_component)
-    non_important_lines = component_lines - important_lines
-
-    for line in important_lines.sorted(lambda l: l.sequence):
-        _set_line_sequence(line)
-
-    for line in non_important_lines.sorted(lambda l: l.sequence):
-        _set_line_sequence(line)
+    def get_kit_components(self):
+        return self.order_line.filtered(lambda l: not l.is_kit and l.kit_reference)
 
 
 def extract_kit_number(ref: str) -> int:
