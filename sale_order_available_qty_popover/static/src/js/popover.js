@@ -81,11 +81,13 @@ const Popover = AbstractField.extend({
     },
 
     _getProductId() {
-        return this.record.data.product_id?.data?.id
+        const product = this.record.data.product_id;
+        return product ? product.data.id : null;
     },
 
     _getUomDisplayName() {
-        return this.record.data.product_default_uom?.data?.display_name
+        const uom = this.record.data.product_default_uom;
+        return uom ? uom.data.display_name : null;
     },
 
     _setIconColor() {
