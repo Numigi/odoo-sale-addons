@@ -18,16 +18,30 @@ const Popover = AbstractField.extend({
 
     _render() {
         this._super.apply(this, arguments)
-        this._setPopOver()
-        this._setIconColor()
+        if (this._shouldDisplayWidget()) {
+            this._setPopOver();
+            this._setIconColor();
+        }
+        else {
+            this._hideWidget();
+        }
     },
 
     _reset() {
         this._super.apply(this, arguments)
         this.$("[data-toggle=\"popover\"]").popover('dispose');
         this.renderElement();
-        this._setPopOver();
-        this._setIconColor()
+        if (this._shouldDisplayWidget()) {
+            this._setPopOver();
+            this._setIconColor();
+        }
+        else {
+            this._hideWidget();
+        }
+    },
+
+    _hideWidget() {
+        this.$el.addClass("d-none");
     },
 
     _onClick(event) {
