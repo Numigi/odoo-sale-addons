@@ -27,6 +27,6 @@ class ProductTemplate(models.Model):
             if product.uom_id != days:
                 raise ValidationError(
                     _(
-                        "The rental service {} must " "have the unit of measure day(s)."
+                        "The rental service {} must have the unit of measure day(s)."
                     ).format(product.display_name)
                 )
