@@ -66,23 +66,29 @@ class TestSaleOrderLine(SaleOrderLineCase):
         self.add_kit_on_sale_order()
         assert len(self.order.order_line) == 8
 
-    def test_important_components(self):
+    def test_products(self):
         self.add_kit_on_sale_order()
         lines = self.order.order_line
-        kit = lines[0]
-        component_a = lines[1]
-        component_b = lines[2]
-        component_z = lines[3]
+        assert lines[0].product_id == self.kit
+        assert lines[1].product_id == self.component_a
+        assert lines[2].product_id == self.component_b
+        assert lines[3].product_id == self.component_z
 
-        assert kit.product_id == self.kit
-        assert component_a.product_id == self.component_a
-        assert component_b.product_id == self.component_b
-        assert component_z.product_id == self.component_z
+    def test_is_component(self):
+        self.add_kit_on_sale_order()
+        lines = self.order.order_line
+        assert not lines[0].is_kit_component
+        assert lines[1].is_kit_component
+        assert lines[2].is_kit_component
+        assert lines[3].is_kit_component
 
-        assert kit.is_kit
-        assert component_a.is_important_kit_component
-        assert component_b.is_important_kit_component
-        assert not component_z.is_important_kit_component
+    def test_is_important_kit_component(self):
+        self.add_kit_on_sale_order()
+        lines = self.order.order_line
+        assert not lines[0].is_important_kit_component
+        assert lines[1].is_important_kit_component
+        assert lines[2].is_important_kit_component
+        assert not lines[3].is_important_kit_component
 
     def test_component_quantities(self):
         self.add_kit_on_sale_order()

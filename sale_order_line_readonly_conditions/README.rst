@@ -11,6 +11,8 @@ The module defines 5 new boolean fields:
 * ``product_readonly``: Makes the product readonly
 * ``product_uom_qty_readonly``: Makes the ordered quantity readonly
 * ``product_uom_readonly``: Makes the unit of measure readonly
+* ``price_unit_readonly``: Makes the unit price readonly
+* ``taxes_readonly``: Makes the taxes readonly
 
 However, this module does not define how these flags are checked.
 Multiple modules can inherit this module and add their specific use case.

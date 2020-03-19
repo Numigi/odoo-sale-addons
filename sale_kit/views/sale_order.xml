@@ -27,11 +27,22 @@
                 <field name="available_kit_references" invisible="1"/>
                 <field name="next_kit_reference" invisible="1"/>
                 <field name="is_kit" invisible="1"/>
+                <field name="is_kit_component" invisible="1"/>
                 <field name="is_important_kit_component" invisible="1"/>
                 <field name="kit_initialized" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
                 <attribute name="widget">sale_kit_product_many2one</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form" position="inside">
+                <field name="kit_reference_readonly" invisible="1"/>
+                <field name="kit_reference" invisible="1"/>
+                <field name="available_kit_references" invisible="1"/>
+                <field name="next_kit_reference" invisible="1"/>
+                <field name="is_kit" invisible="1"/>
+                <field name="is_kit_component" invisible="1"/>
+                <field name="is_important_kit_component" invisible="1"/>
+                <field name="kit_initialized" invisible="1"/>
             </xpath>
         </field>
     </record>

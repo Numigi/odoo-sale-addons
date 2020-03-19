@@ -1,6 +1,8 @@
 # © 2020 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import pytest
+from odoo.exceptions import ValidationError
 from odoo.addons.sale_kit.tests.common import SaleOrderLineCase
 
 
@@ -82,6 +84,92 @@ class TestKitRental(KitRentalCase):
         assert service.rental_date_from_required
         assert service.rental_date_from_editable
         assert service.rental_date_to_editable
+
+    def test_component_unit_price_is_zero(self):
+        self.add_kit_on_sale_order()
+        components = self.get_component_lines()
+        assert not components[0].price_unit
+        assert not components[1].price_unit
+        assert not components[2].price_unit
+
+    def test_component_unit_price_readonly(self):
+        self.add_kit_on_sale_order()
+        components = self.get_component_lines()
+        assert components[0].price_unit_readonly
+        assert components[1].price_unit_readonly
+        assert components[2].price_unit_readonly
+
+    def test_onchange_qty__component_unit_price_is_zero(self):
+        self.add_kit_on_sale_order()
+        components = self.get_component_lines()
+        components[0].product_uom_change()
+        assert not components[0].price_unit
+
+    def test_component_taxes_readonly(self):
+        self.add_kit_on_sale_order()
+        components = self.get_component_lines()
+        assert components[0].taxes_readonly
+        assert components[1].taxes_readonly
+        assert components[2].taxes_readonly
+
+    def test_onchange_fiscal_position__component_taxes_empty(self):
+        self.add_kit_on_sale_order()
+        self.order._compute_tax_id()
+        components = self.get_component_lines()
+        assert not components[0].tax_id
+
+    def test_kit_unit_price_is_zero(self):
+        self.add_kit_on_sale_order()
+        kit = self.get_kit_lines()
+        assert not kit.price_unit
+
+    def test_kit_unit_price_readonly(self):
+        self.add_kit_on_sale_order()
+        kit = self.get_kit_lines()
+        assert kit.price_unit_readonly
+
+    def test_onchange_qty__kit_unit_price_is_zero(self):
+        self.add_kit_on_sale_order()
+        kit = self.get_kit_lines()
+        kit.product_uom_change()
+        assert not kit.price_unit
+
+    def test_kit_taxes_readonly(self):
+        self.add_kit_on_sale_order()
+        kit = self.get_kit_lines()
+        assert kit.taxes_readonly
+
+    def test_kit_taxes_empty(self):
+        self.add_kit_on_sale_order()
+        kit = self.get_kit_lines()
+        assert not kit.tax_id
+
+    def test_onchange_fiscal_position__kit_taxes_empty(self):
+        self.add_kit_on_sale_order()
+        self.order._compute_tax_id()
+        kit = self.get_kit_lines()
+        assert not kit.tax_id
+
+    def test_if_kit_cannot_be_rented__raise_error(self):
+        self.kit.can_be_rented = False
+        with pytest.raises(ValidationError):
+            self.add_kit_on_sale_order()
+
+    def test_service_taxes_not_readonly(self):
+        self.add_kit_on_sale_order()
+        service = self.get_rental_service_lines()
+        assert not service.taxes_readonly
+
+    def test_service_taxes_not_empty(self):
+        self.add_kit_on_sale_order()
+        services = self.get_rental_service_lines()
+        assert services.tax_id
+
+    def test_onchange_fiscal_position__service_taxes_not_empty(self):
+        self.add_kit_on_sale_order()
+        self.order._compute_tax_id()
+        services = self.get_rental_service_lines()
+        assert services.tax_id
 
 
 class TestNonKitRental(KitRentalCase):

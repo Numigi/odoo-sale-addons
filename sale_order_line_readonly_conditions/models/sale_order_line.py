@@ -13,3 +13,5 @@ class SaleOrderLine(models.Model):
     product_readonly = fields.Boolean()
     product_uom_qty_readonly = fields.Boolean()
     product_uom_readonly = fields.Boolean()
+    price_unit_readonly = fields.Boolean()
+    taxes_readonly = fields.Boolean()

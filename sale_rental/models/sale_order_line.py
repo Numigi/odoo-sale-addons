@@ -1,7 +1,8 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -27,11 +28,56 @@ class SaleOrderLine(models.Model):
         ):
             self.is_kit = True
 
+    @api.onchange("product_uom", "product_uom_qty")
+    def product_uom_change(self):
+        super().product_uom_change()
+
+        if self._is_rented_kit() or self._is_rented_kit_component():
+            self.price_unit = 0
+
+    @api.multi
+    def _compute_tax_id(self):
+        super()._compute_tax_id()
+
+        lines_with_no_tax = self.filtered(
+            lambda l: l._is_rented_kit() or l._is_rented_kit_component()
+        )
+        lines_with_no_tax.update({"tax_id": None})
+
     def initialize_kit(self):
+        if self.is_rental_order:
+            self._check_kit_can_be_rented()
+
         super().initialize_kit()
-        if self.order_id.is_rental and self.product_id.can_be_rented:
-            service_line = self.prepare_kit_rental_service()
-            self.order_id.order_line |= service_line
+
+        if self.is_rental_order:
+            self._add_kit_rental_service_to_order()
+            self._add_readonly_flags_for_rented_kit()
+
+    def _check_kit_can_be_rented(self):
+        if not self.product_id.can_be_rented:
+            raise ValidationError(
+                _("The kit {} can not be rented.").format(self.product_id.display_name)
+            )
+
+    def _add_kit_rental_service_to_order(self):
+        service_line = self.prepare_kit_rental_service()
+        service_line._compute_tax_id()
+        self.order_id.order_line |= service_line
+
+    def _add_readonly_flags_for_rented_kit(self):
+        self.price_unit_readonly = True
+        self.taxes_readonly = True
+
+    def prepare_kit_component(self, kit_line):
+        new_line = super().prepare_kit_component(kit_line)
+
+        if self.is_rental_order:
+            new_line.price_unit = 0
+            new_line.price_unit_readonly = True
+            new_line.taxes_readonly = True
+
+        return new_line
 
     def prepare_kit_rental_service(self):
         new_line = self.new({})
@@ -57,3 +103,9 @@ class SaleOrderLine(models.Model):
     def sorted_by_importance(self):
         result = super().sorted_by_importance()
         return result.sorted(key=lambda l: 0 if l.is_rental_service else 1)
+
+    def _is_rented_kit(self):
+        return self.is_kit and self.is_rental_order
+
+    def _is_rented_kit_component(self):
+        return self.is_kit_component and self.is_rental_order

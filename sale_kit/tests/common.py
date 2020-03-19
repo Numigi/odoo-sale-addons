@@ -11,14 +11,22 @@ class SaleOrderLineCase(SavepointCase):
 
         cls.unit = cls.env.ref("uom.product_uom_unit")
 
+        cls.tax = cls.env["account.tax"].create(
+            {"name": "Test Tax", "amount": 10, "amount_type": "fixed"}
+        )
+
         cls.component_a = cls.env["product.product"].create(
-            {"name": "Component A", "type": "consu"}
+            {"name": "Component A", "type": "consu", "taxes_id": [(4, cls.tax.id)]}
         )
         cls.component_b = cls.env["product.product"].create(
-            {"name": "Component B", "type": "consu"}
+            {"name": "Component B", "type": "consu", "taxes_id": [(4, cls.tax.id)]}
         )
         cls.component_z = cls.env["product.product"].create(
-            {"name": "Component Z (Non-important)", "type": "consu"}
+            {
+                "name": "Component Z (Non-important)",
+                "type": "consu",
+                "taxes_id": [(4, cls.tax.id)],
+            }
         )
 
         cls.kit = cls.env["product.product"].create(
@@ -26,6 +34,7 @@ class SaleOrderLineCase(SavepointCase):
                 "name": "My Kit",
                 "type": "service",
                 "is_kit": True,
+                "taxes_id": [(4, cls.tax.id)],
                 "kit_line_ids": [
                     (0, 0, cls.get_kit_line_vals(cls.component_a, True)),
                     (0, 0, cls.get_kit_line_vals(cls.component_b, True)),
@@ -64,3 +73,9 @@ class SaleOrderLineCase(SavepointCase):
     def select_product(line, product):
         line.product_id = product
         line.product_id_change()
+
+    def get_kit_lines(self):
+        return self.order.order_line.filtered(lambda l: l.is_kit)
+
+    def get_component_lines(self):
+        return self.order.order_line.filtered(lambda l: l.is_kit_component)
