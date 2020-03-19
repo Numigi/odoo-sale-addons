@@ -18,16 +18,28 @@ const Popover = AbstractField.extend({
 
     _render() {
         this._super.apply(this, arguments)
-        this._setPopOver()
-        this._setIconColor()
+        this._prepareOrHidePopover();
     },
 
     _reset() {
         this._super.apply(this, arguments)
         this.$("[data-toggle=\"popover\"]").popover('dispose');
         this.renderElement();
-        this._setPopOver();
-        this._setIconColor()
+        this._prepareOrHidePopover();
+    },
+
+    _prepareOrHidePopover() {
+        if (this._shouldDisplayWidget()) {
+            this._setPopover();
+            this._setIconColor();
+        }
+        else {
+            this._hideWidget();
+        }
+    },
+
+    _hideWidget() {
+        this.$el.addClass("d-none");
     },
 
     _onClick(event) {
@@ -43,7 +55,7 @@ const Popover = AbstractField.extend({
         return productType === "product"
     },
 
-    _setPopOver() {
+    _setPopover() {
         const $content = $(QWeb.render("SaleOrderAvailableQtyPopoverDetails", {
             qty: this.value,
             uom: this._getUomDisplayName(),
