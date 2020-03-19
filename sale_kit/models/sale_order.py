@@ -42,6 +42,7 @@ class SaleOrder(models.Model):
 
         for line in uninitialized_kit_lines:
             line.initialize_kit()
+            line._compute_tax_id()
 
     @api.onchange("order_line")
     def unlink_dangling_kit_components(self):

@@ -11,6 +11,7 @@ class SaleOrderLine(models.Model):
 
     is_kit = fields.Boolean()
     kit_sequence = fields.Integer()
+    is_kit_component = fields.Boolean()
     is_important_kit_component = fields.Boolean()
     kit_reference = fields.Char()
     kit_reference_readonly = fields.Boolean()
@@ -45,6 +46,7 @@ class SaleOrderLine(models.Model):
     def prepare_kit_component(self, kit_line):
         new_line = self.new({})
         new_line.kit_reference = self.kit_reference
+        new_line.is_kit_component = True
         new_line.is_important_kit_component = kit_line.is_important
         self._set_kit_component_product_and_quantity(new_line, kit_line)
         self._set_kit_component_readonly_conditions(new_line, kit_line)
