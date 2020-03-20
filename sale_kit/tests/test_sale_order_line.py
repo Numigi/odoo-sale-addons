@@ -92,12 +92,19 @@ class TestSaleOrderLine(SaleOrderLineCase):
 
     def test_component_quantities(self):
         self.add_kit_on_sale_order()
-        lines = self.order.order_line
-        assert len(lines) == 4
+        lines = self.get_component_lines()
+        assert len(lines) == 3
+        assert lines[0].product_uom_qty == self.component_a_qty
+        assert lines[1].product_uom_qty == self.component_b_qty
+        assert lines[2].product_uom_qty == self.component_z_qty
 
-        for line in lines:
-            assert line.product_uom_qty == 1
-            assert line.product_uom == self.unit
+    def test_component_uom(self):
+        self.add_kit_on_sale_order()
+        lines = self.get_component_lines()
+        assert len(lines) == 3
+        assert lines[0].product_uom == self.component_a_uom
+        assert lines[1].product_uom == self.component_b_uom
+        assert lines[2].product_uom == self.component_z_uom
 
     def test_kit_line__readonly_conditions(self):
         line = self.add_kit_on_sale_order()

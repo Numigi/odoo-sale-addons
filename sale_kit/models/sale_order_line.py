@@ -53,24 +53,21 @@ class SaleOrderLine(models.Model):
         return new_line
 
     def _set_kit_component_product_and_quantity(self, new_line, kit_line):
-        uom = self.env.ref("uom.product_uom_unit")
         new_line.set_product_and_quantity(
-            order=self.order_id, product=kit_line.component_id, uom=uom, qty=1
+            order=self.order_id,
+            product=kit_line.component_id,
+            uom=kit_line.uom_id,
+            qty=kit_line.quantity,
         )
 
     def set_product_and_quantity(self, order, product, uom, qty):
         self.product_id = product
+        self.order_id = order
+        self.product_id_change()
+
         self.product_uom = uom
         self.product_uom_qty = qty
-        self.order_id = order
-        context = {
-            "partner_id": order.partner_id.id,
-            "quantity": qty,
-            "pricelist": order.pricelist_id.id,
-            "uom": uom.id,
-            "company_id": order.company_id.id,
-        }
-        self.with_context(**context).product_id_change()
+        self.product_uom_change()
 
     def _set_kit_component_readonly_conditions(self, new_line, kit_line):
         is_important = kit_line.is_important
