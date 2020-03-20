@@ -4,7 +4,7 @@
 from odoo.tests.common import SavepointCase
 
 
-class SaleOrderLineCase(SavepointCase):
+class KitCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -62,15 +62,6 @@ class SaleOrderLineCase(SavepointCase):
             }
         )
 
-    def setUp(self):
-        super().setUp()
-        self.order = self.env["sale.order"].new(
-            {
-                "partner_id": self.env.user.partner_id.id,
-                "pricelist_id": self.env.ref("product.list0").id,
-            }
-        )
-
     @staticmethod
     def get_kit_line_vals(product, qty, uom, important):
         return {
@@ -79,6 +70,17 @@ class SaleOrderLineCase(SavepointCase):
             "uom_id": uom.id,
             "is_important": important,
         }
+
+
+class SaleOrderLineCase(KitCase):
+    def setUp(self):
+        super().setUp()
+        self.order = self.env["sale.order"].new(
+            {
+                "partner_id": self.env.user.partner_id.id,
+                "pricelist_id": self.env.ref("product.list0").id,
+            }
+        )
 
     @classmethod
     def new_so_line(cls, vals=None):

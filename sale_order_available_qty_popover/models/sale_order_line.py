@@ -14,7 +14,9 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     product_type = fields.Selection(related="product_id.type")
-    product_default_uom = fields.Many2one(related="product_id.uom_id")
+    product_default_uom = fields.Many2one(
+        related="product_id.uom_id", string="Default UoM"
+    )
 
     available_qty_for_popover = fields.Float(
         compute="_compute_available_qty_for_popover"
