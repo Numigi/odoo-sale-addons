@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 ALMOST_OUT_OF_STOCK_PARAM = "sale_order_available_qty_popover.almost_out_of_stock_qty"
 GREEN = "#246b03"
-YELLOW = "#dddb01"
+YELLOW = "#fad817"
 RED = "#ee1010"
 
 
