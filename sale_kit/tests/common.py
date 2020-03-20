@@ -10,6 +10,7 @@ class SaleOrderLineCase(SavepointCase):
         super().setUpClass()
 
         cls.unit = cls.env.ref("uom.product_uom_unit")
+        cls.dozen = cls.env.ref("uom.product_uom_dozen")
 
         cls.tax = cls.env["account.tax"].create(
             {"name": "Test Tax", "amount": 10, "amount_type": "fixed"}
@@ -29,6 +30,24 @@ class SaleOrderLineCase(SavepointCase):
             }
         )
 
+        cls.component_a_uom = cls.dozen
+        cls.component_b_uom = cls.unit
+        cls.component_z_uom = cls.unit
+
+        cls.component_a_qty = 1
+        cls.component_b_qty = 2
+        cls.component_z_qty = 3
+
+        component_a_vals = cls.get_kit_line_vals(
+            cls.component_a, cls.component_a_qty, cls.component_a_uom, True
+        )
+        component_b_vals = cls.get_kit_line_vals(
+            cls.component_b, cls.component_b_qty, cls.component_b_uom, True
+        )
+        component_z_vals = cls.get_kit_line_vals(
+            cls.component_z, cls.component_z_qty, cls.component_z_uom, False
+        )
+
         cls.kit = cls.env["product.product"].create(
             {
                 "name": "My Kit",
@@ -36,9 +55,9 @@ class SaleOrderLineCase(SavepointCase):
                 "is_kit": True,
                 "taxes_id": [(4, cls.tax.id)],
                 "kit_line_ids": [
-                    (0, 0, cls.get_kit_line_vals(cls.component_a, True)),
-                    (0, 0, cls.get_kit_line_vals(cls.component_b, True)),
-                    (0, 0, cls.get_kit_line_vals(cls.component_z, False)),
+                    (0, 0, component_a_vals),
+                    (0, 0, component_b_vals),
+                    (0, 0, component_z_vals),
                 ],
             }
         )
@@ -53,8 +72,13 @@ class SaleOrderLineCase(SavepointCase):
         )
 
     @staticmethod
-    def get_kit_line_vals(product, important):
-        return {"component_id": product.id, "is_important": important}
+    def get_kit_line_vals(product, qty, uom, important):
+        return {
+            "component_id": product.id,
+            "quantity": qty,
+            "uom_id": uom.id,
+            "is_important": important,
+        }
 
     @classmethod
     def new_so_line(cls, vals=None):
