@@ -45,9 +45,7 @@ class Warehouse(models.Model):
 
     def _get_rental_route_values(self):
         return {
-            "name": "{warehouse}: Rental".format(
-                warehouse=self.name, description=_("Rental")
-            ),
+            "name": "{warehouse}: Rental".format(warehouse=self.name),
             "active": True,
             "company_id": self.company_id.id,
             "product_categ_selectable": False,

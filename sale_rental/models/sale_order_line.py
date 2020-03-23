@@ -161,11 +161,8 @@ class SaleOrderLineWithRentalDates(models.Model):
     def propagate_service_rental_dates(self):
         lines_to_update = self.order_id.order_line.filtered(
             lambda l: (
-                l.kit_reference == self.kit_reference
-                and (
-                    l.expected_rental_date != self.rental_date_from
-                    or l.expected_return_date != self.rental_date_to
-                )
+                self._is_in_same_kit(l)
+                and not self._service_rental_dates_already_propagated(l)
             )
         )
         if lines_to_update:
@@ -176,6 +173,15 @@ class SaleOrderLineWithRentalDates(models.Model):
                 }
             )
 
+    def _is_in_same_kit(self, other_line):
+        return other_line.kit_reference == self.kit_reference
+
+    def _service_rental_dates_already_propagated(self, other_line):
+        return (
+            other_line.expected_rental_date == self.rental_date_from
+            and other_line.expected_return_date == self.rental_date_to
+        )
+
     def propagate_stock_rental_dates(self):
         rental_date = self.expected_rental_date or datetime.now()
         return_date = self.expected_return_date or rental_date
@@ -183,19 +189,29 @@ class SaleOrderLineWithRentalDates(models.Model):
         self._propagate_return_date_to_stock_moves(return_date)
 
     def _propagate_rental_date_to_stock_moves(self, date_):
-        rental_moves = self.move_ids.filtered(
-            lambda m: m.location_dest_id.is_rental_customer_location
+        moves_to_update = self.move_ids.filtered(
+            lambda m: _is_rental_move(m) and _is_unprocessed_move(m)
         )
-        rental_moves_to_update = rental_moves.filtered(
-            lambda m: m.state not in ("cancel", "done")
-        )
-        rental_moves_to_update.write({"date_expected": date_})
+        _update_stock_moves_expected_date(moves_to_update, date_)
 
     def _propagate_return_date_to_stock_moves(self, date_):
-        return_moves = self.move_ids.filtered(
-            lambda m: m.location_id.is_rental_customer_location
+        moves_to_update = self.move_ids.filtered(
+            lambda m: _is_rental_return_move(m) and _is_unprocessed_move(m)
         )
-        return_moves_to_update = return_moves.filtered(
-            lambda m: m.state not in ("cancel", "done")
-        )
-        return_moves_to_update.write({"date_expected": date_})
+        _update_stock_moves_expected_date(moves_to_update, date_)
+
+
+def _is_rental_move(move):
+    return move.location_dest_id.is_rental_customer_location
+
+
+def _is_rental_return_move(move):
+    return move.location_id.is_rental_customer_location
+
+
+def _is_unprocessed_move(move):
+    return move.state not in ("cancel", "done")
+
+
+def _update_stock_moves_expected_date(moves, date_):
+    moves.write({"date_expected": date_})
