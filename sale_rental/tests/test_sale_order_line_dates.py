@@ -3,6 +3,11 @@
 
 from datetime import datetime, timedelta
 from odoo.addons.sale_kit.tests.common import KitCase
+from ..models.sale_order_line import (
+    is_rental_move,
+    is_rental_return_move,
+    is_unprocessed_move,
+)
 
 
 class TestSaleOrderKitDates(KitCase):
@@ -13,6 +18,7 @@ class TestSaleOrderKitDates(KitCase):
             {
                 "partner_id": cls.env.user.partner_id.id,
                 "pricelist_id": cls.env.ref("product.list0").id,
+                "is_rental": True,
             }
         )
         cls.kit_line = cls.env["sale.order.line"].create(
@@ -77,6 +83,22 @@ class TestSaleOrderKitDates(KitCase):
             }
         )
 
+    def _deliver_component(self, sale_line, qty):
+        candidat_moves = sale_line.move_ids.filtered(
+            lambda m: is_rental_move(m) and is_unprocessed_move(m)
+        )
+        self._process_move(candidat_moves[0], qty)
+
+    def _return_component(self, sale_line, qty):
+        candidat_moves = sale_line.move_ids.filtered(
+            lambda m: is_rental_return_move(m) and is_unprocessed_move(m)
+        )
+        self._process_move(candidat_moves[0], qty)
+
+    def _process_move(self, move, qty):
+        move._set_quantity_done(qty)
+        move._action_done()
+
     def test_rental_date_from_propagated_to_kit_lines(self):
         date_from = datetime.now() + timedelta(10)
         date_to = datetime.now() + timedelta(20)
@@ -108,3 +130,38 @@ class TestSaleOrderKitDates(KitCase):
         self._make_service_line("K2", self.rental_service, date_from, date_to, 1)
         assert self.component_2a.expected_rental_date == date_from
         assert self.component_2a.expected_return_date == date_to
+
+    def test_important_components_delivered(self):
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 2)
+        assert self.kit_line.qty_delivered == 1
+
+    def test_important_components_returned(self):
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 2)
+        self._return_component(self.component_1a, 1)
+        self._return_component(self.component_1b, 2)
+        assert self.component_1a.rental_returned_qty == 1
+        assert self.component_1b.rental_returned_qty == 2
+        assert self.kit_line.qty_delivered == 1
+        assert self.kit_line.rental_returned_qty == 1
+
+    def test_important_components_partially_delivered(self):
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 1)
+        assert self.kit_line.qty_delivered == 0
+
+    def test_important_components_partially_returned(self):
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 2)
+        self._return_component(self.component_1a, 1)
+        self._return_component(self.component_1b, 1)
+        assert self.component_1a.rental_returned_qty == 1
+        assert self.component_1b.rental_returned_qty == 1
+        assert self.kit_line.qty_delivered == 1
+        assert self.kit_line.rental_returned_qty == 0
+
+    def test_one_component_returned(self):
+        self._deliver_component(self.component_1a, 1)
+        self._return_component(self.component_1a, 1)
+        assert self.component_1a.rental_returned_qty == 1

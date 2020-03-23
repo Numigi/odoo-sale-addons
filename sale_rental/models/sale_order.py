@@ -30,3 +30,18 @@ class SaleOrder(models.Model):
     def propagate_service_rental_dates(self):
         for line in self.mapped("order_line").filtered(lambda l: l.is_rental_service):
             line.propagate_service_rental_dates()
+
+
+class SaleOrderWithReturnedQty(models.Model):
+
+    _inherit = "sale.order"
+
+    rental_returned_qty_invisible = fields.Boolean(
+        compute="_compute_rental_returned_qty_invisible"
+    )
+
+    def _compute_rental_returned_qty_invisible(self):
+        for order in self:
+            order.rental_returned_qty_invisible = (
+                not order.is_rental or order.state not in ("sale", "done")
+            )

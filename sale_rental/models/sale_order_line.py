@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from odoo import api, fields, models, _
+from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
 
 
@@ -44,6 +45,28 @@ class SaleOrderLine(models.Model):
             lambda l: l._is_rented_kit() or l._is_rented_kit_component()
         )
         lines_with_no_tax.update({"tax_id": None})
+
+    @api.multi
+    def _compute_qty_delivered(self):
+        super()._compute_qty_delivered()
+
+        lines_to_update = self.filtered(
+            lambda l: l.qty_delivered_method == "stock_move" and l.order_id.is_rental
+        )
+
+        for line in lines_to_update:
+            done_rental_moves = line.move_ids.filtered(
+                lambda m: is_done_move(m) and is_rental_move(m)
+            )
+            line.qty_delivered = sum(
+                self._get_stock_move_qty_in_sale_line_uom(move)
+                for move in done_rental_moves
+            )
+
+    def _get_stock_move_qty_in_sale_line_uom(self, move):
+        return move.product_uom._compute_quantity(
+            move.product_uom_qty, self.product_uom
+        )
 
     @api.multi
     def _action_launch_stock_rule(self):
@@ -190,27 +213,73 @@ class SaleOrderLineWithRentalDates(models.Model):
 
     def _propagate_rental_date_to_stock_moves(self, date_):
         moves_to_update = self.move_ids.filtered(
-            lambda m: _is_rental_move(m) and _is_unprocessed_move(m)
+            lambda m: is_rental_move(m) and is_unprocessed_move(m)
         )
         _update_stock_moves_expected_date(moves_to_update, date_)
 
     def _propagate_return_date_to_stock_moves(self, date_):
         moves_to_update = self.move_ids.filtered(
-            lambda m: _is_rental_return_move(m) and _is_unprocessed_move(m)
+            lambda m: is_rental_return_move(m) and is_unprocessed_move(m)
         )
         _update_stock_moves_expected_date(moves_to_update, date_)
 
 
-def _is_rental_move(move):
+class SaleOrderLineWithReturnedQty(models.Model):
+
+    _inherit = "sale.order.line"
+
+    rental_returned_qty = fields.Float(
+        "Rental Returned Quantity",
+        copy=False,
+        compute="_compute_rental_returned_qty",
+        compute_sudo=True,
+        store=True,
+        digits=dp.get_precision("Product Unit of Measure"),
+        default=0.0,
+    )
+
+    @api.depends("kit_line_ids.rental_returned_qty", "move_ids.state")
+    def _compute_rental_returned_qty(self):
+        services = self.filtered(lambda l: l.product_id.type == "service")
+        for line in services:
+            line.rental_returned_qty = line._get_kit_rental_returned_qty()
+
+        physical_products = self - services
+        for line in physical_products:
+            line.rental_returned_qty = self._get_product_rental_returned_qty()
+
+    def _get_kit_rental_returned_qty(self):
+        all_important_components_returned = all(
+            l.rental_returned_qty >= l.product_uom_qty
+            for l in self.kit_line_ids
+            if l.is_important_kit_component
+        )
+        return 1 if all_important_components_returned else 0
+
+    def _get_product_rental_returned_qty(self):
+        done_rental_return_moves = self.move_ids.filtered(
+            lambda m: is_done_move(m) and is_rental_return_move(m)
+        )
+        return sum(
+            self._get_stock_move_qty_in_sale_line_uom(move)
+            for move in done_rental_return_moves
+        )
+
+
+def is_rental_move(move):
     return move.location_dest_id.is_rental_customer_location
 
 
-def _is_rental_return_move(move):
+def is_rental_return_move(move):
     return move.location_id.is_rental_customer_location
 
 
-def _is_unprocessed_move(move):
+def is_unprocessed_move(move):
     return move.state not in ("cancel", "done")
+
+
+def is_done_move(move):
+    return move.state == "done"
 
 
 def _update_stock_moves_expected_date(moves, date_):
