@@ -11,6 +11,11 @@
     "category": "Sales",
     "summary": "Allow to rent equipments",
     "depends": ["sale_kit", "sale_stock"],
-    "data": ["views/sale_order.xml", "views/product_template.xml"],
+    "data": [
+        "data/stock_location.xml",
+        "views/sale_order.xml",
+        "views/product_template.xml",
+    ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
 }
