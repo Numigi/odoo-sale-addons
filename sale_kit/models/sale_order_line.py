@@ -102,3 +102,58 @@ class SaleOrderLine(models.Model):
 
     def sorted_by_importance(self):
         return self.sorted(key=lambda l: 0 if l.is_important_kit_component else 1)
+
+
+class SaleOrderLineWithLinkBetweenLines(models.Model):
+
+    _inherit = "sale.order.line"
+
+    kit_line_ids = fields.One2many(
+        "sale.order.line", "kit_id", "Components", readonly=True
+    )
+    kit_id = fields.Many2one(
+        "sale.order.line", "Kit", store=True, compute="_compute_kit_id"
+    )
+
+    @api.depends("kit_reference")
+    def _compute_kit_id(self):
+        for line in self:
+            line.kit_id = line._get_kit_line()
+
+    def _get_kit_line(self):
+        if self.is_kit or not self.kit_reference:
+            return None
+
+        return self.order_id.order_line.filtered(
+            lambda l: l.is_kit and l.kit_reference == self.kit_reference
+        )[0:1]
+
+
+class SaleOrderLineDeliveredQty(models.Model):
+    """Add the logic related to the delivered qty of a kit."""
+
+    _inherit = "sale.order.line"
+
+    qty_delivered_method = fields.Selection(selection_add=[("kit", "Kit")])
+
+    @api.depends("is_kit")
+    def _compute_qty_delivered_method(self):
+        super()._compute_qty_delivered_method()
+        kits = self.filtered(lambda l: l.is_kit)
+        kits.update({"qty_delivered_method": "kit"})
+
+    @api.depends("kit_line_ids", "kit_line_ids.qty_delivered")
+    def _compute_qty_delivered(self):
+        super()._compute_qty_delivered()
+        kit_lines = self.filtered(lambda l: l.qty_delivered_method == "kit")
+        kit_lines._compute_kit_qty_delivered()
+
+    def _compute_kit_qty_delivered(self):
+        for line in self:
+            line.qty_delivered = line._get_kit_qty_delivered()
+
+    def _get_kit_qty_delivered(self):
+        important_components = self.kit_line_ids.filtered(
+            lambda l: l.is_important_kit_component
+        )
+        return all(l.qty_delivered >= l.product_uom_qty for l in important_components)
