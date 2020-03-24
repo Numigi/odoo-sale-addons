@@ -275,7 +275,7 @@ def is_rental_return_move(move):
 
 
 def is_processed_move(move):
-    return move.state not in ("cancel", "done")
+    return move.state in ("cancel", "done")
 
 
 def is_done_move(move):
