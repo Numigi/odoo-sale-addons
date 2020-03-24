@@ -12,6 +12,7 @@
     "summary": "Allow to rent equipments",
     "depends": ["sale_kit", "sale_stock"],
     "data": [
+        "data/ir_cron.xml",
         "data/stock_location.xml",
         "views/sale_order.xml",
         "views/product_template.xml",

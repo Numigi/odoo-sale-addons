@@ -284,6 +284,18 @@ class SaleOrderLineWithRentalServiceReturnedQty(models.Model):
         selection_add=[("rental_service", "Rental Service")]
     )
 
+    def update_rental_service_qty_delivered_cron(self):
+        lines_to_recompute = self.search(
+            [
+                ("is_rental_service", "=", True),
+                ("state", "in", ("sale", "done")),
+                ("kit_returned_qty", "<=", 0),
+                ("rental_date_from", "!=", False),
+            ]
+        )
+        lines_to_recompute.modified(["rental_date_from"])
+        lines_to_recompute.recompute()
+
     @api.depends("kit_returned_qty", "product_uom_qty", "rental_date_from")
     def _compute_qty_delivered(self):
         super()._compute_qty_delivered()

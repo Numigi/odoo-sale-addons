@@ -2,10 +2,11 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
+from freezegun import freeze_time
 from odoo.addons.sale_kit.tests.common import KitCase
 
 
-class TestSaleOrderKitDates(KitCase):
+class TestSaleOrderLineDeliveredQty(KitCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -78,22 +79,6 @@ class TestSaleOrderKitDates(KitCase):
             }
         )
 
-    def _deliver_component(self, sale_line, qty):
-        candidat_moves = sale_line.move_ids.filtered(
-            lambda m: m.is_rental_move() and not m.is_processed_move()
-        )
-        self._process_move(candidat_moves[0], qty)
-
-    def _return_component(self, sale_line, qty):
-        candidat_moves = sale_line.move_ids.filtered(
-            lambda m: m.is_rental_return_move() and not m.is_processed_move()
-        )
-        self._process_move(candidat_moves[0], qty)
-
-    def _process_move(self, move, qty):
-        move._set_quantity_done(qty)
-        move._action_done()
-
     def test_rental_date_from_propagated_to_kit_lines(self):
         date_from = datetime.now() + timedelta(10)
         date_to = datetime.now() + timedelta(20)
@@ -127,30 +112,25 @@ class TestSaleOrderKitDates(KitCase):
         assert self.component_2a.expected_return_date == date_to
 
     def test_important_components_delivered(self):
-        self._deliver_component(self.component_1a, 1)
-        self._deliver_component(self.component_1b, 2)
+        self._deliver_important_components()
         assert self.kit_line.qty_delivered == 1
 
     def test_important_components_returned(self):
-        self._deliver_component(self.component_1a, 1)
-        self._deliver_component(self.component_1b, 2)
-        self._return_component(self.component_1a, 1)
-        self._return_component(self.component_1b, 2)
+        self._deliver_important_components()
+        self._return_important_components()
+
         assert self.component_1a.rental_returned_qty == 1
         assert self.component_1b.rental_returned_qty == 2
         assert self.kit_line.qty_delivered == 1
         assert self.kit_line.rental_returned_qty == 1
 
     def test_important_components_partially_delivered(self):
-        self._deliver_component(self.component_1a, 1)
-        self._deliver_component(self.component_1b, 1)
+        self._deliver_important_components_partially()
         assert self.kit_line.qty_delivered == 0
 
     def test_important_components_partially_returned(self):
-        self._deliver_component(self.component_1a, 1)
-        self._deliver_component(self.component_1b, 2)
-        self._return_component(self.component_1a, 1)
-        self._return_component(self.component_1b, 1)
+        self._deliver_important_components()
+        self._return_important_components_partially()
         assert self.component_1a.rental_returned_qty == 1
         assert self.component_1b.rental_returned_qty == 1
         assert self.kit_line.qty_delivered == 1
@@ -163,10 +143,8 @@ class TestSaleOrderKitDates(KitCase):
 
     def test_service_line_qty_delivered__kit_returned(self):
         number_of_days = 20
-        self._deliver_component(self.component_1a, 1)
-        self._deliver_component(self.component_1b, 2)
-        self._return_component(self.component_1a, 1)
-        self._return_component(self.component_1b, 2)
+        self._deliver_important_components()
+        self._return_important_components()
         self.service_1.product_uom_qty = number_of_days
         assert self.service_1.qty_delivered == number_of_days
 
@@ -178,15 +156,62 @@ class TestSaleOrderKitDates(KitCase):
     def test_service_line_qty_delivered__kit_not_returned(self):
         number_of_days_since_start = 10
         date_from = datetime.now() - timedelta(number_of_days_since_start)
-        self._deliver_component(self.component_1a, 1)
-        self._deliver_component(self.component_1b, 2)
+        self._deliver_important_components()
         self.service_1.product_uom_qty = 20
         self.service_1.rental_date_from = date_from
         assert self.service_1.qty_delivered == number_of_days_since_start + 1
 
     def test_service_line_qty_delivered__date_from_in_future(self):
-        self._deliver_component(self.component_1a, 1)
-        self._deliver_component(self.component_1b, 2)
+        self._deliver_important_components()
         self.service_1.product_uom_qty = 20
         self.service_1.rental_date_from = datetime.now() + timedelta(10)
         assert self.service_1.qty_delivered == 0
+
+    def test_service_line_qty_delivered_cron(self):
+        number_of_days_since_start = 10
+        self.service_1.rental_date_from = datetime.now()
+        self.service_1.product_uom_qty = 20
+
+        self._deliver_important_components()
+
+        future_date = datetime.now() + timedelta(number_of_days_since_start)
+        with freeze_time(future_date):
+            self._run_service_line_qty_delivered_cron()
+
+        assert self.service_1.qty_delivered == number_of_days_since_start + 1
+
+    def _run_service_line_qty_delivered_cron(self):
+        cron = self.env.ref("sale_rental.rental_service_qty_delivered_update_cron")
+        cron.method_direct_trigger()
+
+    def _deliver_important_components(self):
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 2)
+
+    def _deliver_important_components_partially(self):
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 1)
+
+    def _return_important_components(self):
+        self._return_component(self.component_1a, 1)
+        self._return_component(self.component_1b, 2)
+
+    def _return_important_components_partially(self):
+        self._return_component(self.component_1a, 1)
+        self._return_component(self.component_1b, 1)
+
+    def _deliver_component(self, sale_line, qty):
+        candidat_moves = sale_line.move_ids.filtered(
+            lambda m: m.is_rental_move() and not m.is_processed_move()
+        )
+        self._process_move(candidat_moves[0], qty)
+
+    def _return_component(self, sale_line, qty):
+        candidat_moves = sale_line.move_ids.filtered(
+            lambda m: m.is_rental_return_move() and not m.is_processed_move()
+        )
+        self._process_move(candidat_moves[0], qty)
+
+    def _process_move(self, move, qty):
+        move._set_quantity_done(qty)
+        move._action_done()
