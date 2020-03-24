@@ -213,13 +213,13 @@ class SaleOrderLineWithRentalDates(models.Model):
 
     def _propagate_rental_date_to_stock_moves(self, date_):
         moves_to_update = self.move_ids.filtered(
-            lambda m: is_rental_move(m) and is_unprocessed_move(m)
+            lambda m: is_rental_move(m) and not is_processed_move(m)
         )
         _update_stock_moves_expected_date(moves_to_update, date_)
 
     def _propagate_return_date_to_stock_moves(self, date_):
         moves_to_update = self.move_ids.filtered(
-            lambda m: is_rental_return_move(m) and is_unprocessed_move(m)
+            lambda m: is_rental_return_move(m) and not is_processed_move(m)
         )
         _update_stock_moves_expected_date(moves_to_update, date_)
 
@@ -274,7 +274,7 @@ def is_rental_return_move(move):
     return move.location_id.is_rental_customer_location
 
 
-def is_unprocessed_move(move):
+def is_processed_move(move):
     return move.state not in ("cancel", "done")
 
 

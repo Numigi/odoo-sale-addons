@@ -6,7 +6,7 @@ from odoo.addons.sale_kit.tests.common import KitCase
 from ..models.sale_order_line import (
     is_rental_move,
     is_rental_return_move,
-    is_unprocessed_move,
+    is_processed_move,
 )
 
 
@@ -85,13 +85,13 @@ class TestSaleOrderKitDates(KitCase):
 
     def _deliver_component(self, sale_line, qty):
         candidat_moves = sale_line.move_ids.filtered(
-            lambda m: is_rental_move(m) and is_unprocessed_move(m)
+            lambda m: is_rental_move(m) and not is_processed_move(m)
         )
         self._process_move(candidat_moves[0], qty)
 
     def _return_component(self, sale_line, qty):
         candidat_moves = sale_line.move_ids.filtered(
-            lambda m: is_rental_return_move(m) and is_unprocessed_move(m)
+            lambda m: is_rental_return_move(m) and not is_processed_move(m)
         )
         self._process_move(candidat_moves[0], qty)
 
