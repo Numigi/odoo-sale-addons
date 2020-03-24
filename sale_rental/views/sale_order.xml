@@ -45,4 +45,22 @@
         </field>
     </record>
 
+    <record id="sale_order_form_with_returned_qty" model="ir.ui.view">
+        <field name="name">Sale Order Form: Add returned qty for rented products</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <field name="rental_returned_qty_invisible" invisible="1"/>
+            </form>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
+                <field name="rental_returned_qty"
+                    attrs="{'column_invisible': [('parent.rental_returned_qty_invisible', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='qty_delivered']" position="after">
+                <field name="rental_returned_qty"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
