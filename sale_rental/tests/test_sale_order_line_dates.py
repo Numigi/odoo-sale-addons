@@ -3,11 +3,6 @@
 
 from datetime import datetime, timedelta
 from odoo.addons.sale_kit.tests.common import KitCase
-from ..models.sale_order_line import (
-    is_rental_move,
-    is_rental_return_move,
-    is_processed_move,
-)
 
 
 class TestSaleOrderKitDates(KitCase):
@@ -85,13 +80,13 @@ class TestSaleOrderKitDates(KitCase):
 
     def _deliver_component(self, sale_line, qty):
         candidat_moves = sale_line.move_ids.filtered(
-            lambda m: is_rental_move(m) and not is_processed_move(m)
+            lambda m: m.is_rental_move() and not m.is_processed_move()
         )
         self._process_move(candidat_moves[0], qty)
 
     def _return_component(self, sale_line, qty):
         candidat_moves = sale_line.move_ids.filtered(
-            lambda m: is_rental_return_move(m) and not is_processed_move(m)
+            lambda m: m.is_rental_return_move() and not m.is_processed_move()
         )
         self._process_move(candidat_moves[0], qty)
 
@@ -165,3 +160,33 @@ class TestSaleOrderKitDates(KitCase):
         self._deliver_component(self.component_1a, 1)
         self._return_component(self.component_1a, 1)
         assert self.component_1a.rental_returned_qty == 1
+
+    def test_service_line_qty_delivered__kit_returned(self):
+        number_of_days = 20
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 2)
+        self._return_component(self.component_1a, 1)
+        self._return_component(self.component_1b, 2)
+        self.service_1.product_uom_qty = number_of_days
+        assert self.service_1.qty_delivered == number_of_days
+
+    def test_service_line_qty_delivered__kit_not_delivered(self):
+        self._deliver_component(self.component_1a, 1)
+        self.service_1.product_uom_qty = 20
+        assert self.service_1.qty_delivered == 0
+
+    def test_service_line_qty_delivered__kit_not_returned(self):
+        number_of_days_since_start = 10
+        date_from = datetime.now() - timedelta(number_of_days_since_start)
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 2)
+        self.service_1.product_uom_qty = 20
+        self.service_1.rental_date_from = date_from
+        assert self.service_1.qty_delivered == number_of_days_since_start + 1
+
+    def test_service_line_qty_delivered__date_from_in_future(self):
+        self._deliver_component(self.component_1a, 1)
+        self._deliver_component(self.component_1b, 2)
+        self.service_1.product_uom_qty = 20
+        self.service_1.rental_date_from = datetime.now() + timedelta(10)
+        assert self.service_1.qty_delivered == 0
