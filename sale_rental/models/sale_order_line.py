@@ -37,6 +37,19 @@ class SaleOrderLine(models.Model):
         if self._is_rented_kit() or self._is_rented_kit_component():
             self.price_unit = 0
 
+    @api.onchange("rental_date_from", "rental_date_to")
+    def onchange_rental_dates(self):
+        if self.is_rental_service and self.rental_date_from and self.rental_date_to:
+            self._force_rental_date_to_after_date_from()
+            self.product_uom_qty = self._get_qty_based_on_rental_dates()
+
+    def _force_rental_date_to_after_date_from(self):
+        self.rental_date_to = max(self.rental_date_from, self.rental_date_to)
+
+    def _get_qty_based_on_rental_dates(self):
+        number_of_days = (self.rental_date_to - self.rental_date_from).days
+        return max(number_of_days + 1, 0)
+
     @api.multi
     def _compute_tax_id(self):
         super()._compute_tax_id()
