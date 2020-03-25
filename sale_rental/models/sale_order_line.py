@@ -56,7 +56,7 @@ class SaleOrderLine(models.Model):
 
         for line in lines_to_update:
             done_rental_moves = line.move_ids.filtered(
-                lambda m: is_done_move(m) and is_rental_move(m)
+                lambda m: m.is_done_move() and m.is_rental_move()
             )
             line.qty_delivered = sum(
                 self._get_stock_move_qty_in_sale_line_uom(move)
@@ -213,15 +213,15 @@ class SaleOrderLineWithRentalDates(models.Model):
 
     def _propagate_rental_date_to_stock_moves(self, date_):
         moves_to_update = self.move_ids.filtered(
-            lambda m: is_rental_move(m) and not is_processed_move(m)
+            lambda m: m.is_rental_move() and not m.is_processed_move()
         )
-        _update_stock_moves_expected_date(moves_to_update, date_)
+        moves_to_update.set_expected_date(date_)
 
     def _propagate_return_date_to_stock_moves(self, date_):
         moves_to_update = self.move_ids.filtered(
-            lambda m: is_rental_return_move(m) and not is_processed_move(m)
+            lambda m: m.is_rental_return_move() and not m.is_processed_move()
         )
-        _update_stock_moves_expected_date(moves_to_update, date_)
+        moves_to_update.set_expected_date(date_)
 
 
 class SaleOrderLineWithReturnedQty(models.Model):
@@ -258,7 +258,7 @@ class SaleOrderLineWithReturnedQty(models.Model):
 
     def _get_product_rental_returned_qty(self):
         done_rental_return_moves = self.move_ids.filtered(
-            lambda m: is_done_move(m) and is_rental_return_move(m)
+            lambda m: m.is_done_move() and m.is_rental_return_move()
         )
         return sum(
             self._get_stock_move_qty_in_sale_line_uom(move)
@@ -266,21 +266,55 @@ class SaleOrderLineWithReturnedQty(models.Model):
         )
 
 
-def is_rental_move(move):
-    return move.location_dest_id.is_rental_customer_location
+class SaleOrderLineWithRentalServiceReturnedQty(models.Model):
 
+    _inherit = "sale.order.line"
 
-def is_rental_return_move(move):
-    return move.location_id.is_rental_customer_location
+    kit_returned_qty = fields.Float(
+        digits=dp.get_precision("Product Unit of Measure"), default=0.0, copy=False
+    )
 
+    @api.depends("is_rental_service")
+    def _compute_qty_delivered_method(self):
+        super()._compute_qty_delivered_method()
+        rental_services = self.filtered(lambda l: l.is_rental_service)
+        rental_services.update({"qty_delivered_method": "rental_service"})
 
-def is_processed_move(move):
-    return move.state in ("cancel", "done")
+    qty_delivered_method = fields.Selection(
+        selection_add=[("rental_service", "Rental Service")]
+    )
 
+    def update_rental_service_qty_delivered_cron(self):
+        lines_to_recompute = self.search(
+            [
+                ("is_rental_service", "=", True),
+                ("state", "in", ("sale", "done")),
+                ("kit_returned_qty", "<=", 0),
+                ("rental_date_from", "!=", False),
+            ]
+        )
+        lines_to_recompute.modified(["rental_date_from"])
+        lines_to_recompute.recompute()
 
-def is_done_move(move):
-    return move.state == "done"
+    @api.depends("kit_returned_qty", "product_uom_qty", "rental_date_from")
+    def _compute_qty_delivered(self):
+        super()._compute_qty_delivered()
+        rental_services = self.filtered(
+            lambda l: l.qty_delivered_method == "rental_service"
+        )
+        rental_services._compute_rental_service_qty_delivered()
 
+    def _compute_rental_service_qty_delivered(self):
+        for line in self:
+            line.qty_delivered = line._get_rental_service_qty_delivered()
 
-def _update_stock_moves_expected_date(moves, date_):
-    moves.write({"date_expected": date_})
+    def _get_rental_service_qty_delivered(self):
+        if self.kit_returned_qty > 0:
+            return self.product_uom_qty
+
+        if not self.rental_date_from:
+            return 0
+
+        now = datetime.now()
+        number_of_days = (now - self.rental_date_from).days
+        return max(number_of_days + 1, 0)
