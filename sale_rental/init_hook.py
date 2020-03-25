@@ -12,5 +12,4 @@ def post_init_hook(cr, registry):
 def _setup_warehouses_rental_routes(env):
     warehouses = env["stock.warehouse"].search([])
     for warehouse in warehouses:
-        warehouse._create_rental_location()
-        warehouse._create_rental_route()
+        warehouse.setup_rental_route()

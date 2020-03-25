@@ -59,11 +59,6 @@ class TestSaleOrder(SavepointCase):
             }
         )
 
-    def _deliver_component(self, sale_line, qty):
-        move = sale_line.move_ids.filtered(lambda m: m.state != "done")[0]
-        move._set_quantity_done(qty)
-        move._action_done()
-
     def test_rental_move_product(self):
         rental_move_1 = self._get_rental_move(self.line_1)
         assert rental_move_1.product_id == self.product_1

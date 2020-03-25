@@ -240,11 +240,13 @@ class SaleOrderLineWithReturnedQty(models.Model):
 
     @api.depends("kit_line_ids.rental_returned_qty", "move_ids.state")
     def _compute_rental_returned_qty(self):
-        services = self.filtered(lambda l: l.product_id.type == "service")
-        for line in services:
+        kits = self.filtered(lambda l: l.product_id.type == "service" and l.is_kit)
+        for line in kits:
             line.rental_returned_qty = line._get_kit_rental_returned_qty()
 
-        physical_products = self - services
+        physical_products = self.filtered(
+            lambda l: l.product_id.type in ("product", "consu")
+        )
         for line in physical_products:
             line.rental_returned_qty = self._get_product_rental_returned_qty()
 
@@ -269,6 +271,10 @@ class SaleOrderLineWithReturnedQty(models.Model):
 class SaleOrderLineWithRentalServiceReturnedQty(models.Model):
 
     _inherit = "sale.order.line"
+
+    kit_delivered_qty = fields.Float(
+        digits=dp.get_precision("Product Unit of Measure"), default=0.0, copy=False
+    )
 
     kit_returned_qty = fields.Float(
         digits=dp.get_precision("Product Unit of Measure"), default=0.0, copy=False
@@ -296,7 +302,9 @@ class SaleOrderLineWithRentalServiceReturnedQty(models.Model):
         lines_to_recompute.modified(["rental_date_from"])
         lines_to_recompute.recompute()
 
-    @api.depends("kit_returned_qty", "product_uom_qty", "rental_date_from")
+    @api.depends(
+        "kit_delivered_qty", "kit_returned_qty", "product_uom_qty", "rental_date_from"
+    )
     def _compute_qty_delivered(self):
         super()._compute_qty_delivered()
         rental_services = self.filtered(
@@ -309,6 +317,9 @@ class SaleOrderLineWithRentalServiceReturnedQty(models.Model):
             line.qty_delivered = line._get_rental_service_qty_delivered()
 
     def _get_rental_service_qty_delivered(self):
+        if self.kit_delivered_qty <= 0:
+            return 0
+
         if self.kit_returned_qty > 0:
             return self.product_uom_qty
 

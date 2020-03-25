@@ -22,13 +22,29 @@ class TestWarehouse(common.SavepointCase):
     def test_rental_route(self):
         assert self.warehouse.rental_route_id
 
+    def test_rental_picking_type(self):
+        picking_type = self.warehouse.rental_type_id
+        assert picking_type
+        assert picking_type.code == "internal"
+        assert picking_type.default_location_src_id == self.warehouse.rental_location_id
+        assert picking_type.default_location_dest_id == self.customer_location
+
+    def test_rental_return_picking_type(self):
+        picking_type = self.warehouse.rental_return_type_id
+        assert picking_type
+        assert picking_type.code == "internal"
+        assert picking_type.default_location_src_id == self.customer_location
+        assert (
+            picking_type.default_location_dest_id == self.warehouse.rental_location_id
+        )
+
     def test_one_pull_from_rental_stock_to_client(self):
         pull = self.warehouse.rental_route_id.rule_ids.filtered(
             lambda r: r.action == "pull"
         )
         assert pull.location_src_id == self.warehouse.rental_location_id
         assert pull.location_id == self.customer_location
-        assert pull.picking_type_id == self.warehouse.out_type_id
+        assert pull.picking_type_id == self.warehouse.rental_type_id
 
     def test_one_push_from_client_to_rental_stock(self):
         pull = self.warehouse.rental_route_id.rule_ids.filtered(
@@ -36,8 +52,13 @@ class TestWarehouse(common.SavepointCase):
         )
         assert pull.location_src_id == self.customer_location
         assert pull.location_id == self.warehouse.rental_location_id
-        assert pull.picking_type_id == self.warehouse.in_type_id
+        assert pull.picking_type_id == self.warehouse.rental_return_type_id
 
     def test_main_warehouse_has_rental_route(self):
         warehouse = self.env.ref("stock.warehouse0")
         assert warehouse.rental_route_id
+
+    def test_main_warehouse_has_rental_picking_types(self):
+        warehouse = self.env.ref("stock.warehouse0")
+        assert warehouse.rental_type_id
+        assert warehouse.rental_return_type_id
