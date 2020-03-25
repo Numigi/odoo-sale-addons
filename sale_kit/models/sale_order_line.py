@@ -109,10 +109,10 @@ class SaleOrderLineWithLinkBetweenLines(models.Model):
     _inherit = "sale.order.line"
 
     kit_line_ids = fields.One2many(
-        "sale.order.line", "kit_id", "Components", readonly=True
+        "sale.order.line", "kit_id", "Components", readonly=True, copy=False
     )
     kit_id = fields.Many2one(
-        "sale.order.line", "Kit", store=True, compute="_compute_kit_id"
+        "sale.order.line", "Kit", store=True, compute="_compute_kit_id", copy=False
     )
 
     @api.depends("kit_reference")
@@ -139,7 +139,9 @@ class SaleOrderLineDeliveredQty(models.Model):
     @api.depends("is_kit")
     def _compute_qty_delivered_method(self):
         super()._compute_qty_delivered_method()
-        kits = self.filtered(lambda l: l.is_kit)
+        kits = self.filtered(
+            lambda l: l.is_kit and l.product_id.type not in ("product", "consu")
+        )
         kits.update({"qty_delivered_method": "kit"})
 
     @api.depends("kit_line_ids", "kit_line_ids.qty_delivered")

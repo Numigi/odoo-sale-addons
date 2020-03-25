@@ -54,11 +54,11 @@
                 <field name="rental_returned_qty_invisible" invisible="1"/>
             </form>
             <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
-                <field name="rental_returned_qty"
+                <field name="rental_returned_qty" string="Returned Quantity"
                     attrs="{'column_invisible': [('parent.rental_returned_qty_invisible', '=', True)]}"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='qty_delivered']" position="after">
-                <field name="rental_returned_qty"/>
+                <field name="rental_returned_qty" string="Returned Quantity"/>
             </xpath>
         </field>
     </record>
