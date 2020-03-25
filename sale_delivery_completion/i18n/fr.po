@@ -17,6 +17,7 @@ msgstr ""
 
 #. module: sale_delivery_completion
 #: model_terms:ir.ui.view,arch_db:sale_delivery_completion.sale_order_form
+#: model_terms:ir.ui.view,arch_db:sale_delivery_completion.sale_order_list
 msgid "Completion"
 msgstr "Complétion"
 
