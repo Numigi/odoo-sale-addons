@@ -136,3 +136,36 @@ class TestSaleOrder(SavepointCase):
         return sale_line.move_ids.filtered(
             lambda m: m.location_dest_id == self.rental_location
         )
+
+    def test_return_picking_excluded_from_delivery_count(self):
+        assert self.order.delivery_count == 1
+
+    def test_action_view_delivery(self):
+        action = self.order.action_view_delivery()
+        picking = self.env["stock.picking"].search(action["domain"])
+        assert picking.location_dest_id == self.customer_location
+
+    def test_rental_return_count(self):
+        assert self.order.rental_return_count == 1
+
+    def test_action_view_rental_return_pickings(self):
+        action = self.order.action_view_rental_return_pickings()
+        picking = self.env["stock.picking"].search(action["domain"])
+        assert picking.location_dest_id == self.rental_location
+
+    def test_rental_return_count__with_2_push_rules(self):
+        self._add_second_push_rule()
+        new_order = self.order.copy()
+        new_order.action_confirm()
+        assert new_order.delivery_count == 1
+        assert new_order.rental_return_count == 2
+
+    def _add_second_push_rule(self):
+        route = self.warehouse.rental_route_id
+        push_rule = route.rule_ids.filtered(lambda r: r.action == "push")
+        push_rule.copy(
+            {
+                "location_src_id": self.rental_location.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+            }
+        )
