@@ -45,3 +45,49 @@ class SaleOrderWithReturnedQty(models.Model):
             order.rental_returned_qty_invisible = (
                 not order.is_rental or order.state not in ("sale", "done")
             )
+
+
+class SaleOrderWithExtraSmartButton(models.Model):
+
+    _inherit = "sale.order"
+
+    rental_return_count = fields.Integer(compute="_compute_picking_ids")
+
+    def _compute_picking_ids(self):
+        super()._compute_picking_ids()
+        for order in self:
+            return_pickings = self._get_rental_return_pickings()
+            order.delivery_count -= len(return_pickings)
+            order.rental_return_count = len(return_pickings)
+
+    def _get_rental_return_pickings(self):
+        return self.mapped("picking_ids").filtered(_is_rental_return_picking)
+
+    @api.multi
+    def action_view_delivery(self):
+        if self.is_rental:
+            return self._action_view_rental_delivery()
+        return super().action_view_delivery()
+
+    def _action_view_rental_delivery(self):
+        pickings = self.mapped("picking_ids") - self._get_rental_return_pickings()
+        return self._get_picking_list_action(pickings)
+
+    def action_view_rental_return_pickings(self):
+        pickings = self._get_rental_return_pickings()
+        return self._get_picking_list_action(pickings)
+
+    def _get_picking_list_action(self, pickings):
+        action = self.env.ref("stock.action_picking_tree_all").read()[0]
+        action["domain"] = [("id", "in", pickings.ids)]
+        return action
+
+
+def _is_rental_return_picking(picking):
+    origin_moves = _get_move_with_origin_moves(picking.move_lines)
+    return any(m for m in origin_moves if m.is_rental_return_move())
+
+
+def _get_move_with_origin_moves(moves):
+    origin_moves = moves.mapped("move_orig_ids")
+    return moves | _get_move_with_origin_moves(origin_moves) if origin_moves else moves

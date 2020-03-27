@@ -63,4 +63,22 @@
         </field>
     </record>
 
+    <record id="sale_order_form_with_rental_return_smart_button" model="ir.ui.view">
+        <field name="name">Sale Order Form: Add smart button for rental return pickings</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <button name="action_view_delivery" position="after">
+                <button type="object"
+                    name="action_view_rental_return_pickings"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                    attrs="{'invisible': [('rental_return_count', '=', 0)]}"
+                    >
+                    <field name="rental_return_count" widget="statinfo" string="Receipt"/>
+                </button>
+            </button>
+        </field>
+    </record>
+
 </odoo>
