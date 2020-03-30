@@ -29,7 +29,7 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
                 <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_qty_readonly', '=', True)]
+                    ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_readonly', '=', True)]
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
@@ -69,7 +69,7 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_uom']" position="attributes">
                 <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_qty_readonly', '=', True)]
+                    ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_readonly', '=', True)]
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>

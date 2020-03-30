@@ -76,6 +76,7 @@ class TestKitRental(KitRentalCase):
     def test_rental_service_readonly_fields(self):
         self.add_kit_on_sale_order()
         service = self.get_rental_service_lines()
+        assert service.kit_reference_readonly
         assert service.product_readonly
         assert not service.product_uom_qty_readonly
         assert service.product_uom_readonly

@@ -135,6 +135,7 @@ class SaleOrderLine(models.Model):
     def prepare_kit_rental_service(self):
         new_line = self.new({})
         new_line.kit_reference = self.kit_reference
+        new_line.kit_reference_readonly = True
         new_line.is_rental_service = True
         new_line.product_readonly = True
         new_line.product_uom_qty_readonly = False
