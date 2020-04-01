@@ -34,11 +34,23 @@ A product that can be rented can also be a `kit <https://github.com/Numigi/odoo-
 When a rentable product is a kit, the product is considered delivered and returned
 when all important components of the kit are delivered / returned.
 
+Menu
+----
+In the ``Sales`` application, I notice a new menu ``Rental``.
+
+This menu allows to access sale orders and quotations of type ``Rental``.
+
+.. image:: static/description/rental_menu.png
+
 Sale Order
 ----------
 I create a new sale order.
 
 I notice a new checkbox ``Is Rental``.
+
+..
+
+    This box is automatically checked when creating a quotation from the rental menu.
 
 .. image:: static/description/sale_order.png
 
