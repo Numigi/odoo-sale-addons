@@ -226,8 +226,9 @@ class SaleOrderLineWithRentalDates(models.Model):
         self._propagate_return_date_to_stock_moves(return_date)
 
     def _propagate_rental_date_to_stock_moves(self, date_):
-        moves_to_update = self.move_ids.filtered(
-            lambda m: m.is_rental_move() and not m.is_processed_move()
+        rental_moves = self.move_ids.filtered(lambda m: m.is_rental_move())
+        moves_to_update = rental_moves.with_all_origin_moves().filtered(
+            lambda m: not m.is_processed_move()
         )
         moves_to_update.set_expected_date(date_)
 

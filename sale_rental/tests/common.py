@@ -8,6 +8,7 @@ class RentalCase(KitCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.uom_day = cls.env.ref("uom.product_uom_day")
         cls.rental_service = cls.env["product.product"].create(
             {
@@ -22,6 +23,7 @@ class RentalCase(KitCase):
                 "partner_id": cls.env.user.partner_id.id,
                 "pricelist_id": cls.env.ref("product.list0").id,
                 "is_rental": True,
+                "pricelist_id": cls.env.ref("product.list0").id,
             }
         )
 

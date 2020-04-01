@@ -8,6 +8,27 @@ class StockMove(models.Model):
 
     _inherit = "stock.move"
 
+    @api.multi
+    def write(self, vals):
+        """Prevent propagating the expected date from a rental move to the return move.
+
+        The expected date of a rental return is not updated from the rental delivery.
+        It is updated only when the return date is set on the sale order line.
+
+        Otherwise, when the delivery is processed, the effective date of delivery
+        is propagated as expected date on the return move.
+        """
+        if "date_expected" in vals:
+            rental_moves = self.filtered(lambda m: m.is_rental_move())
+            rental_moves_without_propagation = rental_moves.with_context(
+                do_not_propagate=True
+            )
+            other_moves = self - rental_moves
+            super(StockMove, rental_moves_without_propagation).write(dict(vals))
+            super(StockMove, other_moves).write(dict(vals))
+        else:
+            return super().write(vals)
+
     def _action_done(self):
         result = super()._action_done()
 
@@ -46,3 +67,9 @@ class StockMove(models.Model):
 
     def set_expected_date(self, date_):
         self.write({"date_expected": date_})
+
+    def with_all_origin_moves(self):
+        origin_moves = self.mapped("move_orig_ids")
+        if not origin_moves:
+            return self
+        return self | origin_moves.with_all_origin_moves()
