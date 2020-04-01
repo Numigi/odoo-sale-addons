@@ -2,24 +2,13 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
-from odoo.tests.common import SavepointCase
+from .common import RentalCase
 
 
-class TestSaleOrder(SavepointCase):
+class SaleOrderCase(RentalCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.warehouse = cls.env.ref("stock.warehouse0")
-
-        cls.order = cls.env["sale.order"].create(
-            {
-                "partner_id": cls.env.user.partner_id.id,
-                "pricelist_id": cls.env.ref("product.list0").id,
-                "is_rental": True,
-                "warehouse_id": cls.warehouse.id,
-            }
-        )
-
         cls.product_1 = cls.env["product.product"].create(
             {"name": "Product 1", "type": "product"}
         )
@@ -40,8 +29,6 @@ class TestSaleOrder(SavepointCase):
             cls.product_2, 2, cls.date_start_2, cls.date_end_2
         )
 
-        cls.order.action_confirm()
-
         cls.customer_location = cls.env.ref("sale_rental.customer_location")
         cls.rental_location = cls.warehouse.rental_location_id
 
@@ -59,33 +46,57 @@ class TestSaleOrder(SavepointCase):
             }
         )
 
+    def get_rental_move(self, sale_line):
+        return sale_line.move_ids.filtered(
+            lambda m: m.location_dest_id == self.customer_location
+        )
+
+    def get_return_move(self, sale_line):
+        return sale_line.move_ids.filtered(
+            lambda m: m.location_dest_id == self.rental_location
+        )
+
+
+class TestSaleOrder(SaleOrderCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.order.action_confirm()
+
     def test_rental_move_product(self):
-        rental_move_1 = self._get_rental_move(self.line_1)
+        rental_move_1 = self.get_rental_move(self.line_1)
         assert rental_move_1.product_id == self.product_1
 
-        rental_move_2 = self._get_rental_move(self.line_2)
+        rental_move_2 = self.get_rental_move(self.line_2)
         assert rental_move_2.product_id == self.product_2
 
     def test_return_move_product(self):
-        return_move_1 = self._get_return_move(self.line_1)
+        return_move_1 = self.get_return_move(self.line_1)
         assert return_move_1.product_id == self.product_1
 
-        return_move_2 = self._get_return_move(self.line_2)
+        return_move_2 = self.get_return_move(self.line_2)
         assert return_move_2.product_id == self.product_2
 
     def test_expected_rental_date(self):
-        rental_move_1 = self._get_rental_move(self.line_1)
+        rental_move_1 = self.get_rental_move(self.line_1)
         assert rental_move_1.date_expected == self.date_start_1
 
-        rental_move_2 = self._get_rental_move(self.line_2)
+        rental_move_2 = self.get_rental_move(self.line_2)
         assert rental_move_2.date_expected == self.date_start_2
 
     def test_expected_return_date(self):
-        return_move_1 = self._get_return_move(self.line_1)
+        return_move_1 = self.get_return_move(self.line_1)
         assert return_move_1.date_expected == self.date_end_1
 
-        return_move_2 = self._get_return_move(self.line_2)
+        return_move_2 = self.get_return_move(self.line_2)
         assert return_move_2.date_expected == self.date_end_2
+
+    def test_expected_date_not_propagated_to_return_move(self):
+        rental_move_1 = self.get_rental_move(self.line_1)
+        return_move_1 = self.get_return_move(self.line_1)
+
+        rental_move_1.date_expected = datetime.now() + timedelta(100)
+        assert return_move_1.date_expected == self.date_end_1
 
     def test_change_rental_dates(self):
         new_date_start = datetime.now() + timedelta(30)
@@ -97,10 +108,10 @@ class TestSaleOrder(SavepointCase):
             }
         )
 
-        rental_move_1 = self._get_rental_move(self.line_1)
+        rental_move_1 = self.get_rental_move(self.line_1)
         assert rental_move_1.date_expected == new_date_start
 
-        return_move_1 = self._get_return_move(self.line_1)
+        return_move_1 = self.get_return_move(self.line_1)
         assert return_move_1.date_expected == new_date_end
 
     def test_if_no_expected_return_date__rental_date_used(self):
@@ -109,10 +120,10 @@ class TestSaleOrder(SavepointCase):
             {"expected_rental_date": new_date_start, "expected_return_date": False}
         )
 
-        rental_move_1 = self._get_rental_move(self.line_1)
+        rental_move_1 = self.get_rental_move(self.line_1)
         assert rental_move_1.date_expected == new_date_start
 
-        return_move_1 = self._get_return_move(self.line_1)
+        return_move_1 = self.get_return_move(self.line_1)
         assert return_move_1.date_expected == new_date_start
 
     def test_if_no_expected_rental_date__today_used(self):
@@ -121,21 +132,11 @@ class TestSaleOrder(SavepointCase):
             {"expected_rental_date": False, "expected_return_date": False}
         )
 
-        rental_move_1 = self._get_rental_move(self.line_1)
+        rental_move_1 = self.get_rental_move(self.line_1)
         assert rental_move_1.date_expected.date() == today
 
-        return_move_1 = self._get_return_move(self.line_1)
+        return_move_1 = self.get_return_move(self.line_1)
         assert return_move_1.date_expected.date() == today
-
-    def _get_rental_move(self, sale_line):
-        return sale_line.move_ids.filtered(
-            lambda m: m.location_dest_id == self.customer_location
-        )
-
-    def _get_return_move(self, sale_line):
-        return sale_line.move_ids.filtered(
-            lambda m: m.location_dest_id == self.rental_location
-        )
 
     def test_return_picking_excluded_from_delivery_count(self):
         assert self.order.delivery_count == 1
@@ -153,19 +154,48 @@ class TestSaleOrder(SavepointCase):
         picking = self.env["stock.picking"].search(action["domain"])
         assert picking.location_dest_id == self.rental_location
 
-    def test_rental_return_count__with_2_push_rules(self):
-        self._add_second_push_rule()
-        new_order = self.order.copy()
-        new_order.action_confirm()
-        assert new_order.delivery_count == 1
-        assert new_order.rental_return_count == 2
 
-    def _add_second_push_rule(self):
-        route = self.warehouse.rental_route_id
+class TestSaleOrderMultipleSteps(SaleOrderCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls._add_second_pull_rule()
+        cls._add_second_push_rule()
+        cls.order.action_confirm()
+
+    @classmethod
+    def _add_second_pull_rule(cls):
+        route = cls.warehouse.rental_route_id
+        pull_rule = route.rule_ids.filtered(lambda r: r.action == "pull")
+        pull_rule.copy(
+            {
+                "location_src_id": cls.warehouse.lot_stock_id.id,
+                "location_id": cls.rental_location.id,
+            }
+        )
+        pull_rule.procure_method = "make_to_order"
+
+    @classmethod
+    def _add_second_push_rule(cls):
+        route = cls.warehouse.rental_route_id
         push_rule = route.rule_ids.filtered(lambda r: r.action == "push")
         push_rule.copy(
             {
-                "location_src_id": self.rental_location.id,
-                "location_id": self.warehouse.lot_stock_id.id,
+                "location_src_id": cls.rental_location.id,
+                "location_id": cls.warehouse.lot_stock_id.id,
             }
         )
+
+    def test_rental_return_count(self):
+        assert self.order.delivery_count == 2
+        assert self.order.rental_return_count == 2
+
+    def test_expected_rental_date__propagated_to_second_pull_move(self):
+        first_pull = self.get_rental_move(self.line_1)
+        second_pull = first_pull.move_orig_ids
+        assert second_pull.date_expected == self.date_start_1
+
+    def test_expected_return_date__propagated_to_second_push_move(self):
+        first_push = self.get_rental_move(self.line_1)
+        second_push = first_push.move_dest_ids
+        assert second_push.date_expected == self.date_end_1
