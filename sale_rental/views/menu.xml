@@ -22,13 +22,9 @@
         <field name="context">
             {
                 'search_default_my_quotation': 1,
+                'search_default_is_rental': 1,
                 'default_is_rental': True,
             }
-        </field>
-        <field name="domain">
-            [
-                ('is_rental', '=', True),
-            ]
         </field>
     </record>
 
@@ -91,13 +87,13 @@
         <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
         <field name="context">
             {
+                'search_default_is_rental': 1,
                 'default_is_rental': 1,
             }
         </field>
         <field name="domain">
             [
                 ('state', 'not in', ('draft', 'sent', 'cancel')),
-                ('is_rental', '=', True),
             ]
         </field>
     </record>
