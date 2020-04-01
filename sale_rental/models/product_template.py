@@ -12,6 +12,11 @@ class ProductTemplate(models.Model):
     can_be_rented = fields.Boolean()
     rental_service_id = fields.Many2one("product.product")
 
+    @api.onchange("can_be_rented")
+    def _if_can_be_rented__then_sale_ok(self):
+        if self.can_be_rented:
+            self.sale_ok = True
+
     @api.constrains("uom_id")
     def _on_uom_changed__check_rental_service_uom(self):
         self.mapped(

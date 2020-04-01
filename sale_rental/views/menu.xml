@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem
+        id="rental_menu"
+        name="Rental"
+        parent="sale.sale_menu_root"
+        sequence="1"
+        />
+
+    <!-- Move the menu item `Orders` before `Rental` -->
+    <record id="sale.sale_order_menu" model="ir.ui.menu">
+        <field name="sequence" eval="0"/>
+    </record>
+
+    <record id="action_rental_quotations" model="ir.actions.act_window">
+        <field name="name">Rental Quotations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="context">
+            {
+                'search_default_my_quotation': 1,
+                'search_default_is_rental': 1,
+                'default_is_rental': True,
+            }
+        </field>
+    </record>
+
+    <record id="action_rental_quotations_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="sale.view_sale_order_kanban"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale.view_order_form"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_calendar" model="ir.actions.act_window.view">
+        <field name="sequence" eval="4"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="sale.view_sale_order_calendar"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_pivot" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="sale.view_sale_order_pivot"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="6"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale.view_sale_order_graph"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <menuitem
+        id="rental_quotation_menu"
+        name="Quotations"
+        action="action_rental_quotations"
+        parent="rental_menu"
+        sequence="10"
+        />
+
+    <record id="action_rental_orders" model="ir.actions.act_window">
+        <field name="name">Rental Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="context">
+            {
+                'search_default_is_rental': 1,
+                'default_is_rental': 1,
+            }
+        </field>
+        <field name="domain">
+            [
+                ('state', 'not in', ('draft', 'sent', 'cancel')),
+            ]
+        </field>
+    </record>
+
+    <record id="action_rental_orders_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sale.view_order_tree"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="sale.view_sale_order_kanban"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale.view_order_form"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_calendar" model="ir.actions.act_window.view">
+        <field name="sequence" eval="4"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="sale.view_sale_order_calendar"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_pivot" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="sale.view_sale_order_pivot"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="6"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale.view_sale_order_graph"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <menuitem
+        id="rental_order_menu"
+        name="Orders"
+        action="action_rental_orders"
+        parent="rental_menu"
+        sequence="20"
+        />
+
+</odoo>

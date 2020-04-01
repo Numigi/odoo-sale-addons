@@ -16,6 +16,7 @@
         "data/stock_location.xml",
         "views/sale_order.xml",
         "views/product_template.xml",
+        "views/menu.xml",
     ],
     "post_init_hook": "post_init_hook",
     "installable": True,
