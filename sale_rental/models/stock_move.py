@@ -90,7 +90,8 @@ class StockMove(models.Model):
         return self.state == "done"
 
     def is_important_component_move(self):
-        return self.sale_line_id.is_important_kit_component
+        sale_line = self.sale_line_id
+        return sale_line.is_important_kit_component or sale_line.is_kit
 
     def is_rental_move(self):
         return self.location_dest_id.is_rental_customer_location
