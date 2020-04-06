@@ -1,6 +1,7 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import datetime
 from odoo import api, fields, models
 
 
@@ -32,32 +33,64 @@ class StockMove(models.Model):
     def _action_done(self):
         result = super()._action_done()
 
-        rental_and_return_moves = self.filtered(
-            lambda m: m.is_rental_move() or m.is_rental_return_move()
+        important_rental_moves = self.filtered(
+            lambda m: m.is_important_component_move() and m.is_rental_move()
         )
-        for move in rental_and_return_moves:
-            move._update_sale_rental_service_line()
+        for move in important_rental_moves:
+            move._update_sale_rental_service_line_delivered_qty()
+            move._update_sale_rental_service_line_date_from()
+
+        important_return_moves = self.filtered(
+            lambda m: m.is_important_component_move() and m.is_rental_return_move()
+        )
+        for move in important_return_moves:
+            move._update_sale_rental_service_line_returned_qty()
+            move._update_sale_rental_service_line_date_to()
 
         return result
 
-    def _update_sale_rental_service_line(self):
+    def _update_sale_rental_service_line_delivered_qty(self):
+        kit_line = self._get_sale_kit_line()
+        service_line = self._get_sale_rental_service_line()
+        service_line.write({"kit_delivered_qty": kit_line.qty_delivered})
+
+    def _update_sale_rental_service_line_returned_qty(self):
+        kit_line = self._get_sale_kit_line()
+        service_line = self._get_sale_rental_service_line()
+        service_line.write({"kit_returned_qty": kit_line.rental_returned_qty})
+
+    def _update_sale_rental_service_line_date_from(self):
+        kit_line = self._get_sale_kit_line()
+        service_line = self._get_sale_rental_service_line()
+
+        if kit_line.qty_delivered > 0 and kit_line.state == "sale":
+            service_line.rental_date_from = datetime.now()
+            service_line.onchange_rental_dates()
+
+    def _update_sale_rental_service_line_date_to(self):
+        kit_line = self._get_sale_kit_line()
+        service_line = self._get_sale_rental_service_line()
+
+        if kit_line.rental_returned_qty > 0 and kit_line.state == "sale":
+            service_line.rental_date_to = datetime.now()
+            service_line.onchange_rental_dates()
+
+    def _get_sale_rental_service_line(self):
+        kit_line = self._get_sale_kit_line()
+        return kit_line.mapped("kit_line_ids").filtered(lambda l: l.is_rental_service)
+
+    def _get_sale_kit_line(self):
         sale_line = self.sale_line_id
-        kit_line = sale_line if sale_line.is_kit else sale_line.kit_id
-        service_line = kit_line.mapped("kit_line_ids").filtered(
-            lambda l: l.is_rental_service
-        )
-        service_line.write(
-            {
-                "kit_delivered_qty": kit_line.qty_delivered,
-                "kit_returned_qty": kit_line.rental_returned_qty,
-            }
-        )
+        return sale_line if sale_line.is_kit else sale_line.kit_id
 
     def is_processed_move(self):
         return self.state in ("done", "cancel")
 
     def is_done_move(self):
         return self.state == "done"
+
+    def is_important_component_move(self):
+        return self.sale_line_id.is_important_kit_component
 
     def is_rental_move(self):
         return self.location_dest_id.is_rental_customer_location

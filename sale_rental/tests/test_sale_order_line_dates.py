@@ -3,6 +3,7 @@
 
 from ddt import ddt, data, unpack
 from datetime import datetime, timedelta
+from freezegun import freeze_time
 from .common import SaleOrderKitCase
 
 
@@ -60,3 +61,60 @@ class TestSaleOrderLineDeliveredQty(SaleOrderKitCase):
         self.service_1.onchange_rental_dates()
         assert self.service_1.rental_date_to == date_from
         assert self.service_1.product_uom_qty == 1
+
+    def test_important_components_delivered(self):
+        self.service_1.rental_date_from = datetime(2020, 1, 1)
+        self.service_1.rental_date_to = datetime(2020, 1, 2)
+
+        delivery_date = datetime.now() + timedelta(10)
+        with freeze_time(delivery_date):
+            self.deliver_important_components()
+
+        assert self.service_1.rental_date_from == delivery_date
+        assert self.service_1.rental_date_to == delivery_date
+        assert self.service_1.product_uom_qty == 1
+
+    def test_important_components_partially_delivered(self):
+        initial_date_from = datetime(2020, 1, 1)
+        initial_date_to = datetime(2020, 1, 2)
+        self.service_1.rental_date_from = initial_date_from
+        self.service_1.rental_date_to = initial_date_to
+
+        delivery_date = datetime.now() + timedelta(10)
+        with freeze_time(delivery_date):
+            self.deliver_important_components_partially()
+
+        assert self.service_1.rental_date_from == initial_date_from
+        assert self.service_1.rental_date_to == initial_date_to
+
+    def test_important_components_returned(self):
+        delivery_date = datetime.now() + timedelta(5)
+        with freeze_time(delivery_date):
+            self.deliver_important_components()
+
+        return_date = datetime.now() + timedelta(10)
+        with freeze_time(return_date):
+            self.return_important_components()
+
+        assert self.service_1.rental_date_from == delivery_date
+        assert self.service_1.rental_date_to == return_date
+        assert self.service_1.product_uom_qty == 6  # 10 - 5 + 1
+
+    def test_important_components_partially_returned(self):
+        now = datetime.now()
+        initial_date_to = now + timedelta(7)
+
+        self.service_1.rental_date_from = datetime(2020, 1, 1)
+        self.service_1.rental_date_to = initial_date_to
+
+        delivery_date = now + timedelta(5)
+        with freeze_time(delivery_date):
+            self.deliver_important_components()
+
+        return_date = now + timedelta(10)
+        with freeze_time(return_date):
+            self.return_important_components_partially()
+
+        assert self.service_1.rental_date_from == delivery_date
+        assert self.service_1.rental_date_to == initial_date_to
+        assert self.service_1.product_uom_qty == 3  # 7 - 5 + 1

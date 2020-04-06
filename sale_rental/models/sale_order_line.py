@@ -44,7 +44,8 @@ class SaleOrderLine(models.Model):
             self.product_uom_qty = self._get_qty_based_on_rental_dates()
 
     def _force_rental_date_to_after_date_from(self):
-        self.rental_date_to = max(self.rental_date_from, self.rental_date_to)
+        if self.rental_date_from > self.rental_date_to:
+            self.rental_date_to = self.rental_date_from
 
     def _get_qty_based_on_rental_dates(self):
         number_of_days = (self.rental_date_to - self.rental_date_from).days

@@ -121,6 +121,8 @@ is computed based on the rental start date.
 When a rented product is delivered but not returned,
 the delivered quantity of the rental service is updated every day based on a cron.
 
+Also, when a product is delivered, the rental start date is automatically set to the current date.
+
 Receipt
 ~~~~~~~
 The return stock picking of a rented product is similar to a receipt picking.
@@ -134,6 +136,9 @@ is equal to the ordered quantity.
 
 The rental start and end date can be edited manually.
 This allows to adjust what must be charged to the customer based on your company's policies.
+
+Also, when a product is returned, the rental end date is automatically set to the current date.
+The number of days is updated based on the start and end dates.
 
 Renting a Kit
 -------------
