@@ -23,7 +23,6 @@ class RentalCase(KitCase):
                 "partner_id": cls.env.user.partner_id.id,
                 "pricelist_id": cls.env.ref("product.list0").id,
                 "is_rental": True,
-                "pricelist_id": cls.env.ref("product.list0").id,
             }
         )
 

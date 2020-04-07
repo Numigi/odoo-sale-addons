@@ -112,7 +112,7 @@ class TestNonKitRental(RentalCase):
     def test_product_delivered(self):
         self.deliver_product(self.product_line, 1)
         assert self.product_line.qty_delivered == 1
-        assert self.service_line.qty_delivered == 0
+        assert self.service_line.qty_delivered == 1
         assert self.product_line.rental_returned_qty == 0
         assert self.service_line.rental_returned_qty == 0
 
