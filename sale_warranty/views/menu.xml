@@ -6,7 +6,7 @@
         id="menu_warranty"
         name="Warranties"
         sequence="8"
-        web_icon="fa fa-folder-open,#FFFFFF,#58a177"
+        web_icon="sale_warranty,static/description/app_icon.png"
         />
 
     <menuitem
