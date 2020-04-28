@@ -25,6 +25,7 @@
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
+        "stock_picking_add_transit_rental",
     ],
     "installable": True,
 }
