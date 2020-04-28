@@ -18,9 +18,12 @@ In the ``Inventory Tab``, I find a new field ``Related Rental Product``.
 
 .. image:: static/description/product_form_related_rental_product.png
 
+<<<<<<< HEAD
 This field allows to select a default product to use when converting this salable product
 to a rentalable product.
 
+=======
+>>>>>>> b06e56e... Add module stock_rental_conversion
 Usage
 -----
 Next to the ``Related Rental Product`` field, I find a button ``Convert``.
@@ -31,6 +34,13 @@ When I click on this button, a wizard is opened.
 
 .. image:: static/description/wizard.png
 
+<<<<<<< HEAD
+=======
+By default, the wizard contains the rental product and the asset profile defined for this salable product.
+
+.. image:: static/description/wizard_default_values.png
+
+>>>>>>> b06e56e... Add module stock_rental_conversion
 Serial Numbers
 ~~~~~~~~~~~~~~
 The wizard has a field to select a serial number.
@@ -66,6 +76,7 @@ After filling the wizard form, I click on ``Validate``.
 Stock Moves
 ~~~~~~~~~~~
 After validating the wizard, 2 stock moves are created.
+<<<<<<< HEAD
 
 .. image:: static/description/stock_moves.png
 
@@ -73,6 +84,12 @@ The salable product is moved from the source location to the production location
 
 The rentalable product is moved from the production location to the destination location.
 
+=======
+One for the sales product and one for the new rental product.
+
+.. image:: static/description/stock_moves.png
+
+>>>>>>> b06e56e... Add module stock_rental_conversion
 New Serial Number
 ~~~~~~~~~~~~~~~~~
 A new serial number is created for the new rental product.

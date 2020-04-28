@@ -11,10 +11,14 @@
     "category": "Sales",
     "summary": "Allow to convert a salable product into a rentalable product.",
     "depends": ["stock_serial_single_quant", "sale_rental"],
+<<<<<<< HEAD
     "data": [
         "views/product_template.xml",
         "views/stock_production_lot.xml",
         "wizard/stock_rental_conversion_wizard.xml",
     ],
+=======
+    "data": [],
+>>>>>>> b06e56e... Add module stock_rental_conversion
     "installable": True,
 }

@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models
+<<<<<<< HEAD
 
 
 class StockProductionLot(models.Model):
@@ -37,3 +38,5 @@ class StockProductionLot(models.Model):
         ).read()[0]
         action["domain"] = [("sales_lot_id", "=", self.id)]
         return action
+=======
+>>>>>>> b06e56e... Add module stock_rental_conversion
