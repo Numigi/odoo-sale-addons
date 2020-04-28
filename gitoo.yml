@@ -6,6 +6,12 @@
   includes:
     - product_kit
 
+- url: https://github.com/Numigi/odoo-stock-addons
+  branch: "12.0"
+  includes:
+    - stock_serial_single_quant
+    - stock_picking_add_transit
+
 - url: https://github.com/Numigi/odoo-web-addons
   branch: "12.0"
   includes:
