@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "onchange_helper",
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_dynamic_price",
