@@ -17,3 +17,8 @@
   includes:
     - web_handle_condition
     - web_trash_condition
+
+- url: https://github.com/OCA/server-tools
+  branch: "12.0"
+  includes:
+    - onchange_helper

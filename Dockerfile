@@ -31,6 +31,7 @@ COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY stock_picking_add_transit_rental /mnt/extra-addons/stock_picking_add_transit_rental
+COPY stock_rental_conversion /mnt/extra-addons/stock_rental_conversion
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo

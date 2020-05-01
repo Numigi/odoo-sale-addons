@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "onchange_helper",
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_dynamic_price",
@@ -26,6 +27,7 @@
         "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
         "stock_picking_add_transit_rental",
+        "stock_rental_conversion",
     ],
     "installable": True,
 }
