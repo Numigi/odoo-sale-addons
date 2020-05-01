@@ -26,6 +26,7 @@
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
+        "stock_rental_conversion",
     ],
     "installable": True,
 }
