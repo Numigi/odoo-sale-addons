@@ -3,6 +3,9 @@
 
 from odoo import fields, models
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cb6f154... Add module stock_rental_conversion
 
 
 class StockProductionLot(models.Model):
@@ -38,5 +41,8 @@ class StockProductionLot(models.Model):
         ).read()[0]
         action["domain"] = [("sales_lot_id", "=", self.id)]
         return action
+<<<<<<< HEAD
 =======
 >>>>>>> b06e56e... Add module stock_rental_conversion
+=======
+>>>>>>> cb6f154... Add module stock_rental_conversion
