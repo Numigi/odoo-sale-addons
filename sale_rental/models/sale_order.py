@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
     is_rental = fields.Boolean("Rental")
 
     def get_rental_customer_location(self):
-        return self.env.ref("sale_rental.customer_location")
+        return self.env.ref("stock_rental.customer_location")
 
     @api.multi
     def action_confirm(self):
