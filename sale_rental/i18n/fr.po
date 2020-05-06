@@ -241,19 +241,3 @@ msgid ""
 "Update the delivered quantity on sale order lines of type rental service"
 msgstr "Mise à jour des quantités livrées sur ligne de SO de location"
 
-#~ msgid "Availability"
-#~ msgstr "Disponibilité"
-
-#~ msgid "Available"
-#~ msgstr "En stock"
-
-#~ msgid "Available Qty For Popover"
-#~ msgstr "Quantitée disponible pour le popup"
-
-#~ msgid "Available Quantity"
-#~ msgstr "Quantité disponible"
-
-#~ msgid "This information includes all reserved quantities in all warehouses."
-#~ msgstr ""
-#~ "Cette information tient compte des quantités réservées pour tous les "
-#~ "entrepôts."
