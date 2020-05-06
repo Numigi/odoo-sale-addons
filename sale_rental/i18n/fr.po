@@ -1,71 +1,243 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_order_available_qty_popover
+# 	* sale_order_available_qty_popover
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-09 19:46+0000\n"
-"PO-Revision-Date: 2020-03-09 19:46+0000\n"
+"POT-Creation-Date: 2020-05-05 21:24+0000\n"
+"PO-Revision-Date: 2020-05-06 07:14-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
 
-#. module: sale_order_available_qty_popover
-#: model:ir.model.fields,help:sale_order_available_qty_popover.field_sale_order_line__product_type
-msgid "A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
-"A consumable product is a product for which stock is not managed.\n"
-"A service is a non-material product you provide."
+#. module: sale_rental
+#: model:ir.model.fields,help:sale_rental.field_sale_order_line__qty_delivered_method
+msgid ""
+"According to product configuration, the delivered quantity can be "
+"automatically computed by mechanism :\n"
+"  - Manual: the quantity is set manually on the line\n"
+"  - Analytic From expenses: the quantity is the quantity sum from posted "
+"expenses\n"
+"  - Timesheet: the quantity is the sum of hours recorded on tasks linked to "
+"this sale line\n"
+"  - Stock Moves: the quantity comes from confirmed pickings\n"
 msgstr ""
 
-#. module: sale_order_available_qty_popover
-#. openerp-web
-#: code:addons/sale_order_available_qty_popover/static/src/js/popover.js:53
-#, python-format
-msgid "Availability"
-msgstr "Disponibilité"
-
-#. module: sale_order_available_qty_popover
-#. openerp-web
-#: code:addons/sale_order_available_qty_popover/static/src/xml/popover.xml:11
-#, python-format
-msgid "Available"
-msgstr "En stock"
-
-#. module: sale_order_available_qty_popover
-#: model:ir.model.fields,field_description:sale_order_available_qty_popover.field_sale_order_line__available_qty_for_popover
-msgid "Available Qty For Popover"
-msgstr "Quantitée disponible pour le popup"
-
-#. module: sale_order_available_qty_popover
-#. openerp-web
-#: code:addons/sale_order_available_qty_popover/static/src/js/popover.js:64
-#, python-format
-msgid "Available Quantity"
-msgstr "Quantité disponible"
-
-#. module: sale_order_available_qty_popover
-#: model:ir.model.fields,field_description:sale_order_available_qty_popover.field_sale_order_line__product_type
-msgid "Product Type"
+#. module: sale_rental
+#: selection:sale.order.line,qty_delivered_method:0
+msgid "Analytic From Expenses"
 msgstr ""
 
-#. module: sale_order_available_qty_popover
-#: model:ir.model,name:sale_order_available_qty_popover.model_sale_order
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_product_product__can_be_rented
+#: model:ir.model.fields,field_description:sale_rental.field_product_template__can_be_rented
+msgid "Can Be Rented"
+msgstr "Peut être loué"
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_form
+msgid "Date From"
+msgstr "Date de début"
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_form
+msgid "Date To"
+msgstr "Date de fin"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__expected_rental_date
+msgid "Expected Rental Date"
+msgstr "Date de location attendue"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__expected_return_date
+msgid "Expected Return Date"
+msgstr "Date de retour attendue"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__is_rental_service
+msgid "Is Rental Service"
+msgstr "Est un service de location"
+
+#. module: sale_rental
+#: selection:sale.order.line,qty_delivered_method:0
+msgid "Kit"
+msgstr "Kit"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__kit_delivered_qty
+msgid "Kit Delivered Qty"
+msgstr "Quantité livrée du kit"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__kit_returned_qty
+msgid "Kit Returned Qty"
+msgstr "Quantité retournée du kit"
+
+#. module: sale_rental
+#: selection:sale.order.line,qty_delivered_method:0
+msgid "Manual"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__qty_delivered_method
+msgid "Method to update delivered qty"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.ui.menu,name:sale_rental.rental_order_menu
+msgid "Orders"
+msgstr "Commandes"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_procurement_group
+msgid "Procurement Group"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.ui.menu,name:sale_rental.rental_quotation_menu
+msgid "Quotations"
+msgstr "Soumissions"
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_form_with_rental_return_smart_button
+msgid "Receipt"
+msgstr "Réception"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order__is_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__is_rental_order
+#: model:ir.ui.menu,name:sale_rental.rental_menu
+#: model_terms:ir.ui.view,arch_db:sale_rental.product_template_form
+msgid "Rental"
+msgstr "Location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__rental_date_from
+msgid "Rental Date From"
+msgstr "Date de début de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__rental_date_from_editable
+msgid "Rental Date From Editable"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__rental_date_from_required
+msgid "Rental Date From Required"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__rental_date_to
+msgid "Rental Date To"
+msgstr "Date de fin de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__rental_date_to_editable
+msgid "Rental Date To Editable"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.actions.act_window,name:sale_rental.action_rental_orders
+msgid "Rental Orders"
+msgstr "Commandes de location"
+
+#. module: sale_rental
+#: model:ir.actions.act_window,name:sale_rental.action_rental_quotations
+msgid "Rental Quotations"
+msgstr "Soumissions de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order__rental_return_count
+msgid "Rental Return Count"
+msgstr "Nombre de retours de location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order__rental_returned_qty_invisible
+msgid "Rental Returned Qty Invisible"
+msgstr ""
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__rental_returned_qty
+msgid "Rental Returned Quantity"
+msgstr "Quantité retournée (location)"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_product_product__rental_service_id
+#: model:ir.model.fields,field_description:sale_rental.field_product_template__rental_service_id
+#: selection:sale.order.line,qty_delivered_method:0
+msgid "Rental Service"
+msgstr "Service de location"
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_search
+msgid "Rentals"
+msgstr "Locations"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_product_product__rented_product_ids
+msgid "Rented Products"
+msgstr "Articles loués"
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_form_with_returned_qty
+msgid "Returned Quantity"
+msgstr "Quantité retournée"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_sale_order
 msgid "Sale Order"
 msgstr ""
 
-#. module: sale_order_available_qty_popover
-#: model:ir.model,name:sale_order_available_qty_popover.model_sale_order_line
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_sale_order_line
 msgid "Sales Order Line"
 msgstr ""
 
-#. module: sale_order_available_qty_popover
-#. openerp-web
-#: code:addons/sale_order_available_qty_popover/static/src/xml/popover.xml:17
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: sale_rental
+#: selection:sale.order.line,qty_delivered_method:0
+msgid "Stock Moves"
+msgstr ""
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/sale_order_line.py:114
 #, python-format
-msgid "This information includes all reserved quantities in all warehouses."
-msgstr "Cette information tient compte des quantités réservées pour tous les entrepôts."
+msgid "The kit {} can not be rented."
+msgstr "Le kit {} ne peut pas être loué."
+
+#. module: sale_rental
+#: code:addons/sale_rental/models/product_template.py:34
+#, python-format
+msgid "The rental service {} must have the unit of measure day(s)."
+msgstr "Le service de location {} doit avoir l'unité de mesure jour(s)."
+
+#. module: sale_rental
+#: model:ir.actions.server,name:sale_rental.rental_service_qty_delivered_update_cron_ir_actions_server
+#: model:ir.cron,cron_name:sale_rental.rental_service_qty_delivered_update_cron
+#: model:ir.cron,name:sale_rental.rental_service_qty_delivered_update_cron
+msgid ""
+"Update the delivered quantity on sale order lines of type rental service"
+msgstr "Mise à jour des quantités livrées sur ligne de SO de location"
+
