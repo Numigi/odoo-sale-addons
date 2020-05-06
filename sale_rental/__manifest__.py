@@ -10,15 +10,12 @@
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Allow to rent equipments",
-    "depends": ["sale_kit", "sale_stock"],
+    "depends": ["sale_kit", "sale_stock", "stock_rental"],
     "data": [
         "data/ir_cron.xml",
-        "data/stock_location.xml",
         "views/sale_order.xml",
         "views/product_template.xml",
-        "views/stock_location.xml",
         "views/menu.xml",
     ],
-    "post_init_hook": "post_init_hook",
     "installable": True,
 }

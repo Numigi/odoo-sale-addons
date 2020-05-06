@@ -29,7 +29,7 @@ class SaleOrderCase(RentalCase):
             cls.product_2, 2, cls.date_start_2, cls.date_end_2
         )
 
-        cls.customer_location = cls.env.ref("sale_rental.customer_location")
+        cls.customer_location = cls.env.ref("stock_rental.customer_location")
         cls.rental_location = cls.warehouse.rental_location_id
 
     @classmethod

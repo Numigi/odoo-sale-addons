@@ -7,7 +7,5 @@ from . import (
     product_template,
     sale_order,
     sale_order_line,
-    stock_location,
     stock_move,
-    stock_warehouse,
 )
