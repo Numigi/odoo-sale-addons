@@ -17,15 +17,15 @@ class KitCase(SavepointCase):
         )
 
         cls.component_a = cls.env["product.product"].create(
-            {"name": "Component A", "type": "consu", "taxes_id": [(4, cls.tax.id)]}
+            {"name": "Component A", "type": "product", "taxes_id": [(4, cls.tax.id)]}
         )
         cls.component_b = cls.env["product.product"].create(
-            {"name": "Component B", "type": "consu", "taxes_id": [(4, cls.tax.id)]}
+            {"name": "Component B", "type": "product", "taxes_id": [(4, cls.tax.id)]}
         )
         cls.component_z = cls.env["product.product"].create(
             {
                 "name": "Component Z (Non-important)",
-                "type": "consu",
+                "type": "product",
                 "taxes_id": [(4, cls.tax.id)],
             }
         )
