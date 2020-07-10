@@ -46,14 +46,6 @@ class SaleOrder(models.Model):
                     line_weight_in_lb = product.weight_in_uom * qty
                 else:
                     line_weight_in_lb = kgm_uom._compute_quantity(line_weight_in_kg, lb_uom, rounding_method="HALF-UP")
-                    # line_weight_in_lb = kgm_uom._compute_quantity(
-                    #     float_round(
-                    #         line_weight_in_kg,
-                    #         precision_rounding=precision_rounding,
-                    #     ),
-                    #     lb_uom,
-                    #     rounding_method="HALF-UP",
-                    # )
 
                 so_weight_in_kg += line_weight_in_kg
                 so_weight_in_lb += line_weight_in_lb
