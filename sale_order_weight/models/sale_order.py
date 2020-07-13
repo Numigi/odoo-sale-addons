@@ -30,10 +30,11 @@ class SaleOrder(models.Model):
             for sol in record.order_line:
                 # When user choose uom with category is not Unit, return 0
                 if sol.product_uom.category_id != unit_uom_categ:
-                    return {
+                    record.write({
                         "weight_in_kg": 0,
                         "weight_in_lb": 0,
-                    }
+                    })
+                    continue
                 product = sol.product_id
                 qty = sol.product_uom_qty
                 if sol.product_uom != unit_uom:
