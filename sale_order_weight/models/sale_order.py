@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
-from odoo.tools.float_utils import float_round
 
 
 class SaleOrder(models.Model):
@@ -26,7 +25,6 @@ class SaleOrder(models.Model):
         lb_uom = self.env.ref("uom.product_uom_lb")
         so_weight_in_kg = 0
         so_weight_in_lb = 0
-        precision_rounding = self.env['decimal.precision'].precision_get("Stock Weight")
 
         for record in self:
             for sol in record.order_line:
