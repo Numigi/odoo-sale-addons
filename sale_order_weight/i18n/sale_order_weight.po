@@ -18,7 +18,7 @@ msgstr ""
 #. module: sale_order_weight
 #: model:ir.model,name:sale_order_weight.model_sale_order
 msgid "Sale Order"
-msgstr ""
+msgstr "Vente"
 
 #. module: sale_order_weight
 #: model:ir.model,name:sale_order_weight.model_sale_order_line
@@ -33,4 +33,4 @@ msgstr "Poids de la commande (kg)"
 #. module: sale_order_weight
 #: model:ir.model.fields,field_description:sale_order_weight.field_sale_order__weight_in_lb
 msgid "Weight of the order (lb)"
-msgstr ""
+msgstr "Poids de la commande (lb)"
