@@ -28,7 +28,7 @@ msgstr ""
 #. module: sale_order_weight
 #: model:ir.model.fields,field_description:sale_order_weight.field_sale_order__weight_in_kg
 msgid "Weight of the order (kg)"
-msgstr ""
+msgstr "Poids de la commande (kg)"
 
 #. module: sale_order_weight
 #: model:ir.model.fields,field_description:sale_order_weight.field_sale_order__weight_in_lb
