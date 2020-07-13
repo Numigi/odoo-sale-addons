@@ -1,30 +1,28 @@
 Sale Order Weight
 =================
 This module adds two field to the records of the model Sale Order:
-  - weight_in_kg: Weight of the order (kg)
-  - weight_in_lb: Weight of the order (lb)
 
-These two fields will be computed every time user create/update sale order line
+- weight_in_kg: Weight of the order (kg)
+- weight_in_lb: Weight of the order (lb)
 
-Computation:
-  - If `order_line.product_uom` is not "Unit":
+These two fields will be computed every time a user creates/updates a sale order line.
 
-    - `quantity = _compute_quantity(order_line.quantity, unit)`
+In case, one of the Category of the Unit of Measure (UoM) in the Sale Order Line
+is not "Unit", then the 2 weights are computed as 0.
 
-  - If `order_line.product_uom.category_id` is not "Unit":
+If all the Sale Order Lines have Unit(s) as the Category of Unit of Measure, then
+the weights are computed per sale order line, then summed to get the weitghts of the
+order.
 
-    - return `weight_in_kg = weight_in_lb = 0`
+Per Sale order Line, the weights are computed with the following steps:
 
-  - `weight_in_kg = product.weight * quantity`
-  - `weight_in_lb`
-
-    - if `product.specific_weight_uom_id` is "lb":
-
-      - `weight_in_lb = product.weight_in_uom * quantity`
-
-    - else:
-
-      - `weight_in_lb = _compute_quantity(weight_in_kg, lb)`
+- convert the sold quantity to the reference UoM "Unit(s)": qty_of_unit
+- get the weights from the products: weight_kg, weight_in_uom
+- if the products already has it's weight defined in ``lb`` for the weight_in_uom,
+  then use that value, otherwise convert from the ``kg`` weight of the product
+  to a weight in ``lb``
+- calculate the weights per sale order line by multiplying the
+  qty_of_unit by the weight_kg, and qty_of_unit by the weight_lb
 
 .. image:: static/description/sale_order_weight.png
 
