@@ -38,7 +38,7 @@ class SaleOrder(models.Model):
                 product = sol.product_id
                 qty = sol.product_uom_qty
                 if sol.product_uom != unit_uom:
-                    qty = sol.product_uom._compute_quantity(qty, unit_uom, rounding_method="HALF-UP")
+                    qty = sol.product_uom._compute_quantity(qty, unit_uom, rounding_method="UP")
 
                 line_weight_in_kg = product.weight * qty
                 if product.specific_weight_uom_id == lb_uom:
