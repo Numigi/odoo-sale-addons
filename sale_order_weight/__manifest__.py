@@ -8,7 +8,7 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
-    "installable": True,
     "depends": ["sale_management", "product_dimension"],
-    "data": ["views/sale_order.xml"],
+    "data": ["views/assets.xml", "views/sale_order.xml"],
+    "installable": True,
 }

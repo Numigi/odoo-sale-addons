@@ -28,6 +28,9 @@ class SaleOrder(models.Model):
 
         for record in self:
             for sol in record.order_line:
+                # Skip section line and note line
+                if sol.display_type:
+                    continue
                 # When user choose uom with category is not Unit, return 0
                 if sol.product_uom.category_id != unit_uom_categ:
                     so_weight_in_kg = 0
