@@ -42,6 +42,16 @@
         </field>
     </record>
 
+    <record id="sale_quotation_list" model="ir.ui.view">
+        <field name="name">Sale Quotation List: add delivery completion</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="completion_rate" string="Completion"/>
+            </tree>
+        </field>
+    </record>
 
     <record id="sale_order_list" model="ir.ui.view">
         <field name="name">Sale Order List: add delivery completion</field>
