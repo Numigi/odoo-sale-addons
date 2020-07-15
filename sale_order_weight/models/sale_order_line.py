@@ -25,7 +25,9 @@ class SaleOrderLine(models.Model):
                 weight_in_lb += product.weight_in_uom * qty
             else:
                 weight_in_kg = record.get_weight_in_kg()
-                weight_in_lb += kgm_uom._compute_quantity(weight_in_kg, lb_uom, rounding_method="UP")
+                weight_in_lb += kgm_uom._compute_quantity(
+                    weight_in_kg, lb_uom, rounding_method="UP"
+                )
         return weight_in_lb
 
     @api.multi
@@ -34,5 +36,7 @@ class SaleOrderLine(models.Model):
         qty = self.product_uom_qty
         product_product_uom = self.product_id.uom_id
         if self.product_uom != product_product_uom:
-            qty = self.product_uom._compute_quantity(qty, product_product_uom, rounding_method="UP")
+            qty = self.product_uom._compute_quantity(
+                qty, product_product_uom, rounding_method="UP"
+            )
         return qty
