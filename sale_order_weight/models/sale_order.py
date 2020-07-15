@@ -8,49 +8,25 @@ class SaleOrder(models.Model):
 
     weight_in_kg = fields.Float(
         string="Weight of the order (kg)",
+        compute="_compute_weight_in_kg",
         digits=dp.get_precision('Stock Weight'),
-        readonly=True,
+        store=True,
     )
     weight_in_lb = fields.Float(
         string="Weight of the order (lb)",
+        compute="_compute_weight_in_lb",
         digits=dp.get_precision('Stock Weight'),
-        readonly=True,
+        store=True,
     )
 
-    @api.multi
-    def compute_weights(self):
-        unit_uom_categ = self.env.ref("uom.product_uom_categ_unit")
-        unit_uom = self.env.ref("uom.product_uom_unit")
-        kgm_uom = self.env.ref("uom.product_uom_kgm")
-        lb_uom = self.env.ref("uom.product_uom_lb")
-        so_weight_in_kg = 0
-        so_weight_in_lb = 0
-
+    @api.depends("order_line", "order_line.product_id", "order_line.product_uom_qty", "order_line.product_uom")
+    def _compute_weight_in_kg(self):
         for record in self:
-            for sol in record.order_line:
-                # Skip section line and note line
-                if sol.display_type:
-                    continue
-                # When user choose uom with category is not Unit, return 0
-                if sol.product_uom.category_id != unit_uom_categ:
-                    so_weight_in_kg = 0
-                    so_weight_in_lb = 0
-                    break
-                product = sol.product_id
-                qty = sol.product_uom_qty
-                if sol.product_uom != unit_uom:
-                    qty = sol.product_uom._compute_quantity(qty, unit_uom, rounding_method="UP")
+            order_lines = record.order_line.filtered(lambda l: not l.display_type)
+            record.weight_in_kg = order_lines.get_weight_in_kg()
 
-                line_weight_in_kg = product.weight * qty
-                if product.specific_weight_uom_id == lb_uom:
-                    line_weight_in_lb = product.weight_in_uom * qty
-                else:
-                    line_weight_in_lb = kgm_uom._compute_quantity(line_weight_in_kg, lb_uom, rounding_method="UP")
-
-                so_weight_in_kg += line_weight_in_kg
-                so_weight_in_lb += line_weight_in_lb
-
-            record.write({
-                "weight_in_kg": so_weight_in_kg,
-                "weight_in_lb": so_weight_in_lb,
-            })
+    @api.depends("order_line", "order_line.product_id", "order_line.product_uom_qty", "order_line.product_uom")
+    def _compute_weight_in_lb(self):
+        for record in self:
+            order_lines = record.order_line.filtered(lambda l: not l.display_type)
+            record.weight_in_lb = order_lines.get_weight_in_lb()

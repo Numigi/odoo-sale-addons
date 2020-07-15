@@ -7,15 +7,13 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="priority">30</field>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='sale_total']" position="after">
-                <group name="sale_weight" class="oe_subtotal_footer o_sale_order_weight" style="float: left !important;">
+            <field name="note" position="before">
+                <group class="oe_inline" >
                     <field name="weight_in_kg"/>
                     <field name="weight_in_lb"/>
                 </group>
-            </xpath>
-            <xpath expr="//field[@name='note']" position="attributes">
-                <attribute name="style">display: block; clear: both</attribute>
-            </xpath>
+                <div class="oe_clear"/>
+            </field>
         </field>
     </record>
 
