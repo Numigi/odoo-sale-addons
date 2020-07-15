@@ -144,9 +144,3 @@ class TestSaleOrderWeight(SavepointCase):
             ),
             uom=self.lb_uom
         )
-
-    def test_sale_order_line_with_unsupported_uom(self):
-        so = self._create_simple_sale_order(
-            product=self.product_weight_gram, product_uom=self.day_uom)
-        self._assert_weight(so.weight_in_kg, 0, uom=self.kgm_uom)
-        self._assert_weight(so.weight_in_lb, 0, uom=self.lb_uom)
