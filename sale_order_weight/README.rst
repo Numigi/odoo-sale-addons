@@ -7,12 +7,7 @@ This module adds two field to the records of the model Sale Order:
 
 These two fields will be computed every time a user creates/updates a sale order line.
 
-In case, one of the Category of the Unit of Measure (UoM) in the Sale Order Line
-is not "Unit", then the 2 weights are computed as 0.
-
-If all the Sale Order Lines have Unit(s) as the Category of Unit of Measure, then
-the weights are computed per sale order line, then summed to get the weitghts of the
-order.
+The weights are computed per sale order line, then summed to get the weitghts of the order.
 
 Per Sale order Line, the weights are computed with the following steps:
 
