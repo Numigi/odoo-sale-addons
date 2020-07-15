@@ -11,7 +11,7 @@ The weights are computed per sale order line, then summed to get the weitghts of
 
 Per Sale order Line, the weights are computed with the following steps:
 
-- convert the sold quantity to the reference UoM "Unit(s)": qty_of_unit
+- convert the sold quantity to the product's UoM: qty_in_product_uom
 - get the weights from the products: weight_kg, weight_in_uom
 - if the products already has it's weight defined in ``lb`` for the weight_in_uom,
   then use that value, otherwise convert from the ``kg`` weight of the product
