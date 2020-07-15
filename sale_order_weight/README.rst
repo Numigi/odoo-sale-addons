@@ -17,7 +17,7 @@ Per Sale order Line, the weights are computed with the following steps:
   then use that value, otherwise convert from the ``kg`` weight of the product
   to a weight in ``lb``
 - calculate the weights per sale order line by multiplying the
-  qty_of_unit by the weight_kg, and qty_of_unit by the weight_lb
+  qty_in_product_uom by the weight_kg, and qty_in_product_uom by the weight_lb
 
 .. image:: static/description/sale_order_weight.png
 
