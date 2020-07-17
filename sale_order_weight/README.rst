@@ -7,7 +7,7 @@ This module adds two field to the records of the model Sale Order:
 
 These two fields will be computed every time a user creates/updates a sale order line.
 
-The weights are computed per sale order line, then summed to get the weitghts of the order.
+The weights are computed per sale order line, then summed to get the weights of the order.
 
 Per Sale order Line, the weights are computed with the following steps:
 
