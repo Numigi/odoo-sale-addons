@@ -6,6 +6,7 @@ from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
 
+MAX_HOURS_AFTER_RENTAL = 6
 
 class SaleOrderLine(models.Model):
 
@@ -49,7 +50,11 @@ class SaleOrderLine(models.Model):
 
     def _get_qty_based_on_rental_dates(self):
         number_of_days = (self.rental_date_to - self.rental_date_from).days
-        return max(number_of_days + 1, 0)
+
+        if (self.rental_date_to.hour - self.rental_date_from.hour) < MAX_HOURS_AFTER_RENTAL:
+            return number_of_days
+        else:
+            return max(number_of_days + 1, 0)
 
     @api.multi
     def _compute_tax_id(self):
