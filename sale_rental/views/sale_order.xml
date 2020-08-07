@@ -42,6 +42,12 @@
                     'readonly': [('rental_date_to_editable', '=', False)],
                 }"/>
             </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="context" operation="python_dict" key="search_default_can_be_rented">is_rental_order</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                <attribute name="context" operation="python_dict" key="search_default_can_be_rented">is_rental_order</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -78,6 +84,18 @@
                     <field name="rental_return_count" widget="statinfo" string="Receipt"/>
                 </button>
             </button>
+        </field>
+    </record>
+
+    <record id="sale_order_search" model="ir.ui.view">
+        <field name="name">Sale Order Search: add rental</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <separator position="after">
+                <filter name="is_rental" string="Rentals" domain="[('is_rental', '=', True)]"/>
+                <separator/>
+            </separator>
         </field>
     </record>
 
