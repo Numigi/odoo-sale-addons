@@ -38,7 +38,8 @@ msgstr ""
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_product_product__can_be_rented
 #: model:ir.model.fields,field_description:sale_rental.field_product_template__can_be_rented
-msgid "Can Be Rented"
+#: model_terms:ir.ui.view,arch_db:sale_rental.product_template_search
+msgid "Can be Rented"
 msgstr "Peut être loué"
 
 #. module: sale_rental
@@ -240,4 +241,3 @@ msgstr "Le service de location {} doit avoir l'unité de mesure jour(s)."
 msgid ""
 "Update the delivered quantity on sale order lines of type rental service"
 msgstr "Mise à jour des quantités livrées sur ligne de SO de location"
-
