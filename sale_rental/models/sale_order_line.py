@@ -57,22 +57,6 @@ class SaleOrderLine(models.Model):
         quantity = abs(self.rental_date_to - self.rental_date_from)
         max_buffer_in_seconds = self._get_buffer_in_seconds()
 
-        print(
-            "\n Quantity = ",
-            quantity.days,
-            "\n Absolute_difference = ",
-            quantity.seconds,
-            "\n max_buffer = ",
-            max_buffer_in_seconds,
-            "\n absolute_hour_difference < max_buffer = ",
-            quantity.seconds < max_buffer_in_seconds,
-            "\n quantity returned = ",
-            quantity.days
-            if quantity.seconds < max_buffer_in_seconds
-            else quantity.days + 1,
-            "\n",
-        )
-
         if quantity.seconds < max_buffer_in_seconds:
             return quantity.days if quantity.days > 0 else 1
         else:

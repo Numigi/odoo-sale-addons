@@ -98,7 +98,7 @@ class TestSaleOrderLineDeliveredQty(SaleOrderKitCase):
 
         assert self.service_1.rental_date_from == delivery_date
         assert self.service_1.rental_date_to == return_date
-        assert self.service_1.product_uom_qty == 6  # 10 - 5 + 1
+        assert self.service_1.product_uom_qty == 5
 
     def test_important_components_partially_returned(self):
         now = datetime.now()
