@@ -117,4 +117,4 @@ class TestSaleOrderLineDeliveredQty(SaleOrderKitCase):
 
         assert self.service_1.rental_date_from == delivery_date
         assert self.service_1.rental_date_to == initial_date_to
-        assert self.service_1.product_uom_qty == 3  # 7 - 5 + 1
+        assert self.service_1.product_uom_qty == 2
