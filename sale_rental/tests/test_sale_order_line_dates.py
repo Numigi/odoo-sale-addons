@@ -43,9 +43,9 @@ class TestSaleOrderLineDeliveredQty(SaleOrderKitCase):
 
     @data(
         (datetime(2020, 1, 1), datetime(2020, 1, 1, 23, 59, 59), 1),
-        (datetime(2020, 1, 1), datetime(2020, 1, 2), 2),
+        (datetime(2020, 1, 1), datetime(2020, 1, 2), 1),
         (datetime(2020, 1, 1), datetime(2020, 1, 2, 23, 59, 59), 2),
-        (datetime(2020, 1, 1), datetime(2020, 1, 3), 3),
+        (datetime(2020, 1, 1), datetime(2020, 1, 3), 2),
     )
     @unpack
     def test_onchange_rental_dates(self, date_from, date_to, quantity):
