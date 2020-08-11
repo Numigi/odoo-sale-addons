@@ -1,12 +1,17 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
 
+import logging
+
 MAX_HOURS_AFTER_RENTAL = 6
+
+_logger = logging.Logger(__name__)
+
 
 class SaleOrderLine(models.Model):
 
@@ -49,12 +54,33 @@ class SaleOrderLine(models.Model):
             self.rental_date_to = self.rental_date_from
 
     def _get_qty_based_on_rental_dates(self):
-        number_of_days = (self.rental_date_to - self.rental_date_from).days
+        quantity = abs(self.rental_date_to - self.rental_date_from)
+        max_buffer_in_seconds = self._get_buffer_in_seconds()
 
-        if (self.rental_date_to.hour - self.rental_date_from.hour) < MAX_HOURS_AFTER_RENTAL:
-            return number_of_days
+        print(
+            "\n Quantity = ",
+            quantity.days,
+            "\n Absolute_difference = ",
+            quantity.seconds,
+            "\n max_buffer = ",
+            max_buffer_in_seconds,
+            "\n absolute_hour_difference < max_buffer = ",
+            quantity.seconds < max_buffer_in_seconds,
+            "\n quantity returned = ",
+            quantity.days
+            if quantity.seconds < max_buffer_in_seconds
+            else quantity.days + 1,
+            "\n",
+        )
+
+        if quantity.seconds < max_buffer_in_seconds:
+            return quantity.days if quantity.days > 0 else 1
         else:
-            return max(number_of_days + 1, 0)
+            return quantity.days + 1
+
+    def _get_buffer_in_seconds(self):
+        buffer = timedelta(hours=int(self.company_id.rental_buffer))
+        return buffer.seconds
 
     @api.multi
     def _compute_tax_id(self):

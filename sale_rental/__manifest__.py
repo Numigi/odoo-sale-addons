@@ -16,6 +16,7 @@
         "views/sale_order.xml",
         "views/product_template.xml",
         "views/menu.xml",
+        "views/res_config_settings.xml",
     ],
     "installable": True,
 }
