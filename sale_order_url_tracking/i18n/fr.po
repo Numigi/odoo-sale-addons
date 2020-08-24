@@ -18,7 +18,7 @@ msgstr ""
 #. module: sale_order_url_tracking
 #: model:ir.model,name:sale_order_url_tracking.model_sale_order
 msgid "Sale Order"
-msgstr ""
+msgstr "Bon de commande"
 
 #. module: sale_order_url_tracking
 #: model:ir.model.fields,field_description:sale_order_url_tracking.field_sale_order__tracking_url
