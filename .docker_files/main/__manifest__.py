@@ -20,6 +20,7 @@
         "sale_order_line_readonly_conditions",
         "sale_order_margin_percent",
         "sale_order_url_tracking",
+        "sale_order_weight",
         "sale_persistent_product_warning",
         "sale_rental",
         "sale_warranty",

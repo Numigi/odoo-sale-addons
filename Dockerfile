@@ -25,6 +25,7 @@ COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
+COPY sale_order_weight /mnt/extra-addons/sale_order_weight
 COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_warranty /mnt/extra-addons/sale_warranty

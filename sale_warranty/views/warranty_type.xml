@@ -30,6 +30,7 @@
                         <field name="duration_in_months"/>
                         <field name="active"/>
                         <field name="description"/>
+                        <field name="url"/>
                         <field name="allow_non_serialized_products"/>
                     </group>
                 </sheet>
