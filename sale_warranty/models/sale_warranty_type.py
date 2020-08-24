@@ -15,6 +15,7 @@ class WarrantyType(models.Model):
     name = fields.Char(required=True)
     duration_in_months = fields.Integer(required=True)
     description = fields.Text()
+    url = fields.Char(string="URL")
     allow_non_serialized_products = fields.Boolean(
         help="If checked, this warranty type is selectable on non-serialized products."
     )
