@@ -19,6 +19,7 @@
         "sale_order_available_qty_popover",
         "sale_order_line_readonly_conditions",
         "sale_order_margin_percent",
+        "sale_order_url_tracking",
         "sale_persistent_product_warning",
         "sale_rental",
         "sale_warranty",
