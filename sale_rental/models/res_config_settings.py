@@ -8,6 +8,4 @@ class ResConfigSettings(models.TransientModel):
 
     _inherit = "res.config.settings"
 
-    rental_buffer = fields.Selection(
-        related="company_id.rental_buffer", readonly=False  # company_id.rental_buffer
-    )
+    rental_buffer = fields.Integer(related="company_id.rental_buffer", readonly=False)

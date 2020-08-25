@@ -6,12 +6,6 @@ from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
 
-import logging
-
-MAX_HOURS_AFTER_RENTAL = 6
-
-_logger = logging.Logger(__name__)
-
 
 class SaleOrderLine(models.Model):
 
@@ -54,17 +48,13 @@ class SaleOrderLine(models.Model):
             self.rental_date_to = self.rental_date_from
 
     def _get_qty_based_on_rental_dates(self):
-        quantity = abs(self.rental_date_to - self.rental_date_from)
-        max_buffer_in_seconds = self._get_buffer_in_seconds()
+        buffer = self._get_buffer()
+        quantity = self.rental_date_to - self.rental_date_from - buffer
+        return max(quantity.days + 1, 1)
 
-        if quantity.seconds < max_buffer_in_seconds:
-            return quantity.days if quantity.days > 0 else 1
-        else:
-            return quantity.days + 1
-
-    def _get_buffer_in_seconds(self):
+    def _get_buffer(self):
         buffer = timedelta(hours=int(self.company_id.rental_buffer))
-        return buffer.seconds
+        return buffer
 
     @api.multi
     def _compute_tax_id(self):

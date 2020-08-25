@@ -14,7 +14,7 @@
                         <div class="o_setting_right_pane">
                             <span class="o_form_label">Rental buffer</span>
                             <div class="text-muted">
-                                Select the number of hours before a rental is considered to be one more day
+                                Enter the number of hours before a rental is considered to be one more day
                             </div>
                             <field name="rental_buffer"/>
                         </div>
@@ -25,5 +25,3 @@
     </record>
 
 </odoo>
-
-<!--Select the number of hours before a rental is considered to be one more day-->
