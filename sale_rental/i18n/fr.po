@@ -18,6 +18,18 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
+msgid "Enter the number of hours before a rental is considered to be one more day"
+msgstr "Entrez le nombre d'heures maximal avant qu'un jour supplémentaire soit compté pour la location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_res_company__rental_buffer
+#: model:ir.model.fields,field_description:sale_rental.field_res_config_settings__rental_buffer
+#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
+msgid "Rental buffer"
+msgstr "Marge de fin de location"
+
+#. module: sale_rental
 #: model:ir.model.fields,help:sale_rental.field_sale_order_line__qty_delivered_method
 msgid ""
 "According to product configuration, the delivered quantity can be "
@@ -126,6 +138,7 @@ msgstr "Réception"
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__is_rental_order
 #: model:ir.ui.menu,name:sale_rental.rental_menu
 #: model_terms:ir.ui.view,arch_db:sale_rental.product_template_form
+#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
 msgid "Rental"
 msgstr "Location"
 
@@ -240,4 +253,3 @@ msgstr "Le service de location {} doit avoir l'unité de mesure jour(s)."
 msgid ""
 "Update the delivered quantity on sale order lines of type rental service"
 msgstr "Mise à jour des quantités livrées sur ligne de SO de location"
-
