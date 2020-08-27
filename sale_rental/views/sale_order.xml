@@ -94,6 +94,7 @@
         <field name="arch" type="xml">
             <separator position="after">
                 <filter name="is_rental" string="Rentals" domain="[('is_rental', '=', True)]"/>
+                <separator/>
             </separator>
         </field>
     </record>
