@@ -1,7 +1,7 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import ValidationError
@@ -48,8 +48,13 @@ class SaleOrderLine(models.Model):
             self.rental_date_to = self.rental_date_from
 
     def _get_qty_based_on_rental_dates(self):
-        number_of_days = (self.rental_date_to - self.rental_date_from).days
-        return max(number_of_days + 1, 0)
+        buffer = self._get_buffer()
+        quantity = self.rental_date_to - self.rental_date_from - buffer
+        return max(quantity.days + 1, 1)
+
+    def _get_buffer(self):
+        buffer = timedelta(hours=int(self.company_id.rental_buffer))
+        return buffer
 
     @api.multi
     def _compute_tax_id(self):

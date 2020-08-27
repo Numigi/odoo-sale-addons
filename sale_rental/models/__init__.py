@@ -5,6 +5,8 @@ from . import (
     procurement_group,
     product_product,
     product_template,
+    res_company,
+    res_config_settings,
     sale_order,
     sale_order_line,
     stock_move,
