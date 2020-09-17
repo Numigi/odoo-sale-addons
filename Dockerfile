@@ -27,6 +27,9 @@ COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
 COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
+COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
+COPY sale_privilege_level_delivery /mnt/extra-addons/sale_privilege_level_delivery
+COPY sale_privilege_level_payment /mnt/extra-addons/sale_privilege_level_payment
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
