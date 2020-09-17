@@ -1,32 +1,33 @@
-Sale Privilege Level
-=====================
-This module adds privilege levels on partners.
+Sale Privilege Level Payment
+============================
+This module allows to filter payment acquirers based on privilege levels.
 
 .. contents:: Table of Contents
 
-Overview
---------
-This module adds the concept of a privilege level and allows to select a privilege level on a partner.
-
-However, it does not define how the privilege level is used.
-
-See modules ``sale_privilege_level_payment`` and ``sale_privilege_level_delivery`` for examples of usage.
-
 Configuration
 -------------
-As ``Partner Manager``, I notice a new menu entry ``Contacts / Configuration / Privilege Levels``.
+As ``Website Manager``, I go to the list of payment acquirers.
 
-.. image:: static/description/privilege_level_menu.png
+.. image:: static/description/acquirers_list.png
 
-When I click on this menu entry, I find the list of privilege levels.
+In the form view of a payment acquirer, I notice a new tab ``Privilege Availability``.
 
-.. image:: static/description/privilege_level_list.png
+.. image:: static/description/acquirer_form.png
 
-Partners
---------
-On the form view of a partner, I can select a single privilege level.
+The field ``Privilege Levels`` allows to filter the payment acquirers based on the privilege level.
 
-.. image:: static/description/partner_form.png
+If one or many privilege levels are selected, the payment acquirer is only selectable for
+customers with one of these privilege levels.
+
+If the field is empty, it is selectable by any customer.
+
+Usage
+-----
+As a customer, I checkout my order.
+
+In the payment step, I see only payment acquirers enabled for my privilege level.
+
+.. image:: static/description/website_shop_payment.png
 
 Contributors
 ------------

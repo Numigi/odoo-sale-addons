@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* recording_lang
+# 	* sale_privilege_level
 #
 msgid ""
 msgstr ""
@@ -115,24 +115,3 @@ msgstr "Rechercher des niveau de privilèges"
 #: model:ir.model.fields,field_description:sale_privilege_level.field_sale_privilege_level__sequence
 msgid "Sequence"
 msgstr "Séquence"
-
-#~ msgid "Code"
-#~ msgstr "Code"
-
-#~ msgid "English"
-#~ msgstr "Anglais"
-
-#~ msgid "French"
-#~ msgstr "Français"
-
-#~ msgid "Language"
-#~ msgstr "Langue"
-
-#~ msgid "Record Language"
-#~ msgstr "Langue d'enregistrements"
-
-#~ msgid "Record Languages"
-#~ msgstr "Langues des enregistrements"
-
-#~ msgid "Search Record Languages"
-#~ msgstr "Chercher des langues d'enregistrements"
