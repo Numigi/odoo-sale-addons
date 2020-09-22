@@ -217,6 +217,12 @@ msgid "Rental Service"
 msgstr "Service de location"
 
 #. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_res_company__rental_buffer
+#: model:ir.model.fields,field_description:sale_rental.field_res_config_settings__rental_buffer
+msgid "Rental Buffer"
+msgstr "Marge de fin de location"
+
+#. module: sale_rental
 #: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_search
 msgid "Rentals"
 msgstr "Locations"

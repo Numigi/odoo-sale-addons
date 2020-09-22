@@ -110,6 +110,11 @@ msgid "Description"
 msgstr "Description"
 
 #. module: sale_warranty
+#: model:ir.model.fields,field_description:sale_warranty.field_sale_warranty_type__url
+msgid "URL"
+msgstr "URL"
+
+#. module: sale_warranty
 #: model_terms:ir.ui.view,arch_db:sale_warranty.warranty_form
 msgid "Details"
 msgstr "Détails"
