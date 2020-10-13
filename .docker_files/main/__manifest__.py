@@ -25,6 +25,7 @@
         "sale_privilege_level",
         "sale_privilege_level_delivery",
         "sale_privilege_level_payment",
+        "sale_privilege_level_website",
         "sale_rental",
         "sale_warranty",
         "sale_warranty_extension",
