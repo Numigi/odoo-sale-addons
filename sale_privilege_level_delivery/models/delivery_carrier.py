@@ -19,8 +19,14 @@ class DeliveryCarrier(models.Model):
     def search(self, *args, **kwargs):
         res = super().search(*args, **kwargs)
 
-        if "filter_delivery_carrier_ids" in self._context:
-            available_ids = self._context["filter_delivery_carrier_ids"]
-            res = res.filtered(lambda a: available_ids and a.id in available_ids)
+        partner_id = self._context.get("sale_privilege_level_partner_id")
+        if partner_id:
+            partner = (
+                self.env["res.partner"]
+                .browse(partner_id)
+                .with_context(sale_privilege_level_partner_id=False)
+            )
+            available_carriers = partner.get_available_delivery_carriers()
+            res &= available_carriers
 
         return res

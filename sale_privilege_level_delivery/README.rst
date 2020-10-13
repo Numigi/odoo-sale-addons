@@ -1,12 +1,12 @@
 Sale Privilege Level Delivery
 =============================
-This module allows to filter delivery methods on the e-commerce based on privilege levels.
+This module allows to filter delivery methods on a sale order based on privilege levels of the customer.
 
 .. contents:: Table of Contents
 
 Configuration
 -------------
-As ``Website Manager``, I go to the list of delivery methods.
+As ``Sale Manager``, I go to the list of delivery methods.
 
 .. image:: static/description/carriers_list.png
 
@@ -21,8 +21,17 @@ customers with one of these privilege levels.
 
 If the field is empty, it is selectable by any customer.
 
-Usage
------
+Sale Orders
+-----------
+As a member of the group ``Sale / User``, I create a new sale order.
+
+After selecting a customer, I notice that the available delivery methods are
+filtered based on the privilege level of this customer.
+
+.. image:: static/description/sale_order.png
+
+E-commerce
+----------
 As a customer, I checkout my order.
 
 In the payment step, I see only delivery methods enabled for my privilege level.

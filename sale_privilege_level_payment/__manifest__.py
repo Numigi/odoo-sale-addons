@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Integrate privilege levels with payments for the e-commerce",
-    "depends": ["sale_privilege_level", "website_sale"],
-    "data": ["views/payment_acquirer.xml"],
+    "depends": ["sale_privilege_level", "payment"],
+    "data": ["views/payment_acquirer.xml", "views/sale_privilege_level.xml"],
     "installable": True,
 }
