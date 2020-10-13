@@ -1,12 +1,12 @@
 Sale Privilege Level Delivery
 =============================
-This module allows to filter delivery methods on a sale order based on privilege levels of the customer.
+This module allows to filter available delivery methods on based on privilege levels of the customer.
 
 .. contents:: Table of Contents
 
 Configuration
 -------------
-As ``Sale Manager``, I go to the list of delivery methods.
+As ``Website Manager``, I go to the list of delivery methods.
 
 .. image:: static/description/carriers_list.png
 
