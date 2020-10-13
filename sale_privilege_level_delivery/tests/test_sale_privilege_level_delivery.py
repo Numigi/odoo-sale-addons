@@ -43,3 +43,21 @@ class TestResPartner(SavepointCase):
         result = self.child_partner.get_available_delivery_carriers()
         assert self.carrier_a in result
         assert self.carrier_b not in result
+
+    def test_search_without_filter(self):
+        carrier = self.env["delivery.carrier"].search([("id", "=", self.carrier_b.id)])
+        assert carrier == self.carrier_b
+
+    def test_search_with_filter(self):
+        available_carriers = (
+            self.env["delivery.carrier"]
+            .with_context(sale_privilege_level_partner_id=self.partner.id)
+            .search([])
+        )
+        assert self.carrier_a in available_carriers
+        assert self.carrier_b not in available_carriers
+
+    def test_sale_order_filter(self):
+        order = self.env["sale.order"].new({"partner_shipping_id": self.partner.id})
+        assert self.carrier_a in order.available_carrier_ids
+        assert self.carrier_b not in order.available_carrier_ids

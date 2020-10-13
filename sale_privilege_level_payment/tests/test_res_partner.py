@@ -43,3 +43,18 @@ class TestResPartner(SavepointCase):
         result = self.child_partner.get_available_payment_acquirers()
         assert self.acquirer_a in result
         assert self.acquirer_b not in result
+
+    def test_search_without_filter(self):
+        acquirer = self.env["payment.acquirer"].search(
+            [("id", "=", self.acquirer_b.id)]
+        )
+        assert acquirer == self.acquirer_b
+
+    def test_search_with_filter(self):
+        available_acquirers = (
+            self.env["payment.acquirer"]
+            .with_context(sale_privilege_level_partner_id=self.partner.id)
+            .search([])
+        )
+        assert self.acquirer_a in available_acquirers
+        assert self.acquirer_b not in available_acquirers
