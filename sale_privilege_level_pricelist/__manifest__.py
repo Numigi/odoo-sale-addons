@@ -11,6 +11,6 @@
     "category": "Sales",
     "summary": "Integrate privilege levels with pricelists",
     "depends": ["sale_privilege_level", "product"],
-    "data": ["views/res_partner.xml", "views/sale_privilege_level.xml"],
+    "data": ["views/sale_privilege_level.xml"],
     "installable": True,
 }
