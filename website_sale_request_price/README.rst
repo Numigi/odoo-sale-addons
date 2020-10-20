@@ -1,6 +1,5 @@
 Website Sale Request Price
 ==========================
-- Must _is_add_to_cart_possible
 .. image:: static/description/website_stock_availability_enhanced_successful.png
 
 Configuration
