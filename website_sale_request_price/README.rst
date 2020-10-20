@@ -1,6 +1,6 @@
 Website Sale Request Price
 ==========================
-- New option on the product in the existing selection field of the E-commerce tab
+- Must _is_add_to_cart_possible
 .. image:: static/description/website_stock_availability_enhanced_successful.png
 
 Configuration

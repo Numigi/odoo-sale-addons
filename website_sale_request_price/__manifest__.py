@@ -9,6 +9,6 @@
     "maintainer": "Numigi",
     "license": "AGPL-3",
     "depends": ["website_sale", "crm_brand", "crm_lead_product"],
-    "data": [],
+    "data": ["views/res_config_settings.xml", "views/templates.xml"],
     "installable": True,
 }
