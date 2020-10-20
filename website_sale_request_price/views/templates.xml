@@ -6,19 +6,31 @@
         </xpath>
     </template>
 
-    <template inherit_id="website_sale.product_price" id="website_sale_request_price_product_price" name="Website Sale Request Price: Product Price">
+    <template inherit_id="website_sale.product_price" id="website_sale_request_price_product_price" name="Product Price: handling hiding Price">
         <xpath expr="//div[hasclass('product_price')]" position="attributes">
             <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
-            <attribute name="style">display: none;</attribute>
         </xpath>
     </template>
-    <template inherit_id="website_sale.product" id="website_sale_request_price_product" name="Website Sale Request Price Product">
+
+    <template inherit_id="website_sale.products_item" id="website_sale_request_price_products_item" name="Products item: handling hiding Price">
+        <xpath expr="//div[hasclass('product_price')]/b" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.products_add_to_cart" id="website_sale_request_price_products_add_to_cart" name="Products item: handling hiding Shopping cart">
+        <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.product" id="website_sale_request_price_product" name="Product: handling showing Request Price instead of Add to Cart">
         <xpath expr="//a[@id='add_to_cart']" position="attributes">
             <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
         </xpath>
         <xpath expr="//a[@id='add_to_cart']" position="after">
             <t t-if="product.is_request_price_required()">
-                <a role="button" id="request_price" class="btn btn-primary btn-lg mt8 js_check_product" t-attf-action="/shop/product/#{slug(product)}/request_price">Request Price</a>
+                <a role="button" id="request_price" class="btn btn-primary btn-lg mt8 js_check_product" t-attf-action="/shop/product/request_price">Request Price</a>
             </t>
         </xpath>
     </template>
@@ -26,7 +38,8 @@
     <template id="request_price_details" name="Request Price Details">
         <div role="dialog" id="modal_request_prices" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-lg">
-                <form id="request_price" t-attf-action="/shop/product/#{slug(product)}/request_price/confirm" method="post" class="js_website_submit_form">
+                <t t-set="product_product" t-value="request.env['product.product'].browse(product_product_id)"/>
+                <form id="request_price" t-attf-action="/shop/product/request_price/confirm" method="post" class="js_website_submit_form">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     <div class="modal-content">
                         <header class="modal-header">
@@ -38,11 +51,12 @@
                             <div class="container">
                                 <h4 class="o_page_header mt16">
                                     <strong>
-                                        <t t-esc="product.display_name"/><!--TODO: get full name with varient-->
+                                        <t t-esc="product_product.display_name"/>
                                     </strong>
-                                    <input type="hidden" class="product_id" name="product" t-att-value="product"/>
+                                    <input type="hidden" class="product_product_id" name="product_product_id" t-att-value="product_product.id"/>
+                                    <input type="hidden" name="product_qty" t-att-value="product_qty"/>
                                 </h4>
-                                <t t-set="user" t-value="product.env.user"/>
+                                <t t-set="user" t-value="request.env.user"/>
                                 <div t-if="user._is_public()" class="row">
                                     <div class="col-lg-4"><span>Name*</span></div>
                                     <div class="col-lg-5"><span>Email*</span></div>
