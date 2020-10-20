@@ -1,20 +1,20 @@
 Website Sale Request Price
 ==========================
-- This module add option to hide the price of product when it rich a threshold and allow user to request for price through email
+- This module adds an option to hide the price of product when it reaches a threshold and allow the user to request for price through email
 - The requesting price action creates a Lead in backend
 
 Module flow
 -----------
 
-- I go to the configuration of the Website. I find new checkbox, if I press it, three new configuration options will show.
+- I go to the configuration of the Website. I find a new checkbox, if I press it, three new configuration options will show.
 
-1. The first option allows me to define a price at from which the price will not be displayed on the website.
-2. The second option allows me to choose the email template that will be used to send a quote confirmation email to the client.
-3. The third option allows me to choose the sales team that will be used to create pipeline/lead in the backend.
+1. The first option allows me to define a price at which the price will not be displayed on the website.
+2. The second option allows me to choose the email template used to send a quote confirmation email to the client.
+3. The third option allows me to select the sales team used to create a pipeline/lead in the backend.
 
 .. image:: static/description/website_sale_request_price_config.png
 
-- As a logged in or non logged in user, I will in the shop. I see the price of the item that less than threshold is hidden.
+- As a logged in or non logged in user, I will in the shop. I see the price of the item that less than the threshold is hidden.
 
 .. image:: static/description/website_sale_request_price_products_item.png
 
@@ -32,7 +32,7 @@ A wizard opens to allow me to fill in my details.
 - An opportunity is created in the backend.
 - The following information is automatically filled in:
 1. Name: "Shop: {name of the variant}"
-2. E-mail: field E-mail of the form
+2. Email: field Email of the form
 3. Telephone: field Telephone of the form
 4. Team: sales team from config
 5. Internal notes: field Additional Information of the form
