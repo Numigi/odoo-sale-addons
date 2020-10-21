@@ -24,7 +24,7 @@ sAnimations.registry.WebsiteSaleRequestPrice = sAnimations.Class.extend(ProductC
             "product_product_id": parseInt($form.find(productSelector.join(', ')).first().val(), 10),
             "product_qty": parseFloat($form.find('input[name="add_qty"]').val() || 1),
         };
-        return ajax.jsonRpc($('#request_price').attr('action'), 'call', post).then(function (modal) {
+        return ajax.jsonRpc('/shop/product/request_price', 'call', post).then(function (modal) {
             var $modal = $(modal);
             $modal.modal({backdrop: 'static', keyboard: false});
             $modal.find('.modal-body > div').removeClass('container');

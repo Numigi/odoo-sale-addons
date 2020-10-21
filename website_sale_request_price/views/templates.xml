@@ -30,7 +30,7 @@
         </xpath>
         <xpath expr="//a[@id='add_to_cart']" position="after">
             <t t-if="product.is_request_price_required()">
-                <a role="button" id="request_price" class="btn btn-primary btn-lg mt8 js_check_product" t-attf-action="/shop/product/request_price">Request Price</a>
+                <a role="button" id="request_price" class="btn btn-primary btn-lg mt8 js_check_product">Request Price</a>
             </t>
         </xpath>
     </template>
