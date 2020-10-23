@@ -10,23 +10,27 @@ In the form view of a privilege level, I notice a new tab ``Pricelists``.
 
 .. image:: static/description/privilege_level_form.png
 
-It contains a mapping indicating which pricelist to use for this privilege level and
-a given currency.
+It contains a list of pricelists available for this privilege level.
+
+The first pricelist from this list matching the country of a partner will be used.
+A pricelist with no country group will match any partner.
 
 Partners
 --------
-In the form view of a partner, I notice a new field ``Customer Currency``.
-This field indicates the currency to use when selling to this partner.
-
-.. image:: static/description/partner_sale_currency.png
-
-I also notice that the ``Sale Pricelist`` is readonly.
+In the form view of a partner, I notice that the ``Sale Pricelist`` is readonly.
 
 .. image:: static/description/partner_pricelist_readonly.png
 
-It is computed based on the partner's privilege level and customer currency.
+It is computed based on the partner's privilege level and country.
 
 .. image:: static/description/partner_privilege_level.png
+
+Known Issues
+------------
+If a customer does not have a privilege level defined, its sale pricelist will be empty.
+
+Otherwise, we would have to use a fallback mechanism for finding a matching pricelist,
+thus making the system harder to reason about.
 
 Contributors
 ------------

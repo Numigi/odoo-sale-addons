@@ -8,10 +8,6 @@ class SalePrivilegeLevel(models.Model):
 
     _inherit = "sale.privilege.level"
 
-    pricelist_ids = fields.Many2many(
-        "product.pricelist",
-        "sale_privilege_level_pricelist_rel",
-        "privilege_level_id",
-        "pricelist_id",
-        "Pricelists",
+    pricelist_ids = fields.One2many(
+        "sale.privilege.level.pricelist", "privilege_level_id", "Pricelists"
     )
