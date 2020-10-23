@@ -17,13 +17,11 @@ A pricelist with no country group will match any partner.
 
 Partners
 --------
-In the form view of a partner, I notice that the ``Sale Pricelist`` is readonly.
+In the form view of a partner, I notice that the ``Sale Pricelist`` is readonly (1).
 
-.. image:: static/description/partner_pricelist_readonly.png
+It is computed based on the partner's country (2) and privilege level (3).
 
-It is computed based on the partner's privilege level and country.
-
-.. image:: static/description/partner_privilege_level.png
+.. image:: static/description/partner_form.png
 
 Known Issues
 ------------
