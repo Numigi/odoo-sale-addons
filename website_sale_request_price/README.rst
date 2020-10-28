@@ -8,14 +8,28 @@ Module flow
 - I go to the configuration of the Website. I find a new checkbox, if I press it, three new configuration options will show.
 
 1. The first option allows me to define a price at which the price will not be displayed on the website.
-2. The second option allows me to choose the email template used to send a quote confirmation email to the client.
+2. The second option allows me to choose the email template used to send a quote confirmation email to the client. The mail template must be linked to Lead/Opportunity model to keep track.
 3. The third option allows me to select the sales team used to create a pipeline/lead in the backend.
 
 .. image:: static/description/website_sale_request_price_config.png
 
-- As a logged in or non logged in user, I will in the shop. I see the price of the item that less than the threshold is hidden.
+- As a logged in or non logged in user, I see the price of the products and [Add to Cart] button only if the price is less than the threshold, otherwise [Request Price] button will appear
 
-.. image:: static/description/website_sale_request_price_products_item.png
+  + When going to the website shop, in the kanban of products:
+
+  .. image:: static/description/website_sale_request_price_shop_kanban.png
+
+  + When going to the website shop, in the list of products:
+
+  .. image:: static/description/website_sale_request_price_shop_list.png
+
+  + When going to the website wishlist:
+
+  .. image:: static/description/website_sale_request_price_wishlist.png
+
+  + When going to the website cart, in the suggested accessories:
+
+  .. image:: static/description/website_sale_request_price_cart_suggested_accessories.png
 
 - I am going to the product sheet. The price is also hidden if the price is above the threshold.
 - Instead of the [Add to Cart] button, I find a new button [Request Price].
