@@ -15,15 +15,16 @@ sAnimations.registry.WebsiteSaleRequestPrice = sAnimations.Class.extend(ProductC
     _onClickPriceRequest: function (ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        var $form = $(ev.currentTarget).closest("form");
+        var $product_form = $(ev.currentTarget).closest("form");
         var productSelector = [
             'input[type="hidden"][name="product_id"]',
             'input[type="radio"][name="product_id"]:checked'
         ];
-        var post = {
-            "product_product_id": parseInt($form.find(productSelector.join(', ')).first().val(), 10),
-            "product_qty": parseFloat($form.find('input[name="add_qty"]').val() || 1),
-        };
+        var product_product_id = parseInt($product_form.find(productSelector.join(', ')).first().val(), 10)
+        || parseInt($(ev.currentTarget).closest("td").find(productSelector.join(', ')).first().val(), 10)
+        || parseInt($(ev.currentTarget).closest("td").find(productSelector.join(', ')).first().attr('data-product-id'), 10);
+        var product_qty = parseFloat($product_form.find('input[name="add_qty"]').val() || 1);
+        var post = {"product_product_id": product_product_id, "product_qty": product_qty};
         return ajax.jsonRpc('/shop/product/request_price', 'call', post).then(function (modal) {
             var $modal = $(modal);
             $modal.modal({backdrop: 'static', keyboard: false});

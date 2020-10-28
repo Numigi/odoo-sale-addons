@@ -1,6 +1,7 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class ResConfigSettings(models.TransientModel):
@@ -24,3 +25,9 @@ class ResConfigSettings(models.TransientModel):
         string="Sales Team",
         config_parameter="website_sale_request_price_sales_team"
     )
+
+    @api.multi
+    def set_values(self):
+        if self.website_sale_request_price_mail_template.model_id.model != "crm.lead":
+            raise UserError(_("Website Sale Request Price's Mail Template must be linked to Lead/Opportunity model"))
+        return super().set_values()

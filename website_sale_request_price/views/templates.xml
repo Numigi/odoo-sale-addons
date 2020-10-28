@@ -6,9 +6,22 @@
         </xpath>
     </template>
 
-    <template inherit_id="website_sale.product_price" id="website_sale_request_price_product_price" name="Product Price: handling hiding Price">
+    <template inherit_id="website_sale.product_price" id="website_sale_request_price_product_price" name="Product form: handling hiding Price">
         <xpath expr="//div[hasclass('product_price')]" position="attributes">
             <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.product" id="website_sale_request_price_product" name="Product form: handling showing Request Price instead of Add to Cart">
+        <xpath expr="//a[@id='add_to_cart']" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''
+            </attribute>
+        </xpath>
+        <xpath expr="//a[@id='add_to_cart']" position="after">
+            <t t-if="product.is_request_price_required()">
+                <a role="button" id="request_price" class="btn btn-primary btn-lg mt8 js_check_product">Request Price
+                </a>
+            </t>
         </xpath>
     </template>
 
@@ -22,15 +35,42 @@
         <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="attributes">
             <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
         </xpath>
+        <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="after">
+            <t t-if="product.is_request_price_required()">
+                <a id="request_price" role="button" class="btn btn-secondary btn-sm" style="color: #FFFFFF;">Request Price</a>
+            </t>
+        </xpath>
     </template>
 
-    <template inherit_id="website_sale.product" id="website_sale_request_price_product" name="Product: handling showing Request Price instead of Add to Cart">
-        <xpath expr="//a[@id='add_to_cart']" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+    <template inherit_id="website_sale_wishlist.product_wishlist" id="website_sale_request_price_product_wishlist" name="Products wishlist: handling hiding price and showing Request Price instead of Add to Cart">
+        <xpath expr="//body[1]//td[3]" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if wish.product_id.product_tmpl_id.is_request_price_required() else ''</attribute>
         </xpath>
-        <xpath expr="//a[@id='add_to_cart']" position="after">
-            <t t-if="product.is_request_price_required()">
-                <a role="button" id="request_price" class="btn btn-primary btn-lg mt8 js_check_product">Request Price</a>
+        <xpath expr="//body[1]//td[3]" position="after">
+            <t t-if="wish.product_id.product_tmpl_id.is_request_price_required()">
+                <td/>
+            </t>
+        </xpath>
+        <xpath expr="//button[hasclass('o_wish_add')]" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if wish.product_id.product_tmpl_id.is_request_price_required() else ''</attribute>
+        </xpath>
+        <xpath expr="//button[hasclass('o_wish_add')]" position="after">
+            <t t-if="wish.product_id.product_tmpl_id.is_request_price_required()">
+                <button id="request_price" type="button" role="button" class="btn btn-secondary btn-block mb4">Request Price</button>
+            </t>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.suggested_products_list" id="website_sale_request_price_suggested_products_list" name="Suggested products list: handling hiding Price and showing Request Price instead of Add to Cart">
+        <xpath expr="//table[@id='suggested_products']//td[hasclass('td-price')]/span" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if product.product_tmpl_id.is_request_price_required() else ''</attribute>
+        </xpath>
+        <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if product.product_tmpl_id.is_request_price_required() else ''</attribute>
+        </xpath>
+        <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="after">
+            <t t-if="product.product_tmpl_id.is_request_price_required()">
+                <a id="request_price" role="button" class="btn btn-link"><strong>Request Price</strong></a>
             </t>
         </xpath>
     </template>
