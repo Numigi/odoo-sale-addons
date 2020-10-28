@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-20 14:15+0000\n"
-"PO-Revision-Date: 2020-10-20 14:15+0000\n"
+"POT-Creation-Date: 2020-10-28 10:41+0000\n"
+"PO-Revision-Date: 2020-10-28 10:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,7 @@ msgstr ""
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
+#: model_terms:ir.ui.view,arch_db:website_sale_request_price.website_sale_request_price_suggested_products_list
 msgid "<strong>Request Price</strong>"
 msgstr ""
 
@@ -56,21 +57,14 @@ msgid "Confirm"
 msgstr "Confirmer"
 
 #. module: website_sale_request_price
-#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Hide prices from a threshold and allow to request for quotation"
 msgstr ""
 
 #. module: website_sale_request_price
-#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_mail_template
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Mail Template"
 msgstr ""
-
-#. module: website_sale_request_price
-#: model:ir.model,name:website_sale_request_price.model_product_product
-msgid "Product"
-msgstr "Article"
 
 #. module: website_sale_request_price
 #: model:ir.model,name:website_sale_request_price.model_product_template
@@ -79,23 +73,45 @@ msgstr "Modèle de produit"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.website_sale_request_price_product
+#: model_terms:ir.ui.view,arch_db:website_sale_request_price.website_sale_request_price_product_wishlist
+#: model_terms:ir.ui.view,arch_db:website_sale_request_price.website_sale_request_price_products_add_to_cart
 msgid "Request Price"
 msgstr ""
 
 #. module: website_sale_request_price
-#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_sales_team
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Sales Team"
 msgstr "Équipe commerciale"
 
 #. module: website_sale_request_price
-#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_threshold
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Threshold"
 msgstr ""
 
 #. module: website_sale_request_price
+#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Website Sale Request Price"
+msgstr ""
+
+#. module: website_sale_request_price
+#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_mail_template
+msgid "Website Sale Request Price Mail Template"
+msgstr ""
+
+#. module: website_sale_request_price
+#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_sales_team
+msgid "Website Sale Request Price Sales Team"
+msgstr ""
+
+#. module: website_sale_request_price
+#: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_threshold
+msgid "Website Sale Request Price Threshold"
+msgstr ""
+
+#. module: website_sale_request_price
+#: code:addons/website_sale_request_price/models/res_config_settings.py:28
+#, python-format
+msgid "Website Sale Request Price's Mail Template must be linked to Lead/Opportunity model"
 msgstr ""
 
