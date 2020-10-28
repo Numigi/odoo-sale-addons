@@ -1,7 +1,6 @@
 Website Sale Request Price
 ==========================
-- This module adds an option to hide the price of product when it reaches a threshold and allow the user to request for price through email
-- The requesting price action creates a Lead in backend
+- This module adds an option to hide the price of a product when it reaches a threshold and allows the user to request for price through a form that will send an email to the sales team and create a CRM lead.
 
 Module flow
 -----------
@@ -18,7 +17,7 @@ Module flow
 
 .. image:: static/description/website_sale_request_price_products_item.png
 
-- I am going to the product sheet. The price is also hidden.
+- I am going to the product sheet. The price is also hidden if the price is above the threshold.
 - Instead of the [Add to Cart] button, I find a new button [Request Price].
 
 .. image:: static/description/website_sale_request_price_request_price_button.png

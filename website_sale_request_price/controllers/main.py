@@ -41,6 +41,7 @@ class WebsiteSaleRequestPriceController(http.Controller):
         lead = crm_lead_env.create(
             {
                 "name": "Shop: " + product.display_name,
+                "type": "opportunity",
                 "partner_id": not is_public and user.partner_id.id,
                 "email_from": email,
                 "phone": phone,
