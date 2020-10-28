@@ -17,7 +17,7 @@ Module flow
 
 .. image:: static/description/website_sale_request_price_products_item.png
 
-- I am going to the product sheet. The price is also hidden.
+- I am going to the product sheet. The price is also hidden if the price is above the threshold.
 - Instead of the [Add to Cart] button, I find a new button [Request Price].
 
 .. image:: static/description/website_sale_request_price_request_price_button.png
