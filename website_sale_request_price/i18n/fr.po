@@ -18,28 +18,28 @@ msgstr ""
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
 msgid "<span>Additional information</span>"
-msgstr ""
+msgstr "<span>Informations additionnelles</span>"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
 msgid "<span>Email*</span>"
-msgstr ""
+msgstr "<span>Courriel*</span>"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
 msgid "<span>Name*</span>"
-msgstr ""
+msgstr "<span>Nom*</span>"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
 msgid "<span>Phone</span>"
-msgstr ""
+msgstr "<span>Téléphone</span>"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.website_sale_request_price_suggested_products_list
 msgid "<strong>Request Price</strong>"
-msgstr ""
+msgstr "<strong>Demade de prix</strong>"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
@@ -59,12 +59,12 @@ msgstr "Confirmer"
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Hide prices from a threshold and allow to request for quotation"
-msgstr ""
+msgstr "Cacher les prix à partir d'un seuil et permettre de faire une demande de prix"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Mail Template"
-msgstr ""
+msgstr "Modèle de courriel"
 
 #. module: website_sale_request_price
 #: model:ir.model,name:website_sale_request_price.model_product_template
@@ -76,7 +76,7 @@ msgstr "Modèle de produit"
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.website_sale_request_price_product_wishlist
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.website_sale_request_price_products_add_to_cart
 msgid "Request Price"
-msgstr ""
+msgstr "Demande de prix"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
@@ -86,32 +86,31 @@ msgstr "Équipe commerciale"
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Threshold"
-msgstr ""
+msgstr "Prix (seuil)"
 
 #. module: website_sale_request_price
 #: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.res_config_settings_view_form_website_sale_request_price_setting
 msgid "Website Sale Request Price"
-msgstr ""
+msgstr "Demande de prix via le site web"
 
 #. module: website_sale_request_price
 #: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_mail_template
 msgid "Website Sale Request Price Mail Template"
-msgstr ""
+msgstr "Modèle de courriel pour demande de prix via le site web"
 
 #. module: website_sale_request_price
 #: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_sales_team
 msgid "Website Sale Request Price Sales Team"
-msgstr ""
+msgstr "Équipe commerciale pour demande de prix via le site web"
 
 #. module: website_sale_request_price
 #: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_threshold
 msgid "Website Sale Request Price Threshold"
-msgstr ""
+msgstr "Prix (seuil) pour demande de prix via le site web"
 
 #. module: website_sale_request_price
 #: code:addons/website_sale_request_price/models/res_config_settings.py:28
 #, python-format
 msgid "Website Sale Request Price's Mail Template must be linked to Lead/Opportunity model"
-msgstr ""
-
+msgstr "Le modèle de courriel pour demande de prix via le site web doit être lié au modèle d'Opportunité (CRM)"
