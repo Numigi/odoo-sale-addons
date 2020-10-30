@@ -79,6 +79,10 @@ Configuration
 
 .. image:: static/description/website_sale_request_price_config.png
 
+Roadmap
+--------
+- Add the support for the Comparison List: As admin in the website (Customize > Comparison List)
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
