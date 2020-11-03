@@ -64,6 +64,14 @@ class TestResPartner(SavepointCase):
         self.partner.country_id = False
         assert self.partner.property_product_pricelist == self.pricelist_world
 
+    def test_pricelist_sequence(self):
+        self.partner.country_id = self.france
+        world_entry = self.level_a.pricelist_ids.filtered(
+            lambda l: l.pricelist_id == self.pricelist_world
+        )
+        world_entry.sequence = -1
+        assert self.partner.property_product_pricelist == self.pricelist_world
+
     def test_commercial_partner_privilege_level(self):
         contact = self.env["res.partner"].create(
             {

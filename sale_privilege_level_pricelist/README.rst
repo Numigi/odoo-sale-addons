@@ -14,6 +14,7 @@ It contains a list of pricelists available for this privilege level.
 
 The first pricelist from this list matching the country of a partner will be used.
 A pricelist with no country group will match any partner.
+Therefore, a pricelist with no country should be the last in the list.
 
 Partners
 --------

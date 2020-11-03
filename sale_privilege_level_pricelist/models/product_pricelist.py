@@ -31,9 +31,6 @@ class Pricelist(models.Model):
 
         return res
 
-    def _matches_company_id(self, company_id):
-        return not self.company_id or self.company_id.id == company_id
-
     def _matches_country(self, country):
         if not self.country_group_ids:
             return True

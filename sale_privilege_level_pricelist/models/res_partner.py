@@ -19,7 +19,6 @@ class ResPartner(models.Model):
         privilege_level = (
             self.privilege_level_id or self.commercial_partner_id.privilege_level_id
         )
-        pricelists = privilege_level.mapped("pricelist_ids.pricelist_id").sorted(
-            "sequence"
-        )
+        pricelist_entries = privilege_level.pricelist_ids.sorted("sequence")
+        pricelists = pricelist_entries.mapped("pricelist_id")
         return pricelists.filtered(lambda p: p._matches_country(self.country_id))
