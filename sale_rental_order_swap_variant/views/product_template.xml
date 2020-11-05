@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_template_form" model="ir.ui.view">
+        <field name="name">Product Template Form: add change_variant</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product_kit.product_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='kit_line_ids']//field[@name='is_important']" position="after">
+                <field name="is_change_variant" attrs="{'readonly': [('is_important', '=', False)]}" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
