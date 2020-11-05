@@ -112,4 +112,3 @@ msgstr "Équipe commerciale pour demande de prix via le site web"
 #: model:ir.model.fields,field_description:website_sale_request_price.field_res_config_settings__website_sale_request_price_threshold
 msgid "Website Sale Request Price Threshold"
 msgstr "Prix (seuil) pour demande de prix via le site web"
-

@@ -17,10 +17,7 @@ class ProductTemplate(models.Model):
         return False
 
     def get_website_sale_request_price_vals(self):
-        icp_env = self.env['ir.config_parameter'].sudo()
+        icp_env = self.env["ir.config_parameter"].sudo()
         active = icp_env.get_param("website_sale_request_price") == "True"
         threshold = float(icp_env.get_param("website_sale_request_price_threshold"))
-        return {
-            "active": active,
-            "threshold": threshold,
-        }
+        return {"active": active, "threshold": threshold}

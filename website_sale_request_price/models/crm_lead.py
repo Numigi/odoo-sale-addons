@@ -13,7 +13,9 @@ class CrmLead(models.Model):
         active = icp_env.get_param("website_sale_request_price") == "True"
         if not active:
             return self.not_found()
-        mail_template_id = int(icp_env.get_param("website_sale_request_price_mail_template"))
+        mail_template_id = int(
+            icp_env.get_param("website_sale_request_price_mail_template")
+        )
         sale_team_id = int(icp_env.get_param("website_sale_request_price_sales_team"))
         mail_template = self.env["mail.template"].browse(mail_template_id).sudo()
         user = self.env.user
@@ -34,11 +36,17 @@ class CrmLead(models.Model):
                 "description": post.get("additional_information"),
                 "contact_name": is_public and post.get("name"),
                 "brand_ids": product_brand,
-                "lead_line_ids": [(0, 0, {
-                    "product_id": product.id,
-                    "name": product.name,
-                    "product_qty": 1,
-                })]
+                "lead_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product.id,
+                            "name": product.name,
+                            "product_qty": 1,
+                        },
+                    )
+                ],
             }
         )
         lead.lead_line_ids[0]._onchange_product_id()

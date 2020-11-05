@@ -19,4 +19,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price_wishlist.website_sale_request_price_product_wishlist
 msgid "Request Price"
 msgstr "Demande de prix"
-
