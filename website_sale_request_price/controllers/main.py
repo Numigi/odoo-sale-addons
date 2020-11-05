@@ -25,4 +25,4 @@ class WebsiteSaleRequestPriceController(http.Controller):
     )
     def request_price_confirm(self, **post):
         request.env["crm.lead"].create_website_sale_request(post)
-        return werkzeug.utils.redirect('/shop')
+        return werkzeug.utils.redirect(request.httprequest.referrer)

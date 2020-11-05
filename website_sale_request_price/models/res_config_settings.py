@@ -16,7 +16,7 @@ class ResConfigSettings(models.TransientModel):
     website_sale_request_price_mail_template = fields.Many2one(
         "mail.template",
         config_parameter="website_sale_request_price_mail_template",
-        # domain=[""]
+        domain=[("model_id.model", "=", "crm.lead")],
     )
     website_sale_request_price_sales_team = fields.Many2one(
         "crm.team",

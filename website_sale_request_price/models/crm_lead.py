@@ -37,7 +37,7 @@ class CrmLead(models.Model):
                 "lead_line_ids": [(0, 0, {
                     "product_id": product.id,
                     "name": product.name,
-                    "product_qty": float(post["product_qty"])
+                    "product_qty": 1,
                 })]
             }
         )

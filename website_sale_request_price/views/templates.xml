@@ -15,15 +15,18 @@
 
     <template inherit_id="website_sale.product" id="website_sale_request_price_product" name="Product form: handling showing Request Price instead of Add to Cart">
         <xpath expr="//a[@id='add_to_cart']" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''
-            </attribute>
+            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
         </xpath>
         <xpath expr="//form[@action='/shop/cart/update']" position="before">
             <t t-call="website_sale_request_price.request_price_details"/>
         </xpath>
         <xpath expr="//a[@id='add_to_cart']" position="after">
             <t t-if="product.is_request_price_required()">
-                <a data-toggle="modal" data-target="#modal_request_price" data-product="product_variant" role="button" class="btn btn-primary btn-lg mt8 js_check_product">Request Price</a>
+                <a data-toggle="modal"
+                   data-target="#modal_request_price"
+                   t-att-data-product-id="product_variant.id"
+                   t-att-data-product-display-name="product_variant.display_name"
+                   role="button" class="btn btn-primary btn-lg mt8 js_check_product">Request Price</a>
             </t>
         </xpath>
     </template>
@@ -34,16 +37,20 @@
         </xpath>
     </template>
 
-    <template inherit_id="website_sale.products_add_to_cart" id="website_sale_request_price_products_add_to_cart" name="Products item: handling showing Request Price instead of Add to Cart">
-        <xpath expr="//form[@action='/shop/cart/update']" position="before">
+    <template inherit_id="website_sale.products" id="website_sale_request_price_products" name="Products grid: call modal">
+        <xpath expr="//div[@id='products_grid']" position="inside">
             <t t-call="website_sale_request_price.request_price_details"/>
         </xpath>
+    </template>
+
+    <template inherit_id="website_sale.products_add_to_cart" id="website_sale_request_price_products_add_to_cart" name="Products item: handling showing Request Price instead of Add to Cart">
         <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="attributes">
             <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
         </xpath>
         <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="after">
             <t t-if="product.is_request_price_required()">
-                <a data-toggle="modal" data-target="#modal_request_price" data-product="product_variant_id" role="button" class="btn btn-secondary btn-sm" style="color: #FFFFFF;">Request Price</a>
+                <t t-set="product_variant" t-value="product._create_first_product_variant()"/>
+                <a data-toggle="modal" data-target="#modal_request_price" t-att-data-product-id="product_variant.id" t-att-data-product-display-name="product_variant.display_name" role="button" class="btn btn-secondary btn-sm" style="color: #FFFFFF;">Request Price</a>
             </t>
         </xpath>
     </template>
@@ -65,7 +72,9 @@
         </xpath>
         <xpath expr="//button[hasclass('o_wish_add')]" position="after">
             <t t-if="wish.product_id.product_tmpl_id.is_request_price_required()">
-                <button data-toggle="modal" data-target="#modal_request_price" data-product="wish.product_id" type="button" role="button" class="btn btn-secondary btn-block mb4">Request Price</button>
+                <button data-toggle="modal" data-target="#modal_request_price"
+                        t-att-data-product-id="wish.product_id.id"
+                        t-att-data-product-display-name="wish.product_id.display_name" type="button" role="button" class="btn btn-secondary btn-block mb4">Request Price</button>
             </t>
         </xpath>
     </template>
@@ -73,21 +82,19 @@
     <template inherit_id="website_sale.suggested_products_list" id="website_sale_request_price_suggested_products_list"
               name="Suggested products list: handling hiding Price and showing Request Price instead of Add to Cart">
         <xpath expr="//table[@id='suggested_products']//td[hasclass('td-price')]/span" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if
-                product.product_tmpl_id.is_request_price_required() else ''
-            </attribute>
+            <attribute name="t-att-style">'display: none!important' if product.product_tmpl_id.is_request_price_required() else ''</attribute>
         </xpath>
         <xpath expr="//table[@id='suggested_products']" position="before">
             <t t-call="website_sale_request_price.request_price_details"/>
         </xpath>
         <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if
-                product.product_tmpl_id.is_request_price_required() else ''
-            </attribute>
+            <attribute name="t-att-style">'display: none!important' if product.product_tmpl_id.is_request_price_required() else ''</attribute>
         </xpath>
         <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="after">
             <t t-if="product.product_tmpl_id.is_request_price_required()">
-                <a data-toggle="modal" data-target="#modal_request_price" data-product="product" role="button" class="btn btn-link">
+                <a data-toggle="modal" data-target="#modal_request_price"
+                   t-att-data-product-id="product.id"
+                   t-att-data-product-display-name="product.display_name" role="button" class="btn btn-link">
                     <strong>Request Price</strong>
                 </a>
             </t>
@@ -97,7 +104,7 @@
     <template id="request_price_details" name="Request Price Details">
         <div role="dialog" id="modal_request_price" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-lg">
-                <form t-attf-action="/shop/product/request_price/confirm" method="post" class="js_website_submit_form">
+                <form id="modal_request_price_form" t-attf-action="/shop/product/request_price/confirm" method="post" class="js_website_submit_form">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     <div class="modal-content">
                         <header class="modal-header">
@@ -108,8 +115,7 @@
                         <main class="modal-body">
                             <div class="container">
                                 <h4 class="o_page_header mt16">
-                                    <strong id="display_name">
-                                    </strong>
+                                    <strong id="product_display_name"/>
                                     <input type="hidden" class="product_product_id" name="product_product_id"/>
                                     <input type="hidden" name="product_qty"/>
                                 </h4>

@@ -1,26 +1,22 @@
 odoo.define('website_sale_request_price.request_price', function (require) {
 'use strict';
 
-var core = require('web.core');
 var sAnimations = require('website.content.snippets.animation');
 require('website_sale.website_sale');
 
 sAnimations.registry.WebsiteSaleRequestPrice = sAnimations.Class.extend({
     selector: '.oe_website_sale',
     events: {
-        'show.bs.modal': 'async _onClickPriceRequest',
+        'show.bs.modal': 'async _onShowModal',
     },
-    _onClickPriceRequest: function (ev) {
+    _onShowModal: function (ev) {
         ev.stopPropagation();
         var button = $(ev.relatedTarget);
-        console.log(button)
-        var product_variant = button.data('product');
-        var qty = button.data('qty');
-        var modal = $(this);
-        console.log(modal)
-        console.log(modal.find('strong#display_name'))
-        modal.find('strong#display_name').text(product_variant.display_name);
-        modal.find('input[type="hidden"][name="product_product_id"]').val(product_variant.id);
+        var product_id = button.data('product-id');
+        var product_display_name = button.data('product-display-name');
+        var form = $('form#modal_request_price_form');
+        form.find('strong[id="product_display_name"]').text(product_display_name);
+        form.find('input[type="hidden"][name="product_product_id"]').val(product_id);
     },
 });
 
