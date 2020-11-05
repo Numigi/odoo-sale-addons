@@ -23,10 +23,6 @@ Module flow
 
   .. image:: static/description/website_sale_request_price_shop_list.png
 
-  + When going to the website wishlist:
-
-  .. image:: static/description/website_sale_request_price_wishlist.png
-
   + When going to the website cart, in the suggested accessories:
 
   .. image:: static/description/website_sale_request_price_cart_suggested_accessories.png
