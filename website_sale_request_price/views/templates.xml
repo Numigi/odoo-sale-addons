@@ -9,13 +9,13 @@
 
     <template inherit_id="website_sale.product_price" id="website_sale_request_price_product_price" name="Product form: handling hiding Price">
         <xpath expr="//div[hasclass('product_price')]" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+            <attribute name="t-if">not product.is_request_price_required()</attribute>
         </xpath>
     </template>
 
     <template inherit_id="website_sale.product" id="website_sale_request_price_product" name="Product form: handling showing Request Price instead of Add to Cart">
         <xpath expr="//a[@id='add_to_cart']" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+            <attribute name="t-if">not product.is_request_price_required()</attribute>
         </xpath>
         <xpath expr="//form[@action='/shop/cart/update']" position="before">
             <t t-call="website_sale_request_price.request_price_details"/>
@@ -33,7 +33,7 @@
 
     <template inherit_id="website_sale.products_item" id="website_sale_request_price_products_item" name="Products item: handling hiding Price">
         <xpath expr="//div[hasclass('product_price')]/b" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+            <attribute name="t-if">not product.is_request_price_required()</attribute>
         </xpath>
     </template>
 
@@ -45,7 +45,7 @@
 
     <template inherit_id="website_sale.products_add_to_cart" id="website_sale_request_price_products_add_to_cart" name="Products item: handling showing Request Price instead of Add to Cart">
         <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.is_request_price_required() else ''</attribute>
+            <attribute name="t-if">not product.is_request_price_required()</attribute>
         </xpath>
         <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="after">
             <t t-if="product.is_request_price_required()">
@@ -58,13 +58,13 @@
     <template inherit_id="website_sale.suggested_products_list" id="website_sale_request_price_suggested_products_list"
               name="Suggested products list: handling hiding Price and showing Request Price instead of Add to Cart">
         <xpath expr="//table[@id='suggested_products']//td[hasclass('td-price')]/span" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.product_tmpl_id.is_request_price_required() else ''</attribute>
+            <attribute name="t-if">not product.product_tmpl_id.is_request_price_required()</attribute>
         </xpath>
         <xpath expr="//table[@id='suggested_products']" position="before">
             <t t-call="website_sale_request_price.request_price_details"/>
         </xpath>
         <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="attributes">
-            <attribute name="t-att-style">'display: none!important' if product.product_tmpl_id.is_request_price_required() else ''</attribute>
+            <attribute name="t-if">not product.product_tmpl_id.is_request_price_required()</attribute>
         </xpath>
         <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="after">
             <t t-if="product.product_tmpl_id.is_request_price_required()">
