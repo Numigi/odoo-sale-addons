@@ -2,14 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
-from odoo.tests import Form, tagged  # TODO remove
-from odoo.tests.common import SingleTransactionCase
-from odoo.tools.float_utils import float_compare, float_round
+from odoo.tests import Form
 
 from odoo.addons.sale_rental.tests.test_sale_order_line import KitRentalCase
 
 
-@tagged("post_install")
 class TestSaleRentalOrderSwapVariant(KitRentalCase):
     @classmethod
     def setUpClass(cls):
