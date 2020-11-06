@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError
 
 class SaleRentalOrderSwapVariant(models.TransientModel):
     _name = "sale.rental.order.swap.variant"
+    _description = "Sale Rental Order Swap Variant"
 
     active_product_id = fields.Many2one("product.product", readonly=True, required=True)
     product_id = fields.Many2one("product.product", required=True)
@@ -29,7 +30,7 @@ class SaleRentalOrderSwapVariant(models.TransientModel):
         active_sale_line_id = context.get(
             "active_model"
         ) == "sale.order.line" and context.get("active_id")
-        if not active_sale_line_id:
-            raise ValidationError(_("Cannot find any active sale order line"))
         sale_line = self.env["sale.order.line"].browse(active_sale_line_id)
+        if not sale_line:
+            raise ValidationError(_("Cannot find any active sale order line"))
         sale_line.change_variant(self.product_id)
