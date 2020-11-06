@@ -22,8 +22,8 @@ class SaleOrderLine(models.Model):
         if done_move:
             raise ValidationError(
                 _(
-                    "The variant swap can not be done since the sale order line with product {} is linked to a stock move "
-                    "that is already done ({}))."
+                    "The variant swap can not be done since the sale order line with product {} is linked to a stock "
+                    "move that is already done ({})."
                 ).format(product.display_name, done_move[0].reference)
             )
         self.product_id = product

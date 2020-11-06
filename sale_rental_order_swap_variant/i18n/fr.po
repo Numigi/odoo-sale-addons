@@ -1,0 +1,100 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_rental_order_swap_variant
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-06 12:38+0000\n"
+"PO-Revision-Date: 2020-11-06 12:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_rental_order_swap_variant
+#: model_terms:ir.ui.view,arch_db:sale_rental_order_swap_variant.sale_rental_order_swap_variant_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: sale_rental_order_swap_variant
+#: code:addons/sale_rental_order_swap_variant/wizard/sale_rental_order_swap_variant.py:35
+#, python-format
+msgid "Cannot find any active sale order line"
+msgstr ""
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.actions.act_window,name:sale_rental_order_swap_variant.action_sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_product_kit_line__is_change_variant
+#: model_terms:ir.ui.view,arch_db:sale_rental_order_swap_variant.sale_rental_order_swap_variant_form
+msgid "Change Variant"
+msgstr ""
+
+#. module: sale_rental_order_swap_variant
+#: model_terms:ir.ui.view,arch_db:sale_rental_order_swap_variant.sale_rental_order_swap_variant_form
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_order_line__is_change_variant_kit_component
+msgid "Is Change Variant Kit Component"
+msgstr ""
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant__product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model,name:sale_rental_order_swap_variant.model_product_kit_line
+msgid "Product Kit Component Line"
+msgstr "Ligne de composante de kit sur article"
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model,name:sale_rental_order_swap_variant.model_sale_rental_order_swap_variant
+msgid "Sale Rental Order Swap Variant"
+msgstr ""
+
+#. module: sale_rental_order_swap_variant
+#: model:ir.model,name:sale_rental_order_swap_variant.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: sale_rental_order_swap_variant
+#: code:addons/sale_rental_order_swap_variant/models/sale_order_line.py:24
+#, python-format
+msgid "The variant swap can not be done since the sale order line with product {} is linked to a stock move that is already done ({})."
+msgstr "Le changement de variante ne peut être effectué, car la ligne de bon de commande client pour l’article {} est liée à un mouvement de stock déjà effectué ({})."
