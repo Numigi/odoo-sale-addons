@@ -1,8 +1,12 @@
 Sale Rental Order Swap Variant
 ==============================
-- This module applies the feature of Website Sale Request Price to Website Sale Wishlist
+Constraints
+Variant change is not possible if related goods movements have already been confirmed.
+If, for example, my item has been delivered and I try to change the variant, I get the following blocking error message:
+The variant change cannot be made because the sales order line for the 'article {product.product} is linked to a stock movement that has already been carried out ({reference of stock.move}).
+The variant swap can not be done since the sale order line with product {product.product} is linked to a stock move that is already done ({reference of stock.move}).
 
-.. image:: static/description/website_sale_request_price_wishlist.png
+.. image:: static/description/sale_rental_order_swap_variant.png
 
 Contributors
 ------------
