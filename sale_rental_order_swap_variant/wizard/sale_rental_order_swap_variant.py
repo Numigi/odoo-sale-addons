@@ -30,11 +30,4 @@ class SaleRentalOrderSwapVariant(models.TransientModel):
         if not active_sale_line_id:
             raise ValidationError(_("Cannot find any active sale order line"))
         sale_line = self.env["sale.order.line"].browse(active_sale_line_id)
-        done_move = sale_line.move_ids.filtered(lambda m: m.state == "done")
-        if done_move:
-            raise ValidationError(_(
-                "The variant swap can not be done since the sale order line with product {} is linked to a stock move "
-                "that is already done ({}))."
-            ).format(self.product_id.display_name, done_move[0].reference))
-        sale_line.product_id = self.product_id
-        sale_line.move_ids.write({"product_id": self.product_id.id})
+        sale_line.change_variant(self.product_id)

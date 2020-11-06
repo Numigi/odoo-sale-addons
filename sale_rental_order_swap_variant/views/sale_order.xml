@@ -12,7 +12,7 @@
                         type="action"
                         icon="fa-exchange"
                         context="{'default_active_product_id': product_id}"
-                        attrs="{'invisible': ['|', ('parent.state', '!=', 'sale'), ('is_change_variant_kit_component', '=', False)]}"
+                        attrs="{'invisible': ['|', '|', ('parent.state', '!=', 'sale'), ('parent.is_rental', '=', False), ('is_change_variant_kit_component', '=', False)]}"
                 />
             </xpath>
         </field>
