@@ -9,6 +9,10 @@
     "maintainer": "Numigi",
     "license": "AGPL-3",
     "depends": ["sale_rental", "sale_kit", "sale_management"],
-    "data": ["wizard/sale_rental_order_swap_variant.xml", "views/product_template.xml", "views/sale_order.xml"],
+    "data": [
+        "wizard/sale_rental_order_swap_variant.xml",
+        "views/product_template.xml",
+        "views/sale_order.xml",
+    ],
     "installable": True,
 }

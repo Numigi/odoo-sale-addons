@@ -26,7 +26,9 @@ class SaleRentalOrderSwapVariant(models.TransientModel):
     def change_variant(self):
         self.ensure_one()
         context = self._context
-        active_sale_line_id = context.get("active_model") == "sale.order.line" and context.get("active_id")
+        active_sale_line_id = context.get(
+            "active_model"
+        ) == "sale.order.line" and context.get("active_id")
         if not active_sale_line_id:
             raise ValidationError(_("Cannot find any active sale order line"))
         sale_line = self.env["sale.order.line"].browse(active_sale_line_id)
