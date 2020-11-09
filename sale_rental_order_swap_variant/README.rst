@@ -1,11 +1,13 @@
 Sale Rental Order Swap Variant
 ==============================
-This module adds a new option on kit products to allow user to swap the kit component's products for another variants from a rental sale order.
+This module adds a new option on kit products to allow user to swap the kit component's
+ products for another variants from a rental sale order.
 
 Configuration
 -------------
 
-- I open a type Kit product. In the configuration of the Kit, I have a new option to Change Variant.
+- I open a type Kit product. In the configuration of the Kit, I have a new option to
+   "Change the Variant".
 - This option is only available for products which are important.
 - I check this option.
 
@@ -14,25 +16,31 @@ Configuration
 Use
 ---
 
-- I create a rental SO with a kit product that containing a product which Variant Change enabled.
-- I confirm the SO. A new button appears next to Variant Change product. If I click on it, a wizard opens.
-- The wizard only allows me to choose another product variant of the same product template.
+- I create a rental SO with a kit product that contains a product for which
+   Variant Change is enabled.
+- I confirm the SO. A new button appears next to Kit component's product.
+   If I click on it, a wizard opens.
+- The wizard only allows me to choose another product variant of the same
+   product template.
 
 .. image:: static/description/sale_rental_order_swap_variant_new_button_wizard.png
 
-- I confirm the wizard.
+- I confirm the change of Variant in the wizard.
 - The article has been changed on my SO line.
 
 .. image:: static/description/sale_rental_order_swap_variant_sol_product_change.png
 
-- If I go to the related pickings (delivery, reception), the article has also been amended.
+- If I go to the related pickings (delivery, reception), the article has also been
+   changed.
 
 .. image:: static/description/sale_rental_order_swap_variant_delivery_product_change.png
 
 Constraints:
 
-- Product Variant change is not possible if related goods movements have already been confirmed.
-- If, for example, my Variant Change product has been delivered and I try to change the variant, I get the following blocking error message:
+- Product Variant change is not possible if related goods movements have already been
+   confirmed.
+- If, for example, my Variant Change product has been delivered and I try to change
+   the variant, I get the following blocking error message:
 
 .. image:: static/description/sale_rental_order_swap_variant_blocking_error_msg.png
 

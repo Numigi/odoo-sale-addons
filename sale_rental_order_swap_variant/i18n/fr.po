@@ -24,14 +24,14 @@ msgstr "Annuler"
 #: code:addons/sale_rental_order_swap_variant/wizard/sale_rental_order_swap_variant.py:35
 #, python-format
 msgid "Cannot find any active sale order line"
-msgstr ""
+msgstr "Aucune ligne de vente"
 
 #. module: sale_rental_order_swap_variant
 #: model:ir.actions.act_window,name:sale_rental_order_swap_variant.action_sale_rental_order_swap_variant
 #: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_product_kit_line__is_change_variant
 #: model_terms:ir.ui.view,arch_db:sale_rental_order_swap_variant.sale_rental_order_swap_variant_form
 msgid "Change Variant"
-msgstr ""
+msgstr "Changement de variante"
 
 #. module: sale_rental_order_swap_variant
 #: model_terms:ir.ui.view,arch_db:sale_rental_order_swap_variant.sale_rental_order_swap_variant_form
@@ -56,7 +56,7 @@ msgstr "Nom affiché"
 #. module: sale_rental_order_swap_variant
 #: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_order_line__is_change_variant_kit_component
 msgid "Is Change Variant Kit Component"
-msgstr ""
+msgstr "Peut changer de variante"
 
 #. module: sale_rental_order_swap_variant
 #: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant____last_update
@@ -86,7 +86,7 @@ msgstr "Ligne de composante de kit sur article"
 #. module: sale_rental_order_swap_variant
 #: model:ir.model,name:sale_rental_order_swap_variant.model_sale_rental_order_swap_variant
 msgid "Sale Rental Order Swap Variant"
-msgstr ""
+msgstr "Changement de variante"
 
 #. module: sale_rental_order_swap_variant
 #: model:ir.model,name:sale_rental_order_swap_variant.model_sale_order_line

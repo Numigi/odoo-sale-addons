@@ -27,4 +27,5 @@ class SaleOrderLine(models.Model):
                 ).format(self.product_id.display_name, done_move[0].reference)
             )
         self.product_id = product
+        self.product_id_change()
         self.move_ids.write({"product_id": product.id})
