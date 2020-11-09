@@ -1,12 +1,40 @@
 Sale Rental Order Swap Variant
 ==============================
-Constraints
-Variant change is not possible if related goods movements have already been confirmed.
-If, for example, my item has been delivered and I try to change the variant, I get the following blocking error message:
-The variant change cannot be made because the sales order line for the 'article {product.product} is linked to a stock movement that has already been carried out ({reference of stock.move}).
-The variant swap can not be done since the sale order line with product {product.product} is linked to a stock move that is already done ({reference of stock.move}).
+This module adds new option on kit product to allow user to swap products with have same variant on rental sale order
 
-.. image:: static/description/sale_rental_order_swap_variant.png
+Configuration
+-------------
+
+- I open a type Kit product. In the configuration of the Kit, I have a new option to Change Variant.
+- This option is only available for products which are important.
+- I check this option.
+
+.. image:: static/description/sale_rental_order_swap_variant_new_field.png
+
+Use
+---
+
+- I create a rental SO with a kit product that containing a product which Variant Change enabled.
+- I confirm the SO. A new button appears next to Variant Change product. If I click on it, a wizard opens.
+- The wizard only allows me to choose another product variant of the same product template.
+
+.. image:: static/description/sale_rental_order_swap_variant_new_button_wizard.png
+
+- I confirm the wizard.
+- The article has been changed on my SO line.
+
+.. image:: static/description/sale_rental_order_swap_variant_sol_product_change.png
+
+- If I go to the related pickings (delivery, reception), the article has also been amended.
+
+.. image:: static/description/sale_rental_order_swap_variant_delivery_product_change.png
+
+Constraints:
+
+- Product Variant change is not possible if related goods movements have already been confirmed.
+- If, for example, my Variant Change product has been delivered and I try to change the variant, I get the following blocking error message:
+
+.. image:: static/description/sale_rental_order_swap_variant_blocking_error_msg.png
 
 Contributors
 ------------

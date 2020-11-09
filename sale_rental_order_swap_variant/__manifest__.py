@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Sale Rental Order Swap Variant",
-    "summary": "Sale Rental Order Swap Variant",
+    "summary": "This module adds new option on kit product to allow user to swap products with have same variant on rental sale order",
     "version": "12.0.1.0.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
