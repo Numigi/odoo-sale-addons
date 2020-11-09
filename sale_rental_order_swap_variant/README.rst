@@ -1,6 +1,6 @@
 Sale Rental Order Swap Variant
 ==============================
-This module adds new option on kit product to allow user to swap products with have same variant on rental sale order
+This module adds a new option on kit products to allow user to swap the kit component's products for another variants from a rental sale order.
 
 Configuration
 -------------
