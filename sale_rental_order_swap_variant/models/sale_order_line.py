@@ -24,7 +24,7 @@ class SaleOrderLine(models.Model):
                 _(
                     "The variant swap can not be done since the sale order line with product {} is linked to a stock "
                     "move that is already done ({})."
-                ).format(product.display_name, done_move[0].reference)
+                ).format(self.product_id.display_name, done_move[0].reference)
             )
         self.product_id = product
         self.move_ids.write({"product_id": product.id})
