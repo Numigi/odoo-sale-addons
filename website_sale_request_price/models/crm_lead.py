@@ -1,6 +1,8 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import werkzeug
+
 from odoo import api, models
 
 
@@ -9,22 +11,18 @@ class CrmLead(models.Model):
 
     @api.model
     def create_website_sale_request(self, post):
-        icp_env = self.env["ir.config_parameter"].sudo()
-        active = icp_env.get_param("website_sale_request_price") == "True"
-        if not active:
-            return self.not_found()
-        mail_template_id = int(
-            icp_env.get_param("website_sale_request_price_mail_template")
-        )
-        sale_team_id = int(icp_env.get_param("website_sale_request_price_sales_team"))
-        mail_template = self.env["mail.template"].browse(mail_template_id).sudo()
+        lead = self._create_wsrp_opportunity(post)
+        self._send_wsrp_email(lead, post)
+
+    @api.model
+    def _create_wsrp_opportunity(self, post):
         user = self.env.user
         is_public = user._is_public()
         product = self.env["product.product"].browse(int(post["product_product_id"]))
         product_brand = product.product_brand_id and [(4, product.product_brand_id.id)]
         email = is_public and post.get("email") or user.partner_id.email
         phone = is_public and post.get("phone") or user.partner_id.phone
-
+        sale_team_id = self._get_wsrp_sale_team_id()
         lead = self.sudo().create(
             {
                 "name": "Shop: " + product.display_name,
@@ -50,7 +48,36 @@ class CrmLead(models.Model):
             }
         )
         lead.lead_line_ids[0]._onchange_product_id()
+        return lead
+
+    @api.model
+    def _send_wsrp_email(self, lead, post):
+        user = self.env.user
+        is_public = user._is_public()
+        email = is_public and post.get("email") or user.partner_id.email
+        mail_template_id = self._get_wsrp_mail_template_id()
+        mail_template = self.env["mail.template"].browse(mail_template_id).sudo()
         email_values = {"email_to": email}
         if not is_public:
             email_values.update({"recipient_ids": [(6, 0, [user.partner_id.id])]})
         mail_template.send_mail(lead.id, email_values=email_values)
+
+    @api.model
+    def _get_wsrp_parameter(self):
+        icp_env = self.env["ir.config_parameter"].sudo()
+        active = icp_env.get_param("website_sale_request_price") == "True"
+        if not active:
+            raise werkzeug.exceptions.NotFound()
+        mail_template_id = int(
+            icp_env.get_param("website_sale_request_price_mail_template")
+        )
+        sale_team_id = int(icp_env.get_param("website_sale_request_price_sales_team"))
+        return mail_template_id, sale_team_id
+
+    @api.model
+    def _get_wsrp_mail_template_id(self):
+        return self._get_wsrp_parameter()[0]
+
+    @api.model
+    def _get_wsrp_sale_team_id(self):
+        return self._get_wsrp_parameter()[1]
