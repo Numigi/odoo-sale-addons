@@ -26,7 +26,8 @@
                    data-target="#modal_request_price"
                    t-att-data-product-id="product_variant.id"
                    t-att-data-product-display-name="product_variant.display_name"
-                   role="button" class="btn btn-primary btn-lg mt8 js_check_product">Request Price</a>
+                   role="button" class="btn btn-primary btn-lg mt8 js_check_product"
+                >Request Price</a>
             </t>
         </xpath>
     </template>
@@ -50,7 +51,12 @@
         <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="after">
             <t t-if="product.is_request_price_required()">
                 <t t-set="product_variant" t-value="product._create_first_product_variant()"/>
-                <a data-toggle="modal" data-target="#modal_request_price" t-att-data-product-id="product_variant.id" t-att-data-product-display-name="product_variant.display_name" role="button" class="btn btn-secondary btn-sm" style="color: #FFFFFF;">Request Price</a>
+                <a data-toggle="modal"
+                   data-target="#modal_request_price"
+                   t-att-data-product-id="product_variant.id"
+                   t-att-data-product-display-name="product_variant.display_name"
+                   role="button" class="btn btn-secondary btn-sm" style="color: #FFFFFF;"
+                >Request Price</a>
             </t>
         </xpath>
     </template>
@@ -68,9 +74,11 @@
         </xpath>
         <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="after">
             <t t-if="product.product_tmpl_id.is_request_price_required()">
-                <a data-toggle="modal" data-target="#modal_request_price"
+                <a data-toggle="modal"
+                   data-target="#modal_request_price"
                    t-att-data-product-id="product.id"
-                   t-att-data-product-display-name="product.display_name" role="button" class="btn btn-link">
+                   t-att-data-product-display-name="product.display_name"
+                   role="button" class="btn btn-link">
                     <strong>Request Price</strong>
                 </a>
             </t>
