@@ -9,6 +9,9 @@
     "maintainer": "Numigi",
     "license": "AGPL-3",
     "depends": ["website_sale_stock"],
-    "data": ["views/product_template.xml", "views/website_stock_availability_enhanced_templates.xml"],
+    "data": [
+        "views/product_template.xml",
+        "views/website_stock_availability_enhanced_templates.xml",
+    ],
     "installable": True,
 }
