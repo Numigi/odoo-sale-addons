@@ -8,8 +8,10 @@ class ProductTemplate(models.Model):
 
     inventory_availability = fields.Selection(
         selection_add=[
-            ("threshold_warning", "Indicate if the inventory is below a threshold and "
-                                  "allow sales if not enough stock"),
-        # TODO in v13+ to place more appropriately the new option : ('custom', )
+            (
+                "threshold_warning",
+                "Indicate if the inventory is below a threshold and allow sales if not enough stock",
+            ),
+            # TODO in v13+ to place more appropriately the new option : ('custom', )
         ]
     )
