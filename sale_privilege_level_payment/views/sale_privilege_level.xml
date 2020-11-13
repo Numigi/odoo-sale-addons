@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_privilege_level_form" model="ir.ui.view">
+        <field name="name">Privilege Level Form: add payment acquirers</field>
+        <field name="model">sale.privilege.level</field>
+        <field name="inherit_id" ref="sale_privilege_level.sale_privilege_level_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="payment_acquirers" string="Payment Acquirers">
+                    <field name="payment_acquirer_ids" colspan="2"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

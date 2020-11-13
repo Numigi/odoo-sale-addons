@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_privilege_level_form" model="ir.ui.view">
+        <field name="name">Privilege Level Form: add pricelists</field>
+        <field name="model">sale.privilege.level</field>
+        <field name="inherit_id" ref="sale_privilege_level.sale_privilege_level_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="pricelists" string="Pricelists">
+                    <field name="pricelist_ids" colspan="2">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="pricelist_id"/>
+                            <field name="country_group_ids" widget="many2many_tags"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
