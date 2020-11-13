@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "crm_brand",
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_dynamic_price",
@@ -25,6 +26,7 @@
         "sale_privilege_level",
         "sale_privilege_level_delivery",
         "sale_privilege_level_payment",
+        "sale_privilege_level_pricelist",
         "sale_privilege_level_website",
         "sale_rental",
         "sale_warranty",

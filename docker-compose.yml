@@ -9,8 +9,6 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
-      - ./sale_privilege_level:/mnt/extra-addons/sale_privilege_level
-      - ./sale_privilege_level_payment:/mnt/extra-addons/sale_privilege_level_payment
     ports:
       - "8069:8069"
       - "8071:8071"
