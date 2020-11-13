@@ -23,6 +23,10 @@ Module flow
 
   .. image:: static/description/website_sale_request_price_shop_list.png
 
+  + When going to the website product form, if the product has been configured optional products (note: Request Price button won't appear in this place):
+
+  .. image:: static/description/website_sale_request_price_optional_products.png
+
   + When going to the website cart, in the suggested accessories:
 
   .. image:: static/description/website_sale_request_price_cart_suggested_accessories.png
