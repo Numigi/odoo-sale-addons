@@ -66,6 +66,9 @@
         <xpath expr="//table[@id='suggested_products']//td[hasclass('td-price')]/span" position="attributes">
             <attribute name="t-if">not product.product_tmpl_id.is_request_price_required()</attribute>
         </xpath>
+        <xpath expr="//table[@id='suggested_products']//td[hasclass('td-price')]/t" position="attributes">
+            <attribute name="t-if">not product.product_tmpl_id.is_request_price_required()</attribute>
+        </xpath>
         <xpath expr="//table[@id='suggested_products']" position="before">
             <t t-call="website_sale_request_price.request_price_details"/>
         </xpath>
@@ -82,6 +85,15 @@
                     <strong>Request Price</strong>
                 </a>
             </t>
+        </xpath>
+    </template>
+
+    <template inherit_id="sale.optional_product_items" id="website_sale_request_price_optional_product_items" name="Optional product items: handling hiding Price and Add to Cart">
+        <xpath expr="//td[hasclass('td-price')]" position="attributes">
+            <attribute name="t-if">not product.is_request_price_required()</attribute>
+        </xpath>
+        <xpath expr="//td[hasclass('td-price')]" position="after">
+            <td t-if="product.is_request_price_required()"/>
         </xpath>
     </template>
 
