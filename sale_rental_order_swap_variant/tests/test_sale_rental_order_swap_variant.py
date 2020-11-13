@@ -11,12 +11,13 @@ class TestSaleRentalOrderSwapVariant(KitRentalCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        component_tmpl = cls.env["product.template"].create({"name": "template"})
         cls.component_a_1 = cls.env["product.product"].create(
-            {"name": "Component A 1", "type": "product", "taxes_id": [(4, cls.tax.id)]}
+            {
+                "name": "Component A 1",
+                "type": "product",
+                "product_tmpl_id": cls.component_a.product_tmpl_id.id,
+            }
         )
-        cls.component_a.product_template = component_tmpl
-        cls.component_a_1.product_template = component_tmpl
         cls.kit.kit_line_ids.filtered(lambda r: r.is_important).write(
             {"allow_change_variant": True}
         )
