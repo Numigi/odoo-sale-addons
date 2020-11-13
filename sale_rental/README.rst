@@ -34,6 +34,18 @@ A product that can be rented can also be a `kit <https://github.com/Numigi/odoo-
 When a rentable product is a kit, the product is considered delivered and returned
 when all important components of the kit are delivered / returned.
 
+System Configuration
+--------------------
+In General Settings --> Sales, there is a new configuration option called ``Rental``.
+
+.. image:: static/description/rental_buffer_config.png
+
+The parameter ``Rental buffer`` determines the location buffer. Here it is set at 6 hours.
+
+.. image:: static/description/product_qty_diff.png
+
+Thus, the first product is rented for exactly one day, and the second product is rented for two days.
+
 Menu
 ----
 In the ``Sales`` application, I notice a new menu ``Rental``.
