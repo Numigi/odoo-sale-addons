@@ -18,7 +18,7 @@ class TestSaleRentalOrderSwapVariant(KitRentalCase):
         cls.component_a.product_template = component_tmpl
         cls.component_a_1.product_template = component_tmpl
         cls.kit.kit_line_ids.filtered(lambda r: r.is_important).write(
-            {"is_change_variant": True}
+            {"allow_change_variant": True}
         )
         so_env = cls.env["sale.order"]
         sol_env = cls.env["sale.order.line"]
@@ -28,15 +28,12 @@ class TestSaleRentalOrderSwapVariant(KitRentalCase):
         cls.kit_line = sol_env.create({"order_id": cls.so.id, "product_id": cls.kit.id})
         cls.kit_line.is_rental_order = cls.so.is_rental
         cls.kit_line.product_id_change()
-        cls.kit_line.with_context(
-            sale_rental_order_swap_variant_test=True
-        ).initialize_kit()
+        cls.kit_line.initialize_kit()
         cls.so.action_confirm()
-        cls.wizard_env = cls.env["sale.rental.order.swap.variant"]
         cls.change_variant_sol = cls.so.order_line.filtered(
-            lambda r: r.is_change_variant_kit_component
+            lambda r: r.allow_change_variant_kit_component
         )[0]
-        cls.wizard_env = cls.wizard_env.with_context(
+        cls.wizard_env = cls.env["sale.rental.order.swap.variant"].with_context(
             active_model="sale.order.line",
             active_id=cls.change_variant_sol.id,
             default_active_product_id=cls.change_variant_sol.product_id.id,

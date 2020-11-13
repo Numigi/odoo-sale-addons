@@ -8,11 +8,11 @@ from odoo.exceptions import ValidationError
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    is_change_variant_kit_component = fields.Boolean()
+    allow_change_variant_kit_component = fields.Boolean()
 
     def prepare_kit_component(self, kit_line):
         new_line = super().prepare_kit_component(kit_line)
-        new_line.is_change_variant_kit_component = kit_line.is_change_variant
+        new_line.allow_change_variant_kit_component = kit_line.allow_change_variant
         return new_line
 
     @api.multi

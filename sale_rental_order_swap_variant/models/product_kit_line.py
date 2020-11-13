@@ -7,9 +7,9 @@ from odoo import api, fields, models
 class ProductKitLine(models.Model):
     _inherit = "product.kit.line"
 
-    is_change_variant = fields.Boolean("Change Variant")
+    allow_change_variant = fields.Boolean()
 
     @api.onchange("is_important")
     def _onchange_is_important(self):
-        if self.is_change_variant and not self.is_important:
-            self.is_change_variant = False
+        if self.allow_change_variant and not self.is_important:
+            self.allow_change_variant = False
