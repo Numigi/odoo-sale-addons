@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-06 12:38+0000\n"
-"PO-Revision-Date: 2020-11-06 12:38+0000\n"
+"POT-Creation-Date: 2020-11-13 06:22+0000\n"
+"PO-Revision-Date: 2020-11-13 06:22+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,23 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_rental_order_swap_variant
+#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_product_kit_line__allow_change_variant
+msgid "Allow Change Variant"
+msgstr "Autoriser le changement de variante"
+
+#. module: sale_rental_order_swap_variant
 #: model_terms:ir.ui.view,arch_db:sale_rental_order_swap_variant.sale_rental_order_swap_variant_form
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: sale_rental_order_swap_variant
-#: code:addons/sale_rental_order_swap_variant/wizard/sale_rental_order_swap_variant.py:35
+#: code:addons/sale_rental_order_swap_variant/wizard/sale_rental_order_swap_variant.py:31
 #, python-format
 msgid "Cannot find any active sale order line"
 msgstr "Aucune ligne de vente"
 
 #. module: sale_rental_order_swap_variant
 #: model:ir.actions.act_window,name:sale_rental_order_swap_variant.action_sale_rental_order_swap_variant
-#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_product_kit_line__is_change_variant
 #: model_terms:ir.ui.view,arch_db:sale_rental_order_swap_variant.sale_rental_order_swap_variant_form
 msgid "Change Variant"
 msgstr "Changement de variante"
@@ -52,11 +56,6 @@ msgstr "Créé le"
 #: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant__display_name
 msgid "Display Name"
 msgstr "Nom affiché"
-
-#. module: sale_rental_order_swap_variant
-#: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_order_line__is_change_variant_kit_component
-msgid "Is Change Variant Kit Component"
-msgstr "Peut changer de variante"
 
 #. module: sale_rental_order_swap_variant
 #: model:ir.model.fields,field_description:sale_rental_order_swap_variant.field_sale_rental_order_swap_variant____last_update
