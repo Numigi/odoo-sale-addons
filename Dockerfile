@@ -39,6 +39,7 @@ COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
 COPY website_sale_request_price_wishlist /mnt/extra-addons/website_sale_request_price_wishlist
+COPY website_stock_availability_enhanced /mnt/extra-addons/website_stock_availability_enhanced
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
