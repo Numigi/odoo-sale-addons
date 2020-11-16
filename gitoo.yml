@@ -17,3 +17,13 @@
   includes:
     - web_handle_condition
     - web_trash_condition
+
+- url: https://github.com/oca/crm
+  branch: "12.0"
+  includes:
+    - crm_lead_product
+
+- url: https://github.com/oca/product-attribute
+  branch: "12.0"
+  includes:
+    - product_brand

@@ -51,6 +51,7 @@ class TestSaleOrderWeight(SavepointCase):
         so = self.env["sale.order"].create(
             {
                 "partner_id": self.customer.id,
+                "pricelist_id": self.env.ref("product.list0").id,
                 "order_line": [
                     (
                         0,
@@ -125,6 +126,7 @@ class TestSaleOrderWeight(SavepointCase):
         so = self.env["sale.order"].create(
             {
                 "partner_id": self.customer.id,
+                "pricelist_id": self.env.ref("product.list0").id,
                 "order_line": [
                     (
                         0,

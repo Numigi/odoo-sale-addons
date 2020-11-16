@@ -16,6 +16,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
+COPY crm_brand /mnt/extra-addons/crm_brand
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
@@ -30,12 +31,15 @@ COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_w
 COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
 COPY sale_privilege_level_delivery /mnt/extra-addons/sale_privilege_level_delivery
 COPY sale_privilege_level_payment /mnt/extra-addons/sale_privilege_level_payment
+COPY sale_privilege_level_pricelist /mnt/extra-addons/sale_privilege_level_pricelist
 COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
+COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
+COPY website_sale_request_price_wishlist /mnt/extra-addons/website_sale_request_price_wishlist
 COPY website_stock_availability_enhanced /mnt/extra-addons/website_stock_availability_enhanced
 
 COPY .docker_files/main /mnt/extra-addons/main
