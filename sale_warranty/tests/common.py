@@ -81,7 +81,7 @@ class SaleWarrantyCase(SavepointCase):
                 "partner_id": cls.customer.id,
                 "user_id": cls.salesman.id,
                 "warehouse_id": cls.warehouse.id,
-                "pricelist_id": cls.pricelist.id,
+                "pricelist_id": cls.env.ref("product.list0").id,
                 "order_line": [
                     (
                         0,
