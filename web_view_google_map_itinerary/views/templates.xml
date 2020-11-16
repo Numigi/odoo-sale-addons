@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="web_view_google_map_itinerary" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script src="web_view_google_map_itinerary/static/src/js/web_view_google_map_itinerary.js" type="text/javascript"/>
+        </xpath>
+    </template>
+
+</odoo>
