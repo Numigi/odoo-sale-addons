@@ -18,7 +18,9 @@ class SaleOrderLine(models.Model):
     @api.multi
     def change_variant(self, product):
         self.ensure_one()
-        done_move = self.move_ids.filtered(lambda m: m.state == "done")
+        done_move = self.move_ids.with_all_origin_moves().filtered(
+            lambda m: m.is_done_move()
+        )
         if done_move:
             raise ValidationError(
                 _(
@@ -26,6 +28,8 @@ class SaleOrderLine(models.Model):
                     "move that is already done ({})."
                 ).format(self.product_id.display_name, done_move[0].reference)
             )
+        self.move_ids._action_cancel()
+        qty = self.product_uom_qty
+        self.product_uom_qty = 0
         self.product_id = product
-        self.product_id_change()
-        self.move_ids.write({"product_id": product.id})
+        self.product_uom_qty = qty
