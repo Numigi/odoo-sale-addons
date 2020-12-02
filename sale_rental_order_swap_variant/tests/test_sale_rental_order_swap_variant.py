@@ -24,7 +24,11 @@ class TestSaleRentalOrderSwapVariant(KitRentalCase):
         so_env = cls.env["sale.order"]
         sol_env = cls.env["sale.order.line"]
         cls.so = so_env.create(
-            {"partner_id": cls.env.user.partner_id.id, "is_rental": True}
+            {
+                "partner_id": cls.env.user.partner_id.id,
+                "is_rental": True,
+                "pricelist_id": cls.env.ref("product.list0").id,
+            }
         )
         cls.kit_line = sol_env.create({"order_id": cls.so.id, "product_id": cls.kit.id})
         cls.kit_line.is_rental_order = cls.so.is_rental
