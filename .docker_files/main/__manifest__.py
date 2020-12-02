@@ -29,6 +29,7 @@
         "sale_privilege_level_pricelist",
         "sale_privilege_level_website",
         "sale_rental",
+        "sale_rental_order_swap_variant",
         "sale_warranty",
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
