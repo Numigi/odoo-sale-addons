@@ -41,22 +41,34 @@ class TestSaleRentalOrderSwapVariant(KitRentalCase):
         )
 
     def test_wizard_action_replace_before_stock_move_done(self):
-        with Form(self.wizard_env) as wizard_form:
-            wizard_form.product_id = self.component_a_1
-            res = wizard_form.save()
-            res.change_variant()
+        self._change_variant()
         self.assertEqual(self.change_variant_sol.product_id, self.component_a_1)
-        self.assertEqual(
-            self.change_variant_sol.move_ids.mapped("product_id"), self.component_a_1
+        stock_moves = self._get_all_stock_moves().filtered(
+            lambda m: m.state != "cancel"
         )
+        self.assertEqual(stock_moves.mapped("product_id"), self.component_a_1)
+
+    def test_old_stock_moves_are_cancelled(self):
+        old_moves = self._get_all_stock_moves()
+        self._change_variant()
+        assert all(m.state == "cancel" for m in old_moves)
+        assert all(not m.picking_id for m in old_moves)
+
+    def _get_all_stock_moves(self):
+        delivery_moves = self.change_variant_sol.move_ids
+        return_moves = delivery_moves.mapped("move_dest_ids")
+        return delivery_moves | return_moves
 
     def test_test_wizard_action_replace_after_stock_move_done(self):
         picking = self.so.picking_ids[0]
         picking.move_ids_without_package.write({"quantity_done": 1})
         picking.button_validate()
         self.change_variant_sol.move_ids._action_done()
+        with self.assertRaises(ValidationError):
+            self._change_variant()
+
+    def _change_variant(self):
         with Form(self.wizard_env) as wizard_form:
             wizard_form.product_id = self.component_a_1
             res = wizard_form.save()
-            with self.assertRaises(ValidationError):
-                res.change_variant()
+            res.change_variant()

@@ -18,18 +18,47 @@ class SaleOrderLine(models.Model):
     @api.multi
     def change_variant(self, product):
         self.ensure_one()
+        self._check_no_done_stock_move()
+        self._cancel_all_stock_moves()
+        self.product_id = product
+        self.name = self.get_sale_order_line_multiline_description_sale(product)
+        self._action_launch_stock_rule()
+
+    def _cancel_all_stock_moves(self):
+        self._cancel_push_stock_moves()
+        self._cancel_pull_stock_moves()
+
+    def _cancel_push_stock_moves(self):
+        moves = self.move_ids.mapped("move_dest_ids")
+        limit = 10
+        while moves and limit:
+            dest_moves = moves.mapped("move_dest_ids")
+            _cancel_stock_moves(moves)
+            moves = dest_moves
+            limit -= 1
+
+    def _cancel_pull_stock_moves(self):
+        moves = self.move_ids
+        limit = 10
+        while moves and limit:
+            orig_moves = moves.mapped("move_orig_ids")
+            _cancel_stock_moves(moves)
+            moves = orig_moves
+            limit -= 1
+
+    def _check_no_done_stock_move(self):
         done_move = self.move_ids.with_all_origin_moves().filtered(
             lambda m: m.is_done_move()
         )
         if done_move:
             raise ValidationError(
                 _(
-                    "The variant swap can not be done since the sale order line with product {} is linked to a stock "
-                    "move that is already done ({})."
+                    "The variant swap can not be done since the sale order line with product {} is "
+                    "linked to a stock move that is already done ({})."
                 ).format(self.product_id.display_name, done_move[0].reference)
             )
-        self.move_ids._action_cancel()
-        qty = self.product_uom_qty
-        self.product_uom_qty = 0
-        self.product_id = product
-        self.product_uom_qty = qty
+
+
+def _cancel_stock_moves(moves):
+    moves._action_cancel()
+    moves.write({"picking_id": False})
