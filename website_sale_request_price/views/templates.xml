@@ -90,10 +90,10 @@
 
     <template inherit_id="sale.optional_product_items" id="website_sale_request_price_optional_product_items" name="Optional product items: handling hiding Price and Add to Cart">
         <xpath expr="//td[hasclass('td-price')]" position="attributes">
-            <attribute name="t-if">not product.is_request_price_required()</attribute>
+            <attribute name="t-if">not website or not product.is_request_price_required()</attribute>
         </xpath>
         <xpath expr="//td[hasclass('td-price')]" position="after">
-            <td t-if="product.is_request_price_required()"/>
+            <td t-if="website and product.is_request_price_required()"/>
         </xpath>
     </template>
 
