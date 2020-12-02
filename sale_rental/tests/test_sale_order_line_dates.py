@@ -43,9 +43,13 @@ class TestSaleOrderLineDeliveredQty(SaleOrderKitCase):
 
     @data(
         (datetime(2020, 1, 1), datetime(2020, 1, 1, 23, 59, 59), 1),
-        (datetime(2020, 1, 1), datetime(2020, 1, 2), 2),
+        (datetime(2020, 1, 1), datetime(2020, 1, 2), 1),
         (datetime(2020, 1, 1), datetime(2020, 1, 2, 23, 59, 59), 2),
-        (datetime(2020, 1, 1), datetime(2020, 1, 3), 3),
+        (datetime(2020, 1, 1), datetime(2020, 1, 3), 2),
+        (datetime(2020, 1, 1, 10), datetime(2020, 1, 2, 10), 1),
+        (datetime(2020, 1, 1, 10), datetime(2020, 1, 1, 10, 1), 1),
+        (datetime(2020, 1, 1, 10), datetime(2020, 1, 2, 17), 2),
+        (datetime(2020, 1, 1, 10), datetime(2020, 1, 3, 9), 2),
     )
     @unpack
     def test_onchange_rental_dates(self, date_from, date_to, quantity):
@@ -98,7 +102,7 @@ class TestSaleOrderLineDeliveredQty(SaleOrderKitCase):
 
         assert self.service_1.rental_date_from == delivery_date
         assert self.service_1.rental_date_to == return_date
-        assert self.service_1.product_uom_qty == 6  # 10 - 5 + 1
+        assert self.service_1.product_uom_qty == 5
 
     def test_important_components_partially_returned(self):
         now = datetime.now()
@@ -117,4 +121,4 @@ class TestSaleOrderLineDeliveredQty(SaleOrderKitCase):
 
         assert self.service_1.rental_date_from == delivery_date
         assert self.service_1.rental_date_to == initial_date_to
-        assert self.service_1.product_uom_qty == 3  # 7 - 5 + 1
+        assert self.service_1.product_uom_qty == 2

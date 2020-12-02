@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_privilege_level_payment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-13 19:47+0000\n"
+"PO-Revision-Date: 2020-10-13 15:47-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: sale_privilege_level_payment
+#: model:ir.model,name:sale_privilege_level_payment.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: sale_privilege_level_payment
+#: model_terms:ir.ui.view,arch_db:sale_privilege_level_payment.payment_acquirer_form
+msgid ""
+"Filling this field allows you to filter payment acquirers based on privilege "
+"levels."
+msgstr ""
+"Remplir ce champ vous permet de filtrer les intermédiaires de paiement selon "
+"les niveaux de privilèges."
+
+#. module: sale_privilege_level_payment
+#: model:ir.model,name:sale_privilege_level_payment.model_payment_acquirer
+msgid "Payment Acquirer"
+msgstr "Intermédiaire de paiement"
+
+#. module: sale_privilege_level_payment
+#: model:ir.model.fields,field_description:sale_privilege_level_payment.field_sale_privilege_level__payment_acquirer_ids
+#: model_terms:ir.ui.view,arch_db:sale_privilege_level_payment.sale_privilege_level_form
+msgid "Payment Acquirers"
+msgstr "Intermédiaires de paiement"
+
+#. module: sale_privilege_level_payment
+#: model_terms:ir.ui.view,arch_db:sale_privilege_level_payment.payment_acquirer_form
+msgid "Privilege Availability"
+msgstr "Disponibilité privilège"
+
+#. module: sale_privilege_level_payment
+#: model:ir.model.fields,field_description:sale_privilege_level_payment.field_payment_acquirer__privilege_level_ids
+msgid "Privilege Levels"
+msgstr "Niveaux de privilèges"
+
+#. module: sale_privilege_level_payment
+#: model:ir.model,name:sale_privilege_level_payment.model_sale_privilege_level
+msgid "Sale Privilege Level"
+msgstr "Niveau de privilèges (ventes)"

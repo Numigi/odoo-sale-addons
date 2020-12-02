@@ -5,6 +5,7 @@
   branch: "12.0"
   includes:
     - product_kit
+    - product_dimension
 
 - url: https://github.com/Numigi/odoo-stock-addons
   branch: "12.0"
@@ -16,3 +17,13 @@
   includes:
     - web_handle_condition
     - web_trash_condition
+
+- url: https://github.com/oca/crm
+  branch: "12.0"
+  includes:
+    - crm_lead_product
+
+- url: https://github.com/oca/product-attribute
+  branch: "12.0"
+  includes:
+    - product_brand
