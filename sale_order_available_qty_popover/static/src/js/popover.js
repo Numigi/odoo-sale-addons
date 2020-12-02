@@ -1,4 +1,4 @@
-odoo.define("sale_persistent_product_warning", function(require){
+odoo.define("sale_order_available_qty_popover", function(require){
 
 const AbstractField = require("web.AbstractField")
 const core = require("web.core")

@@ -32,6 +32,7 @@ class TestSaleOrder(SavepointCase):
         cls.sale_order = cls.env["sale.order"].create(
             {
                 "partner_id": cls.customer.id,
+                "pricelist_id": cls.env.ref("product.list0").id,
                 "order_line": [
                     (0, 0, cls._get_so_line_vals(cls.product_1, cls.unit, 10)),
                     (0, 0, cls._get_so_line_vals(cls.product_2, cls.unit, 10)),
