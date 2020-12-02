@@ -21,6 +21,7 @@
         "sale_order_margin_percent",
         "sale_persistent_product_warning",
         "sale_rental",
+        "sale_rental_order_swap_variant",
         "sale_warranty",
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
