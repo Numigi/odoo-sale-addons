@@ -2,8 +2,7 @@
 <template>
     <t t-extend="MapView.buttons">
         <t t-jquery="button.o-map-button-center-map" t-operation="after">
-            <button t-if="widget.modelName == 'res.partner' || widget.modelName == 'crm.lead'"
-                    class="btn btn-secondary o-map-button-see-in-google-maps"
+            <button class="btn btn-secondary o-map-button-see-in-google-maps"
                     type="button"
                     accesskey="g"
             >SEE IN GOOGLE MAPS</button>

@@ -34,6 +34,7 @@
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
+        "web_view_google_map_itinerary",
         "website_sale_request_price",
         "website_sale_request_price_wishlist",
         "website_stock_availability_enhanced",

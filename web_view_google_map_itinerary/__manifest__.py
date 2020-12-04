@@ -9,7 +9,7 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
-    "depends": ["contacts_maps", "crm_maps"],
+    "depends": ["web_google_maps"],
     "data": ["views/templates.xml"],
     "qweb": ["static/src/xml/web_view_google_map_itinerary.xml"],
     "installable": True,

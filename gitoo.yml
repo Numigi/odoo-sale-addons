@@ -1,6 +1,14 @@
 - url: https://{{GIT_TOKEN}}@github.com/Numigi/odoo-enterprise
   branch: "12.0"
 
+- url: https://github.com/gityopie/odoo-addons
+  branch: "12.0"
+  includes:
+    - contacts_maps
+    - crm_maps
+    - sale_maps
+    - web_google_maps
+
 - url: https://github.com/Numigi/odoo-product-addons
   branch: "12.0"
   includes:
