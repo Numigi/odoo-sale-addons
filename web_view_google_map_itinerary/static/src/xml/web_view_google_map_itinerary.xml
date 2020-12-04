@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-extend="MapView.buttons">
+        <t t-jquery="button.o-map-button-center-map" t-operation="after">
+            <button class="btn btn-secondary o-map-button-see-in-google-maps"
+                    type="button"
+                    accesskey="g"
+            >SEE IN GOOGLE MAPS</button>
+        </t>
+    </t>
+</template>

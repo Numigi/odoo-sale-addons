@@ -1,0 +1,23 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_view_google_map_itinerary
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-16 07:50+0000\n"
+"PO-Revision-Date: 2020-11-16 07:50+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_view_google_map_itinerary
+#. openerp-web
+#: code:addons/web_view_google_map_itinerary/static/src/xml/web_view_google_map_itinerary.xml:9
+#, python-format
+msgid "SEE IN GOOGLE MAPS"
+msgstr "VOIR DANS GOOGLE MAPS"
