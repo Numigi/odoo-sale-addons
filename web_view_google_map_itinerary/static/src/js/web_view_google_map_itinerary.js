@@ -16,15 +16,22 @@ odoo.define('web_view_google_map_itinerary.see_in_google_maps', function (requir
             }
         },
         _onButtonSeeInGoogleMaps: async function () {
-            var record = this.model.get(this.handle);
-            var googleMapUri = await rpc.query({
-                model: this.modelName,
-                method: 'get_google_maps_itinerary_uri',
-                args: [record.res_ids, []],
-            });
-            window.open(googleMapUri);
+            var url = "https://www.google.com/maps/dir/";
+            var query = "?api=1&waypoints=";
+            var params = [];
+            var fieldLat = this.renderer.fieldLat;
+            var fieldLng = this.renderer.fieldLng;
+            _.each(this.renderer.state.data, function (record) {
+                var lat = record.data[fieldLat];
+                var lng = record.data[fieldLng];
+                if (lat || lng) {
+                    params.push(lat + "," + lng);
+                };
+            })
+            query += params.join("|");
+            window.open(url + query);
         },
     });
 
-    return MapController
+    return MapController;
 })
