@@ -28,6 +28,16 @@ On the form view of a partner, I can select a single privilege level.
 
 .. image:: static/description/partner_form.png
 
+Default Privilege Level
+-----------------------
+It is possible to define a default privilege level for new partners.
+
+.. image:: static/description/default_privilege_level.png
+
+When a partner is created on user signup, this privilege level is automatically assigned.
+
+This setting is customizable per company.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

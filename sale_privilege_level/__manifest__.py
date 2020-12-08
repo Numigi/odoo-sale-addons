@@ -3,17 +3,18 @@
 
 {
     "name": "Sale Privilege Level",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Add privilege levels on partners",
-    "depends": ["contacts"],
+    "depends": ["contacts", "sale"],
     "data": [
         "views/res_partner.xml",
         "views/sale_privilege_level.xml",
+        "views/res_config_settings.xml",
         "security/ir.model.access.csv",
     ],
     "installable": True,
