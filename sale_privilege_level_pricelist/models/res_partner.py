@@ -12,7 +12,7 @@ class ResPartner(models.Model):
 
     def _compute_product_pricelist(self):
         for partner in self:
-            available_pricelists = partner._get_available_pricelists()
+            available_pricelists = partner.sudo()._get_available_pricelists()
             partner.property_product_pricelist = available_pricelists[:1]
 
     def _get_available_pricelists(self):

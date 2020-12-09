@@ -79,6 +79,7 @@ class TestResPartner(SavepointCase):
                 "parent_id": self.partner.id,
                 "type": "invoice",
                 "country_id": self.canada.id,
+                "privilege_level_id": False,
             }
         )
         assert contact.property_product_pricelist == self.pricelist_canada
@@ -86,3 +87,16 @@ class TestResPartner(SavepointCase):
     def test_no_privilege_level(self):
         self.partner.privilege_level_id = False
         assert not self.partner.property_product_pricelist
+
+    def test_external_user_can_compute_pricelist(self):
+        portal_user = self.env["res.users"].create(
+            {
+                "name": "User A",
+                "email": "usera@example.com",
+                "login": "usera@example.com",
+                "partner_id": self.partner.id,
+                "groups_id": [(4, self.env.ref("base.group_portal").id)],
+            }
+        )
+        partner = self.partner.sudo(portal_user)
+        assert partner.property_product_pricelist
