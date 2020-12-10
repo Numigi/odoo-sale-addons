@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <field name="industry_id" position="after">
-                <field name="privilege_level_id"/>
+                <field name="privilege_level_invisible" invisible="1"/>
+                <field name="privilege_level_id" attrs="{'invisible': [('privilege_level_invisible', '=', True)]}"/>
             </field>
         </field>
     </record>

@@ -9,10 +9,8 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     def get_available_delivery_carriers(self):
-        partners = self | self.commercial_partner_id
-        privilege_level_carriers = partners.mapped(
-            "privilege_level_id.delivery_carrier_ids"
-        )
+        privilege_level = self.get_privilege_level()
+        privilege_level_carriers = privilege_level.mapped("delivery_carrier_ids")
         unfiltered_carriers = self.env["delivery.carrier"].search(
             [("privilege_level_ids", "=", False)]
         )
