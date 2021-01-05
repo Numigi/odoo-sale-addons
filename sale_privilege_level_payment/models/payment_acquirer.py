@@ -26,7 +26,7 @@ class PaymentAcquirer(models.Model):
                 .browse(partner_id)
                 .with_context(sale_privilege_level_partner_id=False)
             )
-            available_acquirers = partner.get_available_payment_acquirers()
+            available_acquirers = partner.sudo().get_available_payment_acquirers()
             res &= available_acquirers
 
         return res
