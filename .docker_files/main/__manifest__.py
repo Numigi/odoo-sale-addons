@@ -12,6 +12,7 @@
     "summary": "Install all addons required for testing.",
     "depends": [
         "crm_brand",
+        "delivery_carrier_fixed_over",
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_dynamic_price",
