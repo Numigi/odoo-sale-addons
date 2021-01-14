@@ -14,14 +14,14 @@
                 </div>
                 <field
                     nolabel="1"
-                    name="fixed_over"
+                    name="fixed_over_amount"
                     attrs="{'required': [('enable_fixed_over', '!=', False)],
                             'invisible': [('enable_fixed_over', '=', False)]}"/>
-                <label for="fixed_over_amount" string="if the order amount is above"
+                <label for="fixed_over" string="if the order amount is above"
                     style="margin-left: 24px;"/>
                 <field
                     nolabel="1"
-                    name="fixed_over_amount"
+                    name="fixed_over"
                     attrs="{'required': [('enable_fixed_over', '!=', False)],
                             'invisible': [('enable_fixed_over', '=', False)]}"/>
             </xpath>
