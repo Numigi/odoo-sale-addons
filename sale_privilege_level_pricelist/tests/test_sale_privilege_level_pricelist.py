@@ -100,3 +100,11 @@ class TestResPartner(SavepointCase):
         )
         partner = self.partner.sudo(portal_user)
         assert partner.property_product_pricelist
+
+    def test_search(self):
+        self.partner.country_id = self.canada
+        pricelist_obj = self.env["product.pricelist"].with_context(
+            sale_privilege_level_partner_id=self.partner.id
+        )
+        res = pricelist_obj.search([])
+        assert res == self.pricelist_canada | self.pricelist_world
