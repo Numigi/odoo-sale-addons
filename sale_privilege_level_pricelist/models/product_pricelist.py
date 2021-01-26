@@ -26,7 +26,7 @@ class Pricelist(models.Model):
                 .browse(partner_id)
                 .with_context(sale_privilege_level_partner_id=False)
             )
-            available_pricelists = partner.get_available_pricelists()
+            available_pricelists = partner._get_available_pricelists()
             res &= available_pricelists
 
         return res
