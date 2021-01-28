@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-extend="payment.no_tx_found">
+        <t t-jquery="p:first-child" t-operation="replace">
+            <p>The payment is being processed. Be patient.</p>
+        </t>
+    </t>
+
+</templates>

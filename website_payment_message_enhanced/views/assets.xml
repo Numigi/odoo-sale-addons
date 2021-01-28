@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_frontend" name="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/website_payment_message_enhanced/static/src/css/payment_processing.css"/>
+            <script type="text/javascript" src="/website_payment_message_enhanced/static/src/js/payment_processing.js"></script>
+        </xpath>
+    </template>
+
+</odoo>
