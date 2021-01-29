@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="payment_process_page" name="Payment Processing Page" inherit_id="payment.payment_process_page">
+        <!-- Change col-sm-6 to col-sm-12 -->
+        <xpath expr="//div[hasclass('o_payment_processing_content')]" position="attributes">
+            <attribute name="class">o_payment_processing_content col-sm-12</attribute>
+        </xpath>
+    </template>
+
+</odoo>
