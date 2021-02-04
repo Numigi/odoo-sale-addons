@@ -31,7 +31,6 @@ class TestDeliveryCarrier(SavepointCase):
                 "product_uom": cls.env.ref("uom.product_uom_unit").id,
                 "product_uom_qty": 1,
                 "price_unit": cls.minimum_amount,
-                "tax_id": [(5, 0)],
             }
         )
 

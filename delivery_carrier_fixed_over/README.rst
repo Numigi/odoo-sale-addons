@@ -17,6 +17,12 @@ when the order is above a given amount.
 
 .. image:: static/description/fixed_shipping_above.png
 
+Taxes
+-----
+In vanilla Odoo, taxes are included to compute the amount eligible for free shipping.
+
+After installing this module, taxes are excluded.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
