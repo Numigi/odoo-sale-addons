@@ -3,7 +3,7 @@
 
 import werkzeug
 
-from odoo import api, models
+from odoo import api, models, _
 
 
 class CrmLead(models.Model):
@@ -25,7 +25,7 @@ class CrmLead(models.Model):
         sale_team_id = self._get_wsrp_sale_team_id()
         lead = self.sudo().create(
             {
-                "name": "Shop: " + product.display_name,
+                "name": _("Shop: {}").format(product.display_name),
                 "type": "opportunity",
                 "partner_id": not is_public and user.partner_id.id,
                 "email_from": email,
