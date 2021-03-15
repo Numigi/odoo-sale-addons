@@ -6,6 +6,7 @@
   includes:
     - contacts_maps
     - crm_maps
+    - google_marker_icon_picker
     - sale_maps
     - web_google_maps
 

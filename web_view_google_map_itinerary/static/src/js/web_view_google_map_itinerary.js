@@ -4,13 +4,15 @@ odoo.define('web_view_google_map_itinerary.see_in_google_maps', function (requir
     var MapController = require('web_google_maps.MapController');
     var rpc = require('web.rpc');
 
+    const buttonSelector = 'button.o-map-button-see-in-google-maps'
+
     MapController.include({
         renderButtons: function($node) {
             this._super.apply(this, arguments);
             if (this.hasButtons && this.$buttons) {
                 this.$buttons.on(
                     'click',
-                    'button.o-map-button-see-in-google-maps',
+                    buttonSelector,
                     this._onButtonSeeInGoogleMaps.bind(this)
                 );
             }
@@ -30,6 +32,28 @@ odoo.define('web_view_google_map_itinerary.see_in_google_maps', function (requir
             })
             query += params.join("|");
             window.open(url + query);
+        },
+        _update(state) {
+            const result = this._super.apply(this, arguments);
+            result.done(() => {
+                this._updateSeeInGoogleButton(state)
+            })
+            return result
+        },
+        _updateSeeInGoogleButton(state) {
+            const isGroupedView = state.groupedBy && state.groupedBy.length
+            if (isGroupedView) {
+                this._hideSeeInGoogleButton()
+            }
+            else {
+                this._showSeeInGoogleButton()
+            }
+        },
+        _hideSeeInGoogleButton() {
+            this.$buttons.find(buttonSelector).hide()
+        },
+        _showSeeInGoogleButton() {
+            this.$buttons.find(buttonSelector).show()
         },
     });
 
