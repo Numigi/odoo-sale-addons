@@ -1,6 +1,8 @@
 Sale Inter-Company Service
 ==========================
 
+.. contents:: Table of Contents
+
 Use Case
 --------
 Suppose you are managing multiple subsidiaries under a parent company.
@@ -24,7 +26,7 @@ Overview
 This module allows to generate a sale order from a company ``X`` on behalf of a company ``Y``.
 
 * The company ``Y`` invoices the final client.
-* The company ``X`` invoice the company ``Y``.
+* The company ``X`` invoices the company ``Y``.
 
 A discount in percent is applied to the Interco invoice.
 This discount is the profit earned by ``Y`` for concluding the sale.
