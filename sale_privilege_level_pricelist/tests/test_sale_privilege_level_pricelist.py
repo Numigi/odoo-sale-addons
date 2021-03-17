@@ -8,6 +8,8 @@ class TestResPartner(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context={"testing_sale_privilege_level_pricelist": True})
+
         cls.canada = cls.env.ref("base.ca")
         cls.france = cls.env.ref("base.fr")
         cls.belgium = cls.env.ref("base.be")
