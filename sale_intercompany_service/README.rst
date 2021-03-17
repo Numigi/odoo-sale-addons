@@ -87,14 +87,45 @@ It is dedicated to the case of invoicing an ``Interco Service``.
 When validating, 3 invoices are created.
 
 1. One customer invoice on the ``Mother`` company (for invoicing the ``Sister`` company)
+
+.. image:: static/description/customer_invoice_mother_company.png
+
 2. One supplier invoice on the ``Sister`` company
+
+.. image:: static/description/supplier_invoice_sister_company.png
+
 3. One customer invoice on the ``Sister`` company (for invoicing the actual customer)
+
+.. image:: static/description/customer_invoice_sister_company.png
 
 The invoices (1) and (2) are symetrical in both company
 and allow to register the intercompany invoicing.
 
 On these 2 invoices, an extra discount is added.
 This discount represents the profit earned by the ``Sister`` company for this sale.
+
+Interco Service Summary
+-----------------------
+On the sale order, I notice a new smart button ``Interco Service``.
+
+.. image:: static/description/sale_order_smart_button.png
+
+When I click on the button, the summary of the ``Interco Service`` is displayed.
+
+.. image:: static/description/interco_service_summary.png
+
+It shows the invoices on both companies that are linked to the sale order.
+
+Invoiceable Lines Versus Downpayment
+------------------------------------
+In the standard invoicing wizard of a sale order, there is a choice between
+either invoicing invoiceable lines or registering a down payment.
+
+.. image:: static/description/sale_order_standard_wizard.png
+
+This option did not make sense in the context of interco services.
+
+For an ``Interco Service``, the invoicing is always done based on ``Invoiceable Lines``.
 
 Contributors
 ------------
