@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="seller_wizard" model="ir.ui.view">
+        <field name="name">Interco Service Wizard</field>
+        <field name="model">sale.interco.service.invoice</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="mode" invisible="1"/>
+                    <group>
+                        <group name="selling_company" string="Selling Company">
+                            <field name="interco_invoice_ids" string="Interco Customer Invoice" widget="many2many_tags"/>
+                            <field name="interco_partner_id" string="Customer"/>
+                            <field name="interco_invoice_address_id" string="Invoicing Address"/>
+                            <field name="interco_position_id" string="Fiscal Position"/>
+                            <field name="discount" string="Interco Discount"/>
+                        </group>
+                        <group name="purchasing_company" string="Purchasing Company">
+                            <field name="supplier_invoice_names" string="Interco Supplier Invoice"/>
+                            <field name="supplier_partner_id" string="Supplier"/>
+                            <field name="supplier_position_name" string="Fiscal Position"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                        </group>
+                        <group name="end_customer" string="End Customer">
+                            <field name="customer_invoice_names" string="End Customer Invoice"/>
+                            <field name="customer_id" string="Customer"/>
+                            <field name="customer_delivery_address_id" string="Invoicing Address"/>
+                            <field name="customer_position_name" string="Fiscal Position"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer attrs="{'invisible': [('mode', '!=', 'invoice')]}">
+                    <button string="Validate" name="validate" class="oe_highlight" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="buyer_wizard" model="ir.ui.view">
+        <field name="name">Interco Service Wizard (Buyer Summary)</field>
+        <field name="model">sale.interco.service.invoice</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group name="selling_company" string="Selling Company">
+                            <field name="interco_invoice_names" string="Interco Customer Invoice"/>
+                            <field name="interco_partner_id" string="Customer"/>
+                            <field name="interco_invoice_address_id" string="Invoicing Address"/>
+                            <field name="interco_position_name" string="Fiscal Position"/>
+                            <field name="discount" string="Interco Discount"/>
+                        </group>
+                        <group name="purchasing_company" string="Purchasing Company">
+                            <field name="supplier_invoice_ids" string="Interco Supplier Invoice" widget="many2many_tags"/>
+                            <field name="supplier_partner_id" string="Supplier"/>
+                            <field name="supplier_position_id" string="Fiscal Position"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                        </group>
+                        <group name="end_customer" string="End Customer">
+                            <field name="customer_invoice_names" string="End Customer Invoice"/>
+                            <field name="customer_id" string="Customer"/>
+                            <field name="customer_delivery_address_id" string="Invoicing Address"/>
+                            <field name="customer_position_id" string="Fiscal Position"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

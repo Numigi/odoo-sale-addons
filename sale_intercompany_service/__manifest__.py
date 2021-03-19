@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Sell to a customer on behalf of another company",
-    "depends": ["sale"],
-    "data": [],
+    "depends": ["sale_management"],
+    "data": ["views/sale_order.xml", "wizard/sale_interco_service_invoice.xml"],
     "installable": True,
 }

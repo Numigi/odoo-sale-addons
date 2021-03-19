@@ -88,15 +88,15 @@ When validating, 3 invoices are created.
 
 1. One customer invoice on the ``Mother`` company (for invoicing the ``Sister`` company)
 
-.. image:: static/description/customer_invoice_mother_company.png
+	.. image:: static/description/customer_invoice_mother_company.png
 
 2. One supplier invoice on the ``Sister`` company
 
-.. image:: static/description/supplier_invoice_sister_company.png
+	.. image:: static/description/supplier_invoice_sister_company.png
 
 3. One customer invoice on the ``Sister`` company (for invoicing the actual customer)
 
-.. image:: static/description/customer_invoice_sister_company.png
+	.. image:: static/description/customer_invoice_sister_company.png
 
 The invoices (1) and (2) are symetrical in both company
 and allow to register the intercompany invoicing.
