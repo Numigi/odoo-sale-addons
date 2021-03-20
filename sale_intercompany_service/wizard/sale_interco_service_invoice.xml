@@ -10,6 +10,7 @@
                     <field name="mode" invisible="1"/>
                     <group>
                         <group name="selling_company" string="Selling Company">
+                            <field name="order_id" string="Sale Order"/>
                             <field name="interco_invoice_ids" string="Interco Customer Invoice" widget="many2many_tags"/>
                             <field name="interco_partner_id" string="Customer"/>
                             <field name="interco_invoice_address_id" string="Invoicing Address"/>
@@ -49,6 +50,7 @@
                 <sheet>
                     <group>
                         <group name="selling_company" string="Selling Company">
+                            <field name="order_name" string="Sale Order"/>
                             <field name="interco_invoice_names" string="Interco Customer Invoice"/>
                             <field name="interco_partner_id" string="Customer"/>
                             <field name="interco_invoice_address_id" string="Invoicing Address"/>
@@ -65,7 +67,7 @@
                         <group>
                         </group>
                         <group name="end_customer" string="End Customer">
-                            <field name="customer_invoice_names" string="End Customer Invoice"/>
+                            <field name="customer_invoice_ids" string="End Customer Invoice" widget="many2many_tags"/>
                             <field name="customer_id" string="Customer"/>
                             <field name="customer_delivery_address_id" string="Invoicing Address"/>
                             <field name="customer_position_id" string="Fiscal Position"/>

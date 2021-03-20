@@ -1,7 +1,7 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import fields, models, _
 
 
 class AccountInvoice(models.Model):
@@ -15,6 +15,7 @@ class AccountInvoice(models.Model):
     interco_supplier_invoice_id = fields.Many2one(
         "account.invoice", ondelete="restrict"
     )
+    is_interco_service = fields.Boolean()
 
     def open_interco_service_summary(self):
         order = self.sudo().interco_service_order_id
@@ -22,9 +23,12 @@ class AccountInvoice(models.Model):
             {"order_id": order.id, "mode": "summary"}
         )
         action = wizard.get_formview_action()
+        action["name"] = _("Interco Service")
         view_ref = (
             "seller_wizard" if self.company_id == order.company_id else "buyer_wizard"
         )
-        action["view_id"] = self.env.ref(f"sale_intercompany_service.{view_ref}").id
+        action["views"] = [
+            (self.env.ref(f"sale_intercompany_service.{view_ref}").id, "form")
+        ]
         action["target"] = "new"
         return action

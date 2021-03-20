@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="customer_invoice_form" model="ir.ui.view">
+        <field name="name">Account Invoice Form: add interco service</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <field name="is_interco_service"/>
+            </form>
+            <div name="button_box" position="inside">
+                <button name="open_interco_service_summary"
+                    type="object"
+                    string="Interco Service"
+                    class="oe_stat_button"
+                    icon="fa-building"
+                    attrs="{'invisible': [('is_interco_service', '=', False)]}"
+                    />
+            </div>
+        </field>
+    </record>
+
+    <record id="supplier_invoice_form" model="ir.ui.view">
+        <field name="name">Account Invoice Form: add interco service</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <field name="is_interco_service"/>
+            </form>
+            <xpath expr="//sheet/div" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="open_interco_service_summary"
+                        type="object"
+                        string="Interco Service"
+                        class="oe_stat_button"
+                        icon="fa-building"
+                        attrs="{'invisible': [('is_interco_service', '=', False)]}"
+                        />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

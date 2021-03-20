@@ -207,6 +207,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         cls.customer_invoice_line = cls.customer_invoice.invoice_line_ids
 
     def test_interco_invoice(self):
+        assert self.invoice.is_interco_service
         assert self.invoice.partner_id == self.subsidiary_partner
         assert self.invoice.partner_shipping_id == self.subsidiary_partner
         assert self.invoice.fiscal_position_id == self.interco_position
@@ -225,6 +226,7 @@ class TestIntercoInvoices(IntercoServiceCase):
 
     def test_interco_supplier_invoice(self):
         invoice = self.supplier_invoice
+        assert invoice.is_interco_service
         assert invoice.partner_id == self.mother_partner
         assert invoice.type == "in_invoice"
         assert invoice.fiscal_position_id == self.mother_position
@@ -249,6 +251,7 @@ class TestIntercoInvoices(IntercoServiceCase):
 
     def test_interco_customer_invoice(self):
         invoice = self.customer_invoice
+        assert invoice.is_interco_service
         assert invoice.partner_id == self.customer
         assert invoice.type == "out_invoice"
         assert invoice.fiscal_position_id == self.customer_position

@@ -1,7 +1,7 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import fields, models, _
 
 
 class SaleOrder(models.Model):
@@ -13,16 +13,22 @@ class SaleOrder(models.Model):
     )
 
     def open_interco_service_invoice_wizard(self):
-        return self._get_interco_service_wizard_action("invoice")
+        action = self._get_interco_service_wizard_action("invoice")
+        action["name"] = _("Invoice Interco Service")
+        return action
 
     def open_interco_service_summary(self):
-        return self._get_interco_service_wizard_action("seller_summary")
+        action = self._get_interco_service_wizard_action("summary")
+        action["name"] = _("Interco Service")
+        return action
 
     def _get_interco_service_wizard_action(self, mode):
         wizard = self.env["sale.interco.service.invoice"].create(
             {"order_id": self.id, "mode": mode}
         )
         action = wizard.get_formview_action()
-        action["view_id"] = self.env.ref("sale_intercompany_service.seller_wizard").id
+        action["views"] = [
+            (self.env.ref(f"sale_intercompany_service.seller_wizard").id, "form")
+        ]
         action["target"] = "new"
         return action

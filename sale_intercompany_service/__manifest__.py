@@ -11,6 +11,10 @@
     "category": "Sales",
     "summary": "Sell to a customer on behalf of another company",
     "depends": ["sale_management"],
-    "data": ["views/sale_order.xml", "wizard/sale_interco_service_invoice.xml"],
+    "data": [
+        "views/account_invoice.xml",
+        "views/sale_order.xml",
+        "wizard/sale_interco_service_invoice.xml",
+    ],
     "installable": True,
 }

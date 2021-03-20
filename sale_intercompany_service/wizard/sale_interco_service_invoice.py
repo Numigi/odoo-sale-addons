@@ -10,10 +10,10 @@ class SaleIntercoServiceInvoice(models.TransientModel):
     _description = "Sale Interco Service Invoice"
 
     mode = fields.Selection(
-        [("invoice", "Invoice"), ("summary", "Summary")], required=True
+        [("invoice", "Invoice"), ("summary", "Summary")], required=True, readonly=True
     )
 
-    order_id = fields.Many2one("sale.order")
+    order_id = fields.Many2one("sale.order", readonly=True)
     order_name = fields.Char(
         "Order Name", related="order_id.display_name", related_sudo=True
     )
@@ -73,17 +73,23 @@ class SaleIntercoServiceInvoice(models.TransientModel):
     )
 
     interco_invoice_ids = fields.Many2many(
-        "account.invoice", compute="_compute_related_invoices"
+        "account.invoice", compute="_compute_related_invoices", compute_sudo=True
     )
-    interco_invoice_names = fields.Text(compute="_compute_related_invoices")
+    interco_invoice_names = fields.Text(
+        compute="_compute_related_invoices", compute_sudo=True
+    )
     supplier_invoice_ids = fields.Many2many(
-        "account.invoice", compute="_compute_related_invoices"
+        "account.invoice", compute="_compute_related_invoices", compute_sudo=True
     )
-    supplier_invoice_names = fields.Text(compute="_compute_related_invoices")
+    supplier_invoice_names = fields.Text(
+        compute="_compute_related_invoices", compute_sudo=True
+    )
     customer_invoice_ids = fields.Many2many(
-        "account.invoice", compute="_compute_related_invoices"
+        "account.invoice", compute="_compute_related_invoices", compute_sudo=True
     )
-    customer_invoice_names = fields.Text(compute="_compute_related_invoices")
+    customer_invoice_names = fields.Text(
+        compute="_compute_related_invoices", compute_sudo=True
+    )
 
     @api.depends("interco_partner_id")
     def _compute_interco_company_id(self):
@@ -164,8 +170,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
         return "\n".join(invoices.sudo().mapped("display_name"))
 
     def validate(self):
-        invoice_ids = self.order_id.action_invoice_create()
-        invoices = self.env["account.invoice"].browse(invoice_ids)
+        invoices = self._create_interco_invoice()
 
         for invoice in invoices:
             self._update_interco_invoice(invoice)
@@ -174,11 +179,18 @@ class SaleIntercoServiceInvoice(models.TransientModel):
 
         return invoices[:1].get_formview_action()
 
+    def _create_interco_invoice(self):
+        invoice_ids = self.order_id.with_context(
+            default_currency_id=self.order_id.currency_id.id
+        ).action_invoice_create()
+        return self.env["account.invoice"].browse(invoice_ids)
+
     def _update_interco_invoice(self, invoice):
         invoice.write(
             {
                 "interco_service_order_id": self.order_id.id,
                 "partner_shipping_id": self.interco_partner_id.id,
+                "is_interco_service": True,
             }
         )
         self._update_invoice_line_discount(invoice)
@@ -213,6 +225,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
                 "account_id": partner.property_account_payable_id.id,
                 "fiscal_position_id": self.supplier_position_id.id,
                 "interco_service_order_id": self.order_id.id,
+                "is_interco_service": True,
             }
         )
 
@@ -270,6 +283,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
                 "account_id": partner.property_account_receivable_id.id,
                 "fiscal_position_id": self.customer_position_id.id,
                 "interco_service_order_id": self.order_id.id,
+                "is_interco_service": True,
             }
         )
 

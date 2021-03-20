@@ -40,6 +40,15 @@
             <field name="partner_shipping_id" position="after">
                 <field name="is_interco_service"/>
             </field>
+            <div name="button_box" position="inside">
+                <button name="open_interco_service_summary"
+                    type="object"
+                    string="Interco Service"
+                    class="oe_stat_button"
+                    icon="fa-building"
+                    attrs="{'invisible': ['|', ('is_interco_service', '=', False), ('state', 'not in', ('sale', 'done'))]}"
+                    />
+            </div>
         </field>
     </record>
 

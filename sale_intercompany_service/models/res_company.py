@@ -8,4 +8,4 @@ class ResCompany(models.Model):
 
     _inherit = "res.company"
 
-    interco_service_discount = fields.Float()
+    interco_service_discount = fields.Float(default=20)
