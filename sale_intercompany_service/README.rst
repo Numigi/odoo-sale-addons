@@ -116,6 +116,20 @@ When I click on the button, the summary of the ``Interco Service`` is displayed.
 
 It shows the invoices on both companies that are linked to the sale order.
 
+The smart button is available on each invoice (on both companies).
+
+.. image:: static/description/invoice_summary_smart_button.png
+
+Multiple Invoices
+-----------------
+It is possible to run the invoicing wizard multiple times.
+
+When doing so, each new invoice only contains the remaining quantities to invoice.
+
+On the summary, all invoices are displayed.
+
+.. image:: static/description/interco_service_summary_with_multiple_invoice.png
+
 Invoiceable Lines Versus Downpayment
 ------------------------------------
 In the standard invoicing wizard of a sale order, there is a choice between

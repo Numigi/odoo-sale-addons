@@ -13,6 +13,7 @@
     "depends": ["sale_management"],
     "data": [
         "views/account_invoice.xml",
+        "views/res_config_settings.xml",
         "views/sale_order.xml",
         "wizard/sale_interco_service_invoice.xml",
     ],
