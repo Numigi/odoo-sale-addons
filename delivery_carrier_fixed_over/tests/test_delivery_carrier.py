@@ -8,6 +8,10 @@ class TestDeliveryCarrier(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.company = cls.env["res.company"].create({"name": "My Company"})
+        cls.env.user.write(
+            {"company_id": cls.company.id, "company_ids": [(4, cls.company.id)]}
+        )
         cls.product = cls.env["product.product"].create({"name": "Product A"})
         cls.delivery_product = cls.env["product.product"].create({"name": "Delivery"})
 

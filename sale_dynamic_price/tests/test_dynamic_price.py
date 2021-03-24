@@ -145,5 +145,6 @@ class TestDynamicPrice(SavepointCase):
         self.env["product.product"].sale_price_update_cron()
         template = self.product.product_tmpl_id
         pricelist = self.env.ref("product.list0")
+        pricelist.currency_id = self.env.user.company_id.currency_id
         template = template.with_context(pricelist=pricelist.id)
         assert round(template.price, 2) == expected_price

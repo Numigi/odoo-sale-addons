@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">Sale Order Form: add interco service</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_management.sale_order_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="attributes">
+                <attribute name="attrs">
+                    {
+                        'invisible': [
+                            '|',
+                            ('invoice_status', '!=', 'to invoice'),
+                            ('is_interco_service', '=', True),
+                        ]
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][2]" position="attributes">
+                <attribute name="attrs">
+                    {
+                        'invisible': [
+                            '|',
+                            '|',
+                            ('invoice_status', '!=', 'no'),
+                            ('state', '!=', 'sale'),
+                            ('is_interco_service', '=', True),
+                        ]
+                    }
+                </attribute>
+            </xpath>
+            <button name="action_quotation_send" position="before">
+                <button name="open_interco_service_invoice_wizard"
+                    type="object"
+                    string="Create Invoice"
+                    attrs="{'invisible': ['|', ('is_interco_service', '=', False), ('state', '!=', 'sale')]}"
+                    />
+            </button>
+            <field name="partner_shipping_id" position="after">
+                <field name="is_interco_service"/>
+            </field>
+            <div name="button_box" position="inside">
+                <button name="open_interco_service_summary"
+                    type="object"
+                    string="Interco Service"
+                    class="oe_stat_button"
+                    icon="fa-building"
+                    attrs="{'invisible': ['|', ('is_interco_service', '=', False), ('state', 'not in', ('sale', 'done'))]}"
+                    />
+            </div>
+        </field>
+    </record>
+
+</odoo>
