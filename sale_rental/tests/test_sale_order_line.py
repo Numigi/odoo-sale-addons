@@ -69,6 +69,7 @@ class TestKitRental(KitRentalCase):
         assert service.product_uom_qty == 1
 
     def test_rental_service_has_a_unit_price(self):
+        self.env["res.currency.rate"].search([]).write({"rate": 1})
         self.add_kit_on_sale_order()
         service = self.get_rental_service_lines()
         assert service.price_unit == self.price_per_day
