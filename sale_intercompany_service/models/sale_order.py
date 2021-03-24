@@ -1,7 +1,7 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 
 
 class SaleOrder(models.Model):
@@ -32,3 +32,8 @@ class SaleOrder(models.Model):
         ]
         action["target"] = "new"
         return action
+
+    @api.onchange("is_interco_service")
+    def _onchange_is_interco_service(self):
+        if self.is_interco_service:
+            self.partner_invoice_id = False

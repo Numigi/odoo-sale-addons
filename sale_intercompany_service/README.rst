@@ -36,29 +36,24 @@ therefore, ``Y`` does not even need to have a warehouse defined.
 
 Configuration
 -------------
-As ``Administrator``, I go to the settings of the ``Sale`` application.
+As ``Administrator``, I go to the general settings.
 
-I notice a new section ``Interco Service``.
+I notice a new field ``Intercompany Service Discount``.
 
-.. image:: static/description/sale_settings.png
+.. image:: static/description/settings.png
 
-The field ``Discount`` defines the percentage to use for this company when selling on
-behalf of another company.
+This field defines the percentage to use for this company when selling on behalf of another company.
 
 Usage
 -----
 
 Create Sale Order
 *****************
-A sale order is created from ``Company A`` (i.e. the ``Mother`` company).
+I create a sale order from the company ``Mother Company``.
 
-This order is typed as ``Interco Service``.
+I check ``Interco Service`` and select ``Sister Company`` as invoiced partner.
 
 .. image:: static/description/sale_order_interco_service.png
-
-On the order, I select ``Company B`` (i.e. the ``Sister`` company) as the company on behalf of which the products are sold.
-
-.. image:: static/description/sale_order_company.png
 
 The remaining fields are the same as for a regular sale order.
 
@@ -68,7 +63,7 @@ After confirming the sale order, I notice that a delivery order was created.
 
 .. image:: static/description/sale_order_picking.png
 
-The picking was created as if the sale where done from the ``Mother`` company.
+The picking is created as usual, shipping from the warehouse of ``Mother Company``.
 
 .. image:: static/description/picking_form.png
 
@@ -81,7 +76,11 @@ Back to the sale order, I click to create an invoice.
 
 .. image:: static/description/sale_order_create_invoice.png
 
-A wizard is opened. This wizard is different from the original one.
+A wizard is opened.
+
+.. image:: static/description/invoice_wizard.png
+
+This wizard is different from the original one.
 It is dedicated to the case of invoicing an ``Interco Service``.
 
 When validating, 3 invoices are created.
@@ -98,8 +97,7 @@ When validating, 3 invoices are created.
 
 	.. image:: static/description/customer_invoice_sister_company.png
 
-The invoices (1) and (2) are symetrical in both company
-and allow to register the intercompany invoicing.
+The invoices (1) and (2) are symetrical in both company and allow to register the intercompany invoicing.
 
 On these 2 invoices, an extra discount is added.
 This discount represents the profit earned by the ``Sister`` company for this sale.
@@ -140,6 +138,34 @@ either invoicing invoiceable lines or registering a down payment.
 This option did not make sense in the context of interco services.
 
 For an ``Interco Service``, the invoicing is always done based on ``Invoiceable Lines``.
+
+Fiscal Positions
+----------------
+The module uses fiscal positions defined on each partner to properly map taxes and accounts on each invoice.
+
+For example, you may have a ``Company A`` in Quebec, selling to a customer in Manitoba, on behalf of ``Company B``
+which is located in Ontario.
+
+In such case:
+
+* The fiscal position of Ontario is applied on the intercompany customer invoicing.
+* The fiscal position of Quebec is applied on the intercompany supplier invoice.
+* The fiscal position of Manitoba is applied to the invoice to the end customer.
+
+End Customer Discount
+---------------------
+If a discount is defined on the sale order line, that discount represents a discount to the end customer.
+
+In such case, the interco discount is combined with the end customer discount on the interco invoices.
+
+The interco discount is computed based on the final price to the customer.
+
+If the end customer discount is 10% and the interco discount is 20%,
+the combined discount on the interco invoices is 28%.
+
+..
+
+	10% + (1 - 10%) * 20% = 28%
 
 Contributors
 ------------
