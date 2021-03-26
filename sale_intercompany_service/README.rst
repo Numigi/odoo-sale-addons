@@ -167,6 +167,21 @@ the combined discount on the interco invoices is 28%.
 
 	10% + (1 - 10%) * 20% = 28%
 
+Known Issues
+------------
+
+Fiscal Positions
+****************
+In multi-company mode, when partners are shared between companies, one must be careful to parametrize fiscal positions
+consistently between companies.
+
+When loading a chart of account for a company, the fiscal positions are duplicated for this company.
+
+On partners that are shared between companies, you must therefore reselect the fiscal position for each company.
+
+One way to mitigate this issue is to not define specific fiscal positions on partners (when possible).
+When doing so, Odoo automatically evaluates the proper fiscal position based on the partner's address.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

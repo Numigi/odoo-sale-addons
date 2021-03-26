@@ -32,7 +32,18 @@
   includes:
     - crm_lead_product
 
+- url: https://github.com/OCA/multi-company
+  branch: "12.0"
+  includes:
+    - account_invoice_inter_company
+    - purchase_sale_inter_company
+
 - url: https://github.com/oca/product-attribute
   branch: "12.0"
   includes:
     - product_brand
+
+- url: https://github.com/OCA/stock-logistics-workflow.git
+  branch: "12.0"
+  includes:
+    - sale_order_global_stock_route
