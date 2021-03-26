@@ -194,6 +194,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             }
         )
         self._update_invoice_line_discount(invoice)
+        invoice.compute_taxes()
 
     def _update_invoice_line_discount(self, invoice):
         for line in invoice.invoice_line_ids:

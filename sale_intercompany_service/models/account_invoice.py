@@ -1,7 +1,9 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 
 class AccountInvoice(models.Model):
@@ -32,3 +34,47 @@ class AccountInvoice(models.Model):
         ]
         action["target"] = "new"
         return action
+
+    @api.multi
+    def action_invoice_open(self):
+        for invoice in self.filtered("interco_supplier_invoice_id"):
+            invoice._check_amounts_match_supplier_invoice()
+
+        related_interco_invoices = self.sudo().search(
+            [("interco_supplier_invoice_id", "in", self.ids)]
+        )
+        related_interco_invoices._check_amounts_match_supplier_invoice()
+
+        return super().action_invoice_open()
+
+    def _check_amounts_match_supplier_invoice(self):
+        supplier_invoice = self.interco_supplier_invoice_id.sudo()
+        if float_compare(self.amount_tax, supplier_invoice.amount_tax, 2) != 0:
+            raise ValidationError(
+                _(
+                    "The tax amount ({invoice_amount}) on the invoice ({invoice}) "
+                    "does not match the tax amount ({supplier_amount}) on the related "
+                    "intercompany supplier invoice ({supplier_invoice}). "
+                    "You must adjust the amount of taxes."
+                ).format(
+                    invoice=self.display_name,
+                    invoice_amount=self.amount_tax,
+                    supplier_invoice=supplier_invoice.display_name,
+                    supplier_amount=supplier_invoice.amount_tax,
+                )
+            )
+
+        if float_compare(self.amount_total, supplier_invoice.amount_total, 2) != 0:
+            raise ValidationError(
+                _(
+                    "The total amount ({invoice_amount}) on the invoice ({invoice}) "
+                    "does not match the total amount ({supplier_amount}) on the related "
+                    "intercompany supplier invoice ({supplier_invoice}). "
+                    "You must adjust the amounts."
+                ).format(
+                    invoice=self.display_name,
+                    invoice_amount=self.amount_total,
+                    supplier_invoice=supplier_invoice.display_name,
+                    supplier_amount=supplier_invoice.amount_total,
+                )
+            )
