@@ -5,7 +5,7 @@
         <field name="name">Interco Service Wizard</field>
         <field name="model">sale.interco.service.invoice</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="0">
                 <sheet>
                     <field name="mode" invisible="1"/>
                     <group>
@@ -46,7 +46,7 @@
         <field name="name">Interco Service Wizard (Buyer Summary)</field>
         <field name="model">sale.interco.service.invoice</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="0" edit="0">
                 <sheet>
                     <group>
                         <group name="selling_company" string="Selling Company">
@@ -74,6 +74,8 @@
                         </group>
                     </group>
                 </sheet>
+                <footer>
+                </footer>
             </form>
         </field>
     </record>

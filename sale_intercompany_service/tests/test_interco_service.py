@@ -214,6 +214,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert self.invoice.company_id == self.mother_company
         assert self.invoice.account_id.company_id == self.mother_company
         assert self.invoice.journal_id.company_id == self.mother_company
+        assert self.invoice.amount_tax
 
     def test_interco_invoice_line(self):
         # The interco discount is added to the customer discount
@@ -234,6 +235,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert invoice.journal_id.company_id == self.subsidiary
         assert invoice.account_id.internal_type == "payable"
         assert invoice.account_id.company_id == self.subsidiary
+        assert invoice.amount_tax
 
     def test_interco_supplier_invoice_line(self):
         line = self.supplier_invoice_line
@@ -260,6 +262,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert invoice.account_id.internal_type == "receivable"
         assert invoice.account_id.company_id == self.subsidiary
         assert invoice.partner_shipping_id == self.delivery_address
+        assert invoice.amount_tax
 
     def test_interco_customer_invoice_line(self):
         line = self.customer_invoice_line

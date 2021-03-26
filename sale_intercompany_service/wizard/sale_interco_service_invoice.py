@@ -232,6 +232,8 @@ class SaleIntercoServiceInvoice(models.TransientModel):
         for line in supplier_invoice.invoice_line_ids:
             self._set_supplier_taxes(line)
 
+        supplier_invoice.compute_taxes()
+
         invoice.interco_supplier_invoice_id = supplier_invoice
 
     def _get_supplier_invoice_line_vals(self, invoice):
@@ -289,6 +291,8 @@ class SaleIntercoServiceInvoice(models.TransientModel):
 
         for line in customer_invoice.invoice_line_ids:
             self._set_customer_taxes(line)
+
+        customer_invoice.compute_taxes()
 
         invoice.interco_customer_invoice_id = customer_invoice
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="inter_company_route" model='stock.location.route'>
+        <field name="name">Inter Company Delivery</field>
+        <field name="company_id"></field>
+        <field name="sequence">999</field>
+        <field name="sale_selectable" eval="True"></field>
+        <field name="product_selectable" eval="False"></field>
+        <field name="product_categ_selectable" eval="False"></field>
+        <field name="warehouse_selectable" eval="False"></field>
+    </record>
+
+</odoo>
