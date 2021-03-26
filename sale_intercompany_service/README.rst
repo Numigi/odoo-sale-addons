@@ -171,7 +171,7 @@ Known Issues
 ------------
 
 Fiscal Positions
-~~~~~~~~~~~~~~~~
+****************
 In multi-company mode, when partners are shared between companies, one must be careful to parametrize fiscal positions
 consistently between companies.
 

@@ -91,7 +91,7 @@ Recommendations
 ---------------
 
 Constraints on Quants
-~~~~~~~~~~~~~~~~~~~~~
+*********************
 Having multiple quants with the same serial number can be problematic.
 You loose track of precisely where is a serial number.
 
