@@ -265,7 +265,7 @@ class TestIntercoInvoices(IntercoServiceCase):
 
     def _validate_invoice(self, invoice):
         self._set_user_company(invoice.company_id)
-        self.user.groups_id |= self.env.ref("account.group_account_user")
+        self.user.groups_id |= self.env.ref("account.group_account_invoice")
         invoice.sudo(self.user).action_invoice_open()
 
     def test_interco_invoice(self):
