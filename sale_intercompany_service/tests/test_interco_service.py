@@ -1,6 +1,8 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import pytest
+from odoo.exceptions import ValidationError
 from odoo.tests.common import SavepointCase
 
 
@@ -45,9 +47,9 @@ class IntercoServiceCase(SavepointCase):
                 "invoice_policy": "order",
             }
         )
-        cls.product.taxes_id = cls._get_customer_tax(
-            cls.mother_company, "HST 15%"
-        ) | cls._get_customer_tax(cls.subsidiary, "HST 13%")
+
+        cls.product.taxes_id = cls._get_customer_tax(cls.mother_company, "HST 15%")
+        cls.product.taxes_id |= cls._get_customer_tax(cls.subsidiary, "HST 13%")
         cls.product.supplier_taxes_id = cls._get_supplier_tax(cls.subsidiary, "HST 13%")
 
         cls.user = cls.env.ref("base.user_demo")
@@ -146,6 +148,7 @@ class IntercoServiceCase(SavepointCase):
     @classmethod
     def _create_company(cls, name):
         company = cls.env["res.company"].create({"name": name})
+        company.partner_id.company_id = False
         cls.env.user.company_ids |= company
         cls.env.user.company_id = company
         account_chart = cls.env.ref("l10n_ca.ca_en_chart_template_en")
@@ -190,6 +193,32 @@ class TestWizard(IntercoServiceCase):
         assert not self.wizard.customer_position_id
 
 
+class TestSaleOrderConstraints(IntercoServiceCase):
+    def test_non_interco_partner(self):
+        with pytest.raises(ValidationError):
+            self.order.partner_invoice_id = self.customer
+
+    def test_invoicing_address_not_shared_between_companies(self):
+        self.subsidiary_partner.company_id = self.mother_company
+        with pytest.raises(ValidationError):
+            self.order.partner_invoice_id = self.subsidiary_partner
+
+    def test_customer_not_shared_between_companies(self):
+        self.customer.company_id = self.mother_company
+        with pytest.raises(ValidationError):
+            self.order.partner_id = self.customer
+
+    def test_delivery_address_not_shared_between_companies(self):
+        self.delivery_address.company_id = self.mother_company
+        with pytest.raises(ValidationError):
+            self.order.partner_shipping_id = self.delivery_address
+
+    def test_product_not_shared_between_companies(self):
+        self.product.company_id = self.mother_company
+        with pytest.raises(ValidationError):
+            self.order_line.product_id = self.product
+
+
 class TestIntercoInvoices(IntercoServiceCase):
     @classmethod
     def setUpClass(cls):
@@ -205,6 +234,39 @@ class TestIntercoInvoices(IntercoServiceCase):
 
         cls.customer_invoice = cls.invoice.sudo().interco_customer_invoice_id
         cls.customer_invoice_line = cls.customer_invoice.invoice_line_ids
+
+    def test_interco_invoice_tax_amount_not_matching(self):
+        self.invoice.tax_line_ids[0].amount += 0.01
+        self.invoice.invoice_line_ids[0].price_unit -= 0.01
+        with pytest.raises(ValidationError):
+            self._validate_invoice(self.invoice)
+
+    def test_supplier_invoice_tax_amount_not_matching(self):
+        self.supplier_invoice.tax_line_ids[0].amount += 0.01
+        self.supplier_invoice.invoice_line_ids[0].price_unit -= 0.01
+        with pytest.raises(ValidationError):
+            self._validate_invoice(self.supplier_invoice)
+
+    def test_interco_invoice_price_not_matching(self):
+        self.invoice.invoice_line_ids[0].price_unit += 0.01
+        with pytest.raises(ValidationError):
+            self._validate_invoice(self.invoice)
+
+    def test_supplier_invoice_price_not_matching(self):
+        self.supplier_invoice.invoice_line_ids[0].price_unit += 0.01
+        with pytest.raises(ValidationError):
+            self._validate_invoice(self.supplier_invoice)
+
+    def test_interco_invoice_tax_amount_matching(self):
+        self._validate_invoice(self.invoice)
+
+    def test_customer_invoice_does_not_need_to_match_amounts(self):
+        self._validate_invoice(self.customer_invoice)
+
+    def _validate_invoice(self, invoice):
+        self._set_user_company(invoice.company_id)
+        self.user.groups_id |= self.env.ref("account.group_account_user")
+        invoice.sudo(self.user).action_invoice_open()
 
     def test_interco_invoice(self):
         assert self.invoice.is_interco_service
