@@ -13,6 +13,6 @@ class SaleOrder(models.Model):
         transaction = super()._create_payment_transaction(vals)
 
         if transaction.acquirer_id.auto_confirm_sale_order:
-            self.action_confirm()
+            self.with_context(send_email=True).action_confirm()
 
         return transaction
