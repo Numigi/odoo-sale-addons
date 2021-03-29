@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* payment_auto_confirm_sale_order
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-29 18:44+0000\n"
+"PO-Revision-Date: 2021-03-29 18:44+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_auto_confirm_sale_order
+#: model:ir.model.fields,field_description:payment_auto_confirm_sale_order.field_payment_acquirer__auto_confirm_sale_order
+msgid "Automatic Order Confirmation"
+msgstr "Confirmation automatic des soumissions"
+
+#. module: payment_auto_confirm_sale_order
+#: model:ir.model,name:payment_auto_confirm_sale_order.model_payment_acquirer
+msgid "Payment Acquirer"
+msgstr ""
+
+#. module: payment_auto_confirm_sale_order
+#: model:ir.model,name:payment_auto_confirm_sale_order.model_sale_order
+msgid "Sale Order"
+msgstr ""

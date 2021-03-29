@@ -14,6 +14,7 @@
         "l10n_ca",  # for testing sale_intercompany_service
         "crm_brand",
         "delivery_carrier_fixed_over",
+        "payment_auto_confirm_sale_order",
         "purchase_sale_inter_company_route",
         "sale_default_term_on_company",
         "sale_delivery_completion",
