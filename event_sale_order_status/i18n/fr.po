@@ -1,0 +1,51 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* event_sale_order_status
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-30 11:44+0000\n"
+"PO-Revision-Date: 2021-03-30 11:44+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: event_sale_order_status
+#: model_terms:ir.ui.view,arch_db:event_sale_order_status.event_form
+msgid "Confirmed"
+msgstr "Confirmés"
+
+#. module: event_sale_order_status
+#: model:ir.model.fields,field_description:event_sale_order_status.field_event_event__confirmed_attendees_count
+msgid "Confirmed Attendees Count"
+msgstr "Nombre de participants confirmés"
+
+#. module: event_sale_order_status
+#: model_terms:ir.ui.view,arch_db:event_sale_order_status.event_registration_search
+msgid "Confirmed Sale Order"
+msgstr "Commande client confirmée"
+
+#. module: event_sale_order_status
+#: model:ir.actions.act_window,name:event_sale_order_status.action_confirmed_attendees
+msgid "Confirmed Sale Orders"
+msgstr "Commandes clients confirmées"
+
+#. module: event_sale_order_status
+#: model:ir.model,name:event_sale_order_status.model_event_event
+msgid "Event"
+msgstr ""
+
+#. module: event_sale_order_status
+#: model:ir.model,name:event_sale_order_status.model_event_registration
+msgid "Event Registration"
+msgstr ""
+
+#. module: event_sale_order_status
+#: model:ir.model.fields,field_description:event_sale_order_status.field_event_registration__sale_order_state
+msgid "Sale Order Status"
+msgstr "Statut de la commande client"
