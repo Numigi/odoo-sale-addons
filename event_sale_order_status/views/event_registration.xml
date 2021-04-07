@@ -30,7 +30,8 @@
         <field name="arch" type="xml">
             <field name="event_id" position="before">
                 <separator/>
-                <filter string="Confirmed Sale Order" name="confirmed_sale_order" domain="[('sale_order_id.state', 'in', ['sale', 'done'])]"/>
+                <filter string="Confirmed Sale Order" name="confirmed_sale_order"
+                    domain="[('sale_order_id.state', 'in', ['sale', 'done'])]"/>
             </field>
         </field>
     </record>
