@@ -17,5 +17,6 @@ class Event(models.Model):
             event.confirmed_attendees_count = len(
                 event.registration_ids.filtered(
                     lambda r: r.sale_order_id.state in ("sale", "done")
+                    and r.state != "cancel"
                 )
             )
