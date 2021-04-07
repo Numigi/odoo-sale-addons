@@ -3,6 +3,7 @@
 
 from . import (
     purchase_order,
+    sale_order_line,
     stock_move,
     stock_production_lot,
     stock_rule,
