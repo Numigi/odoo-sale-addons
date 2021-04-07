@@ -122,11 +122,12 @@ class IntercoCase(SavepointCase):
         picking.action_done()
 
     @classmethod
-    def create_return_picking(cls, picking):
+    def create_return_picking(cls, picking, to_refund=False):
         wizard_obj = cls.env["stock.return.picking"].with_context(active_id=picking.id)
         values = wizard_obj.default_get(list(wizard_obj._fields))
         wizard = wizard_obj.create(values)
         wizard.product_return_moves.quantity = 1
+        wizard.product_return_moves.to_refund = to_refund
         return_picking_id = wizard.create_returns()["res_id"]
         return cls.env["stock.picking"].browse(return_picking_id)
 
@@ -180,6 +181,19 @@ class TestIntercoSaleOrder(IntercoCase):
         self._set_user_company(self.purchasing_company)
         self.serial.refresh()
         assert self.purchase_order in self.serial.purchase_order_ids
+
+    def test_delivered_quantity(self):
+        assert self.sale_order_line.qty_delivered == 1
+
+    def test_returned_quantity_not_refunded(self):
+        return_picking = self.create_return_picking(self.picking, to_refund=False)
+        self._process_picking(return_picking)
+        assert self.sale_order_line.qty_delivered == 1
+
+    def test_refunded_quantity(self):
+        return_picking = self.create_return_picking(self.picking, to_refund=True)
+        self._process_picking(return_picking)
+        assert self.sale_order_line.qty_delivered == 0
 
 
 class TestStandardSaleOrder(IntercoCase):
