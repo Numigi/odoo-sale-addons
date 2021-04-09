@@ -10,18 +10,18 @@ class SaleOrder(models.Model):
 
     @api.onchange("company_id", "partner_id")
     def _check_partner_authorized_companies(self):
-        commercial_partner = self.partner_id.sudo().commercial_partner_id
-        if not self._is_company_authorized(commercial_partner):
+        partner = self.partner_id.sudo().commercial_partner_id
+
+        if not self._is_company_authorized(self.company_id, partner):
             self.partner_id = None
             message = _(
                 "The company {company} is not authorized to sell to the customer {customer}. "
                 "Please switch to another company or select a different customer."
             ).format(
-                company=self.company_id.display_name,
-                customer=commercial_partner.display_name,
+                company=self.company_id.display_name, customer=partner.display_name
             )
             return {"warning": {"title": _("Warning"), "message": message}}
 
-    def _is_company_authorized(self, partner):
+    def _is_company_authorized(self, company, partner):
         companies = partner.sale_authorized_company_ids
-        return not companies or self.company_id in companies
+        return not companies or company in companies
