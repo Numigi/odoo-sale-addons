@@ -39,6 +39,17 @@ class SaleOrder(models.Model):
         if self.is_interco_service:
             self.partner_invoice_id = False
 
+    @api.multi
+    @api.onchange("partner_id")
+    def onchange_partner_id(self):
+        invoice_address = self.partner_invoice_id
+        res = super().onchange_partner_id()
+
+        if self.is_interco_service:
+            self.partner_invoice_id = invoice_address
+
+        return res
+
     @api.constrains("is_interco_service", "partner_invoice_id")
     def _check_interco_invoice_partner(self):
         for order in self.filtered("is_interco_service"):
