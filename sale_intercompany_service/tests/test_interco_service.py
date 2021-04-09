@@ -193,6 +193,31 @@ class TestWizard(IntercoServiceCase):
         assert not self.wizard.customer_position_id
 
 
+class TestOnchange(IntercoServiceCase):
+    def setUp(self):
+        super().setUp()
+        self.order = self.env["sale.order"].new({})
+        self.order.partner_id = self.customer
+
+    def test_non_interco(self):
+        self.order.onchange_partner_id()
+        assert self.order.partner_invoice_id == self.customer
+        assert self.order.partner_shipping_id == self.customer
+
+    def test_interco(self):
+        self.order.is_interco_service = True
+        self.order.onchange_partner_id()
+        assert not self.order.partner_invoice_id
+        assert self.order.partner_shipping_id == self.customer
+
+    def test_interco_with_invoice_address_selected(self):
+        self.order.is_interco_service = True
+        self.order.partner_invoice_id = self.subsidiary_partner
+        self.order.onchange_partner_id()
+        assert self.order.partner_invoice_id == self.subsidiary_partner
+        assert self.order.partner_shipping_id == self.customer
+
+
 class TestSaleOrderConstraints(IntercoServiceCase):
     def test_non_interco_partner(self):
         with pytest.raises(ValidationError):
