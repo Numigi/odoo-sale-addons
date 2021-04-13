@@ -21,7 +21,7 @@ class SaleOrderLine(models.Model):
 
     @api.onchange("product_id")
     def product_id_change(self):
-        super().product_id_change()
+        res = super().product_id_change()
 
         if (
             self.is_rental_order
@@ -29,6 +29,8 @@ class SaleOrderLine(models.Model):
             and not self.kit_reference
         ):
             self.is_kit = True
+
+        return res
 
     @api.onchange("product_uom", "product_uom_qty")
     def product_uom_change(self):
