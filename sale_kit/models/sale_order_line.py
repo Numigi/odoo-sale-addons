@@ -21,8 +21,9 @@ class SaleOrderLine(models.Model):
 
     @api.onchange("product_id")
     def product_id_change(self):
-        super().product_id_change()
+        res = super().product_id_change()
         self.is_kit = self.product_id.is_kit
+        return res
 
     def initialize_kit(self):
         self.kit_reference = self.next_kit_reference
