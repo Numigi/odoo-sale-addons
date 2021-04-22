@@ -21,6 +21,7 @@ COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
 COPY purchase_sale_inter_company_route /mnt/extra-addons/purchase_sale_inter_company_route
+COPY sale_default_analytic_tag /mnt/extra-addons/sale_default_analytic_tag
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price

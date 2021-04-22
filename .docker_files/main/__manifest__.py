@@ -17,6 +17,7 @@
         "event_sale_order_status",
         "payment_auto_confirm_sale_order",
         "purchase_sale_inter_company_route",
+        "sale_default_analytic_tag",
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_dynamic_price",
