@@ -19,13 +19,14 @@ class StockMove(models.Model):
             move.destination_sale_line_id = move._find_destination_sale_line()
 
     def _find_destination_sale_line(self):
-        if self.sale_line_id:
-            return self.sale_line_id
+        moves = self
+        limit = 10
 
-        for destination in self.move_dest_ids:
-            destination_sale_line = destination._find_destination_sale_line()
-            if destination_sale_line:
-                return destination_sale_line
+        while moves and not moves.mapped("sale_line_id") and limit:
+            moves = moves.mapped("move_dest_ids")
+            limit -= 1
+
+        return moves.mapped("sale_line_id")[:1]
 
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
