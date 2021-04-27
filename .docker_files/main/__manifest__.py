@@ -11,10 +11,10 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "l10n_ca",  # for testing sale_intercompany_service
         "crm_brand",
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
+        "l10n_ca",  # for testing sale_intercompany_service
         "payment_auto_confirm_sale_order",
         "purchase_sale_inter_company_route",
         "sale_default_analytic_tag",
@@ -22,6 +22,7 @@
         "sale_delivery_completion",
         "sale_dynamic_price",
         "sale_intercompany_service",
+        "sale_invoice_email_warning",
         "sale_invoice_no_follow",
         "sale_kit",
         "sale_minimum_margin",
