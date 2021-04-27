@@ -4,7 +4,7 @@
 from odoo.tests.common import SavepointCase
 
 
-class IntercoCase(SavepointCase):
+class TestInvoice(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

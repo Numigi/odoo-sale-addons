@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">Sale Order Form: message when invoiced partner has no email</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+			<header position="after">
+				<field name="show_invoice_email_warning" invisible="1"/>
+                <div class="alert alert-warning" role="alert"
+                    attrs="{'invisible': [('show_invoice_email_warning', '=', False)]}"
+                    >
+                     	Please note that the invoicing address does not have an e-mail address.
+                     	This can block when paying the invoice from the portal or when sending the invoice.
+                </div>
+            </header>
+        </field>
+    </record>
+
+</odoo>
