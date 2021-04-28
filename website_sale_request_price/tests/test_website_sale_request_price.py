@@ -45,7 +45,6 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
         self.lead_env.create_website_sale_request(post)
         lead = self.lead_env.search(
             [
-                ("name", "=", "Shop: product A"),
                 ("type", "=", "opportunity"),
                 ("team_id", "=", self.sale_team.id),
                 ("description", "=", post["additional_information"]),
