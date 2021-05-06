@@ -15,6 +15,11 @@
                      	This can block when paying the invoice from the portal or when sending the invoice.
                 </div>
             </header>
+            <field name="partner_invoice_id" position="after">
+                <field name="partner_invoice_email" string=""
+                    attrs="{'invisible': [('partner_invoice_email', '=', False)]}"
+                    />
+            </field>
         </field>
     </record>
 

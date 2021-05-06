@@ -1,26 +1,36 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_invoice_email_warning
+# 	* sale_invoice_email_warning
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-27 18:21+0000\n"
-"PO-Revision-Date: 2021-04-27 18:21+0000\n"
+"POT-Creation-Date: 2021-05-06 17:09+0000\n"
+"PO-Revision-Date: 2021-05-06 13:10-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: sale_invoice_email_warning
+#: model:ir.model.fields,field_description:sale_invoice_email_warning.field_sale_order__partner_invoice_email
+msgid "Invoicing Email"
+msgstr "Courriel de facturation"
 
 #. module: sale_invoice_email_warning
 #: model_terms:ir.ui.view,arch_db:sale_invoice_email_warning.sale_order_form
-msgid "Please note that the invoicing address does not have an e-mail address.\n"
-"                     	This can block when paying the invoice from the portal or when sending the invoice."
-msgstr "Attention, le partenaire de facturation n'a pas de courriel renseigné. "
-"Cela peut bloquer au moment du paiement portail ou de l'envoie de la facture."
+msgid ""
+"Please note that the invoicing address does not have an e-mail address.\n"
+"                     \tThis can block when paying the invoice from the "
+"portal or when sending the invoice."
+msgstr ""
+"Attention, le partenaire de facturation n'a pas de courriel renseigné. Cela "
+"peut bloquer au moment du paiement portail ou de l'envoie de la facture."
 
 #. module: sale_invoice_email_warning
 #: model:ir.model,name:sale_invoice_email_warning.model_sale_order
