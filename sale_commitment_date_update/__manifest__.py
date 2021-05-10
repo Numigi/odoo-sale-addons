@@ -3,18 +3,16 @@
 
 {
     "name": "Sale Commitment Date Update",
-    'version': '1.0.0',
-    'author': 'Numigi',
-    'maintainer': 'Numigi',
-    'website': 'https://bit.ly/numigi-com',
-    'license': 'LGPL-3',
+    "version": "1.0.0",
+    "author": "Numigi",
+    "maintainer": "Numigi",
+    "website": "https://bit.ly/numigi-com",
+    "license": "LGPL-3",
     "category": "Sales",
     "summary": "Allows to change the sale commitment date",
     "depends": [
-        'sale_stock',
+        "sale_stock",
     ],
-    "data": [
-        
-    ],
+    "data": [],
     "installable": True,
 }
