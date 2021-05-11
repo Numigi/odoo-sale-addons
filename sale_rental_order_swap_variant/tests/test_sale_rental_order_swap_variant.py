@@ -43,6 +43,7 @@ class TestSaleRentalOrderSwapVariant(KitRentalCase):
             active_id=cls.change_variant_sol.id,
             default_active_product_id=cls.change_variant_sol.product_id.id,
         )
+        cls.env["res.lang"].load_lang("fr_FR")
 
     def test_wizard_action_replace_before_stock_move_done(self):
         self._change_variant()
@@ -70,6 +71,13 @@ class TestSaleRentalOrderSwapVariant(KitRentalCase):
         self.change_variant_sol.move_ids._action_done()
         with self.assertRaises(ValidationError):
             self._change_variant()
+
+    def test_product_description_is_in_partner_lang(self):
+        fr_term = "Mon Article"
+        self.so.partner_id.lang = "fr_FR"
+        self.component_a_1.with_context(lang="fr_FR").name = fr_term
+        self._change_variant()
+        assert fr_term in self.change_variant_sol.name
 
     def _change_variant(self):
         with Form(self.wizard_env) as wizard_form:
