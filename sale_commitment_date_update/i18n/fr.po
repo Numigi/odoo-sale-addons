@@ -1,184 +1,91 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_dynamic_price
+# 	* sale_commitment_date_update
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-07 18:04+0000\n"
-"PO-Revision-Date: 2021-05-07 14:04-0400\n"
+"POT-Creation-Date: 2021-05-11 15:19+0000\n"
+"PO-Revision-Date: 2021-05-11 11:51-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
+"Language: fr\n"
+"X-Generator: Poedit 2.3\n"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "0.01"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model_terms:ir.ui.view,arch_db:sale_commitment_date_update.sale_commitment_date_update_form
+msgid "Cancel"
+msgstr "Annuler"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "0.05"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.actions.act_window,name:sale_commitment_date_update.action_sale_commitment_date_update
+#: model_terms:ir.ui.view,arch_db:sale_commitment_date_update.sale_commitment_date_update_form
+#: model_terms:ir.ui.view,arch_db:sale_commitment_date_update.sale_order_form
+msgid "Commitment Date"
+msgstr "Date d'engagement"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "0.1"
-msgstr ""
+#. module: sale_commitment_date_update
+#: code:addons/sale_commitment_date_update/wizard/sale_commitment_date_update.py:21
+#, python-format
+msgid "Commitment date changed to {}"
+msgstr "Date d'engagement changée au {}"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "0.5"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model_terms:ir.ui.view,arch_db:sale_commitment_date_update.sale_commitment_date_update_form
+msgid "Confirm"
+msgstr "Confirmer"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "10"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__create_uid
+msgid "Created by"
+msgstr "Créé par"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "100"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__create_date
+msgid "Created on"
+msgstr "Créé le"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "1000"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__date
+msgid "Date"
+msgstr "Date"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "50"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_rounding:0
-msgid "500"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__id
+msgid "ID"
+msgstr "ID"
 
-#. module: sale_dynamic_price
-#: model_terms:ir.ui.view,arch_db:sale_dynamic_price.product_template_form_with_dynamic_price
-msgid "<b>The sale price is managed on product variants.</b>"
-msgstr "<b>Prix de vente géré sur les variantes.</b>"
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update____last_update
+msgid "Last Modified on"
+msgstr "Modifié pour la dernière fois le"
 
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__standard_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_template__standard_price
-msgid "Cost"
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour pour la dernière fois par"
 
-#. module: sale_dynamic_price
-#: model:ir.model.fields,help:sale_dynamic_price.field_product_template__standard_price
-msgid ""
-"Cost used for stock valuation in standard price and as a first price to set "
-"in average/FIFO."
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__write_date
+msgid "Last Updated on"
+msgstr "Mis à jour pour la dernière fois le"
 
-#. module: sale_dynamic_price
-#: model:ir.model.fields,help:sale_dynamic_price.field_product_product__standard_price
-msgid ""
-"Cost used for stock valuation in standard price and as a first price to set "
-"in average/fifo. Also used as a base price for pricelists. Expressed in the "
-"default unit of measure of the product."
-msgstr ""
+#. module: sale_commitment_date_update
+#: model:ir.model.fields,field_description:sale_commitment_date_update.field_sale_commitment_date_update__order_id
+msgid "Order"
+msgstr "Commande"
 
-#. module: sale_dynamic_price
-#: selection:product.product,price_type:0
-msgid "Dynamic"
-msgstr "Dynamique"
-
-#. module: sale_dynamic_price
-#: selection:product.product,price_type:0
-msgid "Fixed"
-msgstr "Fixe"
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__margin
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_template__margin
-msgid "Margin"
-msgstr "Marge"
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__margin_amount
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_template__margin_amount
-msgid "Margin Amount"
-msgstr "Montant de marge"
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__price_surcharge
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_template__price_surcharge
-msgid "Price Surcharge"
-msgstr "Surcharge du prix"
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__price_type
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_template__price_type
-msgid "Price Type"
-msgstr "Type de prix"
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,help:sale_dynamic_price.field_product_product__list_price
-#: model:ir.model.fields,help:sale_dynamic_price.field_product_template__list_price
-msgid "Price at which the product is sold to customers."
-msgstr ""
-
-#. module: sale_dynamic_price
-#: model:ir.model,name:sale_dynamic_price.model_product_pricelist
-#, fuzzy
-#| msgid "Pricing"
-msgid "Pricelist"
-msgstr "Prix"
-
-#. module: sale_dynamic_price
-#: model_terms:ir.ui.view,arch_db:sale_dynamic_price.product_variant_form_with_dynamic_price
-msgid "Pricing"
-msgstr "Prix"
-
-#. module: sale_dynamic_price
-#: model:ir.model,name:sale_dynamic_price.model_product_product
-msgid "Product"
-msgstr ""
-
-#. module: sale_dynamic_price
-#: model:ir.model,name:sale_dynamic_price.model_product_template
-msgid "Product Template"
-msgstr ""
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__price_rounding
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_template__price_rounding
-msgid "Rounding"
-msgstr "Arrondi"
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__lst_price
-msgid "Sale Price"
-msgstr ""
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_product__list_price
-#: model:ir.model.fields,field_description:sale_dynamic_price.field_product_template__list_price
-#: model_terms:ir.ui.view,arch_db:sale_dynamic_price.product_template_form_with_dynamic_price
-#: model_terms:ir.ui.view,arch_db:sale_dynamic_price.product_variant_form_with_dynamic_price
-msgid "Sales Price"
-msgstr "Prix de vente"
-
-#. module: sale_dynamic_price
-#: model:ir.model.fields,help:sale_dynamic_price.field_product_product__lst_price
-msgid ""
-"The sale price is managed from the product template. Click on the 'Configure "
-"Variants' button to set the extra attribute prices."
-msgstr ""
-
-#. module: sale_dynamic_price
-#: model:ir.actions.server,name:sale_dynamic_price.sale_price_update_cron_ir_actions_server
-#: model:ir.cron,cron_name:sale_dynamic_price.sale_price_update_cron
-#: model:ir.cron,name:sale_dynamic_price.sale_price_update_cron
-msgid "Update dynamic sale prices on products"
-msgstr "Mise à jour des prix sur les articles"
+#. module: sale_commitment_date_update
+#: model:ir.model,name:sale_commitment_date_update.model_sale_commitment_date_update
+msgid "Sale Commitment Date Update"
+msgstr "Mise à jour de la date d'engagement"

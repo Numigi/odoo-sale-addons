@@ -1,7 +1,7 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import fields, models, _
 from datetime import timedelta
 
 
@@ -17,11 +17,20 @@ class SaleCommitmentDateUpdate(models.TransientModel):
         for line in self.order_id.order_line:
             self._process_order_line(line, done_moves)
         self.order_id.commitment_date = self.date
+        self.order_id.message_post(
+            body=_("Commitment date changed to {}").format(
+                fields.Datetime.to_string(self.date)
+            )
+        )
 
     def _process_order_line(self, line, done_moves):
         delta = self._get_delta(line)
         moves = self._iter_all_stock_moves(line)
-        moves_to_update = (m for m in moves if m not in done_moves)
+        moves_to_update = (
+            m
+            for m in moves
+            if m not in done_moves and m.state not in ("done", "cancel")
+        )
 
         for move in moves_to_update:
             move.write({"date_expected": move.date_expected + delta})

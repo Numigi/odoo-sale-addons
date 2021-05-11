@@ -106,14 +106,25 @@ class TestWizard(SavepointCase):
     def test_two_sale_order_lines_with_two_steps(self):
         self.sale_order.warehouse_id.delivery_steps = "pick_ship"
         new_line = self.sale_order_line.copy(
-            {"order_id": self.sale_order.id,}
+            {
+                "order_id": self.sale_order.id,
+            }
         )
         self.sale_order.action_confirm()
         self.wizard.confirm()
-        assert self.sale_order_line.move_ids.move_orig_ids.date_expected == self.new_date
+        assert (
+            self.sale_order_line.move_ids.move_orig_ids.date_expected == self.new_date
+        )
 
     def test_stock_move_completed(self):
         self.sale_order.action_confirm()
-        self.sale_order_line.move_ids.is_done = True
+        self.sale_order_line.move_ids._set_quantity_done(1)
+        self.sale_order_line.move_ids._action_done()
         self.wizard.confirm()
-        assert self.sale_order_line.move_ids.date_expected == self.new_date
+        assert self.sale_order_line.move_ids.date_expected != self.new_date
+
+    def test_stock_move_cancelled(self):
+        self.sale_order.action_confirm()
+        self.sale_order_line.move_ids._action_cancel()
+        self.wizard.confirm()
+        assert self.sale_order_line.move_ids.date_expected != self.new_date

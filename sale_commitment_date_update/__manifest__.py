@@ -13,6 +13,9 @@
     "depends": [
         "sale_stock",
     ],
-    "data": [],
+    "data": [
+        "wizard/sale_commitment_date_update.xml",
+        "views/sale_order.xml",
+    ],
     "installable": True,
 }
