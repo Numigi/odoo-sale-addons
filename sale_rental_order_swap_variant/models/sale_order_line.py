@@ -21,7 +21,10 @@ class SaleOrderLine(models.Model):
         self._check_no_done_stock_move()
         self._cancel_all_stock_moves()
         self.product_id = product
-        self.name = self.get_sale_order_line_multiline_description_sale(product)
+        product_with_lang = product.with_context(
+            lang=self.order_id.partner_id.lang
+        )
+        self.name = self.get_sale_order_line_multiline_description_sale(product_with_lang)
         self._action_launch_stock_rule()
 
     def _cancel_all_stock_moves(self):
