@@ -1,4 +1,6 @@
 from odoo import models
+from datetime import timedelta
+
 
 class SaleCommitmentDateUpdateMrp(models.TransientModel):
     _inherit = "sale.commitment.date.update"
@@ -12,9 +14,17 @@ class SaleCommitmentDateUpdateMrp(models.TransientModel):
 
     def _process_production(self, prod):
         finish_date = self._get_production_finish_date(prod)
+        start_date = self._get_production_start_date(prod, finish_date)
         prod.date_planned_finished = finish_date
+        prod.date_planned_start = start_date
 
     def _get_production_finish_date(self, prod):
         move = prod.move_dest_ids[:1]
         return self._compute_stock_move_date(move)
 
+    def _get_production_start_date(self, prod, finish):
+        return (
+            finish
+            - timedelta(self.order_id.company_id.manufacturing_lead or 0)
+            - timedelta(prod.product_id.produce_delay or 0)
+        )
