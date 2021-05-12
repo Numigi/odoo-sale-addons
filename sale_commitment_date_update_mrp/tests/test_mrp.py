@@ -25,8 +25,3 @@ class TestSaleCommitmentDateMrp(SaleCommitmentDateCase):
     def test_propagates_date_to_mrp(self):
         self.wizard.confirm()
         assert self.mrp_order.date_planned_finished == self.new_date
-
-    def test_propagates_date_to_mrp_no_date(self):
-        self.mrp_order.date_planned_finished = False
-        self.wizard.confirm()
-        assert not self.mrp_order.date_planned_finished

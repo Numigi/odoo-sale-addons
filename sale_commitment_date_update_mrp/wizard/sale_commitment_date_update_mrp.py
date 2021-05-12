@@ -11,6 +11,10 @@ class SaleCommitmentDateUpdateMrp(models.TransientModel):
             self._process_production(prod)
 
     def _process_production(self, prod):
-        if prod.date_planned_finished:
-            delta = self._get_delta(prod.product_id)
-            prod.write({"date_planned_finished": prod.date_planned_finished + delta})
+        finish_date = self._get_production_finish_date(prod)
+        prod.date_planned_finished = finish_date
+
+    def _get_production_finish_date(self, prod):
+        move = prod.move_dest_ids[:1]
+        return self._compute_stock_move_date(move)
+
