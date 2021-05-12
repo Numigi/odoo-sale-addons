@@ -8,19 +8,19 @@ Usage
 -----
 This module spreads the sale order commitment date changes to its manufacturing orders. First, change the commitment date.
 
-.. image:: static/description/menu
+.. image:: static/description/menu.png
 
 To confirm the new date, select the date in the provided menu and click 'Confirm'.
 
-.. image:: static/description/change
+.. image:: static/description/change.png
 
 The sale order commitment date change will now be updated.
 
-.. image:: static/description/commit
+.. image:: static/description/commit.png
 
 The manufacturing order created by the sale order will also have its deadline updated.
 
-.. image:: static/description/manuf
+.. image:: static/description/manuf.png
 
 Configuration
 -------------
