@@ -1,4 +1,10 @@
+# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
 from .common import SaleCommitmentDateCase
+from freezegun import freeze_time
+from datetime import timedelta
+
 
 class TestWizard(SaleCommitmentDateCase):
 
@@ -47,6 +53,7 @@ class TestWizard(SaleCommitmentDateCase):
 
     def test_sale_order_with_customer_lead(self):
         self.sale_order.commitment_date = None
+        self.product.product_tmpl_id.sale_delay = 3
         self.sale_order_line.customer_lead = 3
         with freeze_time(self.old_date):
             self.sale_order.action_confirm()

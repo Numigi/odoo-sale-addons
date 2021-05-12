@@ -3,7 +3,6 @@
 
 from odoo.tests.common import SavepointCase
 from datetime import datetime, timedelta
-from freezegun import freeze_time
 
 
 class SaleCommitmentDateCase(SavepointCase):

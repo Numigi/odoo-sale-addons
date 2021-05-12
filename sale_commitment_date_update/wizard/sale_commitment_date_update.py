@@ -13,9 +13,7 @@ class SaleCommitmentDateUpdate(models.TransientModel):
     date = fields.Datetime()
 
     def confirm(self):
-        done_moves = []
-        for line in self.order_id.order_line:
-            self._process_order_line(line, done_moves)
+        self._propagate_date()
         self.order_id.commitment_date = self.date
         self.order_id.message_post(
             body=_("Commitment date changed to {}").format(
@@ -23,26 +21,30 @@ class SaleCommitmentDateUpdate(models.TransientModel):
             )
         )
 
-    def _process_order_line(self, line, done_moves):
-        delta = self._get_delta(line)
-        moves = self._iter_all_stock_moves(line)
-        moves_to_update = (
-            m
-            for m in moves
-            if m not in done_moves and m.state not in ("done", "cancel")
+    def _propagate_date(self):
+        for move in self._iter_stock_moves_to_update():
+            self._process_stock_move(move)
+
+    def _process_stock_move(self, move):
+        delta = self._get_delta(move.product_id)
+        move.with_context(do_not_propagate=True).write(
+            {"date_expected": move.date_expected + delta}
         )
 
-        for move in moves_to_update:
-            move.write({"date_expected": move.date_expected + delta})
-            done_moves.append(move)
+    def _iter_stock_moves_to_update(self):
+        all_moves = self._get_all_stock_moves()
+        return (m for m in all_moves if m.state not in ("done", "cancel"))
 
-    def _iter_all_stock_moves(self, line):
-        for step in self._iter_stock_move_steps(line):
-            for move in step:
-                yield move
+    def _get_all_stock_moves(self):
+        result = self.env["stock.move"]
 
-    def _iter_stock_move_steps(self, line):
-        moves = line.move_ids
+        for moves in self._iter_stock_move_steps():
+            result |= moves
+
+        return result
+
+    def _iter_stock_move_steps(self):
+        moves = self.order_id.mapped("order_line.move_ids")
 
         limit = 10
         while moves and limit:
@@ -50,9 +52,10 @@ class SaleCommitmentDateUpdate(models.TransientModel):
             moves = moves.mapped("move_orig_ids")
             limit -= 1
 
-    def _get_delta(self, line):
+    def _get_delta(self, product):
         initial_date = (
             self.order_id.commitment_date
-            or self.order_id.confirmation_date + timedelta(line.customer_lead)
+            or self.order_id.confirmation_date
+            + timedelta(product.product_tmpl_id.sale_delay)
         )
         return self.date - initial_date
