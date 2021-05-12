@@ -14,7 +14,6 @@
         "mrp",
         "sale_commitment_date_update",
     ],
-    "data": [
-    ],
+    "data": [],
     "installable": True,
 }

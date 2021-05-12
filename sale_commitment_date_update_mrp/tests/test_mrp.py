@@ -20,10 +20,13 @@ class TestSaleCommitmentDateMrp(SaleCommitmentDateCase):
         }
         )
         cls.sale_order.action_confirm()
+        cls.mrp_order = cls.sale_order_line.move_ids.created_production_id
 
     def test_propagates_date_to_mrp(self):
         self.wizard.confirm()
-        mrp_order = self.env["mrp.production"].search([('procurement_group_id', '=', self.sale_order.procurement_group_id.id)])
-        
-        assert mrp_order
-        assert mrp_order.date_planned_finished == self.new_date
+        assert self.mrp_order.date_planned_finished == self.new_date
+
+    def test_propagates_date_to_mrp_no_date(self):
+        self.mrp_order.date_planned_finished = False
+        self.wizard.confirm()
+        assert not self.mrp_order.date_planned_finished
