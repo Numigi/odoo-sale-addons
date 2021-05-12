@@ -11,3 +11,4 @@ docker-compose.override.yml
 .DS_STORE
 .third-party-addons
 .pytest_cache
+.vscode/

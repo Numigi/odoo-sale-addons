@@ -17,6 +17,7 @@
         "l10n_ca",  # for testing sale_intercompany_service
         "payment_auto_confirm_sale_order",
         "purchase_sale_inter_company_route",
+        "sale_commitment_date_update",
         "sale_default_analytic_tag",
         "sale_default_term_on_company",
         "sale_delivery_completion",

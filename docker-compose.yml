@@ -9,7 +9,7 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
-      - ./sale_default_analytic_tag:/mnt/extra-addons/sale_default_analytic_tag
+      - ./sale_commitment_date_update:/mnt/extra-addons/sale_commitment_date_update
     ports:
       - "8069:8069"
       - "8071:8071"
