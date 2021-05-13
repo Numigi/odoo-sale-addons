@@ -50,4 +50,3 @@ class SaleCommitmentDateCase(SavepointCase):
                 "date": cls.new_date,
             }
         )
-

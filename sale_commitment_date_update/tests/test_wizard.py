@@ -7,7 +7,6 @@ from datetime import timedelta
 
 
 class TestWizard(SaleCommitmentDateCase):
-
     def test_propagates_date_to_sale_order(self):
         self.wizard.confirm()
         assert self.sale_order.commitment_date == self.new_date
@@ -85,4 +84,3 @@ class TestWizard(SaleCommitmentDateCase):
         self.sale_order_line.move_ids._action_cancel()
         self.wizard.confirm()
         assert self.sale_order_line.move_ids.date_expected != self.new_date
-

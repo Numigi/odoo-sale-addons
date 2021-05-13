@@ -4,17 +4,17 @@ This module spreads the change of a sale order commitment date to its manufactur
 
 .. contents:: Table of Contents
 
+Context
+-------
+This module depends from the `Sale Commitment Date Update <../sale_commitment_date_update/README.rst>`_ module.
+
 Usage
 -----
-This module spreads the sale order commitment date changes to its manufacturing orders. First, change the commitment date.
+First, `update the commitment date <../sale_commitment_date_update/README.rst>`_.
 
 .. image:: static/description/menu.png
 
-To confirm the new date, select the date in the provided menu and click 'Confirm'.
-
 .. image:: static/description/change.png
-
-The sale order commitment date change will now be updated.
 
 .. image:: static/description/commit.png
 

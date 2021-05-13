@@ -10,7 +10,7 @@ class SaleCommitmentDateUpdate(models.TransientModel):
     _description = "Sale Commitment Date Update"
 
     order_id = fields.Many2one("sale.order")
-    date = fields.Datetime()
+    date = fields.Datetime(required=True)
 
     def confirm(self):
         self._propagate_date()
