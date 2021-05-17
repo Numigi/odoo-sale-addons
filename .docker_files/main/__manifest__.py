@@ -18,6 +18,7 @@
         "payment_auto_confirm_sale_order",
         "purchase_sale_inter_company_route",
         "sale_commitment_date_update",
+        "sale_commitment_date_update_mrp",
         "sale_default_analytic_tag",
         "sale_default_term_on_company",
         "sale_delivery_completion",

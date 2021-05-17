@@ -1,4 +1,4 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from . import product_pricelist
+from . import sale_commitment_date_update_mrp
