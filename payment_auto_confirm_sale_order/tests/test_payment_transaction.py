@@ -23,7 +23,7 @@ class TestPayment(SavepointCase):
         cls.line = cls._create_sale_order_line(cls.order)
 
         cls.acquirer = cls.env.ref("payment.payment_acquirer_transfer")
-        cls.acquirer.auto_confirm_sale_order = True
+        cls.acquirer.auto_confirm_sale_order = "confirm_order"
 
     @classmethod
     def _create_sale_order_line(cls, order):
@@ -45,6 +45,11 @@ class TestPayment(SavepointCase):
         self.acquirer.auto_confirm_sale_order = False
         self._create_payment_transaction()
         assert self.order.state == "draft"
+
+    def test_quotation_sent(self):
+        self.acquirer.auto_confirm_sale_order = "send_quotation"
+        self._create_payment_transaction()
+        assert self.order.state == "sent"
 
     def _create_payment_transaction(self):
         return self.order._create_payment_transaction({"acquirer_id": self.acquirer.id})
