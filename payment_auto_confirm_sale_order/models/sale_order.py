@@ -12,7 +12,12 @@ class SaleOrder(models.Model):
     def _create_payment_transaction(self, vals):
         transaction = super()._create_payment_transaction(vals)
 
-        if transaction.acquirer_id.auto_confirm_sale_order:
+        action = transaction.acquirer_id.auto_confirm_sale_order
+
+        if action == "confirm_order":
             self.with_context(send_email=True).action_confirm()
+
+        elif action == "send_quotation":
+            self.force_quotation_send()
 
         return transaction
