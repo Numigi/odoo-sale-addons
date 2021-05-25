@@ -8,14 +8,40 @@ Configuration
 -------------
 As ``Administrator``, I go to the form view of a payment method.
 
-I notice a new checkbox ``Automatic Order Confirmation``.
+I notice a new field ``Automatic Order Confirmation``.
 
-.. image:: static/description/payment_acquirer_checkbox.png
+.. image:: static/description/payment_acquirer.png
 
-When this box is checked, the sale order will be confirmed automatically when
+The field has two options:
+
+* Send Quotation
+* Confirm Order
+
+Send Quotation
+~~~~~~~~~~~~~~
+When this option is selected, the quotation is sent to the customer when
 checking out an order using this payment method.
 
-I adjust the messages for this payment method in regard to this new feature.
+..
+
+    This option is useful for payment methods such as Stripe (Credit Cards) or Paypal.
+    By default in Odoo, until the transaction is confirmed, the order is left in ``Draft`` state.
+
+    This process can take up to 20 minutes.
+
+    Meanwhile, the shopping cart is not emptied and products can still be added to the same order.
+    This behavior causes a mishmash between ordered products and payment transactions.
+
+Confirm Order
+~~~~~~~~~~~~~
+When this option is selected, the sale order will be confirmed when
+checking out an order using this payment method.
+
+A confirmation email is automatically sent to the customer.
+
+Messages
+~~~~~~~~
+After selecting an option, I adjust the messages for this payment method in regard to this new feature.
 
 .. image:: static/description/payment_acquirer_messages.png
 
