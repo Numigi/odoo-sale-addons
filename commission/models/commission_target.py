@@ -25,8 +25,18 @@ class CommissionTarget(models.Model):
     rate_type = fields.Selection(related="category_id.rate_type", store=True)
     date_start = fields.Date()
     date_end = fields.Date()
-    total = fields.Monetary()
+    invoice_ids = fields.Many2many(
+        "account.invoice", "commission_target_invoice_rel", "target_id", "invoice_id"
+    )
+    target_amount = fields.Monetary(required=True)
+    invoiced_amount = fields.Monetary(compute="_compute_invoiced_amount", store=True)
+    commissions_total = fields.Monetary(compute="_compute_commissions_total", store=True)
+    fixed_rate = fields.Float()
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
+
+    def compute(self):
+        for target in self:
+            target.invoice_ids = target._find_invoices()
 
     def _find_invoices(self):
         invoices = self.env["account.invoice"].search(
@@ -38,7 +48,21 @@ class CommissionTarget(models.Model):
             lambda inv: inv.company_id == self.company_id
             and inv.user_id == self.employee_id.user_id
             and inv.date_invoice <= self.date_end
+            and inv.type not in ("in_invoice", "in_refund")
+            and inv.state not in ("draft", "cancel")
         )
 
-    def _compute_total(self):
-        pass
+    @api.depends("invoiced_amount", "fixed_rate")
+    def _compute_commissions_total(self):
+        for target in self:
+            if target.category_id.rate_type == "fixed":
+                target.commissions_total = target.invoiced_amount * target.fixed_rate / 100
+            else:
+                pass
+
+    @api.depends("invoice_ids")
+    def _compute_invoiced_amount(self):
+        for target in self:
+            target.invoiced_amount = sum(
+                inv.amount_total_company_signed for inv in target.invoice_ids
+            )
