@@ -30,7 +30,9 @@ class CommissionTarget(models.Model):
     )
     target_amount = fields.Monetary(required=True)
     invoiced_amount = fields.Monetary(compute="_compute_invoiced_amount", store=True)
-    commissions_total = fields.Monetary(compute="_compute_commissions_total", store=True)
+    commissions_total = fields.Monetary(
+        compute="_compute_commissions_total", store=True
+    )
     fixed_rate = fields.Float()
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
 
@@ -44,6 +46,12 @@ class CommissionTarget(models.Model):
                 ("date_invoice", ">=", self.date_start),
             ]
         )
+        if self.category_id.basis == "personal":
+            return self._filter_invoices_personal(invoices)
+        else:
+            return self._filter_invoices_team(invoices)
+        
+    def _filter_invoices_personal(self, invoices):
         return invoices.filtered(
             lambda inv: inv.company_id == self.company_id
             and inv.user_id == self.employee_id.user_id
@@ -52,13 +60,26 @@ class CommissionTarget(models.Model):
             and inv.state not in ("draft", "cancel")
         )
 
+    def _filter_invoices_team(self, invoices):
+        return invoices
+        # TODO
+
     @api.depends("invoiced_amount", "fixed_rate")
     def _compute_commissions_total(self):
         for target in self:
             if target.category_id.rate_type == "fixed":
-                target.commissions_total = target.invoiced_amount * target.fixed_rate / 100
+                self._compute_target_commissions_fixed(target)
             else:
-                pass
+                self._compute_target_commissions_interval(target)
+
+    def _compute_target_commissions_fixed(self, target):
+        target.commissions_total = (
+            target.invoiced_amount * target.fixed_rate / 100
+        )
+
+    def _compute_target_commissions_interval(self, target):
+        pass
+        # TODO
 
     @api.depends("invoice_ids")
     def _compute_invoiced_amount(self):
