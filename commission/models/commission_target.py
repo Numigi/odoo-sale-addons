@@ -23,6 +23,7 @@ class CommissionTarget(models.Model):
     )
     category_id = fields.Many2one("commission.category")
     rate_type = fields.Selection(related="category_id.rate_type", store=True)
+    rate_ids = fields.One2many("commission.target.rate", "target_id")
     date_start = fields.Date()
     date_end = fields.Date()
     invoice_ids = fields.Many2many(
@@ -39,6 +40,7 @@ class CommissionTarget(models.Model):
     def compute(self):
         for target in self:
             target.invoice_ids = target._find_invoices()
+            target._update_rates()
 
     def _find_invoices(self):
         invoices = self.env["account.invoice"].search(
@@ -46,12 +48,6 @@ class CommissionTarget(models.Model):
                 ("date_invoice", ">=", self.date_start),
             ]
         )
-        if self.category_id.basis == "personal":
-            return self._filter_invoices_personal(invoices)
-        else:
-            return self._filter_invoices_team(invoices)
-        
-    def _filter_invoices_personal(self, invoices):
         return invoices.filtered(
             lambda inv: inv.company_id == self.company_id
             and inv.user_id == self.employee_id.user_id
@@ -60,9 +56,9 @@ class CommissionTarget(models.Model):
             and inv.state not in ("draft", "cancel")
         )
 
-    def _filter_invoices_team(self, invoices):
-        return invoices
-        # TODO
+    def _update_rates(self):
+        for rate in self.rate_ids:
+            rate._compute_rate()
 
     @api.depends("invoiced_amount", "fixed_rate")
     def _compute_commissions_total(self):
@@ -73,9 +69,7 @@ class CommissionTarget(models.Model):
                 self._compute_target_commissions_interval(target)
 
     def _compute_target_commissions_fixed(self, target):
-        target.commissions_total = (
-            target.invoiced_amount * target.fixed_rate / 100
-        )
+        target.commissions_total = target.invoiced_amount * target.fixed_rate / 100
 
     def _compute_target_commissions_interval(self, target):
         pass
