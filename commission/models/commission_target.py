@@ -21,6 +21,7 @@ class CommissionTarget(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
+    currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
     category_id = fields.Many2one("commission.category")
     rate_type = fields.Selection(related="category_id.rate_type", store=True)
     rate_ids = fields.One2many("commission.target.rate", "target_id")
@@ -29,18 +30,17 @@ class CommissionTarget(models.Model):
     invoice_ids = fields.Many2many(
         "account.invoice", "commission_target_invoice_rel", "target_id", "invoice_id"
     )
-    target_amount = fields.Monetary(required=True)
     invoiced_amount = fields.Monetary(compute="_compute_invoiced_amount", store=True)
-    commissions_total = fields.Monetary(
-    )
+    target_amount = fields.Monetary(required=True)
     fixed_rate = fields.Float()
-    currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
+    commissions_total = (
+        fields.Monetary()
+    )  # contains the employee revenue from commissions when the category rate is fixed
 
     def compute(self):
         for target in self:
             target.invoice_ids = target._find_invoices()
             target._compute_commissions_total()
-            target._update_rates()
 
     def _find_invoices(self):
         invoices = self.env["account.invoice"].search(
@@ -56,27 +56,27 @@ class CommissionTarget(models.Model):
             and inv.state not in ("draft", "cancel")
         )
 
-    def _update_rates(self):
-        for rate in self.rate_ids:
-            rate._compute_rate()
-
-    def _compute_commissions_total(self):
-        for target in self:
-            if target.category_id.rate_type == "fixed":
-                self._compute_target_commissions_fixed(target)
-            else:
-                self._compute_target_commissions_interval(target)
-
-    def _compute_target_commissions_fixed(self, target):
-        target.commissions_total = target.invoiced_amount * target.fixed_rate / 100
-
-    def _compute_target_commissions_interval(self, target):
-        pass
-        # TODO
-
     @api.depends("invoice_ids")
     def _compute_invoiced_amount(self):
         for target in self:
             target.invoiced_amount = sum(
                 inv.amount_total_company_signed for inv in target.invoice_ids
             )
+
+    def _compute_commissions_total(self):
+        for target in self:
+            if target.category_id.rate_type == "fixed":
+                self._compute_target_commissions_fixed(target)
+            else:
+                # if not fixed, update commission_target_rates instead
+                self._compute_target_commissions_interval(target)
+
+    def _compute_target_commissions_fixed(self, target):
+        target.commissions_total = target.invoiced_amount * target.fixed_rate / 100
+
+    def _compute_target_commissions_interval(self, target):
+        target._update_rates()
+
+    def _update_rates(self):
+        for rate in self.rate_ids:
+            rate._compute_rate()
