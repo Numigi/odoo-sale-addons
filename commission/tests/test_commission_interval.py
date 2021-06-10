@@ -14,9 +14,15 @@ class TestCommissionInterval(TestCommissionCase):
 
         cls.invoice = cls._create_invoice(amount=60000)
 
-    @data((0, 0, 0), (0, 50, 100), (50, 100, 20), (100, 100, 0))
+    @data(
+        (0, 0, 0),
+        (0, 50, 1),  # 50% of 100k == 50k < 60k
+        (50, 100, 0.2),  # (60k - 50k) / (100k - 50k)
+        (100, 100, 0)
+    )
     @unpack
     def test_interval_rate_completion(self, slice_from, slice_to, result):
+        self.target.commissions_total = 
         rate = self._create_rate(slice_from, slice_to, 0)
         self.category.rate_type = "interval"
         self.target.compute()

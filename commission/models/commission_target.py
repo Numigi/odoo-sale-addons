@@ -32,7 +32,6 @@ class CommissionTarget(models.Model):
     target_amount = fields.Monetary(required=True)
     invoiced_amount = fields.Monetary(compute="_compute_invoiced_amount", store=True)
     commissions_total = fields.Monetary(
-        compute="_compute_commissions_total", store=True
     )
     fixed_rate = fields.Float()
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
@@ -40,6 +39,7 @@ class CommissionTarget(models.Model):
     def compute(self):
         for target in self:
             target.invoice_ids = target._find_invoices()
+            target._compute_commissions_total()
             target._update_rates()
 
     def _find_invoices(self):
@@ -60,7 +60,6 @@ class CommissionTarget(models.Model):
         for rate in self.rate_ids:
             rate._compute_rate()
 
-    @api.depends("invoiced_amount", "fixed_rate")
     def _compute_commissions_total(self):
         for target in self:
             if target.category_id.rate_type == "fixed":

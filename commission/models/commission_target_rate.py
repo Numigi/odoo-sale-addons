@@ -13,7 +13,7 @@ class CommissionTargetRate(models.Model):
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
     max_amount = fields.Monetary()
-    completion = (
+    completion_rate = (
         fields.Float()
     )  # <field name="progress" widget="progressbar"/> pour que ce soit une progress bar
     subtotal = fields.Monetary()
@@ -25,16 +25,17 @@ class CommissionTargetRate(models.Model):
     def _compute_rate(self):
         total = self.target_id.commissions_total
         target = self.target_id.target_amount
-        minimum = self.slice_from / 100 * target
-        quantity = (self.slice_to - self.slice_from)/100 * target
-        if quantity <= 0:
-            self.completion = 0
-            self.subtotal = 0
-            print(f"QUANTITY WAS 0 !!!")
-            return
 
-        total = max(0, total - minimum)
-        result = min(1, total / quantity)
+        slice_from = self.slice_from * target
+        slice_to = self.slice_to * target
 
-        self.completion = result
-        self.subtotal = self.max_amount * result
+        if total <= slice_from:
+            self.completion_rate = 0
+
+        elif total <= slice_to:
+            full_slice = slice_to - slice_from
+            completion = total - slice_from
+            self.completion_rate = completion / full_slice
+
+        else:
+            self.completion_rate = 1
