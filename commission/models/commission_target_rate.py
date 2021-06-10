@@ -23,19 +23,26 @@ class CommissionTargetRate(models.Model):
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
 
     def _compute_rate(self):
-        total = self.target_id.commissions_total
+        total = self.target_id.invoiced_amount
         target = self.target_id.target_amount
 
-        slice_from = self.slice_from * target
-        slice_to = self.slice_to * target
+        slice_from = self.slice_from / 100 * target
+        slice_to = self.slice_to / 100 * target
+
+        if slice_to - slice_from <= 0:
+            self.completion_rate = 0
+            return
 
         if total <= slice_from:
             self.completion_rate = 0
+            self.subtotal = 0
 
         elif total <= slice_to:
             full_slice = slice_to - slice_from
             completion = total - slice_from
             self.completion_rate = completion / full_slice
+            self.subtotal = completion * self.commission_percentage / 100
 
         else:
             self.completion_rate = 1
+            self.subtotal = (slice_to - slice_from) * self.commission_percentage / 100

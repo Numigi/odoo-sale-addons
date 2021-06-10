@@ -46,8 +46,6 @@ class TestCommissionCase(SavepointCase):
             }
         )
 
-        cls.invoice = cls._create_invoice(amount=5000)
-
     @classmethod
     def _create_company(cls, name):
         company = cls.env["res.company"].create({"name": name})
