@@ -3,11 +3,9 @@
 
 from odoo.tests.common import SavepointCase
 from datetime import date
-from ddt import ddt, data
 
 
-@ddt
-class TestPayment(SavepointCase):
+class TestCommissionCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -48,7 +46,7 @@ class TestPayment(SavepointCase):
             }
         )
 
-        cls.invoice = cls._create_invoice()
+        cls.invoice = cls._create_invoice(amount=5000)
 
     @classmethod
     def _create_company(cls, name):
@@ -60,7 +58,7 @@ class TestPayment(SavepointCase):
         return company
 
     @classmethod
-    def _create_invoice(cls, user=None, date_=None, currency=None):
+    def _create_invoice(cls, user=None, date_=None, currency=None, amount=0):
         invoice = cls.env["account.invoice"].create(
             {
                 "company_id": cls.company.id,
@@ -72,12 +70,12 @@ class TestPayment(SavepointCase):
                 else cls.env.ref("base.USD").id,
             }
         )
-        line = cls.env["account.invoice.line"].create(
+        cls.env["account.invoice.line"].create(
             {
                 "name": "testing",
                 "invoice_id": invoice.id,
-                "quantity": 5,
-                "price_unit": 1000,
+                "quantity": 1,
+                "price_unit": amount,
                 "account_id": cls.env["account.account"]
                 .search(
                     [
@@ -92,66 +90,13 @@ class TestPayment(SavepointCase):
         invoice.action_invoice_open()
         return invoice
 
-    def test_find_invoice_single_user(self):
-        invoices = self.target._find_invoices()
-        assert self.invoice == invoices
-
-    def test_find_invoice_wrong_user(self):
-        self.invoice.user_id = self.env.ref("base.user_demo")
-        invoices = self.target._find_invoices()
-        assert not invoices
-
-    @data("in_invoice", "in_refund")
-    def test_supplier_invoice(self, type_):
-        self.invoice.type = type_
-        invoices = self.target._find_invoices()
-        assert not invoices
-
-    @data("draft", "cancel")
-    def test_excluded_state(self, state):
-        self.invoice.state = state
-        invoices = self.target._find_invoices()
-        assert not invoices
-
-    @data(date(2020, 5, 17), date(2020, 7, 17))
-    def test_find_invoice_correct_date(self, correct_date):
-        self.invoice.date_invoice = correct_date
-        invoices = self.target._find_invoices()
-        assert self.invoice == invoices
-
-    @data(date(2020, 5, 16), date(2020, 7, 18))
-    def test_find_invoice_wrong_date(self, wrong_date):
-        self.invoice.date_invoice = wrong_date
-        invoices = self.target._find_invoices()
-        assert not invoices
-
-    def test_invoiced_amount(self):
-        self.target.compute()
-        assert self.target.invoiced_amount == 5000
-
-    def test_invoiced_amount(self):
-        invoice = self._create_invoice()
-        self.target.compute()
-        assert self.target.invoiced_amount == 10000
-
-    def test_different_currency_invoice(self):
-        cad_invoice = self._create_invoice(currency="CAD")
-        self.target.compute()
-        assert self.target.invoiced_amount == 5000 + 5000 / self.exchange_rate_cad.rate
-
-    def test_fixed_rate(self):
-        self.target.fixed_rate = 10
-        self.target.compute()
-        assert (
-            self.target.commissions_total
-            == self.target.invoiced_amount * self.target.fixed_rate / 100
-        )
-
-    def test_not_fixed_rate(self):
-        self.category.rate_type = "interval"
-        self.target.fixed_rate = 10
-        self.target.compute()
-        assert (
-            self.target.commissions_total
-            != self.target.invoiced_amount * self.target.fixed_rate / 100
+    @classmethod
+    def _create_rate(cls, slice_from, slice_to, percentage):
+        return cls.env["commission.target.rate"].create(
+            {
+                "target_id": cls.target.id,
+                "slice_from": slice_from,
+                "slice_to": slice_to,
+                "commission_percentage": percentage,
+            }
         )
