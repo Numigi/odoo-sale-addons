@@ -9,6 +9,7 @@ class CommissionTargetRate(models.Model):
     _description = "Commission Target Rate"
 
     target_id = fields.Many2one("commission.target", required=True)
+    currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
@@ -20,7 +21,6 @@ class CommissionTargetRate(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
-    currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
 
     def _compute_rate(self):
         total = self.target_id.invoiced_amount
@@ -29,20 +29,24 @@ class CommissionTargetRate(models.Model):
         slice_from = self.slice_from / 100 * target
         slice_to = self.slice_to / 100 * target
 
+        # prevents division by zero if interval is invalid
         if slice_to - slice_from <= 0:
             self.completion_rate = 0
             return
 
+        # less money than the lower bound = 0% completion
         if total <= slice_from:
             self.completion_rate = 0
             self.subtotal = 0
 
+        # money inside the interval
         elif total <= slice_to:
             full_slice = slice_to - slice_from
             completion = total - slice_from
             self.completion_rate = completion / full_slice
             self.subtotal = completion * self.commission_percentage / 100
 
+        # more money than the higher bound = 100% completion
         else:
             self.completion_rate = 1
             self.subtotal = (slice_to - slice_from) * self.commission_percentage / 100

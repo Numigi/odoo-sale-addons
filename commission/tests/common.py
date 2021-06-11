@@ -19,7 +19,10 @@ class TestCommissionCase(SavepointCase):
         cls.customer = cls.env["res.partner"].create({"name": "testing"})
 
         cls.employee = cls.env["hr.employee"].create(
-            {"name": "jean", "user_id": cls.user.id}
+            {
+                "name": "jean",
+                "user_id": cls.user.id,
+            }
         )
 
         cls.category = cls.env["commission.category"].create(
@@ -56,6 +59,17 @@ class TestCommissionCase(SavepointCase):
         return company
 
     @classmethod
+    def _create_rate(cls, slice_from, slice_to, percentage=0):
+        return cls.env["commission.target.rate"].create(
+            {
+                "target_id": cls.target.id,
+                "slice_from": slice_from,
+                "slice_to": slice_to,
+                "commission_percentage": percentage,
+            }
+        )
+
+    @classmethod
     def _create_invoice(cls, user=None, date_=None, currency=None, amount=0):
         invoice = cls.env["account.invoice"].create(
             {
@@ -87,14 +101,3 @@ class TestCommissionCase(SavepointCase):
         )
         invoice.action_invoice_open()
         return invoice
-
-    @classmethod
-    def _create_rate(cls, slice_from, slice_to, percentage):
-        return cls.env["commission.target.rate"].create(
-            {
-                "target_id": cls.target.id,
-                "slice_from": slice_from,
-                "slice_to": slice_to,
-                "commission_percentage": percentage,
-            }
-        )

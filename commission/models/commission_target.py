@@ -39,43 +39,45 @@ class CommissionTarget(models.Model):
 
     def compute(self):
         for target in self:
-            target.invoice_ids = target._find_invoices()
+            target._update_invoices()
+            target._compute_invoiced_amount()
             target._compute_commissions_total()
 
-    def _find_invoices(self):
+    def _update_invoices(self):
         invoices = self.env["account.invoice"].search(
             [
                 ("date_invoice", ">=", self.date_start),
             ]
         )
-        return invoices.filtered(
+        invoices = invoices.filtered(
             lambda inv: inv.company_id == self.company_id
             and inv.user_id == self.employee_id.user_id
             and inv.date_invoice <= self.date_end
             and inv.type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
+        self.invoice_ids = invoices
+
+        return invoices
 
     @api.depends("invoice_ids")
     def _compute_invoiced_amount(self):
-        for target in self:
-            target.invoiced_amount = sum(
-                inv.amount_total_company_signed for inv in target.invoice_ids
-            )
+        self.invoiced_amount = sum(
+            inv.amount_total_company_signed for inv in self.invoice_ids
+        )
 
     def _compute_commissions_total(self):
-        for target in self:
-            if target.category_id.rate_type == "fixed":
-                self._compute_target_commissions_fixed(target)
-            else:
-                # if not fixed, update commission_target_rates instead
-                self._compute_target_commissions_interval(target)
+        if self.category_id.rate_type == "fixed":
+            self._compute_target_commissions_fixed()
+        else:
+            # if not fixed, update commission_target_rates instead
+            self._compute_target_commissions_interval()
 
-    def _compute_target_commissions_fixed(self, target):
-        target.commissions_total = target.invoiced_amount * target.fixed_rate / 100
+    def _compute_target_commissions_fixed(self):
+        self.commissions_total = self.invoiced_amount * self.fixed_rate / 100
 
-    def _compute_target_commissions_interval(self, target):
-        target._update_rates()
+    def _compute_target_commissions_interval(self):
+        self._update_rates()
 
     def _update_rates(self):
         for rate in self.rate_ids:

@@ -25,4 +25,3 @@ class CommissionCategory(models.Model):
         "Based On",
         default="personal",
     )
-    # field attribution, quel type?

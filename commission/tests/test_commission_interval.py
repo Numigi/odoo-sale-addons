@@ -22,7 +22,7 @@ class TestCommissionInterval(TestCommissionCase):
     )
     @unpack
     def test_interval_rate_completion(self, slice_from, slice_to, result):
-        rate = self._create_rate(slice_from, slice_to, 0)
+        rate = self._create_rate(slice_from, slice_to)
         self.category.rate_type = "interval"
         self.target.compute()
         assert rate.completion_rate == result
