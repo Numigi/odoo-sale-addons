@@ -14,36 +14,36 @@ class TestCommissionInvoice(TestCommissionCase):
         cls.invoice = cls._create_invoice(amount=5000)
 
     def test_find_invoice_single_user(self):
-        invoices = self.target._find_invoices()
+        invoices = self.target._update_invoices()
         assert self.invoice == invoices
 
     def test_find_invoice_wrong_user(self):
         self.invoice.user_id = self.env.ref("base.user_demo")
-        invoices = self.target._find_invoices()
+        invoices = self.target._update_invoices()
         assert not invoices
 
     @data("in_invoice", "in_refund")
     def test_supplier_invoice(self, type_):
         self.invoice.type = type_
-        invoices = self.target._find_invoices()
+        invoices = self.target._update_invoices()
         assert not invoices
 
     @data("draft", "cancel")
     def test_excluded_state(self, state):
         self.invoice.state = state
-        invoices = self.target._find_invoices()
+        invoices = self.target._update_invoices()
         assert not invoices
 
     @data(date(2020, 5, 17), date(2020, 7, 17))
     def test_find_invoice_correct_date(self, correct_date):
         self.invoice.date_invoice = correct_date
-        invoices = self.target._find_invoices()
+        invoices = self.target._update_invoices()
         assert self.invoice == invoices
 
     @data(date(2020, 5, 16), date(2020, 7, 18))
     def test_find_invoice_wrong_date(self, wrong_date):
         self.invoice.date_invoice = wrong_date
-        invoices = self.target._find_invoices()
+        invoices = self.target._update_invoices()
         assert not invoices
 
     def test_invoiced_amount(self):
