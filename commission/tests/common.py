@@ -20,7 +20,7 @@ class TestCommissionCase(SavepointCase):
 
         cls.employee = cls.env["hr.employee"].create(
             {
-                "name": "jean",
+                "name": "Jean",
                 "user_id": cls.user.id,
             }
         )
@@ -31,21 +31,23 @@ class TestCommissionCase(SavepointCase):
             }
         )
 
-        cls.target = cls.env["commission.target"].create(
-            {
-                "employee_id": cls.employee.id,
-                "category_id": cls.category.id,
-                "date_start": date(2020, 5, 17),
-                "date_end": date(2020, 7, 17),
-                "target_amount": 100000,
-            }
-        )
-
         cls.exchange_rate_cad = cls.env["res.currency.rate"].create(
             {
                 "name": date(2020, 6, 17),
                 "rate": 0.8,
                 "currency_id": cls.env.ref("base.CAD").id,
+            }
+        )
+
+    @classmethod
+    def _create_target(cls, employee, category, amount):
+        return cls.env["commission.target"].create(
+            {
+                "employee_id": employee.id,
+                "category_id": category.id,
+                "date_start": date(2020, 5, 17),
+                "date_end": date(2020, 7, 17),
+                "target_amount": amount,
             }
         )
 
