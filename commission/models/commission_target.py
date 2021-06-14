@@ -81,4 +81,5 @@ class CommissionTarget(models.Model):
 
     def _update_rates(self):
         for rate in self.rate_ids:
-            rate._compute_rate()
+            rate._compute_completion_rate()
+            rate._compute_subtotal()
