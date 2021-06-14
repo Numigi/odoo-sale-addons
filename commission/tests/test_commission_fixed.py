@@ -2,8 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from .common import TestCommissionCase
-from ddt import ddt, data
-from ddt import unpack
+from ddt import ddt, data, unpack
 
 
 @ddt
@@ -13,10 +12,12 @@ class TestCommissionFixed(TestCommissionCase):
         super().setUpClass()
         cls.invoice = cls._create_invoice(amount=5000)
 
+        cls.target = cls._create_target(cls.employee, cls.category, 100000)
+
     @data(
         (0, 0),
-        (50, 2500),  # 50% of 5k = 2.5k
-        (100, 5000),  # 100% of 5k = 5k
+        (0.05, 250),  # 50% of 5k = 2.5k
+        (1, 5000),  # 100% of 5k = 5k
     )
     @unpack
     def test_fixed_rate(self, rate, total):

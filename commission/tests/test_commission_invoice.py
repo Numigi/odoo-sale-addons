@@ -13,6 +13,8 @@ class TestCommissionInvoice(TestCommissionCase):
         super().setUpClass()
         cls.invoice = cls._create_invoice(amount=5000)
 
+        cls.target = cls._create_target(cls.employee, cls.category, 100000)
+
     def test_find_invoice_single_user(self):
         invoices = self.target._update_invoices()
         assert self.invoice == invoices

@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models, api
+from odoo.exceptions import ValidationError
 
 
 class CommissionTargetRate(models.Model):
@@ -26,9 +27,8 @@ class CommissionTargetRate(models.Model):
         self.completion_rate = self._get_completion_rate()
 
     def _get_completion_rate(self):
-        total = self.target_id.invoiced_amount
+        total = self.target_id.invoiced_amount if self.target_id.category_id.basis == "personal" else self.target_id.team_total
         slice_from, slice_to = self._get_absolute_slice_amounts()
-
         if total <= slice_from:
             return 0
 
@@ -42,10 +42,19 @@ class CommissionTargetRate(models.Model):
 
     def _compute_subtotal(self):
         slice_from, slice_to = self._get_absolute_slice_amounts()
-        self.subtotal = (slice_to - slice_from) * self.completion_rate * self.commission_percentage
+        self.subtotal = (
+            (slice_to - slice_from) * self.completion_rate * self.commission_percentage
+        )
 
     def _get_absolute_slice_amounts(self):
         target = self.target_id.target_amount
         absolute_slice_from = self.slice_from / 100 * target
         absolute_slice_to = self.slice_to / 100 * target
         return absolute_slice_from, absolute_slice_to
+
+    @api.constrains("slice_from", "slice_to")
+    def _validate_slices(self):
+        if self.slice_to < self.slice_from:
+            raise ValidationError(
+                "The upper bound should be greater than the lower bound."
+            )
