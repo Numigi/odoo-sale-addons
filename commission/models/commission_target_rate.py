@@ -22,31 +22,30 @@ class CommissionTargetRate(models.Model):
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
 
-    def _compute_rate(self):
+    def _compute_completion_rate(self):
+        self.completion_rate = self._get_completion_rate()
+
+    def _get_completion_rate(self):
         total = self.target_id.invoiced_amount
-        target = self.target_id.target_amount
+        slice_from, slice_to = self._get_absolute_slice_amounts()
 
-        slice_from = self.slice_from / 100 * target
-        slice_to = self.slice_to / 100 * target
-
-        # prevents division by zero if interval is invalid
-        if slice_to - slice_from <= 0:
-            self.completion_rate = 0
-            return
-
-        # less money than the lower bound = 0% completion
         if total <= slice_from:
-            self.completion_rate = 0
-            self.subtotal = 0
+            return 0
 
-        # money inside the interval
         elif total <= slice_to:
             full_slice = slice_to - slice_from
             completion = total - slice_from
-            self.completion_rate = completion / full_slice
-            self.subtotal = completion * self.commission_percentage / 100
+            return completion / full_slice
 
-        # more money than the higher bound = 100% completion
         else:
-            self.completion_rate = 1
-            self.subtotal = (slice_to - slice_from) * self.commission_percentage / 100
+            return 1
+
+    def _compute_subtotal(self):
+        slice_from, slice_to = self._get_absolute_slice_amounts()
+        self.subtotal = (slice_to - slice_from) * self.completion_rate * self.commission_percentage
+
+    def _get_absolute_slice_amounts(self):
+        target = self.target_id.target_amount
+        absolute_slice_from = self.slice_from / 100 * target
+        absolute_slice_to = self.slice_to / 100 * target
+        return absolute_slice_from, absolute_slice_to
