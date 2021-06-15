@@ -54,7 +54,10 @@ class TestCommissionTeam(TestCommissionCase):
 
     def test_manager_total_fixed(self):
         self.target.compute()
-        assert self.target.commissions_total == 400000 * self.employee_target.fixed_rate * self.target.fixed_rate
+        assert (
+            self.target.commissions_total
+            == 400000 * self.employee_target.fixed_rate * self.target.fixed_rate
+        )
 
     @data(
         (0, 0, 1),

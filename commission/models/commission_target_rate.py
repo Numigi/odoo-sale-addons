@@ -27,7 +27,11 @@ class CommissionTargetRate(models.Model):
         self.completion_rate = self._get_completion_rate()
 
     def _get_completion_rate(self):
-        total = self.target_id.invoiced_amount if self.target_id.category_id.basis == "personal" else self.target_id.team_total
+        total = (
+            self.target_id.invoiced_amount
+            if self.target_id.category_id.basis == "personal"
+            else self.target_id.team_total
+        )
         slice_from, slice_to = self._get_absolute_slice_amounts()
         if total <= slice_from:
             return 0
