@@ -23,15 +23,13 @@ class CommissionTargetRate(models.Model):
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
 
-    def _compute_completion_rate(self):
-        self.completion_rate = self._get_completion_rate()
+    def _update_rate(self):
+        self.completion_rate = self._compute_completion_rate()
+        self.subtotal = self._compute_subtotal()
 
-    def _get_completion_rate(self):
-        total = (
-            self.target_id.invoiced_amount
-            if self.target_id.category_id.basis == "personal"
-            else self.target_id.team_total
-        )
+    def _compute_completion_rate(self):
+        total = self.target_id.invoiced_amount
+
         slice_from, slice_to = self._get_absolute_slice_amounts()
         if total <= slice_from:
             return 0
@@ -46,9 +44,7 @@ class CommissionTargetRate(models.Model):
 
     def _compute_subtotal(self):
         slice_from, slice_to = self._get_absolute_slice_amounts()
-        self.subtotal = (
-            (slice_to - slice_from) * self.completion_rate * self.commission_percentage
-        )
+        return (slice_to - slice_from) * self.completion_rate * self.commission_percentage
 
     def _get_absolute_slice_amounts(self):
         target = self.target_id.target_amount
