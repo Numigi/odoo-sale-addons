@@ -48,16 +48,16 @@ class TestCommissionInvoice(TestCommissionCase):
         invoices = self.target._get_invoices()
         assert not invoices
 
-    def test_invoiced_amount(self):
+    def test_base_amount(self):
         self.target.compute()
-        assert self.target.invoiced_amount == 5000
+        assert self.target.base_amount == 5000
 
-    def test_multiple_invoiced_amount(self):
+    def test_multiple_base_amount(self):
         invoice = self._create_invoice(amount=5000)
         self.target.compute()
-        assert self.target.invoiced_amount == 10000
+        assert self.target.base_amount == 10000
 
-    def test_different_currency_invoiced_amount(self):
+    def test_different_currency_base_amount(self):
         cad_invoice = self._create_invoice(currency="CAD", amount=5000)
         self.target.compute()
-        assert self.target.invoiced_amount == 5000 + 5000 / self.exchange_rate_cad.rate
+        assert self.target.base_amount == 5000 + 5000 / self.exchange_rate_cad.rate

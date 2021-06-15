@@ -28,7 +28,7 @@ class CommissionTargetRate(models.Model):
         self.subtotal = self._compute_subtotal()
 
     def _compute_completion_rate(self):
-        total = self.target_id.invoiced_amount
+        total = self.target_id.base_amount
 
         slice_from, slice_to = self._get_absolute_slice_amounts()
         if total <= slice_from:
