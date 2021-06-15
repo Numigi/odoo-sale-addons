@@ -23,5 +23,5 @@ class CommissionCategory(models.Model):
             ("my_team_commissions", "My Team's Commissions"),
         ],
         "Based On",
-        default="personal",
+        default="my_sales",
     )

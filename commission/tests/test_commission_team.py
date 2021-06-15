@@ -34,7 +34,7 @@ class TestCommissionTeam(TestCommissionCase):
         cls.manager_category = cls.env["commission.category"].create(
             {
                 "name": "standard",
-                "basis": "team",
+                "basis": "my_team_commissions",
             }
         )
 
@@ -48,9 +48,9 @@ class TestCommissionTeam(TestCommissionCase):
 
         cls.invoice = cls._create_invoice(amount=400000)
 
-    def test_manager_team_target(self):
-        self.target._update_child_targets()
-        assert self.employee_target == self.target.child_target_ids
+    def test_child_targets(self):
+        child_targets = self.target._get_child_targets()
+        assert self.employee_target == child_targets
 
     def test_manager_total_fixed(self):
         self.target.compute()
