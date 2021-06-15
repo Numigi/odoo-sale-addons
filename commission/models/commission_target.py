@@ -35,106 +35,23 @@ class CommissionTarget(models.Model):
     )
     target_amount = fields.Monetary(required=True)
     fixed_rate = fields.Float()
-    invoiced_amount = fields.Monetary()
+    base_amount = fields.Monetary()
     commissions_total = fields.Monetary()
-
-    """def compute(self):
-        for target in self:
-            if target.category_id.basis == "personal":
-                target._compute_target_personal()
-            else:
-                target._compute_target_team()
-
-    def _compute_target_personal(self):
-        self._update_invoices()
-        self._compute_invoiced_amount()
-        self._compute_commissions_total_personal()
-
-    def _update_invoices(self):
-        invoices = self.env["account.invoice"].search(
-            [
-                ("date_invoice", ">=", self.date_start),
-            ]
-        )
-        invoices = invoices.filtered(
-            lambda inv: inv.company_id == self.company_id
-            and inv.user_id == self.employee_id.user_id
-            and inv.date_invoice <= self.date_end
-            and inv.type not in ("in_invoice", "in_refund")
-            and inv.state not in ("draft", "cancel")
-        )
-        self.invoice_ids = invoices
-
-        return invoices
-
-    def _compute_invoiced_amount(self):
-        self.invoiced_amount = sum(
-            inv.amount_total_company_signed for inv in self.invoice_ids
-        )
-
-    def _compute_commissions_total_personal(self):
-        if self.category_id.rate_type == "fixed":
-            self._compute_target_commissions_fixed()
-        else:
-            self._update_rates()
-
-    def _compute_target_commissions_fixed(self):
-        self.commissions_total = self.invoiced_amount * self.fixed_rate
-
-    def _compute_target_team(self):
-        self._update_child_targets()
-        total = self._compute_commissions_total_team()
-        self._update_commissions_team(total)
-
-    def _update_child_targets(self):
-        targets = self.env["commission.target"].search(
-            [
-                ("employee_id.department_id.manager_id", "=", self.employee_id.id),
-            ]
-        )
-        self.child_target_ids = targets - self
-
-    def _compute_commissions_total_team(self):
-        total = 0
-        for target in self.child_target_ids:
-            target.compute()
-            total += target.commissions_total
-        return total
-
-    def _update_commissions_team(self, total):
-        if self.category_id.rate_type == "fixed":
-            self._compute_commissions_team_fixed(total)
-        else:
-            self._compute_commissions_team_interval(total)
-
-    def _compute_commissions_team_fixed(self, total):
-        self.commissions_total = total * self.fixed_rate
-
-    def _compute_commissions_team_interval(self, total):
-        self.team_total = total
-        self._update_rates()
-
-    def _update_rates(self):
-        for rate in self.rate_ids:
-            rate._compute_completion_rate()
-            rate._compute_subtotal()"""
-
-    ###########################
 
     def compute(self):
         for target in self:
-            target._update_invoiced_amount()
+            target._update_base_amount()
             target._update_commissions_total()
 
-    def _update_invoiced_amount(self):
+    def _update_base_amount(self):
         if self.category_id.basis == "my_sales":
-            self._update_invoiced_amount_my_sales()
+            self._update_base_amount_my_sales()
         elif self.category_id.basis == "my_team_commissions":
-            self._update_invoiced_amount_my_team_commissions()
+            self._update_base_amount_my_team_commissions()
 
-    def _update_invoiced_amount_my_sales(self):
+    def _update_base_amount_my_sales(self):
         self.invoice_ids = self._get_invoices()
-        self.invoiced_amount = self._compute_my_invoiced_amount()
+        self.base_amount = self._compute_my_base_amount()
 
     def _get_invoices(self):
         invoices = self.env["account.invoice"].search(
@@ -152,15 +69,15 @@ class CommissionTarget(models.Model):
 
         return invoices
 
-    def _compute_my_invoiced_amount(self):
+    def _compute_my_base_amount(self):
         return sum(
             inv.amount_total_company_signed for inv in self.invoice_ids
         )
 
-    def _update_invoiced_amount_my_team_commissions(self):
+    def _update_base_amount_my_team_commissions(self):
         self._get_child_targets()
         self.child_target_ids = self._get_child_targets()
-        self.invoiced_amount = self._compute_my_team_commissions()
+        self.base_amount = self._compute_my_team_commissions()
 
     def _get_child_targets(self):
         return self.env["commission.target"].search(
@@ -186,7 +103,7 @@ class CommissionTarget(models.Model):
         self.commissions_total = self._compute_commissions_total_fixed()
 
     def _compute_commissions_total_fixed(self):
-        return self.invoiced_amount * self.fixed_rate
+        return self.base_amount * self.fixed_rate
         
     def _update_commissions_total_interval(self):
         self._update_rates()
