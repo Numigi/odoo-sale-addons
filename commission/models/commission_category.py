@@ -19,8 +19,8 @@ class CommissionCategory(models.Model):
     )
     basis = fields.Selection(
         [
-            ("personal", "My Sales"),
-            ("team", "My Team Sales"),
+            ("my_sales", "My Sales"),
+            ("my_team_commissions", "My Team's Commissions"),
         ],
         "Based On",
         default="personal",
