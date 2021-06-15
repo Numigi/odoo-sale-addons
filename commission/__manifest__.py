@@ -15,6 +15,6 @@
         "hr",
         "date_range",
     ],
-    "data": [],
+    "data": ["views/commission.xml", "views/target.xml", "views/category.xml"],
     "installable": True,
 }
