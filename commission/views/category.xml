@@ -26,6 +26,27 @@
         </field>
      </record>
 
+     <record id="comission_category_form" model="ir.ui.view">
+        <field name="name">commission.category.form</field>
+        <field name="model">commission.category</field>
+        <field name="arch" type="xml">
+            <form string="Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group string="Calculation">
+                        <field name="rate_type"/>
+                        <field name="basis"/>
+                    </group>
+                    <group string="Attribution">
+                        <!-- <field name="child_ids"/> -->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <menuitem id="commission_category" name="Categories" parent="commission_root" action="action_category" sequence="20"/>
 
 </odoo>
