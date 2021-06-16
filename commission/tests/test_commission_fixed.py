@@ -12,7 +12,7 @@ class TestCommissionFixed(TestCommissionCase):
         super().setUpClass()
         cls.invoice = cls._create_invoice(amount=5000)
 
-        cls.target = cls._create_target(cls.employee, cls.category, 100000)
+        cls.target = cls._create_target(target_amount=100000)
 
     @data(
         (0, 0),

@@ -10,20 +10,13 @@ class TestCommissionCase(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.user = cls.env["res.users"].create(
-            {"name": "testing", "email": "test@test.com", "login": "testing"}
-        )
+        cls.user = cls._create_user()
 
-        cls.company = cls._create_company("testing")
+        cls.employee = cls._create_employee()
+
+        cls.company = cls._create_company()
 
         cls.customer = cls.env["res.partner"].create({"name": "testing"})
-
-        cls.employee = cls.env["hr.employee"].create(
-            {
-                "name": "Jean",
-                "user_id": cls.user.id,
-            }
-        )
 
         cls.category = cls.env["commission.category"].create(
             {
@@ -39,20 +32,49 @@ class TestCommissionCase(SavepointCase):
             }
         )
 
-    @classmethod
-    def _create_target(cls, employee, category, amount):
-        return cls.env["commission.target"].create(
+        cls.date_range_type = cls.env["date.range.type"].create(
             {
-                "employee_id": employee.id,
-                "category_id": category.id,
+                "name": "type",
+            }
+        )
+
+        cls.date_range = cls.env["date.range"].create(
+            {
+                "name": "Q2",
                 "date_start": date(2020, 5, 17),
                 "date_end": date(2020, 7, 17),
-                "target_amount": amount,
+                "type_id": cls.date_range_type.id,
             }
         )
 
     @classmethod
-    def _create_company(cls, name):
+    def _create_target(
+        cls,
+        employee=None,
+        category=None,
+        target_amount=0,
+        date_range=None,
+        fixed_rate=0,
+    ):
+        if not employee:
+            employee = cls.employee
+        if not category:
+            category = cls.category
+        if not date_range:
+            date_range = cls.date_range
+
+        return cls.env["commission.target"].create(
+            {
+                "employee_id": employee.id,
+                "category_id": category.id,
+                "target_amount": target_amount,
+                "date_range_id": date_range.id,
+                "fixed_rate": fixed_rate,
+            }
+        )
+
+    @classmethod
+    def _create_company(cls, name="Testing"):
         company = cls.env["res.company"].create({"name": name})
         cls.env.user.company_ids |= company
         cls.env.user.company_id = company
@@ -61,10 +83,28 @@ class TestCommissionCase(SavepointCase):
         return company
 
     @classmethod
-    def _create_rate(cls, slice_from, slice_to, percentage=0):
+    def _create_user(cls, name="Testing", email="testing@testmail.com"):
+        return cls.env["res.users"].create(
+            {"name": name, "email": email, "login": name}
+        )
+
+    @classmethod
+    def _create_employee(cls, user=None):
+        if not user:
+            user = cls.user
+
+        return cls.env["hr.employee"].create(
+            {
+                "name": user.name,
+                "user_id": user.id,
+            }
+        )
+
+    @classmethod
+    def _create_rate(cls, target, slice_from, slice_to, percentage=0):
         return cls.env["commission.target.rate"].create(
             {
-                "target_id": cls.target.id,
+                "target_id": target.id,
                 "slice_from": slice_from,
                 "slice_to": slice_to,
                 "commission_percentage": percentage,
@@ -72,16 +112,21 @@ class TestCommissionCase(SavepointCase):
         )
 
     @classmethod
-    def _create_invoice(cls, user=None, date_=None, currency=None, amount=0):
+    def _create_invoice(
+        cls, _date=date(2020, 6, 17), user=None, currency=None, amount=0
+    ):
+        if not user:
+            user = cls.user
+        if not currency:
+            currency = cls.env.ref("base.USD")
+
         invoice = cls.env["account.invoice"].create(
             {
                 "company_id": cls.company.id,
                 "partner_id": cls.customer.id,
-                "user_id": user.id if user else cls.user.id,
-                "date_invoice": date(2020, 6, 17) if not date_ else date_,
-                "currency_id": cls.env.ref(f"base.{currency}").id
-                if currency
-                else cls.env.ref("base.USD").id,
+                "user_id": user.id,
+                "date_invoice": _date,
+                "currency_id": currency.id,
             }
         )
         cls.env["account.invoice.line"].create(

@@ -20,8 +20,7 @@
         <field name="arch" type="xml">
             <tree string="Targets">
                 <field name="employee_id"/>
-                <field name="date_start"/>
-                <field name="date_end"/>
+                <field name="date_range_id"/>
                 <field name="commissions_total"/>
             </tree>
         </field>

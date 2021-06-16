@@ -44,7 +44,12 @@ class CommissionTargetRate(models.Model):
 
     def _compute_subtotal(self):
         slice_from, slice_to = self._get_absolute_slice_amounts()
-        return (slice_to - slice_from) * self.completion_rate * self.commission_percentage
+        return (
+            (slice_to - slice_from)
+            * self.completion_rate
+            * self.commission_percentage
+            / 100
+        )
 
     def _get_absolute_slice_amounts(self):
         target = self.target_id.target_amount
