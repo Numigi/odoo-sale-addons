@@ -25,8 +25,7 @@ class CommissionTarget(models.Model):
     category_id = fields.Many2one("commission.category")
     rate_type = fields.Selection(related="category_id.rate_type", store=True)
     rate_ids = fields.One2many("commission.target.rate", "target_id")
-    date_start = fields.Date()
-    date_end = fields.Date()
+    date_range_id = fields.Many2one("date.range")
     invoice_ids = fields.Many2many(
         "account.invoice", "commission_target_invoice_rel", "target_id", "invoice_id"
     )
@@ -39,7 +38,7 @@ class CommissionTarget(models.Model):
     commissions_total = fields.Monetary()
 
     def compute(self):
-        for target in self:#._sort_by_children_first():
+        for target in self:  # ._sort_by_children_first():
             target._update_base_amount()
             target._update_commissions_total()
 
@@ -59,13 +58,13 @@ class CommissionTarget(models.Model):
     def _get_invoices(self):
         invoices = self.env["account.invoice"].search(
             [
-                ("date_invoice", ">=", self.date_start),
+                ("date_invoice", ">=", self.date_range_id.date_start),
             ]
         )
         invoices = invoices.filtered(
             lambda inv: inv.company_id == self.company_id
             and inv.user_id == self.employee_id.user_id
-            and inv.date_invoice <= self.date_end
+            and inv.date_invoice <= self.date_range_id.date_end
             and inv.type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
@@ -73,9 +72,7 @@ class CommissionTarget(models.Model):
         return invoices
 
     def _compute_my_base_amount(self):
-        return sum(
-            inv.amount_total_company_signed for inv in self.invoice_ids
-        )
+        return sum(inv.amount_total_company_signed for inv in self.invoice_ids)
 
     def _update_base_amount_my_team_commissions(self):
         self._get_child_targets()
@@ -83,11 +80,18 @@ class CommissionTarget(models.Model):
         self.base_amount = self._compute_my_team_commissions()
 
     def _get_child_targets(self):
-        return self.env["commission.target"].search(
-            [
-                ("employee_id.department_id.manager_id", "=", self.employee_id.id),
-            ]
-        ) - self
+        children = (
+            self.env["commission.target"].search(
+                [
+                    ("employee_id.department_id.manager_id", "=", self.employee_id.id),
+                ]
+            )
+            - self
+        )
+        children = children.filtered(
+            lambda child: child.date_range_id == self.date_range_id
+        )
+        return children
 
     def _compute_my_team_commissions(self):
         total = 0
@@ -107,11 +111,11 @@ class CommissionTarget(models.Model):
 
     def _compute_commissions_total_fixed(self):
         return self.base_amount * self.fixed_rate
-        
+
     def _update_commissions_total_interval(self):
         self._update_rates()
         self.commissions_total = self._compute_commissions_total_interval()
-        
+
     def _update_rates(self):
         for rate in self.rate_ids:
             rate._update_rate()

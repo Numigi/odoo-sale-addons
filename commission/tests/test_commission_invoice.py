@@ -13,7 +13,7 @@ class TestCommissionInvoice(TestCommissionCase):
         super().setUpClass()
         cls.invoice = cls._create_invoice(amount=5000)
 
-        cls.target = cls._create_target(cls.employee, cls.category, 100000)
+        cls.target = cls._create_target(target_amount=100000)
 
     def test_find_invoice_single_user(self):
         invoices = self.target._get_invoices()
@@ -37,13 +37,13 @@ class TestCommissionInvoice(TestCommissionCase):
         assert not invoices
 
     @data(date(2020, 5, 17), date(2020, 7, 17))
-    def test_find_invoice_correct_date(self, correct_date):
+    def test_find_invoice_correct_date_range(self, correct_date):
         self.invoice.date_invoice = correct_date
         invoices = self.target._get_invoices()
         assert self.invoice == invoices
 
     @data(date(2020, 5, 16), date(2020, 7, 18))
-    def test_find_invoice_wrong_date(self, wrong_date):
+    def test_find_invoice_wrong_date_range(self, wrong_date):
         self.invoice.date_invoice = wrong_date
         invoices = self.target._get_invoices()
         assert not invoices
@@ -58,6 +58,8 @@ class TestCommissionInvoice(TestCommissionCase):
         assert self.target.base_amount == 10000
 
     def test_different_currency_base_amount(self):
-        cad_invoice = self._create_invoice(currency="CAD", amount=5000)
+        cad_invoice = self._create_invoice(
+            currency=self.env.ref("base.CAD"), amount=5000
+        )
         self.target.compute()
         assert self.target.base_amount == 5000 + 5000 / self.exchange_rate_cad.rate
