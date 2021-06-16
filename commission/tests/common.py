@@ -18,11 +18,7 @@ class TestCommissionCase(SavepointCase):
 
         cls.customer = cls.env["res.partner"].create({"name": "testing"})
 
-        cls.category = cls.env["commission.category"].create(
-            {
-                "name": "standard",
-            }
-        )
+        cls.category = cls._create_category("Standard")
 
         cls.exchange_rate_cad = cls.env["res.currency.rate"].create(
             {
@@ -38,11 +34,23 @@ class TestCommissionCase(SavepointCase):
             }
         )
 
-        cls.date_range = cls.env["date.range"].create(
+        cls.date_range = cls._create_date_range("Q2", date(2020, 5, 17), date(2020, 7, 17))
+
+    @classmethod
+    def _create_category(cls, name):
+        return cls.env["commission.category"].create(
             {
-                "name": "Q2",
-                "date_start": date(2020, 5, 17),
-                "date_end": date(2020, 7, 17),
+                "name": name,
+            }
+        )
+
+    @classmethod
+    def _create_date_range(cls, name, date_start, date_end):
+        return cls.env["date.range"].create(
+            {
+                "name": name,
+                "date_start": date_start,
+                "date_end": date_end,
                 "type_id": cls.date_range_type.id,
             }
         )
