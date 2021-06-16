@@ -25,3 +25,15 @@ class CommissionCategory(models.Model):
         "Based On",
         default="my_sales",
     )
+    child_ids = fields.Many2many("commission.category", "commission_category_child_rel", "parent_id", "child_id")
+
+    def _sorted_by_dependencies(self):
+        return self.sorted(lambda c: len(c._get_all_children()))
+    
+    def _get_all_children(self):
+        children = self.mapped("child_ids")
+
+        if children:
+            children |= children._get_all_children()
+        
+        return children

@@ -65,14 +65,8 @@ class TestCommissionTeam(TestCommissionCase):
         assert self.employee_target == child_targets
 
     def test_child_targets_date_out_of_range(self):
-        wrong_date_range = self.env["date.range"].create(
-            {
-                "name": "Q3",
-                "date_start": date(2020, 8, 17),
-                "date_end": date(2020, 11, 17),
-                "type_id": self.date_range_type.id,
-            }
-        )
+        wrong_date_range = self._create_date_range("Q3", date(2020, 8, 17), date(2020, 11, 17))
+
         self.employee_target.date_range_id = wrong_date_range
 
         child_targets = self.manager_target._get_child_targets()

@@ -38,12 +38,9 @@ class CommissionTarget(models.Model):
     commissions_total = fields.Monetary()
 
     def compute(self):
-        for target in self:  # ._sort_by_children_first():
+        for target in self:
             target._update_base_amount()
             target._update_commissions_total()
-
-    """def _sort_by_children_first(self):
-        return self.sorted(key=lambda r: not r in self.child_target_ids)"""
 
     def _update_base_amount(self):
         if self.category_id.basis == "my_sales":
