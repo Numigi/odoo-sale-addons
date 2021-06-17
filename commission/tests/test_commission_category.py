@@ -2,6 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import operator
+import pytest
+from odoo.exceptions import ValidationError
 from functools import reduce
 from .common import TestCommissionCase
 
@@ -36,6 +38,10 @@ class TestCommissionCategory(TestCommissionCase):
 
         sorted_categories = categories._sorted_by_dependencies()
         assert sorted_categories == self._concatenate_categories(second_child, first_child, self.category)
+
+    def test_no_self_child(self):
+        with pytest.raises(ValidationError):
+            self.category.child_ids = self.category
 
     def _concatenate_categories(self, *categories):
         return reduce(operator.or_, categories)
