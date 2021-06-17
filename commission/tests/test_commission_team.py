@@ -12,21 +12,12 @@ class TestCommissionTeam(TestCommissionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.manager_user = cls.env["res.users"].create(
-            {"name": "manager", "email": "manager@test.com", "login": "managing"}
-        )
-        cls.manager = cls.env["hr.employee"].create(
-            {
-                "name": "Bob",
-                "user_id": cls.manager_user.id,
-            }
-        )
-        cls.manager_category = cls.env["commission.category"].create(
-            {
-                "name": "standard",
-                "basis": "my_team_commissions",
-            }
-        )
+        cls.manager_user = cls._create_user(name="Manager", email="manager@testmail.com")
+
+        cls.manager = cls._create_employee(user=cls.manager_user)
+
+        cls.manager_category = cls._create_category(name="Manager", basis="my_team_commissions")
+
         cls.manager_target = cls._create_target(
             employee=cls.manager,
             category=cls.manager_category,
