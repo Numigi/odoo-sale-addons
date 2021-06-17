@@ -27,6 +27,8 @@ class CommissionCategory(models.Model):
         default="my_sales",
     )
     child_ids = fields.Many2many("commission.category", "commission_category_child_rel", "parent_id", "child_id")
+    included_tag_ids = fields.Many2one("account.analytic.tag")
+    excluded_tag_ids = fields.Many2one("account.analytic.tag")
 
     def _sorted_by_dependencies(self):
         return self.sorted(lambda c: len(c._get_all_children()))
