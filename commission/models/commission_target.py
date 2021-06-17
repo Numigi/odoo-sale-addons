@@ -91,11 +91,15 @@ class CommissionTarget(models.Model):
         return children
 
     def _compute_my_team_commissions(self):
-        total = 0
+        self._update_child_targets()
+        return self._compute_my_team_commissions_total()
+
+    def _update_child_targets(self):
         for target in self.child_target_ids:
             target.compute()
-            total += target.commissions_total
-        return total
+
+    def _compute_my_team_commissions_total(self):
+        return sum(child.commissions_total for child in self.child_target_ids)
 
     def _update_commissions_total(self):
         if self.category_id.rate_type == "fixed":

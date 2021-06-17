@@ -1,7 +1,8 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import fields, models, api
+from odoo.exceptions import ValidationError
 
 
 class CommissionCategory(models.Model):
@@ -37,3 +38,10 @@ class CommissionCategory(models.Model):
             children |= children._get_all_children()
         
         return children
+
+    @api.constrains("child_ids")
+    def _validate_slices(self):
+        if self in self.child_ids:
+            raise ValidationError(
+                "You cannot assign a child category to itself."
+            )
