@@ -14,7 +14,6 @@ class CommissionTargetRate(models.Model):
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
-    max_amount = fields.Monetary()
     completion_rate = (
         fields.Float()
     )  # <field name="progress" widget="progressbar"/> pour que ce soit une progress bar
