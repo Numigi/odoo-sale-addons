@@ -70,33 +70,29 @@ class CommissionTarget(models.Model):
 
     def _compute_my_base_amount(self):
         # return sum(inv.amount_total_company_signed for inv in self.invoice_ids)
-        return sum(self._compute_invoice_amount(invoice) for invoice in self.invoice_ids)
+        return sum(
+            self._compute_invoice_amount(invoice) for invoice in self.invoice_ids
+        )
 
     def _compute_invoice_amount(self, invoice):
-        return sum(self._compute_invoice_line_amount(line) for line in invoice.invoice_line_ids)
+        return sum(
+            line.price_subtotal_signed
+            for line in invoice.invoice_line_ids
+            if self._should_use_invoice_line(line)
+        )
 
-    def _compute_invoice_line_amount(self, line):
+    def _should_use_invoice_line(self, line):
+        is_included_line = self._is_included_invoice_line(line)
+        is_excluded_line = self._is_excluded_invoice_line(line)
+        return is_included_line and not is_excluded_line
+
+    def _is_included_invoice_line(self, line):
         included = self.category_id.included_tag_ids
+        return not included or bool(included & line.analytic_tag_ids)
+
+    def _is_excluded_invoice_line(self, line):
         excluded = self.category_id.excluded_tag_ids
-        should_use = False
-
-        if not included:
-            should_use = True
-
-        for tag in included:
-            if tag in line.analytic_tag_ids:
-                should_use = True
-                break
-        
-        for tag in excluded:
-            if tag in line.analytic_tag_ids:
-                should_use = False
-                break
-
-        if should_use:
-            return line.price_subtotal_signed
-        
-        return 0
+        return bool(excluded & line.analytic_tag_ids)
 
     def _update_base_amount_my_team_commissions(self):
         self._get_child_targets()
