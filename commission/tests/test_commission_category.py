@@ -15,14 +15,14 @@ class TestCommissionCategory(TestCommissionCase):
 
     def test_get_one_child(self):
         child_category = self._create_category("Child")
-        self.category.child_ids = child_category
+        self.category.child_category_ids = child_category
         assert self.category._get_all_children() == child_category
 
     def test_get_many_children(self):
         first_child = self._create_category("Child")
         second_child = self._create_category("Child's Child")
-        self.category.child_ids = first_child
-        first_child.child_ids = second_child
+        self.category.child_category_ids = first_child
+        first_child.child_category_ids = second_child
         assert self.category._get_all_children() == self._concatenate_categories(first_child, second_child)
 
     def test_get_no_children(self):
@@ -31,8 +31,8 @@ class TestCommissionCategory(TestCommissionCase):
     def test_sorted_by_dependencies(self):
         first_child = self._create_category("Child")
         second_child = self._create_category("Child's Child")
-        self.category.child_ids = first_child
-        first_child.child_ids = second_child
+        self.category.child_category_ids = first_child
+        first_child.child_category_ids = second_child
 
         categories = self._concatenate_categories(self.category, second_child, first_child)
 
@@ -41,7 +41,7 @@ class TestCommissionCategory(TestCommissionCase):
 
     def test_no_self_child(self):
         with pytest.raises(ValidationError):
-            self.category.child_ids = self.category
+            self.category.child_category_ids = self.category
 
     def _concatenate_categories(self, *categories):
         return reduce(operator.or_, categories)
