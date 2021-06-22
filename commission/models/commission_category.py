@@ -27,24 +27,24 @@ class CommissionCategory(models.Model):
         default="my_sales",
     )
     rate_ids = fields.One2many("commission.category.rate", "category_id")
-    child_category_ids = fields.Many2many("commission.category", "commission_category_child_rel", "parent_id", "child_id")
+    child_category_ids = fields.Many2many(
+        "commission.category", "commission_category_child_rel", "parent_id", "child_id"
+    )
     included_tag_ids = fields.Many2one("account.analytic.tag")
     excluded_tag_ids = fields.Many2one("account.analytic.tag")
 
     def _sorted_by_dependencies(self):
         return self.sorted(lambda c: len(c._get_all_children()))
-    
+
     def _get_all_children(self):
         children = self.mapped("child_category_ids")
 
         if children:
             children |= children._get_all_children()
-        
+
         return children
 
     @api.constrains("child_category_ids")
     def _validate_slices(self):
         if self in self.child_category_ids:
-            raise ValidationError(
-                "You cannot assign a child category to itself."
-            )
+            raise ValidationError("You cannot assign a child category to itself.")

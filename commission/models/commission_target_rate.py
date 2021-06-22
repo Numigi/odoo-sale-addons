@@ -9,7 +9,7 @@ class CommissionTargetRate(models.Model):
     _name = "commission.target.rate"
     _description = "Commission Target Rate"
 
-    target_id = fields.Many2one("commission.target", required=True)
+    target_id = fields.Many2one("commission.target", required=True, index=True)
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)

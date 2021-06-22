@@ -38,9 +38,13 @@ class CommissionTarget(models.Model):
     commissions_total = fields.Monetary()
 
     def compute(self):
-        for target in self:
+        for target in self._sorted_by_category_dependency():
             target._update_base_amount()
             target._update_commissions_total()
+
+    def _sorted_by_category_dependency(self):
+        categories = list(self.mapped("category_id")._sorted_by_dependencies())
+        return self.sorted(lambda t: categories.index(t.category_id))
 
     def _update_base_amount(self):
         if self.category_id.basis == "my_sales":
@@ -110,16 +114,12 @@ class CommissionTarget(models.Model):
         )
         children = children.filtered(
             lambda child: child.date_range_id == self.date_range_id
+            and child.category_id in self.category_id.child_category_ids
         )
         return children
 
     def _compute_my_team_commissions(self):
-        self._update_child_targets()
         return self._compute_my_team_commissions_total()
-
-    def _update_child_targets(self):
-        for target in self.child_target_ids:
-            target.compute()
 
     def _compute_my_team_commissions_total(self):
         return sum(child.commissions_total for child in self.child_target_ids)

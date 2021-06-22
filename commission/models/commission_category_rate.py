@@ -9,6 +9,7 @@ class CommissionCategoryRate(models.Model):
     _name = "commission.category.rate"
     _description = "Commission Category Rate"
 
+    category_id = fields.Many2one("commission.category", required=True)
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)

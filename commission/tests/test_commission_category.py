@@ -23,7 +23,11 @@ class TestCommissionCategory(TestCommissionCase):
         second_child = self._create_category("Child's Child")
         self.category.child_category_ids = first_child
         first_child.child_category_ids = second_child
-        assert self.category._get_all_children() == self._concatenate_categories(first_child, second_child)
+
+        children = self.category._get_all_children()
+
+        assert children[0] == first_child
+        assert children[1] == second_child
 
     def test_get_no_children(self):
         assert not self.category._get_all_children()
@@ -34,14 +38,13 @@ class TestCommissionCategory(TestCommissionCase):
         self.category.child_category_ids = first_child
         first_child.child_category_ids = second_child
 
-        categories = self._concatenate_categories(self.category, second_child, first_child)
-
+        categories = self.category | second_child | first_child
         sorted_categories = categories._sorted_by_dependencies()
-        assert sorted_categories == self._concatenate_categories(second_child, first_child, self.category)
+
+        assert sorted_categories[0] == second_child
+        assert sorted_categories[1] == first_child
+        assert sorted_categories[2] == self.category
 
     def test_no_self_child(self):
         with pytest.raises(ValidationError):
             self.category.child_category_ids = self.category
-
-    def _concatenate_categories(self, *categories):
-        return reduce(operator.or_, categories)
