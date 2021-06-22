@@ -26,6 +26,7 @@ class CommissionCategory(models.Model):
         "Based On",
         default="my_sales",
     )
+    rate_ids = fields.One2many("commission.category.rate", "category_id")
     child_category_ids = fields.Many2many("commission.category", "commission_category_child_rel", "parent_id", "child_id")
     included_tag_ids = fields.Many2one("account.analytic.tag")
     excluded_tag_ids = fields.Many2one("account.analytic.tag")
