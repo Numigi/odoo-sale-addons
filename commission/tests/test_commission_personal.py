@@ -7,7 +7,7 @@ from ddt import ddt, data
 
 
 @ddt
-class TestCommissionInvoice(TestCommissionCase):
+class TestCommissionPersonal(TestCommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -99,3 +99,18 @@ class TestCommissionInvoice(TestCommissionCase):
 
         self.target.compute()
         assert self.target.base_amount == 5000
+
+    def test_new_personal_category_spreads_rates(self):
+        self.target.fixed_rate = 0
+        new_category = self.env["commission.category"].create(
+            {
+                "name": "New",
+                "rate_type": "fixed",
+                "basis": "my_sales",
+                "fixed_rate": 0.5
+            }
+        )
+        self.target.category_id = new_category
+        self.target.onchange_category_id()
+
+        assert self.target.fixed_rate == 0.5

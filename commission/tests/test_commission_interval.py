@@ -28,7 +28,7 @@ class TestCommissionInterval(TestCommissionCase):
     )
     @unpack
     def test_interval_rate_completion(self, slice_from, slice_to, completion):
-        rate = self._create_rate(self.target, slice_from, slice_to)
+        rate = self._create_target_rate(self.target, slice_from, slice_to)
         self.category.rate_type = "interval"
         self.target.compute()
         assert rate.completion_rate == completion
@@ -42,11 +42,11 @@ class TestCommissionInterval(TestCommissionCase):
     )
     @unpack
     def test_interval_rate_subtotal(self, slice_from, slice_to, subtotal):
-        rate = self._create_rate(self.target, slice_from, slice_to, self.interval_rate)
+        rate = self._create_target_rate(self.target, slice_from, slice_to, self.interval_rate)
         self.category.rate_type = "interval"
         self.target.compute()
         assert rate.subtotal == subtotal
 
     def test_interval_invalid(self):
         with pytest.raises(ValidationError):
-            self._create_rate(self.target, 50, 40)
+            self._create_target_rate(self.target, 50, 40)

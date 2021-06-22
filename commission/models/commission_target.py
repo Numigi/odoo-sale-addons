@@ -1,7 +1,9 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import operator
 from odoo import fields, models, api
+from functools import reduce
 
 
 class CommissionTarget(models.Model):
@@ -146,3 +148,30 @@ class CommissionTarget(models.Model):
 
     def _compute_commissions_total_interval(self):
         return sum(rate.subtotal for rate in self.rate_ids)
+
+    @api.onchange("category_id")
+    def onchange_category_id(self):
+        if self.category_id.rate_type == "fixed":
+            self._onchange_category_id_fixed()
+        elif self.category_id.rate_type == "interval":
+            self._onchange_category_id_interval()
+
+    def _onchange_category_id_fixed(self):
+        self.fixed_rate = self.category_id.fixed_rate
+
+    def _onchange_category_id_interval(self):
+        self.rate_ids = self._create_target_rates()
+
+    def _create_target_rates(self):
+        target_rates = [self._create_target_rate_from_category_rate(category_rate) for category_rate in self.category_id.rate_ids]
+        return reduce(operator.or_, target_rates)
+
+    def _create_target_rate_from_category_rate(self, category_rate):
+        return self.env["commission.target.rate"].create(
+            {
+                "target_id": self.id,
+                "slice_from": category_rate.slice_from,
+                "slice_to": category_rate.slice_to,
+                "commission_percentage": category_rate.commission_percentage
+            }
+        )

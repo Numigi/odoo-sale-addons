@@ -84,7 +84,7 @@ class TestCommissionTeam(TestCommissionCase):
     )
     @unpack
     def test_manager_completion_interval(self, slice_from, slice_to, completion):
-        rate = self._create_rate(self.manager_target, slice_from, slice_to)
+        rate = self._create_target_rate(self.manager_target, slice_from, slice_to)
         self.manager_category.rate_type = "interval"
         self.employee_target.commissions_total = 400000 * 0.05
         self.manager_target.compute()
@@ -99,7 +99,7 @@ class TestCommissionTeam(TestCommissionCase):
     )
     @unpack
     def test_manager_subtotal_interval(self, slice_from, slice_to, subtotal):
-        rate = self._create_rate(
+        rate = self._create_target_rate(
             self.manager_target,
             slice_from,
             slice_to,
@@ -122,3 +122,22 @@ class TestCommissionTeam(TestCommissionCase):
         self.employee_target.commissions_total = 400000 * 0.05
         self.manager_target.compute()
         assert self.manager_target.commissions_total == 0
+
+    def test_new_team_category_spreads_rates(self):
+        new_category = self.env["commission.category"].create(
+            {
+                "name": "New",
+                "rate_type": "interval",
+                "basis": "my_sales",
+            }
+        )
+        first_rate = self._create_category_rate(new_category, 0, 50, self.interval_rate)
+        second_rate = self._create_category_rate(new_category, 50, 100, self.interval_rate*2)
+        rates = first_rate | second_rate
+
+        self.employee_target.category_id = new_category
+        self.employee_target.onchange_category_id()
+
+        assert rates.mapped("slice_from") == self.employee_target.rate_ids.mapped("slice_from")
+        assert rates.mapped("slice_to") == self.employee_target.rate_ids.mapped("slice_to")
+        assert rates.mapped("commission_percentage") == self.employee_target.rate_ids.mapped("commission_percentage")

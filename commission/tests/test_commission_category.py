@@ -1,10 +1,8 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import operator
 import pytest
 from odoo.exceptions import ValidationError
-from functools import reduce
 from .common import TestCommissionCase
 
 

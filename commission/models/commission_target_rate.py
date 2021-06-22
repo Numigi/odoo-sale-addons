@@ -10,7 +10,6 @@ class CommissionTargetRate(models.Model):
     _description = "Commission Target Rate"
 
     target_id = fields.Many2one("commission.target", required=True, index=True)
-    currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
@@ -21,6 +20,7 @@ class CommissionTargetRate(models.Model):
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
+    currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
 
     def _update_rate(self):
         self.completion_rate = self._compute_completion_rate()
