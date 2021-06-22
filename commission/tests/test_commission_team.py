@@ -12,11 +12,15 @@ class TestCommissionTeam(TestCommissionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.manager_user = cls._create_user(name="Manager", email="manager@testmail.com")
+        cls.manager_user = cls._create_user(
+            name="Manager", email="manager@testmail.com"
+        )
 
         cls.manager = cls._create_employee(user=cls.manager_user)
 
-        cls.manager_category = cls._create_category(name="Manager", basis="my_team_commissions")
+        cls.manager_category = cls._create_category(
+            name="Manager", basis="my_team_commissions"
+        )
 
         cls.manager_target = cls._create_target(
             employee=cls.manager,
@@ -24,6 +28,7 @@ class TestCommissionTeam(TestCommissionCase):
             target_amount=40000,
             fixed_rate=0.05,
         )
+        cls.manager_category.child_category_ids = cls.category
 
         cls.department = cls.env["hr.department"].create(
             {
@@ -36,8 +41,6 @@ class TestCommissionTeam(TestCommissionCase):
         cls.employee_target = cls._create_target(target_amount=100000, fixed_rate=0.05)
 
         cls.interval_rate = 5
-
-        cls.invoice = cls._create_invoice(amount=400000)
 
     def test_child_targets(self):
         child_targets = self.manager_target._get_child_targets()
@@ -56,7 +59,9 @@ class TestCommissionTeam(TestCommissionCase):
         assert self.employee_target == child_targets
 
     def test_child_targets_date_out_of_range(self):
-        wrong_date_range = self._create_date_range("Q3", date(2020, 8, 17), date(2020, 11, 17))
+        wrong_date_range = self._create_date_range(
+            "Q3", date(2020, 8, 17), date(2020, 11, 17)
+        )
 
         self.employee_target.date_range_id = wrong_date_range
 
@@ -64,6 +69,7 @@ class TestCommissionTeam(TestCommissionCase):
         assert not child_targets
 
     def test_manager_total_fixed(self):
+        self.employee_target.commissions_total = 400000 * 0.05
         self.manager_target.compute()
         assert (
             self.manager_target.commissions_total
@@ -80,6 +86,7 @@ class TestCommissionTeam(TestCommissionCase):
     def test_manager_completion_interval(self, slice_from, slice_to, completion):
         rate = self._create_rate(self.manager_target, slice_from, slice_to)
         self.manager_category.rate_type = "interval"
+        self.employee_target.commissions_total = 400000 * 0.05
         self.manager_target.compute()
         assert rate.completion_rate == completion
 
@@ -99,5 +106,19 @@ class TestCommissionTeam(TestCommissionCase):
             self.interval_rate,
         )
         self.manager_category.rate_type = "interval"
+        self.employee_target.commissions_total = 400000 * 0.05
         self.manager_target.compute()
         assert rate.subtotal == subtotal
+
+    def test_sorted_by_dependency(self):
+        rset = (
+            self.manager_target | self.employee_target
+        )._sorted_by_category_dependency()
+        assert rset[0] == self.employee_target
+        assert rset[1] == self.manager_target
+
+    def test_no_child_categories(self):
+        self.manager_category.child_category_ids.unlink()
+        self.employee_target.commissions_total = 400000 * 0.05
+        self.manager_target.compute()
+        assert self.manager_target.commissions_total == 0

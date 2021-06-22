@@ -34,7 +34,9 @@ class TestCommissionCase(SavepointCase):
             }
         )
 
-        cls.date_range = cls._create_date_range("Q2", date(2020, 5, 17), date(2020, 7, 17))
+        cls.date_range = cls._create_date_range(
+            "Q2", date(2020, 5, 17), date(2020, 7, 17)
+        )
 
     @classmethod
     def _create_category(cls, name, basis="my_sales"):

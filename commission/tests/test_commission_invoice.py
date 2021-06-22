@@ -15,17 +15,9 @@ class TestCommissionInvoice(TestCommissionCase):
 
         cls.target = cls._create_target(target_amount=100000)
 
-        cls.included_tag = cls.env["account.analytic.tag"].create(
-            {
-                "name": "Chairs"
-            }
-        )
+        cls.included_tag = cls.env["account.analytic.tag"].create({"name": "Chairs"})
 
-        cls.excluded_tag = cls.env["account.analytic.tag"].create(
-            {
-                "name": "Tables"
-            }
-        )
+        cls.excluded_tag = cls.env["account.analytic.tag"].create({"name": "Tables"})
 
     def test_find_invoice_single_user(self):
         invoices = self.target._get_invoices()
@@ -82,7 +74,7 @@ class TestCommissionInvoice(TestCommissionCase):
         self.invoice.invoice_line_ids.analytic_tag_ids = self.included_tag
 
         excluded_invoice = self._create_invoice(amount=5000)
-        
+
         self.target.compute()
         assert self.target.base_amount == 5000
 
@@ -101,7 +93,9 @@ class TestCommissionInvoice(TestCommissionCase):
         self.invoice.invoice_line_ids.analytic_tag_ids = self.included_tag
 
         excluded_invoice = self._create_invoice(amount=5000)
-        excluded_invoice.invoice_line_ids.analytic_tag_ids = self.included_tag | self.excluded_tag
+        excluded_invoice.invoice_line_ids.analytic_tag_ids = (
+            self.included_tag | self.excluded_tag
+        )
 
         self.target.compute()
         assert self.target.base_amount == 5000
