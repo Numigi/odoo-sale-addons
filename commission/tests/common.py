@@ -112,10 +112,21 @@ class TestCommissionCase(SavepointCase):
         )
 
     @classmethod
-    def _create_rate(cls, target, slice_from, slice_to, percentage=0):
+    def _create_target_rate(cls, target, slice_from, slice_to, percentage=0):
         return cls.env["commission.target.rate"].create(
             {
                 "target_id": target.id,
+                "slice_from": slice_from,
+                "slice_to": slice_to,
+                "commission_percentage": percentage,
+            }
+        )
+
+    @classmethod
+    def _create_category_rate(cls, category, slice_from, slice_to, percentage=0):
+        return cls.env["commission.category.rate"].create(
+            {
+                "category_id": category.id,
                 "slice_from": slice_from,
                 "slice_to": slice_to,
                 "commission_percentage": percentage,

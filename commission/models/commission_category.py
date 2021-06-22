@@ -27,6 +27,7 @@ class CommissionCategory(models.Model):
         default="my_sales",
     )
     rate_ids = fields.One2many("commission.category.rate", "category_id")
+    fixed_rate = fields.Float()
     child_category_ids = fields.Many2many(
         "commission.category", "commission_category_child_rel", "parent_id", "child_id"
     )
