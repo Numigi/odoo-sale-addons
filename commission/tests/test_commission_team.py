@@ -132,12 +132,20 @@ class TestCommissionTeam(TestCommissionCase):
             }
         )
         first_rate = self._create_category_rate(new_category, 0, 50, self.interval_rate)
-        second_rate = self._create_category_rate(new_category, 50, 100, self.interval_rate*2)
+        second_rate = self._create_category_rate(
+            new_category, 50, 100, self.interval_rate * 2
+        )
         rates = first_rate | second_rate
 
         self.employee_target.category_id = new_category
         self.employee_target.onchange_category_id()
 
-        assert rates.mapped("slice_from") == self.employee_target.rate_ids.mapped("slice_from")
-        assert rates.mapped("slice_to") == self.employee_target.rate_ids.mapped("slice_to")
-        assert rates.mapped("commission_percentage") == self.employee_target.rate_ids.mapped("commission_percentage")
+        assert rates.mapped("slice_from") == self.employee_target.rate_ids.mapped(
+            "slice_from"
+        )
+        assert rates.mapped("slice_to") == self.employee_target.rate_ids.mapped(
+            "slice_to"
+        )
+        assert rates.mapped(
+            "commission_percentage"
+        ) == self.employee_target.rate_ids.mapped("commission_percentage")
