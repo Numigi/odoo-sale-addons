@@ -10,7 +10,7 @@ class CommissionTarget(models.Model):
     _name = "commission.target"
     _description = "Commission Target"
 
-    name = fields.Char()
+    name = fields.Char(string="Reference", readonly=True, copy=False, default="")
     status = fields.Selection(
         [
             ("draft", "Draft"),
@@ -150,6 +150,14 @@ class CommissionTarget(models.Model):
 
     def _compute_commissions_total_interval(self):
         return sum(rate.subtotal for rate in self.rate_ids)
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New Target') == 'New Target':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'commission.target.reference') or 'New'
+        result = super(CommissionTarget, self).create(vals)
+        return result
 
     @api.onchange("category_id")
     def onchange_category_id(self):
