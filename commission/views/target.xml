@@ -19,6 +19,7 @@
         <field name="model">commission.target</field>
         <field name="arch" type="xml">
             <tree string="Targets">
+                <field name="name"/>
                 <field name="employee_id"/>
                 <field name="date_start"/>
                 <field name="date_end"/>
@@ -26,6 +27,16 @@
             </tree>
         </field>
      </record>
+
+    <record id="sequence_target_reference" model="ir.sequence">
+        <field name="name">Target Reference</field>
+        <field name="code">commission.target.reference</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">CO</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
 
     <menuitem id="commission_target" name="Targets" parent="commission_root" action="action_target" sequence="10"/>
 
