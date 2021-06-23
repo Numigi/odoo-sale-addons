@@ -13,3 +13,10 @@ class CommissionCategoryRate(models.Model):
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
+
+    @api.constrains("slice_from", "slice_to")
+    def _validate_slices(self):
+        if self.slice_to < self.slice_from:
+            raise ValidationError(
+                "The upper bound should be greater than the lower bound."
+            )

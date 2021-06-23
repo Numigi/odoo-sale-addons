@@ -38,7 +38,7 @@ class CommissionTarget(models.Model):
     )
     target_amount = fields.Monetary(required=True)
     fixed_rate = fields.Float()
-    base_amount = fields.Monetary()
+    base_amount = fields.Monetary(readonly=True)
     commissions_total = fields.Monetary(readonly=True)
 
     def compute(self):
