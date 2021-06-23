@@ -47,9 +47,15 @@
                         </field>
                     </group>
                     <group string="Attribution">
-                        <field name="included_tag_ids"/>
-                        <field name="excluded_tag_ids"/>
-                        <field name="child_category_ids" widget="many2many_checkboxes"/>
+                        <field name="included_tag_ids" attrs="{
+                            'invisible':[('basis', '=', 'my_team_commissions')]
+                        }"/>
+                        <field name="excluded_tag_ids" attrs="{
+                            'invisible':[('basis', '=', 'my_team_commissions')]
+                        }"/>
+                        <field name="child_category_ids" widget="many2many_checkboxes" attrs="{
+                            'invisible':[('basis', '=', 'my_sales')]
+                        }"/>
                     </group>
                 </sheet>
             </form>

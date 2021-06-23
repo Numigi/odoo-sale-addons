@@ -42,7 +42,9 @@ class TestCommissionInterval(TestCommissionCase):
     )
     @unpack
     def test_interval_rate_subtotal(self, slice_from, slice_to, subtotal):
-        rate = self._create_target_rate(self.target, slice_from, slice_to, self.interval_rate)
+        rate = self._create_target_rate(
+            self.target, slice_from, slice_to, self.interval_rate
+        )
         self.category.rate_type = "interval"
         self.target.compute()
         assert rate.subtotal == subtotal

@@ -107,7 +107,7 @@ class TestCommissionPersonal(TestCommissionCase):
                 "name": "New",
                 "rate_type": "fixed",
                 "basis": "my_sales",
-                "fixed_rate": 0.5
+                "fixed_rate": 0.5,
             }
         )
         self.target.category_id = new_category

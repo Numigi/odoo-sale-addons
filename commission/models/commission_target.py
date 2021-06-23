@@ -153,9 +153,11 @@ class CommissionTarget(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', 'New Target') == 'New Target':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'commission.target.reference') or 'New'
+        if vals.get("name", "New Target") == "New Target":
+            vals["name"] = (
+                self.env["ir.sequence"].next_by_code("commission.target.reference")
+                or "New"
+            )
         result = super(CommissionTarget, self).create(vals)
         return result
 
@@ -173,7 +175,10 @@ class CommissionTarget(models.Model):
         self.rate_ids = self._create_target_rates_from_category()
 
     def _create_target_rates_from_category(self):
-        target_rates = [self._create_target_rate_from_category_rate(category_rate) for category_rate in self.category_id.rate_ids]
+        target_rates = [
+            self._create_target_rate_from_category_rate(category_rate)
+            for category_rate in self.category_id.rate_ids
+        ]
         return reduce(operator.or_, target_rates)
 
     def _create_target_rate_from_category_rate(self, category_rate):
@@ -182,10 +187,10 @@ class CommissionTarget(models.Model):
                 "target_id": self.id,
                 "slice_from": category_rate.slice_from,
                 "slice_to": category_rate.slice_to,
-                "commission_percentage": category_rate.commission_percentage
+                "commission_percentage": category_rate.commission_percentage,
             }
         )
-    
+
     @api.onchange("date_range_id")
     def onchange_date_range(self):
         self.date_start = self.date_range_id.date_start
