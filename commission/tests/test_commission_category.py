@@ -46,3 +46,8 @@ class TestCommissionCategory(TestCommissionCase):
     def test_no_self_child(self):
         with pytest.raises(ValidationError):
             self.category.child_category_ids = self.category
+
+    def test_interval_date_invalid(self):
+        category = self._create_category(name="Testing")
+        with pytest.raises(ValidationError):
+            self._create_category_rate(category, 50, 40)

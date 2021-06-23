@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 class CommissionTargetRate(models.Model):
     _name = "commission.target.rate"
     _description = "Commission Target Rate"
+    _order = "slice_from"
 
     target_id = fields.Many2one("commission.target", required=True, index=True)
     slice_from = fields.Float(required=True)

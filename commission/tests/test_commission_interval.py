@@ -47,6 +47,6 @@ class TestCommissionInterval(TestCommissionCase):
         self.target.compute()
         assert rate.subtotal == subtotal
 
-    def test_interval_invalid(self):
+    def test_interval_date_invalid(self):
         with pytest.raises(ValidationError):
             self._create_target_rate(self.target, 50, 40)
