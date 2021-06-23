@@ -114,3 +114,14 @@ class TestCommissionPersonal(TestCommissionCase):
         self.target.onchange_category_id()
 
         assert self.target.fixed_rate == 0.5
+
+    def test_date_range_onchange(self):
+        new_date_range = self._create_date_range(
+            "Q4", date(2024, 8, 17), date(2024, 11, 17)
+        )
+
+        self.target.date_range_id = new_date_range
+        self.target.onchange_date_range()
+
+        assert self.target.date_start == date(2024, 8, 17)
+        assert self.target.date_end == date(2024, 11, 17)

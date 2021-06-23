@@ -6,7 +6,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">commission.target</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
             Create your First Target Here !
@@ -20,7 +20,8 @@
         <field name="arch" type="xml">
             <tree string="Targets">
                 <field name="employee_id"/>
-                <field name="date_range_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
                 <field name="commissions_total"/>
             </tree>
         </field>

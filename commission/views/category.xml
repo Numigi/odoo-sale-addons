@@ -6,7 +6,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">commission.category</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
             Create your First Category Here !
@@ -40,7 +40,9 @@
                         <field name="basis"/>
                     </group>
                     <group string="Attribution">
-                        <!-- <field name="child_ids"/> -->
+                        <field name="included_tag_ids"/>
+                        <field name="excluded_tag_ids"/>
+                        <field name="child_category_ids"/>
                     </group>
                 </sheet>
             </form>
