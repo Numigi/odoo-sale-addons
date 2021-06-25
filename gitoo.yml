@@ -52,3 +52,9 @@
   branch: "12.0"
   includes:
     - date_range
+
+- url: https://github.com/Numigi/odoo-timesheet-addons
+  branch: "12.0"
+  includes:
+    - payroll_period
+    - payroll_preparation

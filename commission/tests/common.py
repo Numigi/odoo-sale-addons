@@ -81,6 +81,8 @@ class TestCommissionCase(SavepointCase):
                 "target_amount": target_amount,
                 "date_range_id": date_range.id,
                 "fixed_rate": fixed_rate,
+                "date_start": date_range.date_start,
+                "date_end": date_range.date_end,
             }
         )
 

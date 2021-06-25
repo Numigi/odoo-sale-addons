@@ -15,6 +15,7 @@ class CommissionTarget(models.Model):
         [
             ("draft", "Draft"),
             ("confirmed", "Confirmed"),
+            ("in_progress", "In Progress"),
             ("done", "Done"),
             ("cancelled", "Cancelled"),
         ]
@@ -40,6 +41,7 @@ class CommissionTarget(models.Model):
     fixed_rate = fields.Float()
     base_amount = fields.Monetary(readonly=True)
     commissions_total = fields.Monetary(readonly=True)
+    already_paid = fields.Monetary(readonly=True)
 
     def compute(self):
         for target in self._sorted_by_category_dependency():
@@ -63,13 +65,13 @@ class CommissionTarget(models.Model):
     def _get_invoices(self):
         invoices = self.env["account.invoice"].search(
             [
-                ("date_invoice", ">=", self.date_range_id.date_start),
+                ("date_invoice", ">=", self.date_start),
             ]
         )
         invoices = invoices.filtered(
             lambda inv: inv.company_id == self.company_id
             and inv.user_id == self.employee_id.user_id
-            and inv.date_invoice <= self.date_range_id.date_end
+            and inv.date_invoice <= self.date_end
             and inv.type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
@@ -153,11 +155,9 @@ class CommissionTarget(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get("name", "New Target") == "New Target":
-            vals["name"] = (
-                self.env["ir.sequence"].next_by_code("commission.target.reference")
-                or "New"
-            )
+        if vals.get('name', 'New Target') == 'New Target':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'commission.target.reference') or 'New'
         result = super(CommissionTarget, self).create(vals)
         return result
 
@@ -175,10 +175,7 @@ class CommissionTarget(models.Model):
         self.rate_ids = self._create_target_rates_from_category()
 
     def _create_target_rates_from_category(self):
-        target_rates = [
-            self._create_target_rate_from_category_rate(category_rate)
-            for category_rate in self.category_id.rate_ids
-        ]
+        target_rates = [self._create_target_rate_from_category_rate(category_rate) for category_rate in self.category_id.rate_ids]
         return reduce(operator.or_, target_rates)
 
     def _create_target_rate_from_category_rate(self, category_rate):
@@ -187,10 +184,10 @@ class CommissionTarget(models.Model):
                 "target_id": self.id,
                 "slice_from": category_rate.slice_from,
                 "slice_to": category_rate.slice_to,
-                "commission_percentage": category_rate.commission_percentage,
+                "commission_percentage": category_rate.commission_percentage
             }
         )
-
+    
     @api.onchange("date_range_id")
     def onchange_date_range(self):
         self.date_start = self.date_range_id.date_start
