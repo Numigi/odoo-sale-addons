@@ -11,7 +11,7 @@
     "category": "Sales",
     "summary": "Adds commission functionality to sales.",
     "depends": [
-        "sale",
+        "account",
         "hr",
         "date_range",
     ],

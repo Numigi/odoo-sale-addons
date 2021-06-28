@@ -10,14 +10,15 @@ class CommissionTarget(models.Model):
     _description = "Commission Target"
 
     name = fields.Char(string="Reference", readonly=True, copy=False, default="")
-    status = fields.Selection(
+    state = fields.Selection(
         [
             ("draft", "Draft"),
             ("confirmed", "Confirmed"),
             ("in_progress", "In Progress"),
             ("done", "Done"),
             ("cancelled", "Cancelled"),
-        ]
+        ],
+        default="draft"
     )
     employee_id = fields.Many2one("hr.employee", string="Agent")
     company_id = fields.Many2one(
@@ -40,7 +41,6 @@ class CommissionTarget(models.Model):
     fixed_rate = fields.Float()
     base_amount = fields.Monetary(readonly=True)
     commissions_total = fields.Monetary(readonly=True)
-    already_paid = fields.Monetary(readonly=True)
 
     def compute(self):
         for target in self._sorted_by_category_dependency():

@@ -24,8 +24,7 @@
                 <field name="date_start"/>
                 <field name="date_end"/>
                 <field name="commissions_total"/>
-                <field name="already_paid"/>
-                <field name="status"/>
+                <field name="state"/>
             </tree>
         </field>
      </record>
@@ -35,6 +34,10 @@
         <field name="model">commission.target</field>
         <field name="arch" type="xml">
             <form string="Target">
+                <header>
+                    <button name="compute" string="Compute" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statebar_visible="draft,confirmed,done"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="name"/>
@@ -52,7 +55,7 @@
                         <field name="target_amount"/>
                     </group>
                     <group name="fixed_rate" attrs="{'invisible':[('rate_type', '!=', 'fixed')]}">
-                        <field name="fixed_rate" />
+                        <field name="fixed_rate" widget="percentage"/>
                     </group>
                     <group name="interval" attrs="{'invisible':[('rate_type', '!=', 'interval')]}">
                         <label for="rate_ids"/>
@@ -63,6 +66,9 @@
                                 <field name="commission_percentage"/>
                             </tree>
                         </field>
+                    </group>
+                    <group>
+                        <field name="commissions_total"/>
                     </group>
                 </sheet>
             </form>

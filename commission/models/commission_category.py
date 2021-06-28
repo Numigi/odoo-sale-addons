@@ -15,8 +15,7 @@ class CommissionCategory(models.Model):
             ("fixed", "Fixed"),
             ("interval", "Interval"),
         ],
-        "Rate Type",
-        default="fixed",
+        default="fixed"
     )
     basis = fields.Selection(
         [
