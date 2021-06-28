@@ -97,3 +97,15 @@ class TestRatesPropagation(TestCommissionCase):
         assert rates[1].slice_from == 50
         assert rates[1].slice_to == 100
         assert rates[1].commission_percentage == 0.04
+
+    def test_onchange_twice(self):
+        target = self.env["commission.target"].new({"category_id": self.category.id})
+        target.onchange_category_id()
+        target.onchange_category_id()
+        assert len(target.rate_ids) == 2
+
+    def test_onchange_no_rate_on_category(self):
+        self.category.rate_ids.unlink()
+        target = self.env["commission.target"].new({"category_id": self.category.id})
+        target.onchange_category_id()
+        assert len(target.rate_ids) == 0
