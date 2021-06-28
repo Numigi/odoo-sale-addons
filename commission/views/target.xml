@@ -43,6 +43,7 @@
                         <field name="employee_id"/>
                         <field name="date_range_id"/>
                         <field name="category_id"/>
+                        <field name="rate_type" invisible="1"/>
                     </group>
                     <group>
                         <field name="base_amount"/>
@@ -50,14 +51,18 @@
                     <group>
                         <field name="target_amount"/>
                     </group>
-                    <group>
-                        <field name="rate_type" invisible="1"/>
-                        <field name="fixed_rate" attrs="{
-                            'invisible':[('rate_type', '=', 'interval')]
-                        }"/>
-                        <field name="rate_ids" attrs="{
-                            'invisible':[('rate_type', '=', 'fixed')]
-                        }"/>
+                    <group name="fixed_rate" attrs="{'invisible':[('rate_type', '!=', 'fixed')]}">
+                        <field name="fixed_rate" />
+                    </group>
+                    <group name="interval" attrs="{'invisible':[('rate_type', '!=', 'interval')]}">
+                        <label for="rate_ids"/>
+                        <field name="rate_ids" nolabel="1" colspan="2">
+                            <tree editable="bottom">
+                                <field name="slice_from"/>
+                                <field name="slice_to"/>
+                                <field name="commission_percentage"/>
+                            </tree>
+                        </field>
                     </group>
                 </sheet>
             </form>

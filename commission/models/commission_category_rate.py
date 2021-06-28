@@ -16,7 +16,8 @@ class CommissionCategoryRate(models.Model):
 
     @api.constrains("slice_from", "slice_to")
     def _validate_slices(self):
-        if self.slice_to < self.slice_from:
-            raise ValidationError(
-                "The upper bound should be greater than the lower bound."
-            )
+        for rate in self:
+            if rate.slice_to < rate.slice_from:
+                raise ValidationError(
+                    "The upper bound should be greater than the lower bound."
+                )
