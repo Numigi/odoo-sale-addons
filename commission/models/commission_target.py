@@ -29,8 +29,8 @@ class CommissionTarget(models.Model):
     rate_type = fields.Selection(related="category_id.rate_type", store=True)
     rate_ids = fields.One2many("commission.target.rate", "target_id")
     date_range_id = fields.Many2one("date.range")
-    date_start = fields.Date(readonly=True)
-    date_end = fields.Date(readonly=True)
+    date_start = fields.Date(related="date_range_id.date_start", store=True)
+    date_end = fields.Date(related="date_range_id.date_end", store=True)
     invoice_ids = fields.Many2many(
         "account.invoice", "commission_target_invoice_rel", "target_id", "invoice_id"
     )
@@ -176,7 +176,8 @@ class CommissionTarget(models.Model):
 
     def _create_target_rates_from_category(self):
         target_rates = [self._create_target_rate_from_category_rate(category_rate) for category_rate in self.category_id.rate_ids]
-        return reduce(operator.or_, target_rates)
+        if target_rates:
+            return reduce(operator.or_, target_rates)
 
     def _create_target_rate_from_category_rate(self, category_rate):
         return self.env["commission.target.rate"].create(
@@ -187,8 +188,3 @@ class CommissionTarget(models.Model):
                 "commission_percentage": category_rate.commission_percentage
             }
         )
-    
-    @api.onchange("date_range_id")
-    def onchange_date_range(self):
-        self.date_start = self.date_range_id.date_start
-        self.date_end = self.date_range_id.date_end

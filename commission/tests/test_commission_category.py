@@ -51,3 +51,12 @@ class TestCommissionCategory(TestCommissionCase):
         category = self._create_category(name="Testing")
         with pytest.raises(ValidationError):
             self._create_category_rate(category, 50, 40)
+
+    def test_category_onchange_no_rates(self):
+        category = self._create_category(name="Testing")
+        category.rate_type = "interval"
+        target = self._create_target(target_amount=100000)
+        target.category_id = category
+        target.onchange_category_id()
+        
+        assert target.category_id == category

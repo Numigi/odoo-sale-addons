@@ -21,6 +21,9 @@
             <tree string="Categories">
                 <field name="name"/>
                 <field name="rate_type"/>
+                <field name="fixed_rate" attrs="{
+                            'invisible':[('rate_type', '=', 'interval')]
+                        }"/>
                 <field name="basis"/>
             </tree>
         </field>
@@ -37,14 +40,19 @@
                     </group>
                     <group string="Calculation">
                         <field name="rate_type"/>
-                        <field name="basis"/>
-                        <field name="rate_ids">
+                        <field name="rate_ids" attrs="{
+                            'invisible':[('rate_type', '=', 'fixed')]
+                        }">
                             <tree editable="bottom">
                                 <field name="slice_from"/>
                                 <field name="slice_to"/>
                                 <field name="commission_percentage" widget="percentage"/>
                             </tree>
                         </field>
+                        <field name="fixed_rate" attrs="{
+                            'invisible':[('rate_type', '=', 'interval')]
+                        }"/>
+                        <field name="basis"/>
                     </group>
                     <group string="Attribution">
                         <field name="included_tag_ids" attrs="{
