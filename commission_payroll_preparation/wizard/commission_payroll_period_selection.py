@@ -50,4 +50,4 @@ class CommissionPayrollPeriodSelection(models.TransientModel):
             self.target_id.already_paid = paid_amount
         else:
             self.target_id.already_paid += paid_amount
-        self.target_id.status = "in_progress"
+        self.target_id.state = "in_progress"

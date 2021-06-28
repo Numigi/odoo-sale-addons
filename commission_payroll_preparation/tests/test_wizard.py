@@ -87,4 +87,4 @@ class TestWizard(TestPayrollCase):
 
     def test_create_payroll_target_in_progress(self):
         self.wizard.confirm()
-        assert self.target.status == "in_progress"
+        assert self.target.state == "in_progress"
