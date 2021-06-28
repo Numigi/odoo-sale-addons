@@ -52,3 +52,48 @@ class TestCommissionInterval(TestCommissionCase):
     def test_interval_date_invalid(self):
         with pytest.raises(ValidationError):
             self._create_target_rate(self.target, 50, 40)
+
+
+class TestRatesPropagation(TestCommissionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.category.write(
+            {
+                "rate_type": "interval",
+                "rate_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "slice_from": 0,
+                            "slice_to": 50,
+                            "commission_percentage": 0.02,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "slice_from": 50,
+                            "slice_to": 100,
+                            "commission_percentage": 0.04,
+                        },
+                    ),
+                ],
+            }
+        )
+
+    def test_onchange(self):
+        target = self.env["commission.target"].new({"category_id": self.category.id})
+        target.onchange_category_id()
+
+        rates = target.rate_ids
+        assert len(rates) == 2
+        assert rates[0].slice_from == 0
+        assert rates[0].slice_to == 50
+        assert rates[0].commission_percentage == 0.02
+
+        assert rates[1].slice_from == 50
+        assert rates[1].slice_to == 100
+        assert rates[1].commission_percentage == 0.04
