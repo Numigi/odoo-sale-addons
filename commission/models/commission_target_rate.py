@@ -17,9 +17,7 @@ class CommissionTargetRate(models.Model):
     max_amount = fields.Monetary(compute="_compute_max_amount", store=True)
     completion_rate = fields.Float()
     subtotal = fields.Monetary()
-    company_id = fields.Many2one(
-        "res.company", related="target_id.company_id"
-    )
+    company_id = fields.Many2one("res.company", related="target_id.company_id")
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
 
     def _update_rate(self):

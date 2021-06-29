@@ -37,12 +37,55 @@
             <form string="Target">
                 <header>
                     <field name="state" invisible="1"/>
-                    <button name="compute" string="Compute" type="object" class="oe_highlight" attrs="{'invisible':['|','|',('state', '=', 'draft'),('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
-                    <button name="set_confirmed_state" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible':['|',('state', '!=', 'draft'),('state', '=', 'cancelled')]}"/>
-                    <button name="set_done_state" string="Mark As Done" type="object" class="oe_highlight" confirm="Are you sure?" attrs="{'invisible':['|','|',('state', '=', 'draft'),('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
-                    <button name="set_cancelled_state" string="Cancel" type="object" attrs="{'invisible':['|',('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
-                    <button name="set_draft_state" string="Mark As Draft" type="object" attrs="{'invisible':[('state', '!=', 'cancelled')]}"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                    <button name="compute" 
+                            string="Compute" 
+                            type="object" 
+                            class="oe_highlight" 
+                            attrs="{
+                                'invisible':['|',
+                                            '|',
+                                            ('state', '=', 'draft'),
+                                            ('state', '=', 'done'),
+                                            ('state', '=', 'cancelled')]
+                            }"/>
+                    <button name="set_confirmed_state" 
+                            string="Confirm" 
+                            type="object" 
+                            class="oe_highlight" 
+                            attrs="{
+                                'invisible':['|',
+                                            ('state', '!=', 'draft'),
+                                            ('state', '=', 'cancelled')]
+                            }"/>
+                    <button name="set_done_state" 
+                            string="Mark As Done" 
+                            type="object" 
+                            class="oe_highlight" 
+                            confirm="Are you sure?" 
+                            attrs="{
+                                'invisible':['|',
+                                            '|',
+                                            ('state', '=', 'draft'),
+                                            ('state', '=', 'done'),
+                                            ('state', '=', 'cancelled')]
+                            }"/>
+                    <button name="set_cancelled_state" 
+                            string="Cancel" 
+                            type="object" 
+                            attrs="{
+                                'invisible':['|',
+                                            ('state', '=', 'done'),
+                                            ('state', '=', 'cancelled')]
+                            }"/>
+                    <button name="set_draft_state" 
+                            string="Mark As Draft" 
+                            type="object" 
+                            attrs="{
+                                'invisible':[('state', '!=', 'cancelled')]
+                            }"/>
+                    <field name="state" 
+                            widget="statusbar" 
+                            statusbar_visible="draft,confirmed,done"/>
                 </header>
                 <sheet>
                     <field name="currency_id" invisible="1"/>
@@ -61,10 +104,16 @@
                     <group>
                         <field name="target_amount"/>
                     </group>
-                    <group name="fixed_rate" attrs="{'invisible':[('rate_type', '!=', 'fixed')]}">
+                    <group name="fixed_rate" 
+                            attrs="{
+                                'invisible':[('rate_type', '!=', 'fixed')]
+                            }">
                         <field name="fixed_rate" widget="percentage"/>
                     </group>
-                    <group name="interval" attrs="{'invisible':[('rate_type', '!=', 'interval')]}">
+                    <group name="interval" 
+                            attrs="{
+                                'invisible':[('rate_type', '!=', 'interval')]
+                            }">
                         <label for="rate_ids"/>
                         <field name="rate_ids" nolabel="1" colspan="2">
                             <tree editable="bottom">

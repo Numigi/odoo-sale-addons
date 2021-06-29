@@ -60,11 +60,8 @@ class TestCommissionTeam(TestCommissionCase):
 
     def test_child_targets_wrong_company(self):
         company = self._create_company(name="Wrong")
-        target = self._create_target(
-            employee=self.employee,
-            target_amount=100000
-        )
-        
+        target = self._create_target(employee=self.employee, target_amount=100000)
+
         target.company_id = company
 
         child_targets = self.manager_target._get_child_targets()

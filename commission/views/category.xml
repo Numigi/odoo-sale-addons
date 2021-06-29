@@ -21,7 +21,11 @@
             <tree string="Categories">
                 <field name="name"/>
                 <field name="rate_type"/>
-                <field name="fixed_rate" attrs="{'invisible':[('rate_type', '=', 'interval')]}" widget="percentage"/>
+                <field name="fixed_rate" 
+                        attrs="{
+                            'invisible':[('rate_type', '=', 'interval')]
+                        }" 
+                        widget="percentage"/>
                 <field name="basis"/>
             </tree>
         </field>
@@ -40,10 +44,17 @@
                         <group>
                             <field name="rate_type"/>
                         </group>
-                        <group name="fixed_rate" attrs="{'invisible':[('rate_type', '!=', 'fixed')]}">
-                            <field name="fixed_rate" widget="percentage"/>
+                        <group name="fixed_rate" 
+                                attrs="{
+                                    'invisible':[('rate_type', '!=', 'fixed')]
+                                }">
+                            <field name="fixed_rate" 
+                                    widget="percentage"/>
                         </group>
-                        <group name="interval" attrs="{'invisible':[('rate_type', '!=', 'interval')]}">
+                        <group name="interval"
+                                attrs="{
+                                    'invisible':[('rate_type', '!=', 'interval')]
+                                }">
                             <field name="rate_ids">
                                 <tree editable="bottom">
                                     <field name="slice_from"/>
@@ -57,12 +68,19 @@
                         </group>
                     </group>
                     <group string="Attribution">
-                        <group name="tag_ids" attrs="{'invisible':[('basis', '!=', 'my_sales')]}">
+                        <group name="tag_ids" 
+                                attrs="{
+                                    'invisible':[('basis', '!=', 'my_sales')]
+                                }">
                             <field name="included_tag_ids"/>
                             <field name="excluded_tag_ids"/>
                         </group>
-                        <group name="child_categories" attrs="{'invisible':[('basis', '!=', 'my_team_commissions')]}">
-                            <field name="child_category_ids" widget="many2many_checkboxes"/>
+                        <group name="child_categories" 
+                                attrs="{
+                                    'invisible':[('basis', '!=', 'my_team_commissions')]
+                                }">
+                            <field name="child_category_ids" 
+                                    widget="many2many_checkboxes"/>
                         </group>
                     </group>
                 </sheet>
@@ -70,6 +88,10 @@
         </field>
     </record>
 
-    <menuitem id="commission_category" name="Categories" parent="commission_root" action="action_category" sequence="20"/>
+    <menuitem id="commission_category" 
+                name="Categories" 
+                parent="commission_root" 
+                action="action_category" 
+                sequence="20"/>
 
 </odoo>

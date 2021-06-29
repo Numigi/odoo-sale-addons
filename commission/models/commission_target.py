@@ -20,25 +20,51 @@ class CommissionTarget(models.Model):
         default="draft",
         readonly=True,
     )
-    employee_id = fields.Many2one("hr.employee", string="Agent", readonly=True, states={'draft': [('readonly', False)]})
+    employee_id = fields.Many2one(
+        "hr.employee",
+        string="Agent",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
-    category_id = fields.Many2one("commission.category", readonly=True, states={'draft': [('readonly', False)]})
-    rate_type = fields.Selection(related="category_id.rate_type", store=True, readonly=True, states={'draft': [('readonly', False)]})
-    rate_ids = fields.One2many("commission.target.rate", "target_id", readonly=True, states={'draft': [('readonly', False)]})
-    date_range_id = fields.Many2one("date.range", readonly=True, states={'draft': [('readonly', False)]})
+    category_id = fields.Many2one(
+        "commission.category", readonly=True, states={"draft": [("readonly", False)]}
+    )
+    rate_type = fields.Selection(
+        related="category_id.rate_type",
+        store=True,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
+    rate_ids = fields.One2many(
+        "commission.target.rate",
+        "target_id",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
+    date_range_id = fields.Many2one(
+        "date.range", readonly=True, states={"draft": [("readonly", False)]}
+    )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
     invoice_ids = fields.Many2many(
         "account.invoice", "commission_target_invoice_rel", "target_id", "invoice_id"
     )
     child_target_ids = fields.Many2many(
-        "commission.target", "commission_target_child_rel", "parent_id", "child_id", readonly=True, states={'draft': [('readonly', False)]}
+        "commission.target",
+        "commission_target_child_rel",
+        "parent_id",
+        "child_id",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
     )
-    target_amount = fields.Monetary(required=True, readonly=True, states={'draft': [('readonly', False)]})
-    fixed_rate = fields.Float(readonly=True, states={'draft': [('readonly', False)]})
+    target_amount = fields.Monetary(
+        required=True, readonly=True, states={"draft": [("readonly", False)]}
+    )
+    fixed_rate = fields.Float(readonly=True, states={"draft": [("readonly", False)]})
     base_amount = fields.Monetary(readonly=True)
     commissions_total = fields.Monetary(readonly=True)
 
