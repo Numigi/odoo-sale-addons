@@ -114,3 +114,19 @@ class TestCommissionPersonal(TestCommissionCase):
         self.target.onchange_category_id()
 
         assert self.target.fixed_rate == 0.5
+
+    def test_confirm_target_confirmed_state(self):
+        self.target.set_confirmed_state()
+        assert self.target.state == "confirmed"
+
+    def test_done_method_done_state(self):
+        self.target.set_done_state()
+        assert self.target.state == "done"
+
+    def test_cancel_method_cancel_state(self):
+        self.target.set_cancelled_state()
+        assert self.target.state == "cancelled"
+
+    def test_draft_method_draft_state(self):
+        self.target.set_draft_state()
+        assert self.target.state == "draft"

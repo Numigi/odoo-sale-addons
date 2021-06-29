@@ -189,3 +189,15 @@ class CommissionTarget(models.Model):
                 "commission_percentage": category_rate.commission_percentage
             }
         )
+
+    def set_confirmed_state(self):
+        self.state = "confirmed"
+
+    def set_done_state(self):
+        self.state = "done"
+
+    def set_cancelled_state(self):
+        self.state = "cancelled"
+
+    def set_draft_state(self):
+        self.state = "draft"
