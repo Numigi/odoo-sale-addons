@@ -35,7 +35,12 @@
         <field name="arch" type="xml">
             <form string="Target">
                 <header>
-                    <button name="compute" string="Compute" type="object" class="oe_highlight"/>
+                    <field name="state" invisible="1"/>
+                    <button name="compute" string="Compute" type="object" class="oe_highlight" attrs="{'invisible':['|','|',('state', '=', 'draft'),('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
+                    <button name="set_confirmed_state" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible':['|',('state', '!=', 'draft'),('state', '=', 'cancelled')]}"/>
+                    <button name="set_done_state" string="Mark As Done" type="object" class="oe_highlight" confirm="Are you sure?" attrs="{'invisible':['|','|',('state', '=', 'draft'),('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
+                    <button name="set_cancelled_state" string="Cancel" type="object" class="oe_highlight" attrs="{'invisible':['|',('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
+                    <button name="set_draft_state" string="Mark As Draft" type="object" class="oe_highlight" attrs="{'invisible':[('state', '!=', 'cancelled')]}"/>
                     <field name="state" widget="statusbar" statebar_visible="draft,confirmed,done"/>
                 </header>
                 <sheet>
