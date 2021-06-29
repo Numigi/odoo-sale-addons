@@ -120,6 +120,7 @@ class CommissionTarget(models.Model):
         children = children.filtered(
             lambda child: child.date_range_id == self.date_range_id
             and child.category_id in self.category_id.child_category_ids
+            and child.company_id == self.company_id
         )
         return children
 
