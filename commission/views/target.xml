@@ -69,6 +69,9 @@
                                 <field name="slice_from"/>
                                 <field name="slice_to"/>
                                 <field name="commission_percentage"/>
+                                <field name="max_amount"/>
+                                <field name="completion_rate" widget="progressbar"/>
+                                <field name="subtotal"/>
                             </tree>
                         </field>
                     </group>

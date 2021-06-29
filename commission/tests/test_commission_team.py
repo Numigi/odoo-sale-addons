@@ -77,9 +77,9 @@ class TestCommissionTeam(TestCommissionCase):
         )
 
     @data(
-        (0, 0, 1),
-        (0, 50, 1),  # 50% of 2k == 1k <= 1k
-        (30, 70, 0.5),  # (1k - 0.6k) / (1.4k - 0.6k)
+        (0, 0, 100),
+        (0, 50, 100),  # 50% of 2k == 1k <= 1k
+        (30, 70, 50),  # (1k - 0.6k) / (1.4k - 0.6k)
         (100, 100, 0),
     )
     @unpack

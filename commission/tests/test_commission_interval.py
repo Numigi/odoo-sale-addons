@@ -20,10 +20,10 @@ class TestCommissionInterval(TestCommissionCase):
         cls.interval_rate = 5
 
     @data(
-        (0, 0, 1),
-        (0, 50, 1),  # 50% of 100k == 50k < 60k
-        (30, 70, 0.75),  # (60k - 30k) / (70k - 30k)
-        (50, 100, 0.2),  # (60k - 50k) / (100k - 50k)
+        (0, 0, 100),
+        (0, 50, 100),  # 50% of 100k == 50k < 60k
+        (30, 70, 75),  # (60k - 30k) / (70k - 30k)
+        (50, 100, 20),  # (60k - 50k) / (100k - 50k)
         (100, 100, 0),
     )
     @unpack
@@ -52,6 +52,13 @@ class TestCommissionInterval(TestCommissionCase):
     def test_interval_date_invalid(self):
         with pytest.raises(ValidationError):
             self._create_target_rate(self.target, 50, 40)
+
+    def test_max_amount(self):
+        rate = self._create_target_rate(self.target, 0, 50)
+        self.category.rate_type = "interval"
+        self.target.compute()
+
+        assert rate.max_amount == 50000
 
 
 class TestRatesPropagation(TestCommissionCase):

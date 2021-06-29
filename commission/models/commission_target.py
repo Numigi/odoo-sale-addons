@@ -191,13 +191,17 @@ class CommissionTarget(models.Model):
         )
 
     def set_confirmed_state(self):
-        self.state = "confirmed"
+        for target in self:
+            target.state = "confirmed"
 
     def set_done_state(self):
-        self.state = "done"
+        for target in self:
+            target.state = "done"
 
     def set_cancelled_state(self):
-        self.state = "cancelled"
+        for target in self:
+            target.state = "cancelled"
 
     def set_draft_state(self):
-        self.state = "draft"
+        for target in self:
+            target.state = "draft"
