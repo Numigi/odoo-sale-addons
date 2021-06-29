@@ -14,31 +14,31 @@ class CommissionTarget(models.Model):
         [
             ("draft", "Draft"),
             ("confirmed", "Confirmed"),
-            ("in_progress", "In Progress"),
             ("done", "Done"),
             ("cancelled", "Cancelled"),
         ],
-        default="draft"
+        default="draft",
+        readonly=True,
     )
-    employee_id = fields.Many2one("hr.employee", string="Agent")
+    employee_id = fields.Many2one("hr.employee", string="Agent", readonly=True, states={'draft': [('readonly', False)]})
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
-    category_id = fields.Many2one("commission.category")
-    rate_type = fields.Selection(related="category_id.rate_type", store=True)
-    rate_ids = fields.One2many("commission.target.rate", "target_id")
-    date_range_id = fields.Many2one("date.range")
+    category_id = fields.Many2one("commission.category", readonly=True, states={'draft': [('readonly', False)]})
+    rate_type = fields.Selection(related="category_id.rate_type", store=True, readonly=True, states={'draft': [('readonly', False)]})
+    rate_ids = fields.One2many("commission.target.rate", "target_id", readonly=True, states={'draft': [('readonly', False)]})
+    date_range_id = fields.Many2one("date.range", readonly=True, states={'draft': [('readonly', False)]})
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
     invoice_ids = fields.Many2many(
         "account.invoice", "commission_target_invoice_rel", "target_id", "invoice_id"
     )
     child_target_ids = fields.Many2many(
-        "commission.target", "commission_target_child_rel", "parent_id", "child_id"
+        "commission.target", "commission_target_child_rel", "parent_id", "child_id", readonly=True, states={'draft': [('readonly', False)]}
     )
-    target_amount = fields.Monetary(required=True)
-    fixed_rate = fields.Float()
+    target_amount = fields.Monetary(required=True, readonly=True, states={'draft': [('readonly', False)]})
+    fixed_rate = fields.Float(readonly=True, states={'draft': [('readonly', False)]})
     base_amount = fields.Monetary(readonly=True)
     commissions_total = fields.Monetary(readonly=True)
 
@@ -154,9 +154,11 @@ class CommissionTarget(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', 'New Target') == 'New Target':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'commission.target.reference') or 'New'
+        if vals.get("name", "New Target") == "New Target":
+            vals["name"] = (
+                self.env["ir.sequence"].next_by_code("commission.target.reference")
+                or "New"
+            )
         result = super(CommissionTarget, self).create(vals)
         return result
 
@@ -186,7 +188,7 @@ class CommissionTarget(models.Model):
             {
                 "slice_from": category_rate.slice_from,
                 "slice_to": category_rate.slice_to,
-                "commission_percentage": category_rate.commission_percentage
+                "commission_percentage": category_rate.commission_percentage,
             }
         )
 

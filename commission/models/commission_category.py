@@ -15,7 +15,7 @@ class CommissionCategory(models.Model):
             ("fixed", "Fixed"),
             ("interval", "Interval"),
         ],
-        default="fixed"
+        default="fixed",
     )
     basis = fields.Selection(
         [
@@ -30,11 +30,17 @@ class CommissionCategory(models.Model):
     child_category_ids = fields.Many2many(
         "commission.category", "commission_category_child_rel", "parent_id", "child_id"
     )
-    included_tag_ids =  fields.Many2many(
-        "account.analytic.tag", "commission_category_included_tags_rel", "category_id", "tag_id"
+    included_tag_ids = fields.Many2many(
+        "account.analytic.tag",
+        "commission_category_included_tags_rel",
+        "category_id",
+        "tag_id",
     )
     excluded_tag_ids = fields.Many2many(
-        "account.analytic.tag", "commission_category_excluded_tags_rel", "category_id", "tag_id"
+        "account.analytic.tag",
+        "commission_category_excluded_tags_rel",
+        "category_id",
+        "tag_id",
     )
 
     def _sorted_by_dependencies(self):

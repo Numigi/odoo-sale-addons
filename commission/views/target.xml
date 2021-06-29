@@ -19,6 +19,7 @@
         <field name="model">commission.target</field>
         <field name="arch" type="xml">
             <tree string="Targets">
+                <field name="currency_id" invisible="1"/>
                 <field name="name"/>
                 <field name="employee_id"/>
                 <field name="date_start"/>
@@ -39,11 +40,12 @@
                     <button name="compute" string="Compute" type="object" class="oe_highlight" attrs="{'invisible':['|','|',('state', '=', 'draft'),('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
                     <button name="set_confirmed_state" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible':['|',('state', '!=', 'draft'),('state', '=', 'cancelled')]}"/>
                     <button name="set_done_state" string="Mark As Done" type="object" class="oe_highlight" confirm="Are you sure?" attrs="{'invisible':['|','|',('state', '=', 'draft'),('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
-                    <button name="set_cancelled_state" string="Cancel" type="object" class="oe_highlight" attrs="{'invisible':['|',('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
-                    <button name="set_draft_state" string="Mark As Draft" type="object" class="oe_highlight" attrs="{'invisible':[('state', '!=', 'cancelled')]}"/>
-                    <field name="state" widget="statusbar" statebar_visible="draft,confirmed,done"/>
+                    <button name="set_cancelled_state" string="Cancel" type="object" attrs="{'invisible':['|',('state', '=', 'done'),('state', '=', 'cancelled')]}"/>
+                    <button name="set_draft_state" string="Mark As Draft" type="object" attrs="{'invisible':[('state', '!=', 'cancelled')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
                 </header>
                 <sheet>
+                    <field name="currency_id" invisible="1"/>
                     <group>
                         <field name="name"/>
                     </group>
@@ -66,6 +68,7 @@
                         <label for="rate_ids"/>
                         <field name="rate_ids" nolabel="1" colspan="2">
                             <tree editable="bottom">
+                                <field name="currency_id" invisible="1"/>
                                 <field name="slice_from"/>
                                 <field name="slice_to"/>
                                 <field name="commission_percentage"/>

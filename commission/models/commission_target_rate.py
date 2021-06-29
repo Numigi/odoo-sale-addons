@@ -14,13 +14,11 @@ class CommissionTargetRate(models.Model):
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
-    max_amount = fields.Monetary(compute='_compute_max_amount')
-    completion_rate = (
-        fields.Float()
-    )
+    max_amount = fields.Monetary(compute="_compute_max_amount", store=True)
+    completion_rate = fields.Float()
     subtotal = fields.Monetary()
     company_id = fields.Many2one(
-        "res.company", default=lambda self: self.env.user.company_id, required=True
+        "res.company", related="target_id.company_id"
     )
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
 
@@ -59,6 +57,7 @@ class CommissionTargetRate(models.Model):
         absolute_slice_to = self.slice_to / 100 * target
         return absolute_slice_from, absolute_slice_to
 
+    @api.depends("slice_from", "slice_to", "target_id.target_amount")
     def _compute_max_amount(self):
         for rate in self:
             absolute_bottom, absolute_top = rate._get_absolute_slice_amounts()
