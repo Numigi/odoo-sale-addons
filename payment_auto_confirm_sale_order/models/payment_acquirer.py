@@ -8,4 +8,10 @@ class PaymentAcquirer(models.Model):
 
     _inherit = "payment.acquirer"
 
-    auto_confirm_sale_order = fields.Boolean("Automatic Order Confirmation")
+    auto_confirm_sale_order = fields.Selection(
+        [
+            ("send_quotation", "Send Quotation"),
+            ("confirm_order", "Confirm Order"),
+        ],
+        string="Automatic Order Confirmation",
+    )

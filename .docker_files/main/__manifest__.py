@@ -30,7 +30,7 @@
         "sale_minimum_margin",
         "sale_order_available_qty_popover",
         "sale_order_line_readonly_conditions",
-        "sale_order_line_margin_amount", # TA#32113
+        "sale_order_line_margin_amount",
         "sale_order_margin_percent",
         "sale_order_url_tracking",
         "sale_order_weight",

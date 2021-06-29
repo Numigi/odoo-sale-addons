@@ -14,9 +14,10 @@ class CommissionTargetRate(models.Model):
     slice_from = fields.Float(required=True)
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
+    max_amount = fields.Monetary(compute='_compute_max_amount')
     completion_rate = (
         fields.Float()
-    )  # <field name="progress" widget="progressbar"/> pour que ce soit une progress bar
+    )
     subtotal = fields.Monetary()
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
@@ -37,16 +38,17 @@ class CommissionTargetRate(models.Model):
         elif total <= slice_to:
             full_slice = slice_to - slice_from
             completion = total - slice_from
-            return completion / full_slice
+            return completion / full_slice * 100
 
         else:
-            return 1
+            return 100
 
     def _compute_subtotal(self):
         slice_from, slice_to = self._get_absolute_slice_amounts()
         return (
             (slice_to - slice_from)
             * self.completion_rate
+            / 100
             * self.commission_percentage
             / 100
         )
@@ -56,6 +58,11 @@ class CommissionTargetRate(models.Model):
         absolute_slice_from = self.slice_from / 100 * target
         absolute_slice_to = self.slice_to / 100 * target
         return absolute_slice_from, absolute_slice_to
+
+    def _compute_max_amount(self):
+        for rate in self:
+            absolute_bottom, absolute_top = rate._get_absolute_slice_amounts()
+            rate.max_amount = absolute_top - absolute_bottom
 
     @api.constrains("slice_from", "slice_to")
     def _validate_slices(self):
