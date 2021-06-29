@@ -42,20 +42,14 @@
                             type="object" 
                             class="oe_highlight" 
                             attrs="{
-                                'invisible':['|',
-                                            '|',
-                                            ('state', '=', 'draft'),
-                                            ('state', '=', 'done'),
-                                            ('state', '=', 'cancelled')]
+                                'invisible':[('state', 'in', ['draft','done','cancelled'])]
                             }"/>
                     <button name="set_confirmed_state" 
                             string="Confirm" 
                             type="object" 
                             class="oe_highlight" 
                             attrs="{
-                                'invisible':['|',
-                                            ('state', '!=', 'draft'),
-                                            ('state', '=', 'cancelled')]
+                                'invisible':[('state', '!=', 'draft')]
                             }"/>
                     <button name="set_done_state" 
                             string="Mark As Done" 
@@ -63,19 +57,13 @@
                             class="oe_highlight" 
                             confirm="Are you sure?" 
                             attrs="{
-                                'invisible':['|',
-                                            '|',
-                                            ('state', '=', 'draft'),
-                                            ('state', '=', 'done'),
-                                            ('state', '=', 'cancelled')]
+                                'invisible':[('state', 'in', ['draft', 'done', 'cancelled'])]
                             }"/>
                     <button name="set_cancelled_state" 
                             string="Cancel" 
                             type="object" 
                             attrs="{
-                                'invisible':['|',
-                                            ('state', '=', 'done'),
-                                            ('state', '=', 'cancelled')]
+                                'invisible':[('state', 'in', ['done', 'cancelled'])]
                             }"/>
                     <button name="set_draft_state" 
                             string="Mark As Draft" 
