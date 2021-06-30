@@ -3,6 +3,7 @@
 
 from odoo import fields, models, api, _
 from odoo.exceptions import AccessError
+from odoo.osv.expression import AND
 from functools import reduce
 
 
@@ -70,7 +71,7 @@ class CommissionTarget(models.Model):
     commissions_total = fields.Monetary(readonly=True)
 
     def compute(self):
-        self.check_extended_security_write()
+        self.check_extended_security_read()
         self = self.sudo()
 
         for target in self._sorted_by_category_dependency():
@@ -295,10 +296,42 @@ class CommissionTarget(models.Model):
                 )
 
     def _get_user_managed_departments(self):
-        return self.env["hr.department"].sudo().search([
-            ("manager_id", "in", self.env.user.employee_ids.ids),
-        ])
+        return (
+            self.env["hr.department"]
+            .sudo()
+            .search(
+                [
+                    ("manager_id", "in", self.env.user.employee_ids.ids),
+                ]
+            )
+        )
 
     def get_extended_security_domain(self):
         result = super().get_extended_security_domain()
-        return result
+
+        if self._user_is_manager():
+            extra_domain = self._get_manager_domain()
+
+        elif self._user_is_team_manager():
+            extra_domain = self._get_team_manager_domain()
+
+        else:
+            extra_domain = self._get_user_domain()
+
+        return AND([result, extra_domain])
+
+    def _get_manager_domain(self):
+        return []
+
+    def _get_team_manager_domain(self):
+        departments = self._get_user_managed_departments()
+        return [
+            "|",
+            ("employee_id.department_id", "in", departments.ids),
+            ("employee_id.user_id", "=", self.env.user.id),
+        ]
+
+    def _get_user_domain(self):
+        return [
+            ("employee_id.user_id", "=", self.env.user.id),
+        ]

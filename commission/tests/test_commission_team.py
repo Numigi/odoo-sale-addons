@@ -175,8 +175,20 @@ class TestCommissionTeam(TestCommissionCase):
         with pytest.raises(AccessError):
             self._compute_employee_target()
 
+    def test_target_access_domain(self):
+        targets = self._search_manager_targets()
+        assert targets == self.employee_target | self.manager_target
+
     def _compute_manager_target(self):
         self.manager_target.sudo(self.manager_user).compute()
 
     def _compute_employee_target(self):
         self.employee_target.sudo(self.manager_user).compute()
+
+    def _search_manager_targets(self):
+        domain = (
+            self.env["commission.target"]
+            .sudo(self.manager_user)
+            .get_extended_security_domain()
+        )
+        return self.env["commission.target"].search(domain)
