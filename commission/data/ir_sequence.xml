@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
     <record id="sequence_target_reference" model="ir.sequence">
         <field name="name">Target Reference</field>
         <field name="code">commission.target.reference</field>
@@ -9,4 +11,5 @@
         <field name="number_increment">1</field>
         <field name="company_id"></field>
     </record>
+
 </odoo>
