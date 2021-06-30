@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="commission_payroll_period_selection_form" model="ir.ui.view">
-        <field name="name">commission.payroll.period.selection.form</field>
-        <field name="model">commission.payroll.period.selection</field>
+    <record id="commission_payroll_preparation_wizard_form" model="ir.ui.view">
+        <field name="name">commission.payroll.preparation.wizard.form</field>
+        <field name="model">commission.payroll.preparation.wizard</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Generate Payroll Entries?">
@@ -24,9 +24,9 @@
         </field>
     </record>
 
-    <record id="action_commission_payroll_period_selection" model="ir.actions.act_window">
-        <field name="name">Commission Payroll Period Selection</field>
-        <field name="res_model">commission.payroll.period.selection</field>
+    <record id="action_commission_payroll_preparation_wizard" model="ir.actions.act_window">
+        <field name="name">Commission Payroll Preparation Wizard</field>
+        <field name="res_model">commission.payroll.preparation.wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="target">new</field>
         <field name="view_mode">form</field>

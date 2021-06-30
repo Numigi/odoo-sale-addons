@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
     <record id="commission_target_form" model="ir.ui.view">
         <field name="name">commission.target.form</field>
         <field name="model">commission.target</field>
@@ -10,7 +11,7 @@
                 <button type="action"
                         string="Generate"
                         class="oe_highlight" 
-                        name="%(action_commission_payroll_period_selection)d"
+                        name="%(action_commission_payroll_preparation_wizard)d"
                         attrs="{
                             'invisible':[('state', 'in', ['draft','done','cancelled'])]
                         }"/>
@@ -21,4 +22,14 @@
             </field>
         </field>
     </record>
+
+    <record id="action_generate_payroll" model="ir.actions.act_window">
+        <field name="name">Generate</field>
+        <field name="res_model">commission.payroll.preparation.wizard</field>
+        <field name="groups_id" eval="[(4, ref('commission.group_user'))]"/>
+        <field name="binding_model_id" ref="model_commission_target"/>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
 </odoo>

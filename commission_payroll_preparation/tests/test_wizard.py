@@ -1,6 +1,8 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import pytest
+from odoo.exceptions import ValidationError
 from .common import TestPayrollCase
 from datetime import date
 
@@ -18,11 +20,12 @@ class TestWizard(TestPayrollCase):
                 "category_id": cls.category.id,
                 "target_amount": cls.target_amount,
                 "date_range_id": cls.date_range.id,
+                "rate_type": "fixed",
                 "fixed_rate": cls.fixed_rate,
             }
         )
 
-        cls.wizard = cls.env["commission.payroll.period.selection"].create(
+        cls.wizard = cls.env["commission.payroll.preparation.wizard"].create(
             {
                 "target_ids": [(6, 0, [cls.target.id])],
                 "period": cls.period.id,
@@ -77,3 +80,9 @@ class TestWizard(TestPayrollCase):
         self.wizard.confirm()
         created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
         assert created_payroll.target_id == self.target
+
+
+    def test_create_payroll_not_confirmed_state(self):
+        self.target.state = "draft"
+        with pytest.raises(ValidationError):
+            self.wizard.confirm()

@@ -4,13 +4,13 @@
 from odoo import api, fields, models
 
 
-class CommissionPayrollPeriodSelection(models.TransientModel):
-    _name = "commission.payroll.period.selection"
-    _description = "Commission Payroll Period Selection"
+class CommissionPayrollPreparationWizard(models.TransientModel):
+    _name = "commission.payroll.preparation.wizard"
+    _description = "Commission Payroll Preparation Wizard"
 
     target_ids = fields.Many2many(
         "commission.target",
-        "commission_payroll_period_selection_target_rel",
+        "commission_payroll_preparation_wizard_target_rel",
         "wizard_id",
         "target_id",
     )
