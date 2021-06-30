@@ -59,7 +59,7 @@
                                 <tree editable="bottom">
                                     <field name="slice_from"/>
                                     <field name="slice_to"/>
-                                    <field name="commission_percentage"/>
+                                    <field name="commission_percentage" widget="percentage"/>
                                 </tree>
                             </field>
                         </group>
