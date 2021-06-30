@@ -57,8 +57,8 @@
                                 }">
                             <field name="rate_ids">
                                 <tree editable="bottom">
-                                    <field name="slice_from"/>
-                                    <field name="slice_to"/>
+                                    <field name="slice_from" widget="percentage"/>
+                                    <field name="slice_to" widget="percentage"/>
                                     <field name="commission_percentage" widget="percentage"/>
                                 </tree>
                             </field>
