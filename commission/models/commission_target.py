@@ -89,8 +89,17 @@ class CommissionTarget(models.Model):
         states={"draft": [("readonly", False)]},
         track_visibility="onchange",
     )
-    base_amount = fields.Monetary(readonly=True)
-    commissions_total = fields.Monetary(readonly=True)
+    base_amount = fields.Monetary(readonly=True, copy=False)
+    commissions_total = fields.Monetary(readonly=True, copy=False)
+
+    @api.multi
+    def copy(self, default=None):
+        target = super().copy(default)
+
+        for rate in self.rate_ids:
+            rate.copy({"target_id": target.id})
+
+        return target
 
     def compute(self):
         self.check_extended_security_read()

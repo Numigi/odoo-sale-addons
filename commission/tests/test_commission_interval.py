@@ -60,6 +60,17 @@ class TestCommissionInterval(TestCommissionCase):
 
         assert rate.max_amount == 50000
 
+    def test_copy_target(self):
+        rate = self._create_target_rate(self.target, 0, 50, self.interval_rate)
+        rate.completion_rate = 0.5
+        rate.subtotal = 100
+
+        new_target = self.target.copy()
+        new_rate = new_target.rate_ids
+        assert len(new_rate) == 1
+        assert not new_rate.completion_rate
+        assert not new_rate.subtotal
+
 
 class TestRatesPropagation(TestCommissionCase):
     @classmethod

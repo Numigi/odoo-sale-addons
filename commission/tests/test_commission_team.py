@@ -130,7 +130,7 @@ class TestCommissionTeam(TestCommissionCase):
         assert rset[1] == self.manager_target
 
     def test_no_child_categories(self):
-        self.manager_category.child_category_ids.unlink()
+        self.manager_category.child_category_ids = None
         self.employee_target.commissions_total = 400000 * 0.05
         self._compute_manager_target()
         assert self.manager_target.commissions_total == 0

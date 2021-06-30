@@ -15,8 +15,8 @@ class CommissionTargetRate(models.Model):
     slice_to = fields.Float(required=True)
     commission_percentage = fields.Float(required=True)
     max_amount = fields.Monetary(compute="_compute_max_amount", store=True)
-    completion_rate = fields.Float()
-    subtotal = fields.Monetary()
+    completion_rate = fields.Float(copy=False, readonly=True)
+    subtotal = fields.Monetary(copy=False, readonly=True)
     company_id = fields.Many2one("res.company", related="target_id.company_id")
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
 
