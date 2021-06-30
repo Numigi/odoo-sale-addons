@@ -9,13 +9,14 @@ class CommissionCategory(models.Model):
     _name = "commission.category"
     _description = "Commission Category"
 
-    name = fields.Char()
+    name = fields.Char(translate=True, required=True)
     rate_type = fields.Selection(
         [
             ("fixed", "Fixed"),
             ("interval", "Interval"),
         ],
         default="fixed",
+        required=True,
     )
     basis = fields.Selection(
         [
@@ -24,6 +25,7 @@ class CommissionCategory(models.Model):
         ],
         "Based On",
         default="my_sales",
+        required=True,
     )
     rate_ids = fields.One2many("commission.category.rate", "category_id")
     fixed_rate = fields.Float()

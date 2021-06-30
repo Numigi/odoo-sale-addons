@@ -94,7 +94,8 @@
                     </group>
                     <group name="fixed_rate" 
                             attrs="{
-                                'invisible':[('rate_type', '!=', 'fixed')]
+                                'invisible':[('rate_type', '!=', 'fixed')],
+                                'required':[('rate_type', '=', 'fixed')],
                             }">
                         <field name="fixed_rate" widget="percentage"/>
                     </group>

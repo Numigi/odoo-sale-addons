@@ -21,11 +21,14 @@ class CommissionTarget(models.Model):
         ],
         default="draft",
         readonly=True,
+        required=True,
+        copy=False,
     )
     employee_id = fields.Many2one(
         "hr.employee",
         string="Agent",
         readonly=True,
+        required=True,
         states={"draft": [("readonly", False)]},
     )
     company_id = fields.Many2one(
@@ -33,12 +36,16 @@ class CommissionTarget(models.Model):
     )
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
     category_id = fields.Many2one(
-        "commission.category", readonly=True, states={"draft": [("readonly", False)]}
+        "commission.category",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        required=True,
     )
     rate_type = fields.Selection(
         related="category_id.rate_type",
         store=True,
         readonly=True,
+        required=True,
         states={"draft": [("readonly", False)]},
     )
     rate_ids = fields.One2many(
@@ -48,7 +55,10 @@ class CommissionTarget(models.Model):
         states={"draft": [("readonly", False)]},
     )
     date_range_id = fields.Many2one(
-        "date.range", readonly=True, states={"draft": [("readonly", False)]}
+        "date.range",
+        readonly=True,
+        required=True,
+        states={"draft": [("readonly", False)]},
     )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
