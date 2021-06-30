@@ -13,13 +13,12 @@ class CommissionTarget(models.Model):
     left_to_pay = fields.Monetary(compute="_compute_left_to_pay", store=True)
 
     @api.depends("payroll_line_ids")
-    def _compute_payroll_line_amount(self):
-        self.payroll_line_amount == len(self.payroll_line_ids)
-
-    @api.depends("payroll_line_ids")
     def _compute_already_paid(self):
-        self.already_paid = sum(line.amount for line in self.payroll_line_ids)
+        for target in self:
+            target.already_paid = sum(line.amount for line in target.payroll_line_ids)
+            target.payroll_line_amount = len(target.payroll_line_ids)
 
     @api.depends("already_paid")
     def _compute_left_to_pay(self):
-        self.left_to_pay = self.commissions_total - self.already_paid
+        for target in self:
+            target.left_to_pay = target.total_amount - target.already_paid

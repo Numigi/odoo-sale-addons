@@ -27,7 +27,6 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
         for target in self.target_ids:
             if target.state != "confirmed":
                 raise ValidationError(_("You generate a payroll entry for a target in a state other than 'confirmed'."))
-            amount = target.commissions_total
             self._create_payroll_entry(target)
 
     def _create_payroll_entry(self, target):
@@ -37,6 +36,6 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
                 "period_id": self.period.id,
                 "employee_id": target.employee_id.id,
                 "target_id": target.id,
-                "amount": target.commissions_total,
+                "amount": target.total_amount,
             }
         )

@@ -40,7 +40,7 @@
                             'invisible':[('state', 'in', ['draft','done','cancelled'])]
                         }"/>
             </button>
-            <field name="commissions_total" position="after">
+            <field name="total_amount" position="after">
                 <field name="already_paid"/>
                 <field name="left_to_pay"/>
             </field>

@@ -74,7 +74,7 @@ class TestWizard(TestPayrollCase):
 
         assert (
             self.target.left_to_pay
-            == self.target.commissions_total - self.target.already_paid
+            == self.target.total_amount - self.target.already_paid
         )
 
     def test_create_payroll_assigns_target_id(self):
@@ -89,10 +89,7 @@ class TestWizard(TestPayrollCase):
             self.wizard.confirm()
 
     def test_payroll_line_amount(self):
-        invoiced_amount = 500
-        self._create_invoice(amount=invoiced_amount)
-        self.target.compute()
-
         self.wizard.confirm()
+        self.target._compute_already_paid()
 
         assert self.target.payroll_line_amount == 1
