@@ -58,6 +58,15 @@ class TestCommissionTeam(TestCommissionCase):
         child_targets = self.manager_target._get_child_targets()
         assert self.employee_target == child_targets
 
+    def test_child_targets_wrong_company(self):
+        company = self._create_company(name="Wrong")
+        target = self._create_target(employee=self.employee, target_amount=100000)
+
+        target.company_id = company
+
+        child_targets = self.manager_target._get_child_targets()
+        assert target not in child_targets
+
     def test_child_targets_date_out_of_range(self):
         wrong_date_range = self._create_date_range(
             "Q3", date(2020, 8, 17), date(2020, 11, 17)

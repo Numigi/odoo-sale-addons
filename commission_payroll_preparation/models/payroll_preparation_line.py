@@ -4,7 +4,7 @@
 from odoo import fields, models, api
 
 
-class CommissionTarget(models.Model):
+class PayrollPreparationLine(models.Model):
     _inherit = "payroll.preparation.line"
 
     target_id = fields.Many2one("commission.target", index=True)

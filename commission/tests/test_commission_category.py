@@ -58,5 +58,5 @@ class TestCommissionCategory(TestCommissionCase):
         target = self._create_target(target_amount=100000)
         target.category_id = category
         target.onchange_category_id()
-        
+
         assert target.category_id == category
