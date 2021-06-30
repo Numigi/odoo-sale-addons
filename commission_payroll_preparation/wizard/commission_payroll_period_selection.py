@@ -19,7 +19,7 @@ class CommissionPayrollPeriodSelection(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        defaults["target_ids"] = [(6, 0, self._context.get("active_ids"))]
+        defaults["target_ids"] = [(6, 0, self._context.get("active_ids") or [])]
         return defaults
 
     def confirm(self):

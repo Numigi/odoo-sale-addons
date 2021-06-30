@@ -24,17 +24,16 @@ class TestWizard(TestPayrollCase):
 
         cls.wizard = cls.env["commission.payroll.period.selection"].create(
             {
-                "target_id": cls.target.id,
+                "target_ids": [(6, 0, [cls.target.id])],
                 "period": cls.period.id,
             }
         )
 
     def test_create_payroll(self):
         self.wizard.confirm()
-        created_payroll = self.env["payroll.preparation.line"].search([])
+        created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
         assert (
-            created_payroll.company_id == self.company
-            and created_payroll.period_id == self.period
+            created_payroll.period_id == self.period
             and created_payroll.employee_id == self.employee
             and created_payroll.amount == 0
         )
@@ -46,10 +45,9 @@ class TestWizard(TestPayrollCase):
 
         self.wizard.confirm()
 
-        created_payroll = self.env["payroll.preparation.line"].search([])
+        created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
         assert (
-            created_payroll.company_id == self.company
-            and created_payroll.period_id == self.period
+            created_payroll.period_id == self.period
             and created_payroll.employee_id == self.employee
             and created_payroll.amount == invoiced_amount * self.fixed_rate
         )
@@ -77,5 +75,5 @@ class TestWizard(TestPayrollCase):
 
     def test_create_payroll_assigns_target_id(self):
         self.wizard.confirm()
-        created_payroll = self.env["payroll.preparation.line"].search([])
+        created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
         assert created_payroll.target_id == self.target
