@@ -18,9 +18,9 @@
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",
-        "views/commission.xml",
-        "views/target.xml",
-        "views/category.xml",
+        "views/menus.xml",
+        "views/commission_target.xml",
+        "views/commission_category.xml",
         "data/ir_sequence.xml"
     ],
     "installable": True,
