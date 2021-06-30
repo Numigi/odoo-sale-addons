@@ -1,0 +1,148 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* commission_payroll_preparation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-30 22:21+0000\n"
+"PO-Revision-Date: 2021-06-30 18:43-0400\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3\n"
+"Last-Translator: \n"
+"Language: fr\n"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_target__already_paid
+msgid "Already Paid"
+msgstr "Déjà payé"
+
+#. module: commission_payroll_preparation
+#: model_terms:ir.ui.view,arch_db:commission_payroll_preparation.commission_payroll_preparation_wizard_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: commission_payroll_preparation
+#: model:ir.actions.act_window,name:commission_payroll_preparation.action_commission_payroll_preparation_wizard
+#: model:ir.model,name:commission_payroll_preparation.model_commission_payroll_preparation_wizard
+msgid "Commission Payroll Preparation Wizard"
+msgstr "Fenêtre de la préparation des entrées de payes des commissions"
+
+#. module: commission_payroll_preparation
+#: model:ir.model,name:commission_payroll_preparation.model_commission_target
+msgid "Commission Target"
+msgstr "Cible de commission"
+
+#. module: commission_payroll_preparation
+#: model_terms:ir.ui.view,arch_db:commission_payroll_preparation.commission_payroll_preparation_wizard_form
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: commission_payroll_preparation
+#: model:ir.actions.act_window,name:commission_payroll_preparation.action_generate_payroll
+#: model_terms:ir.ui.view,arch_db:commission_payroll_preparation.commission_target_form
+msgid "Generate"
+msgstr "Générer"
+
+#. module: commission_payroll_preparation
+#: model_terms:ir.ui.view,arch_db:commission_payroll_preparation.commission_payroll_preparation_wizard_form
+msgid "Generate Payroll Entries?"
+msgstr "Générer des entrées de paye?"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard____last_update
+msgid "Last Modified on"
+msgstr "Modifié la dernière fois le"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour la dernière fois par"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__write_date
+msgid "Last Updated on"
+msgstr "Mis à jour pour la dernière fois le"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_target__left_to_pay
+msgid "Left To Pay"
+msgstr "Montant restant à payer"
+
+#. module: commission_payroll_preparation
+#: model:ir.actions.server,name:commission_payroll_preparation.action_mark_as_done_target
+msgid "Mark As Done"
+msgstr "Terminer"
+
+#. module: commission_payroll_preparation
+#: model:ir.actions.act_window,name:commission_payroll_preparation.open_payroll_entries
+#: model_terms:ir.ui.view,arch_db:commission_payroll_preparation.commission_target_form
+msgid "Payroll Entries"
+msgstr "Entrées de paie"
+
+#. module: commission_payroll_preparation
+#: model:ir.model,name:commission_payroll_preparation.model_payroll_preparation_line
+msgid "Payroll Entry"
+msgstr "Entrée de paie"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_target__payroll_line_ids
+msgid "Payroll Line"
+msgstr "Ligne d'entrée de paie"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_target__payroll_line_amount
+msgid "Payroll Line Amount"
+msgstr "Montant de ligne d'entrée de paie"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__period
+msgid "Period"
+msgstr "Période"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_payroll_preparation_line__prorata
+msgid "Prorata"
+msgstr "Prorata"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_payroll_preparation_line__prorata_amount
+msgid "Prorata Amount"
+msgstr "Montant de prorata"
+
+#. module: commission_payroll_preparation
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__target_ids
+#: model:ir.model.fields,field_description:commission_payroll_preparation.field_payroll_preparation_line__target_id
+msgid "Target"
+msgstr "Cible"
+
+#. module: commission_payroll_preparation
+#: code:addons/commission_payroll_preparation/wizard/commission_payroll_preparation_wizard.py:29
+#, python-format
+msgid "You generate a payroll entry for a target in a state other than 'confirmed'."
+msgstr "Vous ne pouvez pas générer une entrée de paie pour une cible dans un état autre que 'confirmé'."
