@@ -335,3 +335,9 @@ class CommissionTarget(models.Model):
         return [
             ("employee_id.user_id", "=", self.env.user.id),
         ]
+
+    @api.model
+    def get_read_access_actions(self):
+        res = super().get_read_access_actions()
+        res.append("compute")
+        return res

@@ -19,6 +19,7 @@
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",
+        "security/extended_security_rule.xml",
         "views/menus.xml",
         "views/commission_target.xml",
         "views/commission_category.xml",
