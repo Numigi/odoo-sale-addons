@@ -53,19 +53,19 @@ class TestCommissionPersonal(TestCommissionCase):
         assert not invoices
 
     def test_base_amount(self):
-        self.target.compute()
+        self._compute_target()
         assert self.target.base_amount == 5000
 
     def test_multiple_base_amount(self):
         invoice = self._create_invoice(amount=5000)
-        self.target.compute()
+        self._compute_target()
         assert self.target.base_amount == 10000
 
     def test_different_currency_base_amount(self):
         cad_invoice = self._create_invoice(
             currency=self.env.ref("base.CAD"), amount=5000
         )
-        self.target.compute()
+        self._compute_target()
         assert self.target.base_amount == 5000 + 5000 / self.exchange_rate_cad.rate
 
     def test_included_tags(self):
@@ -75,7 +75,7 @@ class TestCommissionPersonal(TestCommissionCase):
 
         excluded_invoice = self._create_invoice(amount=5000)
 
-        self.target.compute()
+        self._compute_target()
         assert self.target.base_amount == 5000
 
     def test_excluded_tags(self):
@@ -83,7 +83,7 @@ class TestCommissionPersonal(TestCommissionCase):
 
         self.invoice.invoice_line_ids.analytic_tag_ids = self.excluded_tag
 
-        self.target.compute()
+        self._compute_target()
         assert not self.target.base_amount
 
     def test_included_excluded_tags(self):
@@ -97,7 +97,7 @@ class TestCommissionPersonal(TestCommissionCase):
             self.included_tag | self.excluded_tag
         )
 
-        self.target.compute()
+        self._compute_target()
         assert self.target.base_amount == 5000
 
     def test_new_personal_category_spreads_rates(self):
@@ -145,3 +145,6 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_draft_method_draft_state(self):
         self.target.set_draft_state()
         assert self.target.state == "draft"
+
+    def _compute_target(self):
+        self.target.sudo(self.user).compute()

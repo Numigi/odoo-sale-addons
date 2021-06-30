@@ -11,8 +11,9 @@ class TestCommissionCase(SavepointCase):
         super().setUpClass()
 
         cls.user = cls._create_user()
+        cls.user.groups_id = cls.env.ref("commission.group_user")
 
-        cls.employee = cls._create_employee()
+        cls.employee = cls._create_employee(user=cls.user)
 
         cls.company = cls._create_company()
 
