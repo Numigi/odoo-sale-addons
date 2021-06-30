@@ -8,7 +8,7 @@
             <form string="Generate Payroll Entries?">
                 <sheet>
                     <group>
-                        <field name="target_id" invisible="1"/>
+                        <field name="target_ids" invisible="1"/>
                         <field name="period"/>
                     </group>
                 </sheet>
