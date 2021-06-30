@@ -11,6 +11,6 @@
     "category": "Sales",
     "summary": "",
     "depends": ["base", "commission", "payroll_preparation", "date_range"],
-    "data": [],
+    "data": ["views/commission_payroll_period_selection.xml", "views/commission_target.xml"],
     "installable": True,
 }
