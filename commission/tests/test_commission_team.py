@@ -63,7 +63,7 @@ class TestCommissionTeam(TestCommissionCase):
         assert self.employee_target == child_targets
 
     def test_compute_target(self):
-        self.employee_target.commissions_total = 2000
+        self.employee_target.total_amount = 2000
         self.manager_target.compute()
         assert self.manager_target.child_target_ids == self.employee_target
         assert self.manager_target.child_commission_amount == 2000
@@ -90,10 +90,10 @@ class TestCommissionTeam(TestCommissionCase):
         assert not child_targets
 
     def test_manager_total_fixed(self):
-        self.employee_target.commissions_total = 400000 * 0.05
+        self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
         assert (
-            self.manager_target.commissions_total
+            self.manager_target.total_amount
             == 400000 * self.employee_target.fixed_rate * self.manager_target.fixed_rate
         )
 
@@ -107,7 +107,7 @@ class TestCommissionTeam(TestCommissionCase):
     def test_manager_completion_interval(self, slice_from, slice_to, completion):
         rate = self._create_target_rate(self.manager_target, slice_from, slice_to)
         self.manager_category.rate_type = "interval"
-        self.employee_target.commissions_total = 400000 * 0.05
+        self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
         assert rate.completion_rate == completion
 
@@ -127,7 +127,7 @@ class TestCommissionTeam(TestCommissionCase):
             self.interval_rate,
         )
         self.manager_category.rate_type = "interval"
-        self.employee_target.commissions_total = 400000 * 0.05
+        self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
         assert rate.subtotal == subtotal
 
@@ -140,9 +140,9 @@ class TestCommissionTeam(TestCommissionCase):
 
     def test_no_child_categories(self):
         self.manager_category.child_category_ids = None
-        self.employee_target.commissions_total = 400000 * 0.05
+        self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
-        assert self.manager_target.commissions_total == 0
+        assert self.manager_target.total_amount == 0
 
     def test_new_team_category_spreads_rates(self):
         new_category = self.env["commission.category"].create(

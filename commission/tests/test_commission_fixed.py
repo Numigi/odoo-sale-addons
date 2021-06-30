@@ -24,4 +24,4 @@ class TestCommissionFixed(TestCommissionCase):
         self.target.fixed_rate = rate
         self.category.rate_type = "fixed"
         self.target.compute()
-        assert self.target.commissions_total == total
+        assert self.target.total_amount == total

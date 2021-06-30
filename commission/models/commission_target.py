@@ -100,7 +100,7 @@ class CommissionTarget(models.Model):
         readonly=True, copy=False
     )
     base_amount = fields.Monetary(readonly=True, copy=False)
-    commissions_total = fields.Monetary(readonly=True, copy=False)
+    total_amount = fields.Monetary(readonly=True, copy=False)
 
     show_invoices = fields.Boolean(compute="_compute_show_invoices")
     show_child_targets = fields.Boolean(compute="_compute_show_child_targets")
@@ -128,7 +128,7 @@ class CommissionTarget(models.Model):
 
         for target in self._sorted_by_category_dependency():
             target._update_base_amount()
-            target._update_commissions_total()
+            target._update_total_amount()
 
     def _sorted_by_category_dependency(self):
         categories = list(self.mapped("category_id")._sorted_by_dependencies())
@@ -209,29 +209,29 @@ class CommissionTarget(models.Model):
         return children
 
     def _compute_child_commission_amount(self):
-        return sum(child.commissions_total for child in self.child_target_ids)
+        return sum(child.total_amount for child in self.child_target_ids)
 
-    def _update_commissions_total(self):
+    def _update_total_amount(self):
         if self.category_id.rate_type == "fixed":
-            self._update_commissions_total_fixed()
+            self._update_total_amount_fixed()
         elif self.category_id.rate_type == "interval":
-            self._update_commissions_total_interval()
+            self._update_total_amount_interval()
 
-    def _update_commissions_total_fixed(self):
-        self.commissions_total = self._compute_commissions_total_fixed()
+    def _update_total_amount_fixed(self):
+        self.total_amount = self._compute_total_amount_fixed()
 
-    def _compute_commissions_total_fixed(self):
+    def _compute_total_amount_fixed(self):
         return self.base_amount * self.fixed_rate
 
-    def _update_commissions_total_interval(self):
+    def _update_total_amount_interval(self):
         self._update_rates()
-        self.commissions_total = self._compute_commissions_total_interval()
+        self.total_amount = self._compute_total_amount_interval()
 
     def _update_rates(self):
         for rate in self.rate_ids:
             rate._update_rate()
 
-    def _compute_commissions_total_interval(self):
+    def _compute_total_amount_interval(self):
         return sum(rate.subtotal for rate in self.rate_ids)
 
     @api.model
