@@ -8,8 +8,13 @@ class CommissionTarget(models.Model):
     _inherit = "commission.target"
 
     payroll_line_ids = fields.One2many("payroll.preparation.line", "target_id", readonly=True)
+    payroll_line_amount = fields.Integer(compte="_compute_payroll_line_amount", store=True)
     already_paid = fields.Monetary(compute="_compute_already_paid", store=True)
     left_to_pay = fields.Monetary(compute="_compute_left_to_pay", store=True)
+
+    @api.depends("payroll_line_ids")
+    def _compute_payroll_line_amount(self):
+        self.payroll_line_amount == len(self.payroll_line_ids)
 
     @api.depends("payroll_line_ids")
     def _compute_already_paid(self):

@@ -87,3 +87,12 @@ class TestWizard(TestPayrollCase):
         self.target.state = "draft"
         with pytest.raises(ValidationError):
             self.wizard.confirm()
+
+    def test_payroll_line_amount(self):
+        invoiced_amount = 500
+        self._create_invoice(amount=invoiced_amount)
+        self.target.compute()
+
+        self.wizard.confirm()
+
+        assert self.target.payroll_line_amount == 1
