@@ -69,7 +69,7 @@
                             string="Mark As Draft" 
                             type="object" 
                             attrs="{
-                                'invisible':[('state', '!=', 'cancelled')]
+                                'invisible':[('state', 'in', ['draft', 'confirmed'])]
                             }"/>
                     <field name="state" 
                             widget="statusbar" 

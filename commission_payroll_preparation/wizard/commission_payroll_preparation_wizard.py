@@ -1,16 +1,17 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
-class CommissionPayrollPeriodSelection(models.TransientModel):
-    _name = "commission.payroll.period.selection"
-    _description = "Commission Payroll Period Selection"
+class CommissionPayrollPreparationWizard(models.TransientModel):
+    _name = "commission.payroll.preparation.wizard"
+    _description = "Commission Payroll Preparation Wizard"
 
     target_ids = fields.Many2many(
         "commission.target",
-        "commission_payroll_period_selection_target_rel",
+        "commission_payroll_preparation_wizard_target_rel",
         "wizard_id",
         "target_id",
     )
@@ -24,6 +25,8 @@ class CommissionPayrollPeriodSelection(models.TransientModel):
 
     def confirm(self):
         for target in self.target_ids:
+            if target.state != "confirmed":
+                raise ValidationError(_("You generate a payroll entry for a target in a state other than 'confirmed'."))
             amount = target.commissions_total
             self._create_payroll_entry(target)
 
