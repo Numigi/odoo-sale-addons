@@ -10,12 +10,12 @@ class TestCommissionCase(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.company = cls._create_company()
+
         cls.user = cls._create_user()
         cls.user.groups_id = cls.env.ref("commission.group_user")
 
         cls.employee = cls._create_employee(user=cls.user)
-
-        cls.company = cls._create_company()
 
         cls.customer = cls.env["res.partner"].create({"name": "testing"})
 
@@ -99,7 +99,13 @@ class TestCommissionCase(SavepointCase):
     @classmethod
     def _create_user(cls, name="Testing", email="testing@testmail.com"):
         return cls.env["res.users"].create(
-            {"name": name, "email": email, "login": name}
+            {
+                "name": name,
+                "email": email,
+                "login": name,
+                "company_ids": [(4, cls.company.id)],
+                "company_id": cls.company.id,
+            }
         )
 
     @classmethod

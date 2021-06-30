@@ -159,6 +159,11 @@ class TestCommissionPersonal(TestCommissionCase):
         targets = self._search_employee_targets()
         assert targets == self.target
 
+    def test_target_access_domain__wrong_company(self):
+        self.target.company_id = self._create_company(name="Wrong")
+        targets = self._search_employee_targets()
+        assert not targets
+
     def _compute_target(self):
         self.target.sudo(self.user).compute()
 

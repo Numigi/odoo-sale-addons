@@ -309,6 +309,8 @@ class CommissionTarget(models.Model):
     def get_extended_security_domain(self):
         result = super().get_extended_security_domain()
 
+        company_domain = self._get_company_domain()
+
         if self._user_is_manager():
             extra_domain = self._get_manager_domain()
 
@@ -318,7 +320,12 @@ class CommissionTarget(models.Model):
         else:
             extra_domain = self._get_user_domain()
 
-        return AND([result, extra_domain])
+        return AND([result, company_domain, extra_domain])
+
+    def _get_company_domain(self):
+        return [
+            ("company_id", "=", self.env.user.company_id.id),
+        ]
 
     def _get_manager_domain(self):
         return []
