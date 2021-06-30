@@ -187,7 +187,11 @@ class CommissionTarget(models.Model):
         return target
 
     def _get_next_sequence_number(self):
-        return self.env["ir.sequence"].with_context(force_company=self.company_id.id).next_by_code("commission.target.reference")
+        return (
+            self.env["ir.sequence"]
+            .with_context(force_company=self.company_id.id)
+            .next_by_code("commission.target.reference")
+        )
 
     @api.onchange("category_id")
     def onchange_category_id(self):

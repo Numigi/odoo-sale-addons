@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_target" model="ir.actions.act_window">
+        <field name="name">Targets</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">commission.target</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create your First Target Here !
+          </p>
+        </field>
+    </record>
+
+    <record id="commission_target_tree" model="ir.ui.view">
+        <field name="name">commission.target.tree</field>
+        <field name="model">commission.target</field>
+        <field name="arch" type="xml">
+            <tree string="Targets">
+                <field name="currency_id" invisible="1"/>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="commissions_total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+     </record>
+
+     <record id="commission_target_form" model="ir.ui.view">
+        <field name="name">commission.target.form</field>
+        <field name="model">commission.target</field>
+        <field name="arch" type="xml">
+            <form string="Target">
+                <header>
+                    <field name="state" invisible="1"/>
+                    <button name="compute" 
+                            string="Compute" 
+                            type="object" 
+                            class="oe_highlight" 
+                            attrs="{
+                                'invisible':[('state', 'in', ['draft','done','cancelled'])]
+                            }"/>
+                    <button name="set_confirmed_state" 
+                            string="Confirm" 
+                            type="object" 
+                            class="oe_highlight" 
+                            attrs="{
+                                'invisible':[('state', '!=', 'draft')]
+                            }"/>
+                    <button name="set_done_state" 
+                            string="Mark As Done" 
+                            type="object" 
+                            class="oe_highlight" 
+                            confirm="Are you sure?" 
+                            attrs="{
+                                'invisible':[('state', 'in', ['draft', 'done', 'cancelled'])]
+                            }"/>
+                    <button name="set_cancelled_state" 
+                            string="Cancel" 
+                            type="object" 
+                            attrs="{
+                                'invisible':[('state', 'in', ['done', 'cancelled'])]
+                            }"/>
+                    <button name="set_draft_state" 
+                            string="Mark As Draft" 
+                            type="object" 
+                            attrs="{
+                                'invisible':[('state', '!=', 'cancelled')]
+                            }"/>
+                    <field name="state" 
+                            widget="statusbar" 
+                            statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <field name="currency_id" invisible="1"/>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="date_range_id"/>
+                        <field name="category_id"/>
+                        <field name="rate_type" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="base_amount"/>
+                    </group>
+                    <group>
+                        <field name="target_amount"/>
+                    </group>
+                    <group name="fixed_rate" 
+                            attrs="{
+                                'invisible':[('rate_type', '!=', 'fixed')]
+                            }">
+                        <field name="fixed_rate" widget="percentage"/>
+                    </group>
+                    <group name="interval" 
+                            attrs="{
+                                'invisible':[('rate_type', '!=', 'interval')]
+                            }">
+                        <label for="rate_ids"/>
+                        <field name="rate_ids" nolabel="1" colspan="2">
+                            <tree editable="bottom">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="slice_from"/>
+                                <field name="slice_to"/>
+                                <field name="commission_percentage"/>
+                                <field name="max_amount"/>
+                                <field name="completion_rate" widget="progressbar"/>
+                                <field name="subtotal"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="commissions_total"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -21,7 +21,7 @@
         "views/menus.xml",
         "views/commission_target.xml",
         "views/commission_category.xml",
-        "data/ir_sequence.xml"
+        "data/ir_sequence.xml",
     ],
     "installable": True,
 }
