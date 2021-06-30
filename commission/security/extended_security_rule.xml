@@ -3,6 +3,7 @@
 
     <record id="commission_target_extended_security_rule" model="extended.security.rule">
         <field name="model_id" ref="model_commission_target"/>
+        <field name="group_ids" eval="[(4, ref('group_manager'))]"/>
         <field name="perm_write" eval="1"/>
         <field name="perm_create" eval="1"/>
         <field name="perm_unlink" eval="1"/>
