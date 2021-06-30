@@ -10,6 +10,8 @@ from functools import reduce
 class CommissionTarget(models.Model):
     _name = "commission.target"
     _description = "Commission Target"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "name desc"
 
     name = fields.Char(string="Reference", readonly=True, copy=False, default="")
     state = fields.Selection(
@@ -23,12 +25,14 @@ class CommissionTarget(models.Model):
         readonly=True,
         required=True,
         copy=False,
+        track_visibility="onchange",
     )
     employee_id = fields.Many2one(
         "hr.employee",
         string="Agent",
         readonly=True,
         required=True,
+        track_visibility="onchange",
         states={"draft": [("readonly", False)]},
     )
     company_id = fields.Many2one(
@@ -40,12 +44,12 @@ class CommissionTarget(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
         required=True,
+        track_visibility="onchange",
     )
     rate_type = fields.Selection(
         related="category_id.rate_type",
         store=True,
         readonly=True,
-        required=True,
         states={"draft": [("readonly", False)]},
     )
     rate_ids = fields.One2many(
@@ -59,6 +63,7 @@ class CommissionTarget(models.Model):
         readonly=True,
         required=True,
         states={"draft": [("readonly", False)]},
+        track_visibility="onchange",
     )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
@@ -74,9 +79,16 @@ class CommissionTarget(models.Model):
         states={"draft": [("readonly", False)]},
     )
     target_amount = fields.Monetary(
-        required=True, readonly=True, states={"draft": [("readonly", False)]}
+        required=True,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        track_visibility="onchange",
     )
-    fixed_rate = fields.Float(readonly=True, states={"draft": [("readonly", False)]})
+    fixed_rate = fields.Float(
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        track_visibility="onchange",
+    )
     base_amount = fields.Monetary(readonly=True)
     commissions_total = fields.Monetary(readonly=True)
 

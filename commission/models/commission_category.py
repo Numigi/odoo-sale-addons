@@ -8,8 +8,10 @@ from odoo.exceptions import ValidationError
 class CommissionCategory(models.Model):
     _name = "commission.category"
     _description = "Commission Category"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "name"
 
-    name = fields.Char(translate=True, required=True)
+    name = fields.Char(translate=True, required=True, track_visibility="onchange")
     rate_type = fields.Selection(
         [
             ("fixed", "Fixed"),
@@ -17,6 +19,7 @@ class CommissionCategory(models.Model):
         ],
         default="fixed",
         required=True,
+        track_visibility="onchange",
     )
     basis = fields.Selection(
         [
@@ -26,9 +29,10 @@ class CommissionCategory(models.Model):
         "Based On",
         default="my_sales",
         required=True,
+        track_visibility="onchange",
     )
     rate_ids = fields.One2many("commission.category.rate", "category_id")
-    fixed_rate = fields.Float()
+    fixed_rate = fields.Float(track_visibility="onchange")
     child_category_ids = fields.Many2many(
         "commission.category", "commission_category_child_rel", "parent_id", "child_id"
     )
@@ -37,12 +41,14 @@ class CommissionCategory(models.Model):
         "commission_category_included_tags_rel",
         "category_id",
         "tag_id",
+        track_visibility="onchange",
     )
     excluded_tag_ids = fields.Many2many(
         "account.analytic.tag",
         "commission_category_excluded_tags_rel",
         "category_id",
         "tag_id",
+        track_visibility="onchange",
     )
 
     def _sorted_by_dependencies(self):
