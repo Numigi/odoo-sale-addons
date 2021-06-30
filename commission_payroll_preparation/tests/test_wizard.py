@@ -22,6 +22,7 @@ class TestWizard(TestPayrollCase):
                 "date_range_id": cls.date_range.id,
                 "rate_type": "fixed",
                 "fixed_rate": cls.fixed_rate,
+                "state": "confirmed"
             }
         )
 

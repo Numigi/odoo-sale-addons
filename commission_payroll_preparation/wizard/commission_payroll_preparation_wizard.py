@@ -1,7 +1,8 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class CommissionPayrollPreparationWizard(models.TransientModel):
@@ -24,6 +25,8 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
 
     def confirm(self):
         for target in self.target_ids:
+            if target.state != "confirmed":
+                raise ValidationError(_("You generate a payroll entry for a target in a state other than 'confirmed'."))
             amount = target.commissions_total
             self._create_payroll_entry(target)
 
