@@ -69,6 +69,7 @@ class CommissionTarget(models.Model):
     commissions_total = fields.Monetary(readonly=True)
 
     def compute(self):
+        self = self.sudo()
         for target in self._sorted_by_category_dependency():
             target._update_base_amount()
             target._update_commissions_total()

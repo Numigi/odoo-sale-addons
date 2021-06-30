@@ -15,6 +15,12 @@
         "hr",
         "date_range",
     ],
-    "data": ["views/commission.xml", "views/target.xml", "views/category.xml"],
+    "data": [
+        "security/res_groups.xml",
+        "security/ir.model.access.csv",
+        "views/commission.xml",
+        "views/target.xml",
+        "views/category.xml",
+    ],
     "installable": True,
 }
