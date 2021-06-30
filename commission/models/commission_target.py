@@ -182,13 +182,12 @@ class CommissionTarget(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get("name", "New Target") == "New Target":
-            vals["name"] = (
-                self.env["ir.sequence"].next_by_code("commission.target.reference")
-                or "New"
-            )
-        result = super(CommissionTarget, self).create(vals)
-        return result
+        target = super(CommissionTarget, self).create(vals)
+        target.name = target._get_next_sequence_number()
+        return target
+
+    def _get_next_sequence_number(self):
+        return self.env["ir.sequence"].next_by_code("commission.target.reference") or "New"
 
     @api.onchange("category_id")
     def onchange_category_id(self):
