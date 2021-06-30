@@ -24,7 +24,7 @@
                 <field name="employee_id"/>
                 <field name="date_start"/>
                 <field name="date_end"/>
-                <field name="commissions_total"/>
+                <field name="total_amount"/>
                 <field name="state"/>
             </tree>
         </field>
@@ -135,8 +135,8 @@
                             </tree>
                         </field>
                     </group>
-                    <group>
-                        <field name="commissions_total"/>
+                    <group name="totals" class="oe_right">
+                        <field name="total_amount"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">
