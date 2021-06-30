@@ -15,7 +15,7 @@ class CommissionPayrollPeriodSelection(models.TransientModel):
         self._create_payroll_entry(self.target_id, self.period)
 
     def _create_payroll_entry(self, target, period):
-        amount = self._compute_target_commissions_within_period()
+        amount = self.target_id.commissions_total
         return self.env["payroll.preparation.line"].create(
             {
                 "company_id": self.target_id.company_id.id,
@@ -25,29 +25,3 @@ class CommissionPayrollPeriodSelection(models.TransientModel):
                 "amount": amount,
             }
         )
-
-    def _compute_target_commissions_within_period(self):
-        initial_date_start = self.target_id.date_start
-        initial_date_end = self.target_id.date_end
-
-        self._compute_target_from_dates(
-            self.period.date_from, self.period.date_to
-        )
-        commissions_total = self.target_id.commissions_total
-        self._compute_target_from_dates(initial_date_start, initial_date_end)
-        
-        self._update_target(commissions_total)
-
-        return commissions_total
-
-    def _compute_target_from_dates(self, date_from, date_to):
-        self.target_id.date_start = date_from
-        self.target_id.date_end = date_to
-        self.target_id.compute()
-
-    def _update_target(self, paid_amount):
-        if not self.target_id.already_paid:
-            self.target_id.already_paid = paid_amount
-        else:
-            self.target_id.already_paid += paid_amount
-        self.target_id.state = "in_progress"

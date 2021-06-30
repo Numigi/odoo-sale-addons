@@ -123,6 +123,4 @@
         </field>
     </record>
 
-    <menuitem id="commission_target" name="Targets" parent="commission_root" action="action_target" sequence="10"/>
-
 </odoo>

@@ -119,17 +119,19 @@ class TestCommissionPersonal(TestCommissionCase):
 
     def test_name_sequence(self):
         self.target.name = self.target._get_next_sequence_number()
-        
+
         assert "CO" in self.target.name
 
     def test_name_sequence_new_company(self):
         new_company = self._create_company(name="New")
-        new_sequence = self.env["ir.sequence"].search([("code", "=", "commission.target.reference")])
+        new_sequence = self.env["ir.sequence"].search(
+            [("code", "=", "commission.target.reference")]
+        )
         new_sequence.prefix = "BO"
         new_sequence.company_id = new_company
         self.target.company_id = new_company
         self.target.name = self.target._get_next_sequence_number()
-        
+
         assert "BO" in self.target.name
 
     def test_confirm_target_confirmed_state(self):

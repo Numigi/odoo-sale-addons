@@ -54,37 +54,7 @@ class TestWizard(TestPayrollCase):
             and created_payroll.amount == invoiced_amount * self.fixed_rate
         )
 
-    def test_create_payroll_wrong_date(self):
-        invoiced_amount = 500
-        early_date_to = date(2021, 2, 10)
-        self._create_invoice(_date=self.date_middle, amount=invoiced_amount)
-        self.target.compute()
-
-        self.period.date_to = early_date_to
-        self.wizard.confirm()
-
-        created_payroll = self.env["payroll.preparation.line"].search([])
-        assert (
-            created_payroll.company_id == self.company
-            and created_payroll.period_id == self.period
-            and created_payroll.employee_id == self.employee
-            and created_payroll.amount == 0
-        )
-
-    def test_create_payroll_adds_to_already_paid(self):
-        invoiced_amount = 500
-        self._create_invoice(amount=invoiced_amount)
-        self.target.compute()
-
-        self.wizard.confirm()
-
-        assert self.target.already_paid == invoiced_amount * self.fixed_rate
-
     def test_create_payroll_assigns_target_id(self):
         self.wizard.confirm()
         created_payroll = self.env["payroll.preparation.line"].search([])
         assert created_payroll.target_id == self.target
-
-    def test_create_payroll_target_in_progress(self):
-        self.wizard.confirm()
-        assert self.target.state == "in_progress"
