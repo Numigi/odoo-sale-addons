@@ -17,14 +17,14 @@ class TestCommissionInterval(TestCommissionCase):
 
         cls._create_invoice(amount=60000)
 
-        cls.interval_rate = 5
+        cls.interval_rate = 0.05
 
     @data(
         (0, 0, 100),
-        (0, 50, 100),  # 50% of 100k == 50k < 60k
-        (30, 70, 75),  # (60k - 30k) / (70k - 30k)
-        (50, 100, 20),  # (60k - 50k) / (100k - 50k)
-        (100, 100, 0),
+        (0, 0.5, 100),  # 50% of 100k == 50k < 60k
+        (0.3, 0.7, 75),  # (60k - 30k) / (70k - 30k)
+        (0.5, 1, 20),  # (60k - 50k) / (100k - 50k)
+        (1, 1, 0),
     )
     @unpack
     def test_interval_rate_completion(self, slice_from, slice_to, completion):
@@ -35,10 +35,10 @@ class TestCommissionInterval(TestCommissionCase):
 
     @data(
         (0, 0, 0),
-        (0, 50, 2500),  # 50% of 50k = 25k
-        (30, 70, 1500),  # 50% of 30k = 15k
-        (50, 100, 500),  # 50% of 10k = 5k
-        (100, 100, 0),
+        (0, 0.5, 2500),  # 50% of 50k = 25k
+        (0.3, 0.7, 1500),  # 50% of 30k = 15k
+        (0.5, 1, 500),  # 50% of 10k = 5k
+        (1, 1, 0),
     )
     @unpack
     def test_interval_rate_subtotal(self, slice_from, slice_to, subtotal):
@@ -51,18 +51,18 @@ class TestCommissionInterval(TestCommissionCase):
 
     def test_interval_date_invalid(self):
         with pytest.raises(ValidationError):
-            self._create_target_rate(self.target, 50, 40)
+            self._create_target_rate(self.target, 0.5, 0.4)
 
     def test_max_amount(self):
-        rate = self._create_target_rate(self.target, 0, 50)
+        rate = self._create_target_rate(self.target, 0, 0.5)
         self.category.rate_type = "interval"
         self.target.compute()
 
         assert rate.max_amount == 50000
 
     def test_copy_target(self):
-        rate = self._create_target_rate(self.target, 0, 50, self.interval_rate)
-        rate.completion_rate = 0.5
+        rate = self._create_target_rate(self.target, 0, 0.5, self.interval_rate)
+        rate.completion_rate = 50
         rate.subtotal = 100
 
         new_target = self.target.copy()
@@ -85,7 +85,7 @@ class TestRatesPropagation(TestCommissionCase):
                         0,
                         {
                             "slice_from": 0,
-                            "slice_to": 50,
+                            "slice_to": 0.5,
                             "commission_percentage": 0.02,
                         },
                     ),
@@ -93,8 +93,8 @@ class TestRatesPropagation(TestCommissionCase):
                         0,
                         0,
                         {
-                            "slice_from": 50,
-                            "slice_to": 100,
+                            "slice_from": 0.5,
+                            "slice_to": 1,
                             "commission_percentage": 0.04,
                         },
                     ),
@@ -109,11 +109,11 @@ class TestRatesPropagation(TestCommissionCase):
         rates = target.rate_ids
         assert len(rates) == 2
         assert rates[0].slice_from == 0
-        assert rates[0].slice_to == 50
+        assert rates[0].slice_to == 0.5
         assert rates[0].commission_percentage == 0.02
 
-        assert rates[1].slice_from == 50
-        assert rates[1].slice_to == 100
+        assert rates[1].slice_from == 0.5
+        assert rates[1].slice_to == 1
         assert rates[1].commission_percentage == 0.04
 
     def test_onchange_twice(self):

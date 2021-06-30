@@ -127,9 +127,9 @@
                         <field name="rate_ids" nolabel="1" colspan="2">
                             <tree editable="bottom">
                                 <field name="currency_id" invisible="1"/>
-                                <field name="slice_from"/>
-                                <field name="slice_to"/>
-                                <field name="commission_percentage"/>
+                                <field name="slice_from" widget="percentage"/>
+                                <field name="slice_to" widget="percentage"/>
+                                <field name="commission_percentage" widget="percentage"/>
                                 <field name="max_amount"/>
                                 <field name="completion_rate" widget="progressbar"/>
                                 <field name="subtotal"/>

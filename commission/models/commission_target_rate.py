@@ -46,13 +46,12 @@ class CommissionTargetRate(models.Model):
             * self.completion_rate
             / 100
             * self.commission_percentage
-            / 100
         )
 
     def _get_absolute_slice_amounts(self):
         target = self.target_id.target_amount
-        absolute_slice_from = self.slice_from / 100 * target
-        absolute_slice_to = self.slice_to / 100 * target
+        absolute_slice_from = self.slice_from * target
+        absolute_slice_to = self.slice_to * target
         return absolute_slice_from, absolute_slice_to
 
     @api.depends("slice_from", "slice_to", "target_id.target_amount")
