@@ -104,13 +104,10 @@ class TestCommissionCase(SavepointCase):
 
     @classmethod
     def _create_employee(cls, user=None):
-        if not user:
-            user = cls.user
-
         return cls.env["hr.employee"].create(
             {
-                "name": user.name,
-                "user_id": user.id,
+                "name": user.name if user else "Some Employee",
+                "user_id": user.id if user else None,
             }
         )
 

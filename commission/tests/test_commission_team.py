@@ -1,9 +1,11 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import pytest
 from .common import TestCommissionCase
 from datetime import date
 from ddt import ddt, data, unpack
+from odoo.exceptions import AccessError
 
 
 @ddt
@@ -15,6 +17,7 @@ class TestCommissionTeam(TestCommissionCase):
         cls.manager_user = cls._create_user(
             name="Manager", email="manager@testmail.com"
         )
+        cls.manager_user.groups_id = cls.env.ref("commission.group_team_manager")
 
         cls.manager = cls._create_employee(user=cls.manager_user)
 
@@ -79,7 +82,7 @@ class TestCommissionTeam(TestCommissionCase):
 
     def test_manager_total_fixed(self):
         self.employee_target.commissions_total = 400000 * 0.05
-        self.manager_target.compute()
+        self._compute_manager_target()
         assert (
             self.manager_target.commissions_total
             == 400000 * self.employee_target.fixed_rate * self.manager_target.fixed_rate
@@ -96,7 +99,7 @@ class TestCommissionTeam(TestCommissionCase):
         rate = self._create_target_rate(self.manager_target, slice_from, slice_to)
         self.manager_category.rate_type = "interval"
         self.employee_target.commissions_total = 400000 * 0.05
-        self.manager_target.compute()
+        self._compute_manager_target()
         assert rate.completion_rate == completion
 
     @data(
@@ -116,7 +119,7 @@ class TestCommissionTeam(TestCommissionCase):
         )
         self.manager_category.rate_type = "interval"
         self.employee_target.commissions_total = 400000 * 0.05
-        self.manager_target.compute()
+        self._compute_manager_target()
         assert rate.subtotal == subtotal
 
     def test_sorted_by_dependency(self):
@@ -129,7 +132,7 @@ class TestCommissionTeam(TestCommissionCase):
     def test_no_child_categories(self):
         self.manager_category.child_category_ids.unlink()
         self.employee_target.commissions_total = 400000 * 0.05
-        self.manager_target.compute()
+        self._compute_manager_target()
         assert self.manager_target.commissions_total == 0
 
     def test_new_team_category_spreads_rates(self):
@@ -158,3 +161,22 @@ class TestCommissionTeam(TestCommissionCase):
         assert rates.mapped(
             "commission_percentage"
         ) == self.employee_target.rate_ids.mapped("commission_percentage")
+
+    def test_compute_not_own_target(self):
+        self.manager_target.employee_id = self._create_employee()
+        with pytest.raises(AccessError):
+            self._compute_manager_target()
+
+    def test_compute_target_of_employee_in_own_team(self):
+        self._compute_employee_target()
+
+    def test_compute_target_of_employee_not_in_own_team(self):
+        self.department.manager_id = self._create_employee()
+        with pytest.raises(AccessError):
+            self._compute_employee_target()
+
+    def _compute_manager_target(self):
+        self.manager_target.sudo(self.manager_user).compute()
+
+    def _compute_employee_target(self):
+        self.employee_target.sudo(self.manager_user).compute()

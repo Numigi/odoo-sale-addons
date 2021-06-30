@@ -1,7 +1,8 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, api
+from odoo import fields, models, api, _
+from odoo.exceptions import AccessError
 from functools import reduce
 
 
@@ -69,7 +70,9 @@ class CommissionTarget(models.Model):
     commissions_total = fields.Monetary(readonly=True)
 
     def compute(self):
+        self.check_extended_security_write()
         self = self.sudo()
+
         for target in self._sorted_by_category_dependency():
             target._update_base_amount()
             target._update_commissions_total()
@@ -187,7 +190,11 @@ class CommissionTarget(models.Model):
         return target
 
     def _get_next_sequence_number(self):
-        return self.env["ir.sequence"].with_context(force_company=self.company_id.id).next_by_code("commission.target.reference")
+        return (
+            self.env["ir.sequence"]
+            .with_context(force_company=self.company_id.id)
+            .next_by_code("commission.target.reference")
+        )
 
     @api.onchange("category_id")
     def onchange_category_id(self):
@@ -234,3 +241,64 @@ class CommissionTarget(models.Model):
     def set_draft_state(self):
         for target in self:
             target.state = "draft"
+
+    def check_extended_security_all(self):
+        super().check_extended_security_all()
+
+        if self._user_is_manager():
+            self._check_manager_access()
+
+        elif self._user_is_team_manager():
+            self._check_team_manager_access()
+
+        else:
+            self._check_user_access()
+
+    def _user_is_manager(self):
+        return self.env.user.has_group("commission.group_manager")
+
+    def _user_is_team_manager(self):
+        return self.env.user.has_group("commission.group_team_manager")
+
+    def _check_manager_access(self):
+        pass
+
+    def _check_team_manager_access(self):
+        user = self.env.user
+        departments = self._get_user_managed_departments()
+
+        for target in self.sudo():
+            employee = target.employee_id
+
+            is_own_target = employee.user_id == user
+            is_own_department = employee.department_id in departments
+
+            if not (is_own_target or is_own_department):
+                raise AccessError(
+                    _(
+                        "You are not allowed to access the target {} because "
+                        "it is either not your own target or a target of a member "
+                        "of your team."
+                    ).format(target.display_name)
+                )
+
+    def _check_user_access(self):
+        user = self.env.user
+
+        for target in self.sudo():
+            if target.employee_id.user_id != user:
+                raise AccessError(
+                    _(
+                        "You are not allowed to access the target {} because "
+                        "it is not your own target."
+                    ).format(target.display_name)
+                )
+
+    def _get_user_managed_departments(self):
+        return self.env["hr.department"].sudo().search([
+            ("manager_id", "in", self.env.user.employee_ids.ids),
+        ])
+
+    def get_extended_security_domain(self):
+        result = super().get_extended_security_domain()
+        return result

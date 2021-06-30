@@ -1,7 +1,9 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import pytest
 from .common import TestCommissionCase
+from odoo.exceptions import AccessError
 from datetime import date
 from ddt import ddt, data
 
@@ -145,6 +147,11 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_draft_method_draft_state(self):
         self.target.set_draft_state()
         assert self.target.state == "draft"
+
+    def test_compute_not_own_commission(self):
+        self.target.employee_id = self._create_employee()
+        with pytest.raises(AccessError):
+            self._compute_target()
 
     def _compute_target(self):
         self.target.sudo(self.user).compute()
