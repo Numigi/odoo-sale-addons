@@ -77,20 +77,39 @@
                 </header>
                 <sheet>
                     <field name="currency_id" invisible="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
                     <group>
-                        <field name="name"/>
+                        <group name="top-left">
+                            <field name="employee_id"/>
+                            <field name="category_id"/>
+                            <field name="basis" invisible="1"/>
+                            <field name="rate_type" invisible="1"/>
+                        </group>
+                        <group name="top-right">
+                            <field name="date_range_id"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                    </group>
+                    <field name="show_invoices" invisible="1"/>
+                    <field name="show_child_targets" invisible="1"/>
+                    <group>
+                        <group name="invoices" attrs="{'invisible': [('show_invoices', '=', False)]}" col="3">
+                            <field name="invoiced_amount"/>
+                            <button name="view_invoices" type="object" string="View Lines"/>
+                        </group>
+                        <group name="child_targets" attrs="{'invisible': [('show_child_targets', '=', False)]}" col="3">
+                            <field name="child_commission_amount"/>
+                            <button name="view_child_targets" type="object" string="View Lines"/>
+                        </group>
                     </group>
                     <group>
-                        <field name="employee_id"/>
-                        <field name="date_range_id"/>
-                        <field name="category_id"/>
-                        <field name="rate_type" invisible="1"/>
-                    </group>
-                    <group>
-                        <field name="base_amount"/>
-                    </group>
-                    <group>
-                        <field name="target_amount"/>
+                        <field name="base_amount" invisible="1"/>
+                        <field name="target_amount" string="Target For The Period"/>
                     </group>
                     <group name="fixed_rate" 
                             attrs="{

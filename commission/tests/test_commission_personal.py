@@ -21,6 +21,19 @@ class TestCommissionPersonal(TestCommissionCase):
 
         cls.excluded_tag = cls.env["account.analytic.tag"].create({"name": "Tables"})
 
+    def test_compute_show_invoices(self):
+        assert self.target.show_invoices
+
+    def test_compute_show_child_targets(self):
+        assert not self.target.show_child_targets
+
+    def test_view_invoices(self):
+        self.target.invoice_ids = self.invoice
+        action = self.target.view_invoices()
+        domain = action["domain"]
+        invoices = self.env["account.invoice"].search(domain)
+        assert invoices == self.invoice
+
     def test_find_invoice_single_user(self):
         invoices = self.target._get_invoices()
         assert self.invoice == invoices
@@ -56,6 +69,7 @@ class TestCommissionPersonal(TestCommissionCase):
 
     def test_base_amount(self):
         self._compute_target()
+        assert self.target.invoiced_amount == 5000
         assert self.target.base_amount == 5000
 
     def test_multiple_base_amount(self):

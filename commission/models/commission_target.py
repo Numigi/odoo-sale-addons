@@ -46,11 +46,13 @@ class CommissionTarget(models.Model):
         required=True,
         track_visibility="onchange",
     )
+    basis = fields.Selection(
+        related="category_id.basis",
+        store=True,
+    )
     rate_type = fields.Selection(
         related="category_id.rate_type",
         store=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     rate_ids = fields.One2many(
         "commission.target.rate",
@@ -89,8 +91,19 @@ class CommissionTarget(models.Model):
         states={"draft": [("readonly", False)]},
         track_visibility="onchange",
     )
+    invoiced_amount = fields.Monetary(
+        "Total Amount On Admissible Invoices",
+        readonly=True, copy=False
+    )
+    child_commission_amount = fields.Monetary(
+        "Total Amount On Team Commissions",
+        readonly=True, copy=False
+    )
     base_amount = fields.Monetary(readonly=True, copy=False)
     commissions_total = fields.Monetary(readonly=True, copy=False)
+
+    show_invoices = fields.Boolean(compute="_compute_show_invoices")
+    show_child_targets = fields.Boolean(compute="_compute_show_child_targets")
 
     @api.multi
     def copy(self, default=None):
@@ -100,6 +113,14 @@ class CommissionTarget(models.Model):
             rate.copy({"target_id": target.id})
 
         return target
+
+    def _compute_show_invoices(self):
+        for target in self:
+            target.show_invoices = target.basis == "my_sales"
+
+    def _compute_show_child_targets(self):
+        for target in self:
+            target.show_child_targets = target.basis == "my_team_commissions"
 
     def compute(self):
         self.check_extended_security_read()
@@ -121,7 +142,8 @@ class CommissionTarget(models.Model):
 
     def _update_base_amount_my_sales(self):
         self.invoice_ids = self._get_invoices()
-        self.base_amount = self._compute_my_base_amount()
+        self.invoiced_amount = self._compute_invoiced_amount()
+        self.base_amount = self.invoiced_amount
 
     def _get_invoices(self):
         invoices = self.env["account.invoice"].search(
@@ -139,13 +161,12 @@ class CommissionTarget(models.Model):
 
         return invoices
 
-    def _compute_my_base_amount(self):
-        # return sum(inv.amount_total_company_signed for inv in self.invoice_ids)
+    def _compute_invoiced_amount(self):
         return sum(
-            self._compute_invoice_amount(invoice) for invoice in self.invoice_ids
+            self._compute_single_invoice_amount(invoice) for invoice in self.invoice_ids
         )
 
-    def _compute_invoice_amount(self, invoice):
+    def _compute_single_invoice_amount(self, invoice):
         return sum(
             line.price_subtotal_signed
             for line in invoice.invoice_line_ids
@@ -168,7 +189,8 @@ class CommissionTarget(models.Model):
     def _update_base_amount_my_team_commissions(self):
         self._get_child_targets()
         self.child_target_ids = self._get_child_targets()
-        self.base_amount = self._compute_my_team_commissions()
+        self.child_commission_amount = self._compute_child_commission_amount()
+        self.base_amount = self.child_commission_amount
 
     def _get_child_targets(self):
         children = (
@@ -186,10 +208,7 @@ class CommissionTarget(models.Model):
         )
         return children
 
-    def _compute_my_team_commissions(self):
-        return self._compute_my_team_commissions_total()
-
-    def _compute_my_team_commissions_total(self):
+    def _compute_child_commission_amount(self):
         return sum(child.commissions_total for child in self.child_target_ids)
 
     def _update_commissions_total(self):
@@ -273,6 +292,18 @@ class CommissionTarget(models.Model):
     def set_draft_state(self):
         for target in self:
             target.state = "draft"
+
+    def view_invoices(self):
+        action = self.env.ref("account.action_invoice_tree").read()[0]
+        action["name"] = _("Invoices")
+        action["domain"] = [('id', 'in', self.invoice_ids.ids)]
+        return action
+
+    def view_child_targets(self):
+        action = self.env.ref("commission.action_target").read()[0]
+        action["name"] = _("Team Commissions")
+        action["domain"] = [('id', 'in', self.child_target_ids.ids)]
+        return action
 
     def check_extended_security_all(self):
         super().check_extended_security_all()

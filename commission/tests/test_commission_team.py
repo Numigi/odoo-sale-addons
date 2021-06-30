@@ -45,30 +45,39 @@ class TestCommissionTeam(TestCommissionCase):
 
         cls.interval_rate = 5
 
+    def test_compute_show_invoices(self):
+        assert not self.manager_target.show_invoices
+
+    def test_compute_show_child_targets(self):
+        assert self.manager_target.show_child_targets
+
+    def test_view_child_targets(self):
+        self.manager_target.child_target_ids = self.employee_target
+        action = self.manager_target.view_child_targets()
+        domain = action["domain"]
+        targets = self.env["commission.target"].search(domain)
+        assert targets == self.employee_target
+
     def test_child_targets(self):
         child_targets = self.manager_target._get_child_targets()
         assert self.employee_target == child_targets
 
+    def test_compute_target(self):
+        self.employee_target.commissions_total = 2000
+        self.manager_target.compute()
+        assert self.manager_target.child_target_ids == self.employee_target
+        assert self.manager_target.child_commission_amount == 2000
+        assert self.manager_target.base_amount == 2000
+
     def test_child_targets_wrong_department(self):
-        foreing_user = self._create_user(name="Foreign", email="foreign@foreign.com")
-        foreign_employee = self._create_employee(user=foreing_user)
-
-        self._create_target(
-            employee=foreign_employee,
-            target_amount=100000,
-        )
-
-        child_targets = self.manager_target._get_child_targets()
-        assert self.employee_target == child_targets
+        self.employee_target.employee_id = self._create_employee()
+        self._compute_manager_target()
+        assert not self.manager_target.child_target_ids
 
     def test_child_targets_wrong_company(self):
-        company = self._create_company(name="Wrong")
-        target = self._create_target(employee=self.employee, target_amount=100000)
-
-        target.company_id = company
-
-        child_targets = self.manager_target._get_child_targets()
-        assert target not in child_targets
+        self.employee_target.company_id = self._create_company(name="Other Company")
+        self._compute_manager_target()
+        assert not self.manager_target.child_target_ids
 
     def test_child_targets_date_out_of_range(self):
         wrong_date_range = self._create_date_range(
