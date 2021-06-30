@@ -12,16 +12,17 @@ class CommissionPayrollPeriodSelection(models.TransientModel):
     period = fields.Many2one("payroll.period")
 
     def confirm(self):
-        self._create_payroll_entry(self.target_id, self.period)
-
-    def _create_payroll_entry(self, target, period):
         amount = self.target_id.commissions_total
+        self._create_payroll_entry(self.target_id, self.period, amount)
+        self.target_id.already_paid += amount
+
+    def _create_payroll_entry(self, target, period, amount):
         return self.env["payroll.preparation.line"].create(
             {
-                "company_id": self.target_id.company_id.id,
-                "period_id": self.period.id,
-                "employee_id": self.target_id.employee_id.id,
-                "target_id": self.target_id.id,
+                "company_id": target.company_id.id,
+                "period_id": period.id,
+                "employee_id": target.employee_id.id,
+                "target_id": target.id,
                 "amount": amount,
             }
         )
