@@ -43,18 +43,33 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def test_create_website_sale_request__flow(self):
         post = {"product_product_id": self.product.id, "additional_information": "INFO"}
         self.lead_env.create_website_sale_request(post)
-        lead = self.lead_env.search(
+
+        lead = self._get_lead()
+        assert lead.type == "opportunity"
+        assert lead.team_id == self.sale_team
+        assert lead.brand_ids == self.brand
+
+        line = lead.lead_line_ids
+        assert line.product_id == self.product
+        assert line.name == self.product.name
+        assert line.product_qty == 1
+
+        mail = self.env["mail.mail"].search(
             [
-                ("type", "=", "opportunity"),
-                ("team_id", "=", self.sale_team.id),
-                ("description", "=", post["additional_information"]),
-                ("brand_ids", "=", self.brand.id),
-                ("lead_line_ids.product_id", "=", self.product.id),
-                ("lead_line_ids.name", "=", self.product.name),
-                ("lead_line_ids.product_qty", "=", 1),
-            ],
-            limit=1,
+                ("res_id", "=", lead.id),
+                ("model", "=", "crm.lead"),
+            ]
         )
-        self.assertEquals(len(lead), 1)
-        mail = self.env["mail.mail"].search([("res_id", "=", lead.id)])
         self.assertEquals(len(mail), 1)
+
+    def test_create_request__with_float_product_id(self):
+        post = {"product_product_id": str(float(self.product.id))}
+        self.lead_env.create_website_sale_request(post)
+        assert self._get_lead()
+
+    def _get_lead(self):
+        return self.lead_env.search(
+            [
+                ("lead_line_ids.product_id", "=", self.product.id),
+            ],
+        )
