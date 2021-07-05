@@ -42,6 +42,7 @@ class CommissionCategory(models.Model):
         "category_id",
         "tag_id",
         track_visibility="onchange",
+        groups="analytic.group_analytic_tags",
     )
     excluded_tag_ids = fields.Many2many(
         "account.analytic.tag",
@@ -49,6 +50,7 @@ class CommissionCategory(models.Model):
         "category_id",
         "tag_id",
         track_visibility="onchange",
+        groups="analytic.group_analytic_tags",
     )
 
     def _sorted_by_dependencies(self):
