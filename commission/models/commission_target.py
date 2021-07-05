@@ -218,7 +218,8 @@ class CommissionTarget(models.Model):
         self.total_amount = self._compute_total_amount_fixed()
 
     def _compute_total_amount_fixed(self):
-        return self.base_amount * self.fixed_rate
+        total = self.base_amount * self.fixed_rate
+        return total
 
     def _update_total_amount_interval(self):
         self._update_rates()
@@ -229,7 +230,8 @@ class CommissionTarget(models.Model):
             rate._update_rate()
 
     def _compute_total_amount_interval(self):
-        return sum(rate.subtotal for rate in self.rate_ids)
+        total = sum(rate.subtotal for rate in self.rate_ids)
+        return total
 
     @api.model
     def create(self, vals):

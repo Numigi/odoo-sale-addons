@@ -33,15 +33,6 @@ class TestWizard(TestPayrollCase):
             }
         )
 
-    def test_create_payroll(self):
-        self.wizard.confirm()
-        created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
-        assert (
-            created_payroll.period_id == self.period
-            and created_payroll.employee_id == self.employee
-            and created_payroll.amount == 0
-        )
-
     def test_create_payroll_with_amount(self):
         invoiced_amount = 500
         self._create_invoice(amount=invoiced_amount)
@@ -77,17 +68,52 @@ class TestWizard(TestPayrollCase):
             == self.target.total_amount - self.target.already_generated
         )
 
+    def test_create_payroll_multiple(self):
+        invoiced_amount = 500
+        self._create_invoice(amount=invoiced_amount)
+        self.target.compute()
+        self.wizard.confirm()
+
+        self._create_invoice(amount=invoiced_amount)
+        self.target.compute()
+        self.wizard.confirm()
+
+        assert self.target.left_to_generate == self.target.total_amount - self.target.already_generated
+        assert self.target.already_generated == 2 * (invoiced_amount * self.fixed_rate)
+
+    def test_payroll_entry_not_created_when_0_left_to_pay(self):
+        invoiced_amount = 1000
+        self._create_invoice(amount=invoiced_amount)
+        self.target.compute()
+        self.wizard.confirm()
+
+        with pytest.raises(ValidationError):
+            self.wizard.confirm()
+
+
     def test_create_payroll_assigns_target_id(self):
+        invoiced_amount = 500
+        self._create_invoice(amount=invoiced_amount)
+        self.target.compute()
+        
         self.wizard.confirm()
         created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
         assert created_payroll.commission_target_id == self.target
 
     def test_create_payroll_not_confirmed_state(self):
+        invoiced_amount = 500
+        self._create_invoice(amount=invoiced_amount)
+        self.target.compute()
+
         self.target.state = "draft"
         with pytest.raises(ValidationError):
             self.wizard.confirm()
 
     def test_payroll_lines_shown_on_wizard_confirm(self):
+        invoiced_amount = 500
+        self._create_invoice(amount=invoiced_amount)
+        self.target.compute()
+
         action = self.wizard.confirm()
         domain = action["domain"]
         assert domain == [("id", "in", self.target.payroll_line_ids.ids)]
