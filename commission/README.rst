@@ -16,7 +16,6 @@ This app contains 2 main menus: Targets and Categories.
 
 Categories
 ----------
-
 The "Categories" menu allows category creation.
 
 Categories are templates for the commissions targets.
@@ -44,7 +43,6 @@ For categories based on team sales, you have the option to select other categori
 
 Targets
 -------
-
 The "Targets" menu allows target creation.
 
 Targets are the commissions goals than can be created for the employees.
@@ -58,9 +56,21 @@ Clicking on "Create" brings up the Target creation menu, allowing you to select 
 * Date Range: The date interval for the target
 * Target For The Period: The target amount of sales for the Period
 
-Once the correct details are entered, you can "Confirm" the target. This then unlocks the "Compute" action button, which will update the total commissions based on the selected settings.
+Once the correct details are entered, you can "Confirm" the target.
 
 .. image:: static/description/target.png
+
+This then unlocks the "Compute" action button, which will update the total commissions based on the selected settings.
+
+.. image:: static/description/computed.png
+
+When finished, you can "Mark as Done" the target, which disables the "Compute" button. You can then put the target back as draft if you need to reverse the termination.
+
+.. image:: static/description/done.png
+
+Read/Write Permissions
+----------------------
+
 
 Configuration
 -------------
