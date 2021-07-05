@@ -41,8 +41,8 @@
                         }"/>
             </button>
             <field name="total_amount" position="after">
-                <field name="already_paid"/>
-                <field name="left_to_pay"/>
+                <field name="already_generated"/>
+                <field name="left_to_generate"/>
             </field>
             <div name="button_box" position="inside">
                 <button type="action"
