@@ -15,7 +15,7 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
         "wizard_id",
         "target_id",
     )
-    period = fields.Many2one("payroll.period")
+    period = fields.Many2one("payroll.period", required=True)
 
     @api.model
     def default_get(self, fields_list):

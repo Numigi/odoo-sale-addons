@@ -15,6 +15,7 @@
                 <footer>
                     <button type="object"
                             string="Confirm"
+                            class="oe_highlight"
                             name="confirm"/>
                     <button string="Cancel"
                             class="btn-secondary"
