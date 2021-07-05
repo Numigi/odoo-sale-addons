@@ -31,11 +31,5 @@ class TestPayrollPreparationLine(TestPayrollCase):
             }
         )
 
-    def test_onchange_prorata_amount(self):
-        rate = 0.5
-        self.payroll_line.prorata = rate
-        self.payroll_line.onchange_prorata_amount()
-        assert self.payroll_line.prorata_amount == self.payroll_line.amount * rate
-
     def test_payroll_line_count(self):
         assert self.target.payroll_line_count == 1

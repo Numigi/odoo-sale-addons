@@ -126,16 +126,6 @@ msgid "Period"
 msgstr "Période"
 
 #. module: commission_payroll_preparation
-#: model:ir.model.fields,field_description:commission_payroll_preparation.field_payroll_preparation_line__prorata
-msgid "Prorata"
-msgstr "Prorata"
-
-#. module: commission_payroll_preparation
-#: model:ir.model.fields,field_description:commission_payroll_preparation.field_payroll_preparation_line__prorata_amount
-msgid "Prorata Amount"
-msgstr "Montant de prorata"
-
-#. module: commission_payroll_preparation
 #: model:ir.model.fields,field_description:commission_payroll_preparation.field_commission_payroll_preparation_wizard__target_ids
 #: model:ir.model.fields,field_description:commission_payroll_preparation.field_payroll_preparation_line__target_id
 msgid "Target"

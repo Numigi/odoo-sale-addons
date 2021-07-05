@@ -8,9 +8,3 @@ class PayrollPreparationLine(models.Model):
     _inherit = "payroll.preparation.line"
 
     commission_target_id = fields.Many2one("commission.target", index=True)
-    prorata = fields.Float()
-    prorata_amount = fields.Float(readonly=True)
-
-    @api.onchange("prorata")
-    def onchange_prorata_amount(self):
-        self.prorata_amount = self.prorata * self.amount
