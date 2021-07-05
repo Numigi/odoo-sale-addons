@@ -128,6 +128,7 @@
                 <field name="currency_id" invisible="1"/>
                 <field name="name"/>
                 <field name="employee_id"/>
+                <field name="category_id"/>
                 <field name="date_start"/>
                 <field name="date_end"/>
                 <field name="total_amount"/>
@@ -145,6 +146,12 @@
                 <field name="employee_id"/>
                 <field name="category_id"/>
                 <field name="state"/>
+                <separator/>
+                <group string="Group By">
+                    <filter string="Employee" name="group_by_employee_id" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Category" name="group_by_category_id" context="{'group_by': 'category_id'}"/>
+                    <filter string="Period" name="group_by_date_range_id" context="{'group_by': 'date_range_id'}"/>
+                </group>
            </search>
         </field>
     </record>

@@ -7,9 +7,11 @@
         <field name="arch" type="xml">
             <form string="Commission Category">
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                    </group>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
                     <group string="Calculation">
                         <group>
                             <field name="rate_type"/>
@@ -42,8 +44,12 @@
                                 attrs="{
                                     'invisible':[('basis', '!=', 'my_sales')]
                                 }">
-                            <field name="included_tag_ids" widget="many2many_checkboxes"/>
-                            <field name="excluded_tag_ids" widget="many2many_checkboxes"/>
+                            <field name="included_tag_ids" widget="many2many_checkboxes"
+                                domain="[('id', '!=', id)]"
+                                />
+                            <field name="excluded_tag_ids" widget="many2many_checkboxes"
+                                domain="[('id', '!=', id)]"
+                                />
                         </group>
                         <group name="child_categories"
                                 attrs="{
@@ -54,6 +60,7 @@
                         </group>
                     </group>
                 </sheet>
+                <field name="id" invisible="1"/>
             </form>
         </field>
     </record>
