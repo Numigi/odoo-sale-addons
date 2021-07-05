@@ -17,13 +17,13 @@ class CommissionTarget(models.Model):
         for target in self:
             target.payroll_line_count = len(target.payroll_line_ids)
 
-    @api.depends("payroll_line_ids")
+    @api.depends("payroll_line_ids.amount")
     def _compute_already_generated(self):
         for target in self:
             target.already_generated = sum(line.amount for line in target.payroll_line_ids)
             target.payroll_line_amount = len(target.payroll_line_ids)
 
-    @api.depends("already_generated")
+    @api.depends("total_amount", "already_generated")
     def _compute_left_to_generate(self):
         for target in self:
             target.left_to_generate = target.total_amount - target.already_generated
