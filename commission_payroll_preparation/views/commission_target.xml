@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record model="ir.actions.act_window" id="open_payroll_entries">
+    <record id="open_payroll_entries" model="ir.actions.act_window">
         <field name="name">Payroll Entries</field>
         <field name="res_model">payroll.preparation.line</field>
         <field name="view_mode">tree,form</field>

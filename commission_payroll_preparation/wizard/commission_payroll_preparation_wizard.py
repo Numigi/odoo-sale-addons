@@ -24,10 +24,19 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
         return defaults
 
     def confirm(self):
+        entries = self._create_payroll_entries()
+        return self._make_payroll_entry_action(entries)
+
+    def _create_payroll_entries(self):
+        entries = self.env["payroll.preparation.line"]
+
         for target in self.target_ids:
             if target.state != "confirmed":
                 raise ValidationError(_("You generate a payroll entry for a target in a state other than 'confirmed'."))
-            self._create_payroll_entry(target)
+
+            entries |= self._create_payroll_entry(target)
+
+        return entries
 
     def _create_payroll_entry(self, target):
         return self.env["payroll.preparation.line"].create(
@@ -39,3 +48,9 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
                 "amount": target.total_amount,
             }
         )
+
+    def _make_payroll_entry_action(self, entries):
+        action = self.env.ref("commission_payroll_preparation.open_payroll_entries").read()[0]
+        action["domain"] = [("id", "in", entries.ids)]
+        action["context"] = {}
+        return action

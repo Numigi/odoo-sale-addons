@@ -82,8 +82,12 @@ class TestWizard(TestPayrollCase):
         created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
         assert created_payroll.commission_target_id == self.target
 
-
     def test_create_payroll_not_confirmed_state(self):
         self.target.state = "draft"
         with pytest.raises(ValidationError):
             self.wizard.confirm()
+
+    def test_payroll_lines_shown_on_wizard_confirm(self):
+        action = self.wizard.confirm()
+        domain = action["domain"]
+        assert domain == [("id", "in", self.target.payroll_line_ids.ids)]
