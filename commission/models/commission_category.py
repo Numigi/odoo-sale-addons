@@ -64,5 +64,6 @@ class CommissionCategory(models.Model):
 
     @api.constrains("child_category_ids")
     def _validate_slices(self):
-        if self in self.child_category_ids:
-            raise ValidationError("You cannot assign a child category to itself.")
+        for category in self:
+            if category in category.child_category_ids:
+                raise ValidationError("You cannot assign a child category to itself.")
