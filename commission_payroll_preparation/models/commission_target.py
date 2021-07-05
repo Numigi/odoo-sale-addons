@@ -9,16 +9,16 @@ class CommissionTarget(models.Model):
 
     payroll_line_ids = fields.One2many("payroll.preparation.line", "commission_target_id", readonly=True)
     payroll_line_amount = fields.Integer(compte="_compute_payroll_line_amount", store=True)
-    already_paid = fields.Monetary(compute="_compute_already_paid", store=True)
+    already_generated = fields.Monetary(compute="_compute_already_generated", store=True)
     left_to_pay = fields.Monetary(compute="_compute_left_to_pay", store=True)
 
     @api.depends("payroll_line_ids")
-    def _compute_already_paid(self):
+    def _compute_already_generated(self):
         for target in self:
-            target.already_paid = sum(line.amount for line in target.payroll_line_ids)
+            target.already_generated = sum(line.amount for line in target.payroll_line_ids)
             target.payroll_line_amount = len(target.payroll_line_ids)
 
-    @api.depends("already_paid")
+    @api.depends("already_generated")
     def _compute_left_to_pay(self):
         for target in self:
-            target.left_to_pay = target.total_amount - target.already_paid
+            target.left_to_pay = target.total_amount - target.already_generated

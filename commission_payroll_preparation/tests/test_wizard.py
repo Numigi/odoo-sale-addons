@@ -56,14 +56,14 @@ class TestWizard(TestPayrollCase):
             and created_payroll.amount == invoiced_amount * self.fixed_rate
         )
 
-    def test_create_payroll_target_already_paid(self):
+    def test_create_payroll_target_already_generated(self):
         invoiced_amount = 500
         self._create_invoice(amount=invoiced_amount)
         self.target.compute()
 
         self.wizard.confirm()
 
-        assert self.target.already_paid == invoiced_amount * self.fixed_rate
+        assert self.target.already_generated == invoiced_amount * self.fixed_rate
 
     def test_create_payroll_target_left_to_pay(self):
         invoiced_amount = 500
@@ -74,7 +74,7 @@ class TestWizard(TestPayrollCase):
 
         assert (
             self.target.left_to_pay
-            == self.target.total_amount - self.target.already_paid
+            == self.target.total_amount - self.target.already_generated
         )
 
     def test_create_payroll_assigns_target_id(self):
@@ -90,6 +90,6 @@ class TestWizard(TestPayrollCase):
 
     def test_payroll_line_amount(self):
         self.wizard.confirm()
-        self.target._compute_already_paid()
+        self.target._compute_already_generated()
 
         assert self.target.payroll_line_amount == 1
