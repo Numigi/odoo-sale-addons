@@ -1,35 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="action_target" model="ir.actions.act_window">
-        <field name="name">Targets</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">commission.target</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-          <p class="o_view_nocontent_smiling_face">
-            Create your First Target Here !
-          </p>
-        </field>
-    </record>
-
-    <record id="commission_target_tree" model="ir.ui.view">
-        <field name="name">commission.target.tree</field>
-        <field name="model">commission.target</field>
-        <field name="arch" type="xml">
-            <tree string="Targets">
-                <field name="currency_id" invisible="1"/>
-                <field name="name"/>
-                <field name="employee_id"/>
-                <field name="date_start"/>
-                <field name="date_end"/>
-                <field name="total_amount"/>
-                <field name="state"/>
-            </tree>
-        </field>
-     </record>
-
      <record id="commission_target_form" model="ir.ui.view">
         <field name="name">commission.target.form</field>
         <field name="model">commission.target</field>
@@ -146,6 +117,48 @@
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
             </form>
+        </field>
+    </record>
+
+    <record id="commission_target_tree" model="ir.ui.view">
+        <field name="name">commission.target.tree</field>
+        <field name="model">commission.target</field>
+        <field name="arch" type="xml">
+            <tree string="Targets">
+                <field name="currency_id" invisible="1"/>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="total_amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+     </record>
+
+    <record id="commission_target_search" model="ir.ui.view">
+        <field name="name">Commission Target Search</field>
+        <field name="model">commission.target</field>
+        <field name="arch" type="xml">
+            <search string="Search Commission Targets">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="category_id"/>
+                <field name="state"/>
+           </search>
+        </field>
+    </record>
+
+    <record id="action_target" model="ir.actions.act_window">
+        <field name="name">Targets</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">commission.target</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create your First Target Here !
+          </p>
         </field>
     </record>
 
