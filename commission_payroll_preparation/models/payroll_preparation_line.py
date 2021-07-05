@@ -7,7 +7,7 @@ from odoo import fields, models, api
 class PayrollPreparationLine(models.Model):
     _inherit = "payroll.preparation.line"
 
-    target_id = fields.Many2one("commission.target", index=True)
+    commission_target_id = fields.Many2one("commission.target", index=True)
     prorata = fields.Float()
     prorata_amount = fields.Float(readonly=True)
 

@@ -80,7 +80,7 @@ class TestWizard(TestPayrollCase):
     def test_create_payroll_assigns_target_id(self):
         self.wizard.confirm()
         created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
-        assert created_payroll.target_id == self.target
+        assert created_payroll.commission_target_id == self.target
 
 
     def test_create_payroll_not_confirmed_state(self):

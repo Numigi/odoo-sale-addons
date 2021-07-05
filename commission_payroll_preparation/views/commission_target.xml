@@ -5,7 +5,7 @@
         <field name="name">Payroll Entries</field>
         <field name="res_model">payroll.preparation.line</field>
         <field name="view_mode">tree,form</field>
-        <field name="context">{'search_default_target_id': active_id}</field>
+        <field name="context">{'search_default_commission_target_id': active_id}</field>
     </record>
 
     <record id="action_generate_payroll" model="ir.actions.act_window">

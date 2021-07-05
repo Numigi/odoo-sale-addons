@@ -11,6 +11,10 @@
     "category": "Sales",
     "summary": "",
     "depends": ["base", "commission", "payroll_preparation", "date_range"],
-    "data": ["views/commission_payroll_preparation_wizard.xml", "views/commission_target.xml"],
+    "data": [
+        "views/commission_payroll_preparation_wizard.xml",
+        "views/commission_target.xml",
+        "views/payroll_preparation_line.xml",
+    ],
     "installable": True,
 }

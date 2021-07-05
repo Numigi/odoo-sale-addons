@@ -35,7 +35,7 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
                 "company_id": target.company_id.id,
                 "period_id": self.period.id,
                 "employee_id": target.employee_id.id,
-                "target_id": target.id,
+                "commission_target_id": target.id,
                 "amount": target.total_amount,
             }
         )
