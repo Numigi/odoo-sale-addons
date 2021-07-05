@@ -5,7 +5,7 @@
         <field name="name">commission.target.form</field>
         <field name="model">commission.target</field>
         <field name="arch" type="xml">
-            <form string="Target">
+            <form string="Commission Target">
                 <header>
                     <field name="state" invisible="1"/>
                     <button name="compute" 
@@ -124,7 +124,7 @@
         <field name="name">commission.target.tree</field>
         <field name="model">commission.target</field>
         <field name="arch" type="xml">
-            <tree string="Targets">
+            <tree string="Commission Targets">
                 <field name="currency_id" invisible="1"/>
                 <field name="name"/>
                 <field name="employee_id"/>
