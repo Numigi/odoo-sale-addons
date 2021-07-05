@@ -72,7 +72,7 @@
                     <group>
                         <group name="invoices" attrs="{'invisible': [('show_invoices', '=', False)]}" col="3">
                             <field name="invoiced_amount"/>
-                            <button name="view_invoices" type="object" string="View Lines"/>
+                            <button name="view_invoice_lines" type="object" string="View Lines"/>
                         </group>
                         <group name="child_targets" attrs="{'invisible': [('show_child_targets', '=', False)]}" col="3">
                             <field name="child_commission_amount"/>
@@ -157,7 +157,7 @@
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
-            Create your First Target Here !
+            Create your first target here
           </p>
         </field>
     </record>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="invoice_line_tree" model="ir.ui.view">
+        <field name="name">Invoice Line (from commission target)</field>
+        <field name="model">account.invoice.line</field>
+        <field name="mode">primary</field>
+        <field name="priority">99</field>
+        <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="invoice_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_invoice_lines" model="ir.actions.act_window">
+        <field name="name">Invoice Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.invoice.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="invoice_line_tree"/>
+    </record>
+
+</odoo>

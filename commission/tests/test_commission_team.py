@@ -43,7 +43,7 @@ class TestCommissionTeam(TestCommissionCase):
         cls.employee.department_id = cls.department
         cls.employee_target = cls._create_target(target_amount=100000, fixed_rate=0.05)
 
-        cls.interval_rate = 5
+        cls.interval_rate = 0.05
 
     def test_compute_show_invoices(self):
         assert not self.manager_target.show_invoices
@@ -99,9 +99,9 @@ class TestCommissionTeam(TestCommissionCase):
 
     @data(
         (0, 0, 100),
-        (0, 50, 100),  # 50% of 2k == 1k <= 1k
-        (30, 70, 50),  # (1k - 0.6k) / (1.4k - 0.6k)
-        (100, 100, 0),
+        (0, 0.5, 100),  # 50% of 2k == 1k <= 1k
+        (0.3, 0.7, 50),  # (1k - 0.6k) / (1.4k - 0.6k)
+        (1, 1, 0),
     )
     @unpack
     def test_manager_completion_interval(self, slice_from, slice_to, completion):
@@ -113,10 +113,10 @@ class TestCommissionTeam(TestCommissionCase):
 
     @data(
         (0, 0, 0),
-        (0, 50, 1000),  # 50% of 2k = 1k
-        (30, 70, 400),  # 50% of 800 = 400
-        (50, 100, 0),  # 50% of 0 = 0
-        (100, 100, 0),
+        (0, 0.5, 1000),  # 50% of 2k = 1k
+        (0.3, 0.7, 400),  # 50% of 800 = 400
+        (0.5, 1, 0),  # 50% of 0 = 0
+        (1, 1, 0),
     )
     @unpack
     def test_manager_subtotal_interval(self, slice_from, slice_to, subtotal):

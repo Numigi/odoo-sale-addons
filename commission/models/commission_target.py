@@ -69,8 +69,11 @@ class CommissionTarget(models.Model):
     )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
-    invoice_ids = fields.Many2many(
-        "account.invoice", "commission_target_invoice_rel", "target_id", "invoice_id"
+    invoice_line_ids = fields.Many2many(
+        "account.invoice.line",
+        "commission_target_invoice_line_rel",
+        "target_id",
+        "invoice_line_id",
     )
     child_target_ids = fields.Many2many(
         "commission.target",
@@ -92,12 +95,10 @@ class CommissionTarget(models.Model):
         track_visibility="onchange",
     )
     invoiced_amount = fields.Monetary(
-        "Total Amount On Admissible Invoices",
-        readonly=True, copy=False
+        "Total Amount On Admissible Invoice Lines", readonly=True, copy=False
     )
     child_commission_amount = fields.Monetary(
-        "Total Amount On Team Commissions",
-        readonly=True, copy=False
+        "Total Amount On Team Commissions", readonly=True, copy=False
     )
     base_amount = fields.Monetary(readonly=True, copy=False)
     total_amount = fields.Monetary(readonly=True, copy=False)
@@ -141,9 +142,15 @@ class CommissionTarget(models.Model):
             self._update_base_amount_my_team_commissions()
 
     def _update_base_amount_my_sales(self):
-        self.invoice_ids = self._get_invoices()
+        self.invoice_line_ids = self._get_invoice_lines()
         self.invoiced_amount = self._compute_invoiced_amount()
         self.base_amount = self.invoiced_amount
+
+    def _get_invoice_lines(self):
+        invoices = self._get_invoices()
+        return invoices.mapped("invoice_line_ids").filtered(
+            lambda l: self._should_use_invoice_line(l)
+        )
 
     def _get_invoices(self):
         invoices = self.env["account.invoice"].search(
@@ -158,20 +165,10 @@ class CommissionTarget(models.Model):
             and inv.type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
-
         return invoices
 
     def _compute_invoiced_amount(self):
-        return sum(
-            self._compute_single_invoice_amount(invoice) for invoice in self.invoice_ids
-        )
-
-    def _compute_single_invoice_amount(self, invoice):
-        return sum(
-            line.price_subtotal_signed
-            for line in invoice.invoice_line_ids
-            if self._should_use_invoice_line(line)
-        )
+        return sum(line.price_subtotal_signed for line in self.invoice_line_ids)
 
     def _should_use_invoice_line(self, line):
         is_included_line = self._is_included_invoice_line(line)
@@ -293,16 +290,16 @@ class CommissionTarget(models.Model):
         for target in self:
             target.state = "draft"
 
-    def view_invoices(self):
-        action = self.env.ref("account.action_invoice_tree").read()[0]
-        action["name"] = _("Invoices")
-        action["domain"] = [('id', 'in', self.invoice_ids.ids)]
+    def view_invoice_lines(self):
+        action = self.env.ref("commission.action_invoice_lines").read()[0]
+        action["name"] = _("Invoice Lines")
+        action["domain"] = [("id", "in", self.invoice_line_ids.ids)]
         return action
 
     def view_child_targets(self):
         action = self.env.ref("commission.action_target").read()[0]
         action["name"] = _("Team Commissions")
-        action["domain"] = [('id', 'in', self.child_target_ids.ids)]
+        action["domain"] = [("id", "in", self.child_target_ids.ids)]
         return action
 
     def check_extended_security_all(self):

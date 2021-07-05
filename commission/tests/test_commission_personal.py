@@ -27,12 +27,12 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_compute_show_child_targets(self):
         assert not self.target.show_child_targets
 
-    def test_view_invoices(self):
-        self.target.invoice_ids = self.invoice
-        action = self.target.view_invoices()
+    def test_view_invoice_lines(self):
+        self.target.invoice_line_ids = self.invoice.invoice_line_ids
+        action = self.target.view_invoice_lines()
         domain = action["domain"]
-        invoices = self.env["account.invoice"].search(domain)
-        assert invoices == self.invoice
+        lines = self.env["account.invoice.line"].search(domain)
+        assert lines == self.invoice.invoice_line_ids
 
     def test_find_invoice_single_user(self):
         invoices = self.target._get_invoices()
