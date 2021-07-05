@@ -87,9 +87,3 @@ class TestWizard(TestPayrollCase):
         self.target.state = "draft"
         with pytest.raises(ValidationError):
             self.wizard.confirm()
-
-    def test_payroll_line_amount(self):
-        self.wizard.confirm()
-        self.target._compute_already_paid()
-
-        assert self.target.payroll_line_amount == 1

@@ -26,7 +26,7 @@ class TestPayrollPreparationLine(TestPayrollCase):
                 "company_id": cls.target.company_id.id,
                 "period_id": cls.period.id,
                 "employee_id": cls.target.employee_id.id,
-                "target_id": cls.target.id,
+                "commission_target_id": cls.target.id,
                 "amount": 1000,
             }
         )
@@ -36,3 +36,6 @@ class TestPayrollPreparationLine(TestPayrollCase):
         self.payroll_line.prorata = rate
         self.payroll_line.onchange_prorata_amount()
         assert self.payroll_line.prorata_amount == self.payroll_line.amount * rate
+
+    def test_payroll_line_count(self):
+        assert self.target.payroll_line_count == 1
