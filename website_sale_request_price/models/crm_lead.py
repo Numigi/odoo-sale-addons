@@ -18,7 +18,8 @@ class CrmLead(models.Model):
     def _create_wsrp_opportunity(self, post):
         user = self.env.user
         is_public = user._is_public()
-        product = self.env["product.product"].browse(int(post["product_product_id"]))
+        product_id = int(float(post["product_product_id"]))
+        product = self.env["product.product"].browse(product_id)
         product_brand = product.product_brand_id and [(4, product.product_brand_id.id)]
         email = is_public and post.get("email") or user.partner_id.email
         phone = is_public and post.get("phone") or user.partner_id.phone
