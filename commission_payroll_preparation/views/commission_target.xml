@@ -36,6 +36,7 @@
                         string="Generate"
                         class="oe_highlight" 
                         name="%(action_commission_payroll_preparation_wizard)d"
+                        groups="commission.group_manager"
                         attrs="{
                             'invisible':[('state', 'in', ['draft','done','cancelled'])]
                         }"/>
@@ -50,6 +51,7 @@
                         class="oe_stat_button"
                         icon="fa-usd"
                         attrs="{'invisible': [('payroll_line_count', '=', 0)]}"
+                        groups="payroll_preparation.group_user"
                         >
                         <field string="Payroll Entries" name="payroll_line_count" widget="statinfo"/>
                 </button>

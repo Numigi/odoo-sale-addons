@@ -7,8 +7,14 @@ from odoo import fields, models, api
 class CommissionTarget(models.Model):
     _inherit = "commission.target"
 
-    payroll_line_ids = fields.One2many("payroll.preparation.line", "commission_target_id", readonly=True)
-    payroll_line_count = fields.Integer(compute="_compute_payroll_line_count")
+    payroll_line_ids = fields.One2many(
+        "payroll.preparation.line", "commission_target_id", readonly=True,
+        group="payroll_preparation.group_user"
+    )
+    payroll_line_count = fields.Integer(
+        compute="_compute_payroll_line_count",
+        groups="payroll_preparation.group_user"
+    )
 
     already_generated = fields.Monetary(compute="_compute_already_generated", store=True)
     left_to_generate = fields.Monetary(compute="_compute_left_to_generate", store=True)
