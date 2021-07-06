@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="commission_root" name="Commissions" sequence="1"/>
+    <menuitem id="commission_target" name="Targets" parent="commission_root" action="action_target" sequence="10"/>
+    <menuitem id="commission_category" 
+                name="Categories" 
+                parent="commission_root" 
+                action="action_category" 
+                sequence="20"/>
+
+</odoo>

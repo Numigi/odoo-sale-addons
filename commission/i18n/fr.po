@@ -1,0 +1,676 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* commission
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-05 20:02+0000\n"
+"PO-Revision-Date: 2021-07-05 16:06-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: commission
+#: model:ir.module.category,description:commission.module_category_commission
+msgid "Access to the Commissions application"
+msgstr "Accès à l'application Commissions"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_needaction
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_needaction
+msgid "Action Needed"
+msgstr "Action requise"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__activity_ids
+#: model:ir.model.fields,field_description:commission.field_commission_target__activity_ids
+msgid "Activities"
+msgstr "Activités"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__activity_state
+#: model:ir.model.fields,field_description:commission.field_commission_target__activity_state
+msgid "Activity State"
+msgstr "État de l'activité"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__employee_id
+msgid "Agent"
+msgstr "Agent"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Are you sure?"
+msgstr "Êtes-vous sur?"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_attachment_count
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_attachment_count
+msgid "Attachment Count"
+msgstr "Nombre de pièces jointes"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.comission_category_form
+msgid "Attribution"
+msgstr "Attribution"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__base_amount
+msgid "Base Amount"
+msgstr "Montant de base"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__basis
+#: model:ir.model.fields,field_description:commission.field_commission_target__basis
+msgid "Based On"
+msgstr "Basé sur"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.comission_category_form
+msgid "Calculation"
+msgstr "Calcul"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: commission
+#: selection:commission.target,state:0
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: commission
+#: model:ir.actions.act_window,name:commission.action_category
+#: model:ir.ui.menu,name:commission.commission_category
+msgid "Categories"
+msgstr "Catégories"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__category_id
+#: model:ir.model.fields,field_description:commission.field_commission_target__category_id
+msgid "Category"
+msgstr "Catégorie"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__child_category_ids
+msgid "Child Category"
+msgstr "Catégorie enfant"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__child_target_ids
+msgid "Child Target"
+msgstr "Cible enfant"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_category_search
+#: model_terms:ir.ui.view,arch_db:commission.commission_category_tree
+msgid "Commission Categories"
+msgstr "Catégories de commissions"
+
+#. module: commission
+#: model:ir.model,name:commission.model_commission_category
+#: model_terms:ir.ui.view,arch_db:commission.comission_category_form
+msgid "Commission Category"
+msgstr "Catégorie de commissions"
+
+#. module: commission
+#: model:ir.model,name:commission.model_commission_category_rate
+msgid "Commission Category Rate"
+msgstr "Taux de catégorie de commissions"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__commission_percentage
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__commission_percentage
+msgid "Commission Percentage"
+msgstr "Pourcentage de commissions"
+
+#. module: commission
+#: model:ir.model,name:commission.model_commission_target
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Commission Target"
+msgstr "Cible de commission"
+
+#. module: commission
+#: model:ir.model,name:commission.model_commission_target_rate
+msgid "Commission Target Rate"
+msgstr "Taux de cible de commissions"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_tree
+msgid "Commission Targets"
+msgstr "Cibles de commissions"
+
+#. module: commission
+#: model:ir.module.category,name:commission.module_category_commission
+#: model:ir.ui.menu,name:commission.commission_root
+msgid "Commissions"
+msgstr "Commissions"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__company_id
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__company_id
+msgid "Company"
+msgstr "Compagnie"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__completion_rate
+msgid "Completion Rate"
+msgstr "Taux de complétion"
+
+#. module: commission
+#: model:ir.actions.server,name:commission.action_compute_target
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Compute"
+msgstr "Calculer"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: commission
+#: selection:commission.target,state:0
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: commission
+#: model_terms:ir.actions.act_window,help:commission.action_category
+msgid "Create your first category here"
+msgstr "Créer votre première catégorie ici"
+
+#. module: commission
+#: model_terms:ir.actions.act_window,help:commission.action_target
+msgid "Create your first target here"
+msgstr "Créer votre première cible ici"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__create_uid
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__create_uid
+#: model:ir.model.fields,field_description:commission.field_commission_target__create_uid
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__create_date
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__create_date
+#: model:ir.model.fields,field_description:commission.field_commission_target__create_date
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__currency_id
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__date_range_id
+msgid "Date Range"
+msgstr "Plage de dates"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__display_name
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__display_name
+#: model:ir.model.fields,field_description:commission.field_commission_target__display_name
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: commission
+#: selection:commission.target,state:0
+msgid "Done"
+msgstr "Terminé"
+
+#. module: commission
+#: selection:commission.target,state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__date_end
+msgid "End date"
+msgstr "Date de fin"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__excluded_tag_ids
+msgid "Excluded Tag"
+msgstr "Tag exclus"
+
+#. module: commission
+#: selection:commission.category,rate_type:0
+msgid "Fixed"
+msgstr "Fixe"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__fixed_rate
+#: model:ir.model.fields,field_description:commission.field_commission_target__fixed_rate
+msgid "Fixed Rate"
+msgstr "Taux fixe"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_follower_ids
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_follower_ids
+msgid "Followers"
+msgstr "Abonné"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_channel_ids
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Abonnés (canaux)"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_partner_ids
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Abonnés(partenaires)"
+
+#. module: commission
+#: model:res.groups,comment:commission.group_team_manager
+msgid "Grants access to commission targets of the user's managed departments."
+msgstr ""
+"Donne accès aux cibles de commissions des départements supervisés par "
+"l'utilisateur"
+
+#. module: commission
+#: model:res.groups,comment:commission.group_user
+msgid "Grants access to the user's own commission targets."
+msgstr "Donne accès aux cibles de l'utilisateur"
+
+#. module: commission
+#: model:res.groups,comment:commission.group_manager
+msgid "Grants full read/write access to commission targets and categories."
+msgstr ""
+"Donne accès en lecture et écriture aux cibles et catégories de commissions."
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__id
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__id
+#: model:ir.model.fields,field_description:commission.field_commission_target__id
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__id
+msgid "ID"
+msgstr "ID"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__message_unread
+#: model:ir.model.fields,help:commission.field_commission_target__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Si coché de nouveaux messages requierent votre attention"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__message_needaction
+#: model:ir.model.fields,help:commission.field_commission_target__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si coché de nouveaux messages requierent votre attention"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__message_has_error
+#: model:ir.model.fields,help:commission.field_commission_target__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si coché, certains messages ont une erreur de livraison"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__included_tag_ids
+msgid "Included Tag"
+msgstr "Tag inclus"
+
+#. module: commission
+#: selection:commission.category,rate_type:0
+msgid "Interval"
+msgstr "Intervalle"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__invoice_line_ids
+msgid "Invoice Line"
+msgstr "Ligne de facture"
+
+#. module: commission
+#: code:addons/commission/models/commission_target.py:297
+#: model:ir.actions.act_window,name:commission.action_invoice_lines
+#: model_terms:ir.ui.view,arch_db:commission.view_invoice_line_tree
+#, python-format
+msgid "Invoice Lines"
+msgstr "Lignes de facture"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_is_follower
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_is_follower
+msgid "Is Follower"
+msgstr "Est abonné"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category____last_update
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate____last_update
+#: model:ir.model.fields,field_description:commission.field_commission_target____last_update
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate____last_update
+msgid "Last Modified on"
+msgstr "Modifié la dernière fois le"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__write_uid
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__write_uid
+#: model:ir.model.fields,field_description:commission.field_commission_target__write_uid
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour la dernière fois par"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__write_date
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__write_date
+#: model:ir.model.fields,field_description:commission.field_commission_target__write_date
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__write_date
+msgid "Last Updated on"
+msgstr "Mis à jour pour la dernière fois le"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_main_attachment_id
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Pièce jointe principale"
+
+#. module: commission
+#: model:res.groups,name:commission.group_manager
+msgid "Manager"
+msgstr "Superviseur"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Mark As Done"
+msgstr "Terminer"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Mark As Draft"
+msgstr "Mettre en brouillon"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__max_amount
+msgid "Max Amount"
+msgstr "Montant maximum"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_has_error
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_has_error
+msgid "Message Delivery error"
+msgstr "Erreur d'envoi du message"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_ids
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_ids
+msgid "Messages"
+msgstr "Messages"
+
+#. module: commission
+#: selection:commission.category,basis:0
+msgid "My Sales"
+msgstr "Mes ventes"
+
+#. module: commission
+#: selection:commission.category,basis:0
+msgid "My Team's Commissions"
+msgstr "Ventes de mon équipe"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__activity_date_deadline
+#: model:ir.model.fields,field_description:commission.field_commission_target__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Date butoir de la prochaine activité"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__activity_summary
+#: model:ir.model.fields,field_description:commission.field_commission_target__activity_summary
+msgid "Next Activity Summary"
+msgstr "Sommaire de la prochaine activité"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__activity_type_id
+#: model:ir.model.fields,field_description:commission.field_commission_target__activity_type_id
+msgid "Next Activity Type"
+msgstr "Type de la prochaine activité"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_needaction_counter
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Nombre d'actions"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_has_error_counter
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_has_error_counter
+msgid "Number of error"
+msgstr "Nombre d'erreurs"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__message_needaction_counter
+#: model:ir.model.fields,help:commission.field_commission_target__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Nombre de messages qui requièrent une action"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__message_has_error_counter
+#: model:ir.model.fields,help:commission.field_commission_target__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Nombre de messages avec une erreur de livraison"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__message_unread_counter
+#: model:ir.model.fields,help:commission.field_commission_target__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Nombre de messages non lus"
+
+#. module: commission
+#: selection:commission.category,activity_state:0
+#: selection:commission.target,activity_state:0
+msgid "Overdue"
+msgstr "Date limite dépassée"
+
+#. module: commission
+#: selection:commission.category,activity_state:0
+#: selection:commission.target,activity_state:0
+msgid "Planned"
+msgstr "Planifié"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__rate_ids
+#: model:ir.model.fields,field_description:commission.field_commission_target__rate_ids
+msgid "Rate"
+msgstr "Taux"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__rate_type
+#: model:ir.model.fields,field_description:commission.field_commission_target__rate_type
+msgid "Rate Type"
+msgstr "Type de taux"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__name
+msgid "Reference"
+msgstr "Référence"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__activity_user_id
+#: model:ir.model.fields,field_description:commission.field_commission_target__activity_user_id
+msgid "Responsible User"
+msgstr "Utilisateur responsable"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_search
+msgid "Search Commission Targets"
+msgstr "Chercher les cibles de commissions"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__show_child_targets
+msgid "Show Child Targets"
+msgstr "Montrer les cibles enfants"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__show_invoices
+msgid "Show Invoices"
+msgstr "Montrer les factures"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__slice_from
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__slice_from
+msgid "Slice From"
+msgstr "Tranche du dessous"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category_rate__slice_to
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__slice_to
+msgid "Slice To"
+msgstr "Tranche du haut"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__date_start
+msgid "Start date"
+msgstr "Date de début"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__state
+msgid "State"
+msgstr "État"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__activity_state
+#: model:ir.model.fields,help:commission.field_commission_target__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"État basé sur les activités\n"
+"Dépassé: Date butoir déjà passée\n"
+"Aujourd'hui: La date de l'activité est aujourd'hui\n"
+"Planifié: Activités futures"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__subtotal
+msgid "Subtotal"
+msgstr "Sous total"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target_rate__target_id
+msgid "Target"
+msgstr "Cible"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__target_amount
+msgid "Target Amount"
+msgstr "Montant de la cible"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "Target For The Period"
+msgstr "Cible pour la période"
+
+#. module: commission
+#: model:ir.actions.act_window,name:commission.action_target
+#: model:ir.ui.menu,name:commission.commission_target
+msgid "Targets"
+msgstr "Cibles"
+
+#. module: commission
+#: code:addons/commission/models/commission_target.py:303
+#, python-format
+msgid "Team Commissions"
+msgstr "Commissions de mon équipe"
+
+#. module: commission
+#: model:res.groups,name:commission.group_team_manager
+msgid "Team Manager"
+msgstr "Superviseur d'équipe"
+
+#. module: commission
+#: selection:commission.category,activity_state:0
+#: selection:commission.target,activity_state:0
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.view_invoice_line_tree
+msgid "Total"
+msgstr "Sous total"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__total_amount
+msgid "Total Amount"
+msgstr "Montant total"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__invoiced_amount
+msgid "Total Amount On Admissible Invoice Lines"
+msgstr "Montant total sur les lignes de factures admissibles"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__child_commission_amount
+msgid "Total Amount On Team Commissions"
+msgstr "Montant total sur les commissions de mon équipe"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_unread
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_unread
+msgid "Unread Messages"
+msgstr "Messages non lus"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__message_unread_counter
+#: model:ir.model.fields,field_description:commission.field_commission_target__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Comptoir des messages non lus"
+
+#. module: commission
+#: model:res.groups,name:commission.group_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_form
+msgid "View Lines"
+msgstr "Voir les lignes"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__website_message_ids
+#: model:ir.model.fields,field_description:commission.field_commission_target__website_message_ids
+msgid "Website Messages"
+msgstr "Messages du site web"
+
+#. module: commission
+#: model:ir.model.fields,help:commission.field_commission_category__website_message_ids
+#: model:ir.model.fields,help:commission.field_commission_target__website_message_ids
+msgid "Website communication history"
+msgstr "Historique des communications du site web"
+
+#. module: commission
+#: code:addons/commission/models/commission_target.py:340
+#, python-format
+msgid ""
+"You are not allowed to access the target {} because it is either not your "
+"own target or a target of a member of your team."
+msgstr ""
+"Vous ne pouvez pas accéder la cible {} puisque ce n'est pas une cible à vous "
+"ou à un membre de votre équipe."
+
+#. module: commission
+#: code:addons/commission/models/commission_target.py:353
+#, python-format
+msgid ""
+"You are not allowed to access the target {} because it is not your own "
+"target."
+msgstr ""
+"Vous ne pouvez pas accéder à la cible {} puisqu'elle ne vous appartient pas."

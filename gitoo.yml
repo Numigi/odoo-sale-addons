@@ -10,6 +10,11 @@
     - sale_maps
     - web_google_maps
 
+- url: https://github.com/Numigi/odoo-base-addons
+  branch: "12.0"
+  includes:
+    - base_extended_security
+
 - url: https://github.com/Numigi/odoo-product-addons
   branch: "12.0"
   includes:
@@ -47,3 +52,14 @@
   branch: "12.0"
   includes:
     - sale_order_global_stock_route
+
+- url: https://github.com/OCA/server-ux.git
+  branch: "12.0"
+  includes:
+    - date_range
+
+- url: https://github.com/Numigi/odoo-timesheet-addons
+  branch: "12.0"
+  includes:
+    - payroll_period
+    - payroll_preparation

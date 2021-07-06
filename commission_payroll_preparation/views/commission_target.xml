@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="open_payroll_entries" model="ir.actions.act_window">
+        <field name="name">Payroll Entries</field>
+        <field name="res_model">payroll.preparation.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_commission_target_id': active_id}</field>
+    </record>
+
+    <record id="action_generate_payroll" model="ir.actions.act_window">
+        <field name="name">Generate</field>
+        <field name="res_model">commission.payroll.preparation.wizard</field>
+        <field name="groups_id" eval="[(4, ref('commission.group_user'))]"/>
+        <field name="binding_model_id" ref="model_commission_target"/>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="action_mark_as_done_target" model="ir.actions.server">
+        <field name="name">Mark As Done</field>
+        <field name="model_id" ref="model_commission_target"/>
+        <field name="binding_model_id" ref="model_commission_target"/>
+        <field name="state">code</field>
+        <field name="code">records.set_done_state()</field>
+    </record>
+
+    <record id="commission_target_form" model="ir.ui.view">
+        <field name="name">commission.target.form</field>
+        <field name="model">commission.target</field>
+        <field name="inherit_id" ref="commission.commission_target_form"></field>
+        <field name="arch" type="xml">
+            <button name="compute" position="after">
+                <field name="state" invisible="1"/>
+                <button type="action"
+                        string="Generate"
+                        class="oe_highlight" 
+                        name="%(action_commission_payroll_preparation_wizard)d"
+                        groups="commission.group_manager"
+                        attrs="{
+                            'invisible':[('state', 'in', ['draft','done','cancelled'])]
+                        }"/>
+            </button>
+            <field name="total_amount" position="after">
+                <field name="already_generated"/>
+                <field name="left_to_generate"/>
+            </field>
+            <div name="button_box" position="inside">
+                <button type="action"
+                        name="%(open_payroll_entries)d"
+                        class="oe_stat_button"
+                        icon="fa-usd"
+                        attrs="{'invisible': [('payroll_line_count', '=', 0)]}"
+                        groups="payroll_preparation.group_user"
+                        >
+                        <field string="Payroll Entries" name="payroll_line_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+</odoo>

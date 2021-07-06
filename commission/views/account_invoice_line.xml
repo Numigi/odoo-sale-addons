@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_invoice_line_tree" model="ir.ui.view">
+        <field name="name">Invoice Line (from commission target)</field>
+        <field name="model">account.invoice.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <tree string="Invoice Lines">
+                <field name="origin"/>
+                <field name="name"/>
+                <field name="invoice_id"/>
+                <field name="partner_id"/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+                <field name="price_unit"/>
+                <field name="discount"/>
+                <field name="price_subtotal_signed" string="Total" sum="Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_invoice_lines" model="ir.actions.act_window">
+        <field name="name">Invoice Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.invoice.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_id" ref="view_invoice_line_tree"/>
+    </record>
+
+</odoo>
