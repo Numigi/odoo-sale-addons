@@ -4,6 +4,23 @@ This module adds commissions functionality for employee sales.
 
 .. contents:: Table of Contents
 
+Context
+-------
+As of version ``12.0``, there is no module in vanilla Odoo that allows you to manage sales commissions.
+
+However, a `series of modules <https://github.com/OCA/commission>`_ already exists on OCA.
+These modules are designed to manage commissions based on extra data entered on sale order lines and invoice lines.
+
+Overview
+--------
+This module implements sales commissions based on targets by period.
+
+This means that the commissions earned by an employee are not computed for each product sold,
+but rather globally for the sold amount of a given period.
+
+With this module, you do not need to enter extra information on invoices.
+However, you need to create targets for your employees for each period (week, month, trimester, etc).
+
 Module
 ------
 This module adds a "Commissions" app to the Odoo apps selection menu.
