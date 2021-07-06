@@ -12,9 +12,9 @@
     "summary": "",
     "depends": ["base", "commission", "payroll_preparation", "date_range"],
     "data": [
+        "wizard/commission_payroll_preparation_wizard.xml",
         "views/commission_target.xml",
         "views/payroll_preparation_line.xml",
-        "wizard/commission_payroll_preparation_wizard.xml",
     ],
     "installable": True,
 }
