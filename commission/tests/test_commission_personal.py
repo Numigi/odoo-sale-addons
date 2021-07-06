@@ -73,12 +73,12 @@ class TestCommissionPersonal(TestCommissionCase):
         assert self.target.base_amount == 5000
 
     def test_multiple_base_amount(self):
-        invoice = self._create_invoice(amount=5000)
+        self._create_invoice(amount=5000)
         self._compute_target()
         assert self.target.base_amount == 10000
 
     def test_different_currency_base_amount(self):
-        cad_invoice = self._create_invoice(
+        self._create_invoice(
             currency=self.env.ref("base.CAD"), amount=5000
         )
         self._compute_target()
@@ -89,7 +89,7 @@ class TestCommissionPersonal(TestCommissionCase):
 
         self.invoice.invoice_line_ids.analytic_tag_ids = self.included_tag
 
-        excluded_invoice = self._create_invoice(amount=5000)
+        self._create_invoice(amount=5000)
 
         self._compute_target()
         assert self.target.base_amount == 5000

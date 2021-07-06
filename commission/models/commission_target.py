@@ -4,7 +4,6 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import AccessError
 from odoo.osv.expression import AND
-from functools import reduce
 
 
 class CommissionTarget(models.Model):

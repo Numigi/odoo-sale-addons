@@ -4,7 +4,6 @@
 import pytest
 from odoo.exceptions import ValidationError
 from .common import TestPayrollCase
-from datetime import date
 
 
 class TestWizard(TestPayrollCase):
@@ -95,7 +94,6 @@ class TestWizard(TestPayrollCase):
         invoiced_amount = 500
         self._create_invoice(amount=invoiced_amount)
         self.target.compute()
-        
         self.wizard.confirm()
         created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
         assert created_payroll.commission_target_id == self.target
