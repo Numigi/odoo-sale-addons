@@ -87,7 +87,11 @@ When finished, you can "Mark as Done" the target, which disables the "Compute" b
 
 Read/Write Permissions
 ----------------------
+Users with the manager role have access to create, view and update commission targets and categories.
 
+Users with the team manager role can only view the commission targets of the members of their team.
+
+Users the with user role can only view their own commission targets.
 
 Configuration
 -------------
