@@ -44,19 +44,17 @@
                                 attrs="{
                                     'invisible':[('basis', '!=', 'my_sales')]
                                 }">
-                            <field name="included_tag_ids" widget="many2many_checkboxes"
-                                domain="[('id', '!=', id)]"
-                                />
-                            <field name="excluded_tag_ids" widget="many2many_checkboxes"
-                                domain="[('id', '!=', id)]"
-                                />
+                            <field name="included_tag_ids" widget="many2many_tags"/>
+                            <field name="excluded_tag_ids" widget="many2many_tags"/>
                         </group>
                         <group name="child_categories"
                                 attrs="{
                                     'invisible':[('basis', '!=', 'my_team_commissions')]
                                 }">
                             <field name="child_category_ids"
-                                    widget="many2many_checkboxes"/>
+                                widget="many2many_checkboxes"
+                                domain="[('id', '!=', id)]"
+                                />
                         </group>
                     </group>
                 </sheet>
