@@ -12,6 +12,8 @@
     "summary": "",
     "depends": ["commission_payroll_preparation"],
     "data": [
+        "views/commission_target.xml",
+        "wizard/commission_payroll_preparation_wizard.xml"
     ],
     "installable": True,
 }
