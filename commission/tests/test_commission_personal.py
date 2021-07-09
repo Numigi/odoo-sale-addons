@@ -17,9 +17,40 @@ class TestCommissionPersonal(TestCommissionCase):
 
         cls.target = cls._create_target(target_amount=100000)
 
-        cls.included_tag = cls.env["account.analytic.tag"].create({"name": "Chairs"})
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Product",
+                "type": "product",
+            }
+        )
 
-        cls.excluded_tag = cls.env["account.analytic.tag"].create({"name": "Tables"})
+        cls.partner = cls.env["res.partner"].create(
+            {
+                "name": "william",
+            }
+        )
+
+        cls.sale_order = cls.env["sale.order"].create(
+            {
+                "partner_id": cls.partner.id,
+                "pricelist_id": cls.env.ref("product.list0").id,
+            }
+        )
+
+        cls.sale_order_line = cls.env["sale.order.line"].create(
+            {
+                "product_id": cls.product.id,
+                "order_id": cls.sale_order.id,
+                "product_uom": cls.product.uom_id.id,
+                "product_uom_qty": 1,
+                "name": "line",
+                "invoice_lines": cls.invoice.invoice_line_ids
+            }
+        )
+
+        cls.included_tag = cls.env["sale.order.tag"].create({"name": "Chairs"})
+
+        cls.excluded_tag = cls.env["sale.order.tag"].create({"name": "Tables"})
 
     def test_compute_show_invoices(self):
         assert self.target.show_invoices
@@ -78,16 +109,16 @@ class TestCommissionPersonal(TestCommissionCase):
         assert self.target.base_amount == 10000
 
     def test_different_currency_base_amount(self):
-        self._create_invoice(
-            currency=self.env.ref("base.CAD"), amount=5000
-        )
+        self._create_invoice(currency=self.env.ref("base.CAD"), amount=5000)
         self._compute_target()
         assert self.target.base_amount == 5000 + 5000 / self.exchange_rate_cad.rate
 
     def test_included_tags(self):
         self.category.included_tag_ids = self.included_tag
 
-        self.invoice.invoice_line_ids.analytic_tag_ids = self.included_tag
+        self.sale_order.so_tag_ids = (
+            self.included_tag
+        )
 
         self._create_invoice(amount=5000)
 
@@ -97,7 +128,9 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_excluded_tags(self):
         self.category.excluded_tag_ids = self.excluded_tag
 
-        self.invoice.invoice_line_ids.analytic_tag_ids = self.excluded_tag
+        self.sale_order.so_tag_ids = (
+            self.excluded_tag
+        )
 
         self._compute_target()
         assert not self.target.base_amount
@@ -106,10 +139,12 @@ class TestCommissionPersonal(TestCommissionCase):
         self.category.included_tag_ids = self.included_tag
         self.category.excluded_tag_ids = self.excluded_tag
 
-        self.invoice.invoice_line_ids.analytic_tag_ids = self.included_tag
+        self.sale_order.so_tag_ids = (
+            self.included_tag
+        )
 
         excluded_invoice = self._create_invoice(amount=5000)
-        excluded_invoice.invoice_line_ids.analytic_tag_ids = (
+        self.sale_order.so_tag_ids = (
             self.included_tag | self.excluded_tag
         )
 
@@ -183,8 +218,6 @@ class TestCommissionPersonal(TestCommissionCase):
 
     def _search_employee_targets(self):
         domain = (
-            self.env["commission.target"]
-            .sudo(self.user)
-            .get_extended_security_domain()
+            self.env["commission.target"].sudo(self.user).get_extended_security_domain()
         )
         return self.env["commission.target"].search(domain)

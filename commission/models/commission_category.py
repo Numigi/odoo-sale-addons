@@ -37,20 +37,18 @@ class CommissionCategory(models.Model):
         "commission.category", "commission_category_child_rel", "parent_id", "child_id"
     )
     included_tag_ids = fields.Many2many(
-        "account.analytic.tag",
+        "sale.order.tag",
         "commission_category_included_tags_rel",
         "category_id",
         "tag_id",
         track_visibility="onchange",
-        groups="analytic.group_analytic_tags",
     )
     excluded_tag_ids = fields.Many2many(
-        "account.analytic.tag",
+        "sale.order.tag",
         "commission_category_excluded_tags_rel",
         "category_id",
         "tag_id",
         track_visibility="onchange",
-        groups="analytic.group_analytic_tags",
     )
 
     def _sorted_by_dependencies(self):
