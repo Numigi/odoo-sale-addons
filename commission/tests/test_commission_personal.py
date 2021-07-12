@@ -3,7 +3,7 @@
 
 import pytest
 from .common import TestCommissionCase
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
 from datetime import date
 from ddt import ddt, data
 
@@ -44,9 +44,9 @@ class TestCommissionPersonal(TestCommissionCase):
                 "product_uom": cls.product.uom_id.id,
                 "product_uom_qty": 1,
                 "name": "line",
-                "invoice_lines": cls.invoice.invoice_line_ids
             }
         )
+        cls.sale_order_line.invoice_lines = cls.invoice.invoice_line_ids
 
         cls.included_tag = cls.env["sale.order.tag"].create({"name": "Chairs"})
 
@@ -113,19 +113,17 @@ class TestCommissionPersonal(TestCommissionCase):
         self._compute_target()
         assert self.target.base_amount == 5000 + 5000 / self.exchange_rate_cad.rate
 
-    def test_included_tags(self):
+    def test_included_tag(self):
         self.category.included_tag_ids = self.included_tag
 
         self.sale_order.so_tag_ids = (
             self.included_tag
         )
 
-        self._create_invoice(amount=5000)
-
         self._compute_target()
         assert self.target.base_amount == 5000
 
-    def test_excluded_tags(self):
+    def test_excluded_tag(self):
         self.category.excluded_tag_ids = self.excluded_tag
 
         self.sale_order.so_tag_ids = (
@@ -135,21 +133,39 @@ class TestCommissionPersonal(TestCommissionCase):
         self._compute_target()
         assert not self.target.base_amount
 
-    def test_included_excluded_tags(self):
+    def test_many_tags(self):
         self.category.included_tag_ids = self.included_tag
         self.category.excluded_tag_ids = self.excluded_tag
 
-        self.sale_order.so_tag_ids = (
-            self.included_tag
-        )
-
         excluded_invoice = self._create_invoice(amount=5000)
-        self.sale_order.so_tag_ids = (
-            self.included_tag | self.excluded_tag
+
+        excluded_sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "pricelist_id": self.env.ref("product.list0").id,
+            }
         )
+        excluded_sale_order_line = self.env["sale.order.line"].create(
+            {
+                "product_id": self.product.id,
+                "order_id": excluded_sale_order.id,
+                "product_uom": self.product.uom_id.id,
+                "product_uom_qty": 1,
+                "name": "line",
+            }
+        )
+        excluded_sale_order_line.invoice_lines = excluded_invoice.invoice_line_ids
+
+        self.sale_order.so_tag_ids = self.included_tag
+        excluded_sale_order.so_tag_ids = self.excluded_tag
 
         self._compute_target()
         assert self.target.base_amount == 5000
+
+    def test_no_same_tags(self):
+        self.category.included_tag_ids = self.included_tag
+        with pytest.raises(ValidationError):
+            self.category.excluded_tag_ids = self.included_tag
 
     def test_new_personal_category_spreads_rates(self):
         self.target.fixed_rate = 0
