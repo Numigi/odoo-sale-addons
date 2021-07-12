@@ -12,6 +12,7 @@ class TestProrataCase(TestPayrollCase):
 
         cls.target_amount = 1000
         cls.fixed_rate = 0.05
+        cls.invoiced_amount = 500
         cls.target = cls.env["commission.target"].create(
             {
                 "employee_id": cls.employee.id,
@@ -20,9 +21,10 @@ class TestProrataCase(TestPayrollCase):
                 "date_range_id": cls.date_range.id,
                 "rate_type": "fixed",
                 "fixed_rate": cls.fixed_rate,
-                "state": "confirmed"
+                "state": "confirmed",
             }
         )
+        cls.target.total_amount = cls.invoiced_amount * cls.fixed_rate
 
         cls.wizard = cls.env["commission.payroll.preparation.wizard"].create(
             {
@@ -30,7 +32,3 @@ class TestProrataCase(TestPayrollCase):
                 "period": cls.period.id,
             }
         )
-
-        cls.invoiced_amount = 500
-        cls._create_invoice(amount=cls.invoiced_amount)
-        cls.target.compute()
