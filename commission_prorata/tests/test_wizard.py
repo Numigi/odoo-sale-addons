@@ -6,11 +6,12 @@ from .common import TestProrataCase
 
 
 class TestWizard(TestProrataCase):
-
     def test_create_payroll_default_prorata(self):
         self.wizard.confirm()
 
-        created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
+        created_payroll = self.env["payroll.preparation.line"].search(
+            [("company_id", "=", self.target.company_id.id)]
+        )
 
         assert created_payroll.amount == self.invoiced_amount * self.fixed_rate
         assert self.target.prorata_days_worked == 1
@@ -21,8 +22,16 @@ class TestWizard(TestProrataCase):
         self.wizard.prorata_days_worked = prorata
         self.wizard.confirm()
 
-        created_payroll = self.env["payroll.preparation.line"].search([("company_id", "=", self.target.company_id.id)])
+        created_payroll = self.env["payroll.preparation.line"].search(
+            [("company_id", "=", self.target.company_id.id)]
+        )
 
-        assert created_payroll.amount == self.invoiced_amount * self.fixed_rate * self.wizard.prorata_days_worked
+        assert (
+            created_payroll.amount
+            == self.invoiced_amount * self.fixed_rate * self.wizard.prorata_days_worked
+        )
         assert self.target.prorata_days_worked == prorata
-        assert self.target.eligible_amount == self.invoiced_amount * self.fixed_rate * self.wizard.prorata_days_worked
+        assert (
+            self.target.eligible_amount
+            == self.invoiced_amount * self.fixed_rate * self.wizard.prorata_days_worked
+        )

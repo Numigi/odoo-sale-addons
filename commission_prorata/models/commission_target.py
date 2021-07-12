@@ -8,8 +8,9 @@ class CommissionTarget(models.Model):
     _inherit = "commission.target"
 
     prorata_days_worked = fields.Float(default=1, readonly=True)
-    eligible_amount = fields.Monetary(readonly=True, compute="_compute_eligible_amount", store=True)
-    
+    eligible_amount = fields.Monetary(
+        readonly=True, compute="_compute_eligible_amount", store=True
+    )
 
     @api.depends("eligible_amount", "already_generated")
     def _compute_left_to_generate(self):

@@ -9,13 +9,16 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
     _inherit = "commission.payroll.preparation.wizard"
 
     prorata_days_worked = fields.Float(default=1)
-    
-    def confirm(self):
-        self._update_target_ids()
-        super().confirm()
-        
 
-    def _update_target_ids(self):
+    def confirm(self):
+        self._update_target_proratas()
+        self._update_target_eligible_amounts()
+        super().confirm()
+
+    def _update_target_proratas(self):
         for target in self.target_ids:
             target.prorata_days_worked = self.prorata_days_worked
+
+    def _update_target_eligible_amounts(self):
+        for target in self.target_ids:
             target.eligible_amount = target.total_amount * target.prorata_days_worked
