@@ -41,6 +41,8 @@ Categories are templates for the commissions targets.
 
 Clicking on "Create" brings up the Category creation menu, allowing you to select different options that will function as a template for targets.
 
+**Fields**
+
 * Name: Name of the category for easier grouping
 * Rate Type: Type of rate used to calculate commissions
 
@@ -52,9 +54,23 @@ Clicking on "Create" brings up the Category creation menu, allowing you to selec
   * My Sales: Commissions calculated on the basis of personal sales
   * My Team Commissions: Commissions calculated on the basis of the user's team's total commissions
 
+**Tags**
+
 For categories based on personal sales, you have the option to select included or excluded tags to help with invoice filtering.
 
+If only included tags are added, then only invoices linked with a sale order with the selected tags will be taken into account.
+
+If only excluded tags are added, then all invoices will be taken into account except those with the selected tag.
+
+If both types of tags are added, then only included invoices that are not linked with a sale order with the selected excluded tags will be taken into account.
+
+You cannot put a tag both as included and excluded.
+
+**Child categories**
+
 For categories based on team sales, you have the option to select other categories to help with invoice filtering.
+
+You cannot add a category as its own child category.
 
 .. image:: static/description/category.png
 
@@ -67,6 +83,8 @@ Targets are the commissions goals than can be created for the employees.
 .. image:: static/description/target_menu.png
 
 Clicking on "Create" brings up the Target creation menu, allowing you to select different options that will change the target's behavior.
+
+**Fields**
 
 * Agent: The agent for who we want to create a commissions target
 * Category: The category which we want to use as a template
