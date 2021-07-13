@@ -2,10 +2,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.exceptions import ValidationError
-from .common import TestProrataCase
+from .common import ProrataCase
 
 
-class TestWizard(TestProrataCase):
+class TestWizard(ProrataCase):
     def test_create_payroll_default_prorata(self):
         self.wizard.confirm()
 

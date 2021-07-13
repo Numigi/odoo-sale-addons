@@ -5,7 +5,7 @@ from odoo.addons.commission_payroll_preparation.tests.common import TestPayrollC
 from datetime import date
 
 
-class TestProrataCase(TestPayrollCase):
+class ProrataCase(TestPayrollCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
