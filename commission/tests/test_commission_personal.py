@@ -137,23 +137,9 @@ class TestCommissionPersonal(TestCommissionCase):
         self.category.included_tag_ids = self.included_tag
         self.category.excluded_tag_ids = self.excluded_tag
 
+        excluded_sale_order = self._create_sale_order()
+        excluded_sale_order_line = self._create_sale_order_line(excluded_sale_order)
         excluded_invoice = self._create_invoice(amount=5000)
-
-        excluded_sale_order = self.env["sale.order"].create(
-            {
-                "partner_id": self.partner.id,
-                "pricelist_id": self.env.ref("product.list0").id,
-            }
-        )
-        excluded_sale_order_line = self.env["sale.order.line"].create(
-            {
-                "product_id": self.product.id,
-                "order_id": excluded_sale_order.id,
-                "product_uom": self.product.uom_id.id,
-                "product_uom_qty": 1,
-                "name": "line",
-            }
-        )
         excluded_sale_order_line.invoice_lines = excluded_invoice.invoice_line_ids
 
         self.sale_order.so_tag_ids = self.included_tag
@@ -237,3 +223,22 @@ class TestCommissionPersonal(TestCommissionCase):
             self.env["commission.target"].sudo(self.user).get_extended_security_domain()
         )
         return self.env["commission.target"].search(domain)
+
+    def _create_sale_order(self):
+        return self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "pricelist_id": self.env.ref("product.list0").id,
+            }
+        )
+
+    def _create_sale_order_line(self, sale_order,):
+        return self.env["sale.order.line"].create(
+            {
+                "product_id": self.product.id,
+                "order_id": sale_order.id,
+                "product_uom": self.product.uom_id.id,
+                "product_uom_qty": 1,
+                "name": "line",
+            }
+        )
