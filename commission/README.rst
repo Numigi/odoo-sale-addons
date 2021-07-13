@@ -66,13 +66,23 @@ If both types of tags are added, then only included invoices that are not linked
 
 You cannot put a tag both as included and excluded.
 
+You can create these tags in the "Configuration" menu of the "Sales" module.
+
+.. image:: static/description/tags.png
+
+These tags are then applied on sale orders. The filtering will occur through the lines of the sale order, which are linked to the invoices themselves.
+
+.. image:: static/description/sale_order.png
+
+.. image:: static/description/sale_tag.png
+
 **Child categories**
 
 For categories based on team sales, you have the option to select other categories to help with invoice filtering.
 
 You cannot add a category as its own child category.
 
-.. image:: static/description/category.png
+.. image:: static/description/child_category.png
 
 Targets
 -------
