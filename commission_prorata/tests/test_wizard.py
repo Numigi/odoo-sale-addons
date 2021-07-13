@@ -26,7 +26,9 @@ class TestWizard(ProrataCase):
             [("company_id", "=", self.target.company_id.id)]
         )
 
-        prorata_invoiced_amount = self.invoiced_amount * self.fixed_rate * self.wizard.prorata_days_worked
+        prorata_invoiced_amount = (
+            self.invoiced_amount * self.fixed_rate * self.wizard.prorata_days_worked
+        )
 
         assert created_payroll.amount == prorata_invoiced_amount
         assert self.target.prorata_days_worked == prorata
