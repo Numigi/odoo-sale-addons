@@ -18,6 +18,7 @@ USER odoo
 
 COPY commission /mnt/extra-addons/commission
 COPY commission_payroll_preparation /mnt/extra-addons/commission_payroll_preparation
+COPY commission_prorata /mnt/extra-addons/commission_prorata
 COPY crm_brand /mnt/extra-addons/crm_brand
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
