@@ -11,6 +11,8 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "commission",
+        "commission_payroll_preparation",
         "crm_brand",
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
