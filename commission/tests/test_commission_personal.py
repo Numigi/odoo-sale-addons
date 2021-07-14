@@ -3,7 +3,7 @@
 
 import pytest
 from .common import TestCommissionCase
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
 from datetime import date
 from ddt import ddt, data
 
@@ -17,9 +17,40 @@ class TestCommissionPersonal(TestCommissionCase):
 
         cls.target = cls._create_target(target_amount=100000)
 
-        cls.included_tag = cls.env["account.analytic.tag"].create({"name": "Chairs"})
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Product",
+                "type": "product",
+            }
+        )
 
-        cls.excluded_tag = cls.env["account.analytic.tag"].create({"name": "Tables"})
+        cls.partner = cls.env["res.partner"].create(
+            {
+                "name": "william",
+            }
+        )
+
+        cls.sale_order = cls.env["sale.order"].create(
+            {
+                "partner_id": cls.partner.id,
+                "pricelist_id": cls.env.ref("product.list0").id,
+            }
+        )
+
+        cls.sale_order_line = cls.env["sale.order.line"].create(
+            {
+                "product_id": cls.product.id,
+                "order_id": cls.sale_order.id,
+                "product_uom": cls.product.uom_id.id,
+                "product_uom_qty": 1,
+                "name": "line",
+            }
+        )
+        cls.sale_order_line.invoice_lines = cls.invoice.invoice_line_ids
+
+        cls.included_tag = cls.env["sale.order.tag"].create({"name": "Chairs"})
+
+        cls.excluded_tag = cls.env["sale.order.tag"].create({"name": "Tables"})
 
     def test_compute_show_invoices(self):
         assert self.target.show_invoices
@@ -78,43 +109,49 @@ class TestCommissionPersonal(TestCommissionCase):
         assert self.target.base_amount == 10000
 
     def test_different_currency_base_amount(self):
-        self._create_invoice(
-            currency=self.env.ref("base.CAD"), amount=5000
-        )
+        self._create_invoice(currency=self.env.ref("base.CAD"), amount=5000)
         self._compute_target()
         assert self.target.base_amount == 5000 + 5000 / self.exchange_rate_cad.rate
 
-    def test_included_tags(self):
+    def test_included_tag(self):
         self.category.included_tag_ids = self.included_tag
 
-        self.invoice.invoice_line_ids.analytic_tag_ids = self.included_tag
-
-        self._create_invoice(amount=5000)
+        self.sale_order.so_tag_ids = (
+            self.included_tag
+        )
 
         self._compute_target()
         assert self.target.base_amount == 5000
 
-    def test_excluded_tags(self):
+    def test_excluded_tag(self):
         self.category.excluded_tag_ids = self.excluded_tag
 
-        self.invoice.invoice_line_ids.analytic_tag_ids = self.excluded_tag
+        self.sale_order.so_tag_ids = (
+            self.excluded_tag
+        )
 
         self._compute_target()
         assert not self.target.base_amount
 
-    def test_included_excluded_tags(self):
+    def test_many_tags(self):
         self.category.included_tag_ids = self.included_tag
         self.category.excluded_tag_ids = self.excluded_tag
 
-        self.invoice.invoice_line_ids.analytic_tag_ids = self.included_tag
-
+        excluded_sale_order = self._create_sale_order()
+        excluded_sale_order_line = self._create_sale_order_line(excluded_sale_order)
         excluded_invoice = self._create_invoice(amount=5000)
-        excluded_invoice.invoice_line_ids.analytic_tag_ids = (
-            self.included_tag | self.excluded_tag
-        )
+        excluded_sale_order_line.invoice_lines = excluded_invoice.invoice_line_ids
+
+        self.sale_order.so_tag_ids = self.included_tag
+        excluded_sale_order.so_tag_ids = self.excluded_tag
 
         self._compute_target()
         assert self.target.base_amount == 5000
+
+    def test_no_same_tags(self):
+        self.category.included_tag_ids = self.included_tag
+        with pytest.raises(ValidationError):
+            self.category.excluded_tag_ids = self.included_tag
 
     def test_new_personal_category_spreads_rates(self):
         self.target.fixed_rate = 0
@@ -183,8 +220,25 @@ class TestCommissionPersonal(TestCommissionCase):
 
     def _search_employee_targets(self):
         domain = (
-            self.env["commission.target"]
-            .sudo(self.user)
-            .get_extended_security_domain()
+            self.env["commission.target"].sudo(self.user).get_extended_security_domain()
         )
         return self.env["commission.target"].search(domain)
+
+    def _create_sale_order(self):
+        return self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "pricelist_id": self.env.ref("product.list0").id,
+            }
+        )
+
+    def _create_sale_order_line(self, sale_order,):
+        return self.env["sale.order.line"].create(
+            {
+                "product_id": self.product.id,
+                "order_id": sale_order.id,
+                "product_uom": self.product.uom_id.id,
+                "product_uom_qty": 1,
+                "name": "line",
+            }
+        )

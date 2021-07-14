@@ -176,11 +176,13 @@ class CommissionTarget(models.Model):
 
     def _is_included_invoice_line(self, line):
         included = self.category_id.included_tag_ids
-        return not included or bool(included & line.analytic_tag_ids)
+        tags = line.sale_line_ids.order_id.so_tag_ids
+        return not included or bool(included & tags)
 
     def _is_excluded_invoice_line(self, line):
         excluded = self.category_id.excluded_tag_ids
-        return bool(excluded & line.analytic_tag_ids)
+        tags = line.sale_line_ids.order_id.so_tag_ids
+        return bool(excluded & tags)
 
     def _update_base_amount_my_team_commissions(self):
         self._get_child_targets()
