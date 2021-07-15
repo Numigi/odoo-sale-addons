@@ -15,6 +15,8 @@
         "hr",
         "date_range",
         "base_extended_security",
+        "sale_order_tag",
+        "sale_stock",
     ],
     "data": [
         "security/res_groups.xml",
