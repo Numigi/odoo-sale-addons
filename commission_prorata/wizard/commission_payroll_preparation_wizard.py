@@ -13,7 +13,7 @@ class CommissionPayrollPreparationWizard(models.TransientModel):
     def confirm(self):
         self._update_target_proratas()
         self._update_target_eligible_amounts()
-        super().confirm()
+        return super().confirm()
 
     def _update_target_proratas(self):
         for target in self.target_ids:
