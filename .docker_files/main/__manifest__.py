@@ -17,6 +17,9 @@
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "l10n_ca",  # for testing sale_intercompany_service
+        "commission",
+        "commission_payroll_preparation",
+        "commission_prorata",
         "payment_auto_confirm_sale_order",
         "purchase_sale_inter_company_route",
         "sale_commitment_date_update",
