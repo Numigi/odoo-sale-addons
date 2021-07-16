@@ -1,6 +1,7 @@
 # © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import datetime
 from odoo import fields, models, api, _
 from odoo.exceptions import AccessError
 from odoo.osv.expression import AND
@@ -68,6 +69,7 @@ class CommissionTarget(models.Model):
     )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
+    last_compute_date = fields.Datetime()
     invoice_line_ids = fields.Many2many(
         "account.invoice.line",
         "commission_target_invoice_line_rel",
@@ -129,6 +131,8 @@ class CommissionTarget(models.Model):
         for target in self._sorted_by_category_dependency():
             target._update_base_amount()
             target._update_total_amount()
+
+        self.last_compute_date = datetime.now()
 
     def _sorted_by_category_dependency(self):
         categories = list(self.mapped("category_id")._sorted_by_dependencies())

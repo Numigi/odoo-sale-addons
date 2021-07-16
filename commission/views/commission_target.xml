@@ -65,6 +65,7 @@
                             <field name="date_range_id"/>
                             <field name="date_start"/>
                             <field name="date_end"/>
+                            <field name="last_compute_date"/>
                         </group>
                     </group>
                     <field name="show_invoices" invisible="1"/>
