@@ -13,7 +13,7 @@ class CommissionTarget(models.Model):
     def compute(self):
         super().compute()
         for target in self:
-            target._update_eligible_amount()
+            target.sudo()._update_eligible_amount()
 
     def _update_eligible_amount(self):
         self.eligible_amount = self.total_amount * self.prorata_days_worked
