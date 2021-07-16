@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* commission_prorata
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-16 18:43+0000\n"
+"PO-Revision-Date: 2021-07-16 14:45-0400\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3\n"
+"Last-Translator: \n"
+"Language: fr\n"
+
+#. module: commission_prorata
+#: model:ir.model,name:commission_prorata.model_commission_payroll_preparation_wizard
+msgid "Commission Payroll Preparation Wizard"
+msgstr "Fenêtre de la préparation des entrées de payes des commissions"
+
+#. module: commission_prorata
+#: model:ir.model,name:commission_prorata.model_commission_target
+msgid "Commission Target"
+msgstr "Cible de commission"
+
+#. module: commission_prorata
+#: model:ir.model.fields,field_description:commission_prorata.field_commission_target__eligible_amount
+msgid "Eligible Amount"
+msgstr "Montant éligible"
+
+#. module: commission_prorata
+#: model:ir.model.fields,field_description:commission_prorata.field_commission_payroll_preparation_wizard__prorata_days_worked
+#: model:ir.model.fields,field_description:commission_prorata.field_commission_target__prorata_days_worked
+msgid "Prorata Days Worked"
+msgstr "Prorata jours travaillés"
