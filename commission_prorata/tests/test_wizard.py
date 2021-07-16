@@ -33,8 +33,3 @@ class TestWizard(ProrataCase):
         assert created_payroll.amount == prorata_invoiced_amount
         assert self.target.prorata_days_worked == prorata
         assert self.target.eligible_amount == prorata_invoiced_amount
-
-    def test_wizard_prorata_default(self):
-        prorata = 0.5
-        self.target.prorata_days_worked = prorata
-        assert self.wizard.prorata_days_worked == self.target.prorata_days_worked

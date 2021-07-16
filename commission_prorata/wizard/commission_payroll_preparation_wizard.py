@@ -8,11 +8,7 @@ from odoo import api, fields, models, _
 class CommissionPayrollPreparationWizard(models.TransientModel):
     _inherit = "commission.payroll.preparation.wizard"
 
-    prorata_days_worked = fields.Float(compute="_compute_default_prorata", store=True)
-
-    @api.depends("target_ids.prorata_days_worked")
-    def _compute_default_prorata(self):
-        self.prorata_days_worked = self.target_ids.prorata_days_worked
+    prorata_days_worked = fields.Float(default=1)
 
     def confirm(self):
         self._update_target_proratas()
