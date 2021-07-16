@@ -240,7 +240,7 @@ msgstr "Brouillon"
 #. module: commission
 #: model_terms:ir.ui.view,arch_db:commission.commission_target_search
 msgid "Employee"
-msgstr ""
+msgstr "Employé"
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_target__date_end
