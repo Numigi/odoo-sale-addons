@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-05 20:02+0000\n"
-"PO-Revision-Date: 2021-07-05 16:06-0400\n"
+"POT-Creation-Date: 2021-07-16 18:37+0000\n"
+"PO-Revision-Date: 2021-07-16 14:42-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -96,6 +96,7 @@ msgstr "Catégories"
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_category_rate__category_id
 #: model:ir.model.fields,field_description:commission.field_commission_target__category_id
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_search
 msgid "Category"
 msgstr "Catégorie"
 
@@ -237,6 +238,11 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_search
+msgid "Employee"
+msgstr "Employé"
+
+#. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_target__date_end
 msgid "End date"
 msgstr "Date de fin"
@@ -294,6 +300,11 @@ msgstr ""
 "Donne accès en lecture et écriture aux cibles et catégories de commissions."
 
 #. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_search
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_category__id
 #: model:ir.model.fields,field_description:commission.field_commission_category_rate__id
 #: model:ir.model.fields,field_description:commission.field_commission_target__id
@@ -335,7 +346,7 @@ msgid "Invoice Line"
 msgstr "Ligne de facture"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:297
+#: code:addons/commission/models/commission_target.py:302
 #: model:ir.actions.act_window,name:commission.action_invoice_lines
 #: model_terms:ir.ui.view,arch_db:commission.view_invoice_line_tree
 #, python-format
@@ -347,6 +358,11 @@ msgstr "Lignes de facture"
 #: model:ir.model.fields,field_description:commission.field_commission_target__message_is_follower
 msgid "Is Follower"
 msgstr "Est abonné"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__last_compute_date
+msgid "Last Compute Date"
+msgstr "Dernière date de calcul"
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_category____last_update
@@ -480,6 +496,11 @@ msgid "Overdue"
 msgstr "Date limite dépassée"
 
 #. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.commission_target_search
+msgid "Period"
+msgstr "Période"
+
+#. module: commission
 #: selection:commission.category,activity_state:0
 #: selection:commission.target,activity_state:0
 msgid "Planned"
@@ -586,7 +607,7 @@ msgid "Targets"
 msgstr "Cibles"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:303
+#: code:addons/commission/models/commission_target.py:308
 #, python-format
 msgid "Team Commissions"
 msgstr "Commissions de mon équipe"
@@ -657,7 +678,7 @@ msgid "Website communication history"
 msgstr "Historique des communications du site web"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:340
+#: code:addons/commission/models/commission_target.py:345
 #, python-format
 msgid ""
 "You are not allowed to access the target {} because it is either not your "
@@ -667,7 +688,7 @@ msgstr ""
 "ou à un membre de votre équipe."
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:353
+#: code:addons/commission/models/commission_target.py:358
 #, python-format
 msgid ""
 "You are not allowed to access the target {} because it is not your own "
