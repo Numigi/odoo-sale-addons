@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="assign_salesperson_by_area_wizard" model="ir.ui.view">
+        <field name="name">assign.salesperson.by.area.wizard</field>
+        <field name="model">assign.salesperson.by.area.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="wizard_msg"/>
+                <group attrs="{'invisible': [('is_several_salespersons', '=', False)]}">
+                    <group>
+                        <field name="salesperson_id"
+                               options="{'no_create': True}"
+                               required="True"
+                               attrs="{'invisible': [('is_several_salespersons', '=', False)]}"
+                        />
+                    </group>
+                    <group/>
+                </group>
+                <group invisible="1">
+                    <field name="available_salesperson_ids" invisible="1"/>
+                    <field name="is_several_salespersons" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="Confirm"
+                            name="action_confirm"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('wizard_msg', 'ilike', 'There is no salesperson to assign')]}"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+      </field>
+    </record>
+
+</odoo>
