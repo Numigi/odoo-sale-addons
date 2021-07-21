@@ -59,7 +59,7 @@ msgstr "Confirmer"
 #. module: crm_assign_by_area
 #: model:ir.model,name:crm_assign_by_area.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #. module: crm_assign_by_area
 #: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__create_uid
