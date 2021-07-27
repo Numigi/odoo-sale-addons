@@ -106,6 +106,16 @@ class TestSaleOrderLine(SaleOrderLineCase):
         assert lines[1].product_uom == self.component_b_uom
         assert lines[2].product_uom == self.component_z_uom
 
+    def test_component_discount(self):
+        discount = 0.2
+        self.kit.kit_discount = discount
+        self.add_kit_on_sale_order()
+        lines = self.get_component_lines()
+        assert len(lines) == 3
+        assert lines[0].discount == discount
+        assert lines[1].discount == discount
+        assert lines[2].discount == discount
+
     def test_kit_line__readonly_conditions(self):
         line = self.add_kit_on_sale_order()
         assert line.is_kit

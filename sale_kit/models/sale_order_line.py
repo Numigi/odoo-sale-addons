@@ -51,6 +51,7 @@ class SaleOrderLine(models.Model):
         new_line.is_important_kit_component = kit_line.is_important
         self._set_kit_component_product_and_quantity(new_line, kit_line)
         self._set_kit_component_readonly_conditions(new_line, kit_line)
+        self._set_kit_component_discount(new_line)
         return new_line
 
     def _set_kit_component_product_and_quantity(self, new_line, kit_line):
@@ -60,6 +61,11 @@ class SaleOrderLine(models.Model):
             uom=kit_line.uom_id,
             qty=kit_line.quantity,
         )
+
+    def _set_kit_component_discount(self, new_line):
+        discount = self.product_id.kit_discount
+        if discount:
+            new_line.discount = discount
 
     def set_product_and_quantity(self, order, product, uom, qty):
         self.product_id = product
