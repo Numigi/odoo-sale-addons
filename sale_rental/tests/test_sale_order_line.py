@@ -81,7 +81,7 @@ class TestKitRental(KitRentalCase):
         assert service.product_readonly
         assert not service.product_uom_qty_readonly
         assert service.product_uom_readonly
-        assert service.handle_widget_invisible
+        assert not service.handle_widget_invisible
         assert service.trash_widget_invisible
         assert service.rental_date_from_required
         assert service.rental_date_from_editable

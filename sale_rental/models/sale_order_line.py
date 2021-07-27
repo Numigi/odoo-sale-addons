@@ -112,8 +112,13 @@ class SaleOrderLine(models.Model):
         super().initialize_kit()
 
         if self.is_rental_order:
-            self._add_kit_rental_service_to_order()
             self._add_readonly_flags_for_rented_kit()
+
+    def add_kit_components(self):
+        if self.is_rental_order:
+            self._add_kit_rental_service_to_order()
+
+        super().add_kit_components()
 
     def _check_kit_can_be_rented(self):
         if not self.product_id.can_be_rented:
@@ -148,7 +153,7 @@ class SaleOrderLine(models.Model):
         new_line.product_readonly = True
         new_line.product_uom_qty_readonly = False
         new_line.product_uom_readonly = True
-        new_line.handle_widget_invisible = True
+        new_line.handle_widget_invisible = False
         new_line.trash_widget_invisible = True
         new_line.rental_date_from_required = True
         new_line.rental_date_from_editable = True
@@ -161,10 +166,6 @@ class SaleOrderLine(models.Model):
         )
         new_line.rental_date_from = datetime.now()
         return new_line
-
-    def sorted_by_importance(self):
-        result = super().sorted_by_importance()
-        return result.sorted(key=lambda l: 0 if l.is_rental_service else 1)
 
     def _is_rented_kit(self):
         return self.is_kit and self.is_rental_order
