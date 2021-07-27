@@ -8,12 +8,19 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/tree/field[@name='kit_initialized']" position="after">
                 <field name="allow_change_variant_kit_component" invisible="1"/>
-                <button name="%(sale_rental_order_swap_variant.action_sale_rental_order_swap_variant)d"
+                <button name="%(action_sale_rental_order_swap_variant)d"
                         type="action"
                         icon="fa-exchange"
                         context="{'default_active_product_id': product_id}"
-                        attrs="{'invisible': ['|', '|', ('parent.state', '!=', 'sale'), ('parent.is_rental', '=', False), ('allow_change_variant_kit_component', '=', False)]}"
-                />
+                        attrs="{
+                            'invisible': [
+                                '|',
+                                '|',
+                                ('parent.state', 'in', ('done', 'cancel')),
+                                ('allow_change_variant_kit_component', '=', False),
+                            ]
+                        }"
+                        />
             </xpath>
         </field>
     </record>
