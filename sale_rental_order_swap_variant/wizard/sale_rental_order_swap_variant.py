@@ -28,7 +28,4 @@ class SaleRentalOrderSwapVariant(models.TransientModel):
 
     def change_variant(self):
         line = self.sale_line_id
-        line.change_variant(self.product_id)
-
-        if line.product_uom_qty != self.quantity:
-            line.product_uom_qty = self.quantity
+        line.change_variant(self.product_id, self.quantity)
