@@ -107,8 +107,8 @@ class TestSaleOrderLine(SaleOrderLineCase):
         assert lines[2].product_uom == self.component_z_uom
 
     def test_component_discount(self):
-        discount = 0.2
-        self.kit.kit_discount = discount
+        discount = 20
+        self.kit.kit_discount = discount / 100
         self.add_kit_on_sale_order()
         lines = self.get_component_lines()
         assert len(lines) == 3
@@ -122,7 +122,7 @@ class TestSaleOrderLine(SaleOrderLineCase):
         assert not line.handle_widget_invisible
         assert not line.trash_widget_invisible
         assert line.product_readonly
-        assert line.product_uom_qty_readonly
+        assert not line.product_uom_qty_readonly
         assert line.product_uom_readonly
         assert line.kit_reference_readonly
 
@@ -130,7 +130,7 @@ class TestSaleOrderLine(SaleOrderLineCase):
         self.add_kit_on_sale_order()
         line = self.order.order_line[1]
         assert line.is_important_kit_component
-        assert line.handle_widget_invisible
+        assert not line.handle_widget_invisible
         assert line.trash_widget_invisible
         assert line.product_readonly
         assert line.product_uom_qty_readonly
@@ -159,3 +159,93 @@ class TestSaleOrderLine(SaleOrderLineCase):
         self.order.unlink_dangling_kit_components()
         assert len(self.order.order_line) == 4
         assert set(self.order.order_line.mapped("kit_reference")) == {"K2"}
+
+    def test_change_kit_quantity(self):
+        k1 = self.add_kit_on_sale_order()
+        k1.product_uom_qty = 2
+        self.order.update_kit_component_quantities()
+
+        lines = self.order.order_line
+        assert lines[1].product_uom_qty == self.component_a_qty * 2
+        assert lines[2].product_uom_qty == self.component_b_qty * 2
+        assert lines[3].product_uom_qty == self.component_z_qty * 2
+
+        k1.product_uom_qty = 3
+        self.order.update_kit_component_quantities()
+
+        assert lines[1].product_uom_qty == self.component_a_qty * 3
+        assert lines[2].product_uom_qty == self.component_b_qty * 3
+        assert lines[3].product_uom_qty == self.component_z_qty * 3
+
+    def test_change_kit_quantity__with_zero_unit(self):
+        k1 = self.add_kit_on_sale_order()
+        k1.product_uom_qty = 0
+        self.order.update_kit_component_quantities()
+
+        lines = self.order.order_line
+        assert lines[1].product_uom_qty == self.component_a_qty
+        assert lines[2].product_uom_qty == self.component_b_qty
+        assert lines[3].product_uom_qty == self.component_z_qty
+
+        assert k1.kit_previous_quantity == 1
+
+    def test_change_kit_quantity__with_zero_previous_qty(self):
+        k1 = self.add_kit_on_sale_order()
+        k1.kit_previous_quantity = 0
+        self.order.update_kit_component_quantities()
+
+        lines = self.order.order_line
+        assert lines[1].product_uom_qty == self.component_a_qty
+        assert lines[2].product_uom_qty == self.component_b_qty
+        assert lines[3].product_uom_qty == self.component_z_qty
+
+        assert k1.kit_previous_quantity == 1
+
+
+class TestSectionsAndNotes(SaleOrderLineCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.section_name = "My Section"
+        cls.note_name = "My Note"
+
+        section_vals = {
+            "name": cls.section_name,
+            "display_type": "line_section",
+        }
+
+        component_a_vals = cls.get_kit_line_vals(
+            cls.component_a, cls.component_a_qty, cls.component_a_uom, True
+        )
+
+        note_vals = {
+            "name": cls.note_name,
+            "display_type": "line_note",
+        }
+
+        cls.kit.write({
+            "kit_line_ids": [
+                (5, 0),
+                (0, 0, section_vals),
+                (0, 0, component_a_vals),
+                (0, 0, note_vals),
+            ],
+        })
+
+    def test_sale_order_line_display_types(self):
+        self.add_kit_on_sale_order()
+        lines = self.order.order_line
+        assert len(lines) == 4
+        assert lines[1].display_type == "line_section"
+        assert not lines[2].display_type
+        assert lines[3].display_type == "line_note"
+
+    def test_sale_order_line_name(self):
+        self.add_kit_on_sale_order()
+        lines = self.order.order_line
+        assert len(lines) == 4
+        assert lines[1].name == self.section_name
+        assert lines[2].name == self.component_a.display_name
+        assert lines[3].name == self.note_name
