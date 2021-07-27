@@ -1,6 +1,7 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from contextlib import contextmanager
 from odoo.exceptions import ValidationError
 from odoo.tests import Form
 
@@ -24,11 +25,6 @@ class TestSaleKit(KitCase):
         cls.kit_line.initialize_kit()
         cls.order.action_confirm()
         cls.order_line = cls.order.order_line[1]
-        cls.wizard_env = cls.env["sale.rental.order.swap.variant"].with_context(
-            active_model="sale.order.line",
-            active_id=cls.order_line.id,
-            default_active_product_id=cls.order_line.product_id.id,
-        )
         cls.env["res.lang"].load_lang("fr_FR")
 
     def test_wizard_action_replace_before_stock_move_done(self):
@@ -71,8 +67,25 @@ class TestSaleKit(KitCase):
         self._change_variant()
         assert fr_term in self.order_line.name
 
+    def test_change_product_uom_qty(self):
+        new_quantity = 999
+        with self._open_wizard() as wizard:
+            wizard.quantity = new_quantity
+            wizard.change_variant()
+
+        assert self.order_line.product_uom_qty == new_quantity
+
     def _change_variant(self):
-        with Form(self.wizard_env) as wizard_form:
+        with self._open_wizard() as wizard:
+            wizard.change_variant()
+
+    @contextmanager
+    def _open_wizard(self):
+        wizard_env = self.env["sale.rental.order.swap.variant"].with_context(
+            default_sale_line_id=self.order_line.id,
+        )
+
+        with Form(wizard_env) as wizard_form:
             wizard_form.product_id = self.component_b
-            res = wizard_form.save()
-            res.change_variant()
+            wizard = wizard_form.save()
+            yield wizard
