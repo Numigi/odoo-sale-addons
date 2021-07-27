@@ -58,6 +58,10 @@
                         <group name="top-left">
                             <field name="employee_id"/>
                             <field name="category_id"/>
+                            <field name="included_teams_ids" 
+                                    domain="[('manager_id', '=', employee_id)]" 
+                                    attrs="{'invisible': [('basis', '!=', 'my_team_commissions')]}" 
+                                    widget="many2many_checkboxes"/>
                             <field name="basis" invisible="1"/>
                             <field name="rate_type" invisible="1"/>
                         </group>

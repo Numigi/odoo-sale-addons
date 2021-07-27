@@ -69,7 +69,7 @@ class CommissionTarget(models.Model):
     )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
-    last_compute_date = fields.Datetime()
+    last_compute_date = fields.Datetime(readonly=True)
     invoice_line_ids = fields.Many2many(
         "account.invoice.line",
         "commission_target_invoice_line_rel",
@@ -89,6 +89,12 @@ class CommissionTarget(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
         track_visibility="onchange",
+    )
+    included_teams_ids = fields.Many2many(
+        "hr.department",
+        "commission_target_included_teams_rel",
+        "department_id",
+        "target_id",
     )
     fixed_rate = fields.Float(
         readonly=True,
@@ -189,23 +195,16 @@ class CommissionTarget(models.Model):
         return bool(excluded & tags)
 
     def _update_base_amount_my_team_commissions(self):
-        self._get_child_targets()
         self.child_target_ids = self._get_child_targets()
         self.child_commission_amount = self._compute_child_commission_amount()
         self.base_amount = self.child_commission_amount
 
     def _get_child_targets(self):
-        children = (
-            self.env["commission.target"].search(
-                [
-                    ("employee_id.department_id.manager_id", "=", self.employee_id.id),
-                ]
-            )
-            - self
-        )
+        children = self.env["commission.target"].search([]) - self
         children = children.filtered(
             lambda child: child.date_range_id == self.date_range_id
             and child.category_id in self.category_id.child_category_ids
+            and child.employee_id.department_id in self.included_teams_ids
             and child.company_id == self.company_id
         )
         return children
