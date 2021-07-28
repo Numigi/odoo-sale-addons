@@ -74,13 +74,10 @@ class TestCommissionTeam(TestCommissionCase):
         new_employee.department_id = new_department
         new_employee_target = self._create_target(target_amount=100000, fixed_rate=0.05)
 
-        self.employee_target.total_amount = 2000
-        new_employee_target.total_amount = 2000
-        self.manager_target.compute()
+        children = self.manager_target._get_child_targets()
 
-        assert self.employee_target in self.manager_target.child_target_ids
-        assert new_employee_target in self.manager_target.child_target_ids
-        assert self.manager_target.base_amount == 4000
+        assert self.employee_target in children
+        assert new_employee_target in children
 
     def test_child_targets_wrong_department(self):
         self.employee_target.employee_id = self._create_employee()
