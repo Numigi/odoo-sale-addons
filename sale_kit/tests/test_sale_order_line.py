@@ -74,6 +74,14 @@ class TestSaleOrderLine(SaleOrderLineCase):
         assert lines[2].product_id == self.component_b
         assert lines[3].product_id == self.component_z
 
+    def test_prices(self):
+        self.add_kit_on_sale_order()
+        lines = self.order.order_line
+        assert not lines[0].price_unit
+        assert lines[1].price_unit
+        assert lines[2].price_unit
+        assert lines[3].price_unit
+
     def test_is_component(self):
         self.add_kit_on_sale_order()
         lines = self.order.order_line

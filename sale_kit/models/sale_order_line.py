@@ -37,6 +37,13 @@ class SaleOrderLine(models.Model):
         self.is_kit = self.product_id.is_kit
         return res
 
+    @api.onchange("product_uom", "product_uom_qty")
+    def product_uom_change(self):
+        super().product_uom_change()
+
+        if self.is_kit:
+            self.price_unit = 0
+
     def initialize_kit(self):
         self.kit_reference = self.next_kit_reference
         self.kit_previous_quantity = self.product_uom_qty
@@ -167,7 +174,7 @@ class SaleOrderLine(models.Model):
         )
         kits.update({"qty_delivered_method": "kit"})
 
-    @api.depends("kit_line_ids", "kit_line_ids.qty_delivered")
+    @api.depends("product_uom_qty", "kit_line_ids", "kit_line_ids.qty_delivered")
     def _compute_qty_delivered(self):
         super()._compute_qty_delivered()
         kit_lines = self.filtered(lambda l: l.qty_delivered_method == "kit")
@@ -178,7 +185,18 @@ class SaleOrderLine(models.Model):
             line.qty_delivered = line._get_kit_qty_delivered()
 
     def _get_kit_qty_delivered(self):
-        important_components = self.kit_line_ids.filtered(
-            lambda l: l.is_important_kit_component
-        )
-        return all(l.qty_delivered >= l.product_uom_qty for l in important_components)
+        ratio = self._get_kit_qty_delivered_ratio()
+        return ratio * self.product_uom_qty
+
+    def _get_kit_qty_delivered_ratio(self):
+        component = self._get_first_important_component()
+
+        if component.product_uom_qty:
+            return component.qty_delivered / component.product_uom_qty
+        elif component.qty_delivered:
+            return 1
+        else:
+            return 0
+
+    def _get_first_important_component(self):
+        return self.kit_line_ids.filtered("is_important_kit_component")[:1]

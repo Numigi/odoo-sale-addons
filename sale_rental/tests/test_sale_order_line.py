@@ -136,6 +136,11 @@ class TestKitRental(KitRentalCase):
         kit.product_uom_change()
         assert not kit.price_unit
 
+    def test_kit_quantity_readonly(self):
+        self.add_kit_on_sale_order()
+        kit = self.get_kit_lines()
+        assert kit.product_uom_qty_readonly
+
     def test_kit_taxes_readonly(self):
         self.add_kit_on_sale_order()
         kit = self.get_kit_lines()

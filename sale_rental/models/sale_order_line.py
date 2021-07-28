@@ -36,7 +36,7 @@ class SaleOrderLine(models.Model):
     def product_uom_change(self):
         super().product_uom_change()
 
-        if self._is_rented_kit() or self._is_rented_kit_component():
+        if self._is_rented_kit_component():
             self.price_unit = 0
 
     @api.onchange("rental_date_from", "rental_date_to")
@@ -132,6 +132,7 @@ class SaleOrderLine(models.Model):
         self.order_id.order_line |= service_line
 
     def _add_readonly_flags_for_rented_kit(self):
+        self.product_uom_qty_readonly = True
         self.price_unit_readonly = True
         self.taxes_readonly = True
 
