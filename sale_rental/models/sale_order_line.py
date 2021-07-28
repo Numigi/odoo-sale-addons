@@ -342,7 +342,7 @@ class SaleOrderLineWithRentalServiceReturnedQty(models.Model):
             line.qty_delivered = line._get_rental_service_qty_delivered()
 
     def _get_rental_service_qty_delivered(self):
-        if self.kit_delivered_qty <= 0:
+        if self.kit_delivered_qty < 1:
             return 0
 
         if self.kit_returned_qty > 0:

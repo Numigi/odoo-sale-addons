@@ -59,23 +59,23 @@ class RentalCase(KitCase):
 
     @classmethod
     def deliver_important_components(cls):
-        cls.deliver_product(cls.component_1a, 1)
-        cls.deliver_product(cls.component_1b, 2)
+        cls.deliver_product(cls.component_1a, 2)
+        cls.deliver_product(cls.component_1b, 4)
 
     @classmethod
     def deliver_important_components_partially(cls):
         cls.deliver_product(cls.component_1a, 1)
-        cls.deliver_product(cls.component_1b, 1)
+        cls.deliver_product(cls.component_1b, 2)
 
     @classmethod
     def return_important_components(cls):
-        cls.return_product(cls.component_1a, 1)
-        cls.return_product(cls.component_1b, 2)
+        cls.return_product(cls.component_1a, 2)
+        cls.return_product(cls.component_1b, 4)
 
     @classmethod
     def return_important_components_partially(cls):
         cls.return_product(cls.component_1a, 1)
-        cls.return_product(cls.component_1b, 1)
+        cls.return_product(cls.component_1b, 2)
 
     @classmethod
     def deliver_product(cls, sale_line, qty):
@@ -113,8 +113,8 @@ class SaleOrderKitCase(RentalCase):
             }
         )
 
-        cls.component_1a = cls.make_component_line("K1", cls.component_a, 1, True)
-        cls.component_1b = cls.make_component_line("K1", cls.component_b, 2, True)
+        cls.component_1a = cls.make_component_line("K1", cls.component_a, 2, True)
+        cls.component_1b = cls.make_component_line("K1", cls.component_b, 4, True)
         cls.component_1z = cls.make_component_line("K1", cls.component_z, 10, False)
 
         cls.service_1 = cls.make_service_line("K1", cls.rental_service, None, None, 1)

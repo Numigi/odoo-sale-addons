@@ -63,7 +63,7 @@ class StockMove(models.Model):
         kit_line = self._get_sale_kit_line()
         service_line = self._get_sale_rental_service_line()
 
-        if kit_line.qty_delivered > 0 and kit_line.state == "sale":
+        if kit_line.qty_delivered >= 1 and kit_line.state == "sale":
             service_line.rental_date_from = datetime.now()
             service_line.onchange_rental_dates()
 
@@ -71,7 +71,7 @@ class StockMove(models.Model):
         kit_line = self._get_sale_kit_line()
         service_line = self._get_sale_rental_service_line()
 
-        if kit_line.rental_returned_qty > 0 and kit_line.state == "sale":
+        if kit_line.rental_returned_qty >= 1 and kit_line.state == "sale":
             service_line.rental_date_to = datetime.now()
             service_line.onchange_rental_dates()
 
