@@ -123,6 +123,7 @@ class SaleOrderLine(models.Model):
 
         for line in self._get_kit_component_lines():
             line.product_uom_qty *= factor
+            line.product_uom_change()
 
         self.kit_previous_quantity = self.product_uom_qty
 
