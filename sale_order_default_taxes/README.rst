@@ -1,6 +1,7 @@
 Sale Order Default Taxes
 ========================
-This module adds feature to suggest configured Sale Tax when the user creates Sale Order Lines
+This module adds a feature to suggest a default Sale Tax when the user creates Sale Order Lines.
+The default Sale Tax is configured in the Company Settings and can be overwritten on the product form.
 
 Contributors
 ------------
