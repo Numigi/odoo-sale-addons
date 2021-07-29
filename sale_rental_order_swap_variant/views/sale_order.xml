@@ -6,21 +6,28 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_kit.sale_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree/field[@name='kit_initialized']" position="after">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='kit_reference']" position="after">
                 <field name="id" invisible="1"/>
-                <field name="allow_change_variant_kit_component" invisible="1"/>
+                <field name="allow_change_variant" invisible="1"/>
+                <field name="allow_change_product" invisible="1"/>
+                <field name="change_variant_button_visible" invisible="1"/>
                 <button name="%(action_sale_rental_order_swap_variant)d"
                         type="action"
                         icon="fa-exchange"
                         context="{'default_sale_line_id': id}"
-                        attrs="{
-                            'invisible': [
-                                '|',
-                                '|',
-                                ('parent.state', 'in', ('done', 'cancel')),
-                                ('allow_change_variant_kit_component', '=', False),
-                            ]
-                        }"
+                        attrs="{'invisible': [('change_variant_button_visible', '=', False)]}"
+                        />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
+                <field name="id" invisible="1"/>
+                <field name="allow_change_variant" invisible="1"/>
+                <field name="allow_change_product" invisible="1"/>
+                <field name="change_variant_button_visible" invisible="1"/>
+                <button name="%(action_sale_rental_order_swap_variant)d"
+                        type="action"
+                        icon="fa-exchange"
+                        context="{'default_sale_line_id': id}"
+                        attrs="{'invisible': [('change_variant_button_visible', '=', False)]}"
                         />
             </xpath>
         </field>

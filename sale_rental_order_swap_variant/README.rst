@@ -61,6 +61,15 @@ Constraints:
 
 .. image:: static/description/blocking_error_msg.png
 
+Allow Changing Product
+----------------------
+Since version ``1.2.0`` of the module, it is possible to allow swapping an important component
+with a different product (instead of only swapping to a different variant).
+
+.. image:: static/description/kit_component_allow_change_product.png
+
+.. image:: static/description/kit_component_allow_change_product_2.png
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
