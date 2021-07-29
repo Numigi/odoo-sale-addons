@@ -2,10 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import Form
-from odoo.tests.common import SavepointCase, post_install
+from odoo.tests.common import SavepointCase
 
 
-@post_install(True)
 class TestCRMAssignByArea(SavepointCase):
     @classmethod
     def setUpClass(cls):
