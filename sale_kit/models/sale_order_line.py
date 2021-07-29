@@ -115,17 +115,24 @@ class SaleOrderLine(models.Model):
         new_line.kit_reference_readonly = is_important
 
     def _update_kit_component_quantities(self):
-        factor = (
+        factor = self._get_kit_components_quantity_factor()
+
+        if factor != 1:
+            self._apply_kit_components_quantity_factor(factor)
+
+        self.kit_previous_quantity = self.product_uom_qty
+
+    def _get_kit_components_quantity_factor(self):
+        return (
             self.product_uom_qty / self.kit_previous_quantity
             if self.kit_previous_quantity
             else 1
         )
 
+    def _apply_kit_components_quantity_factor(self, factor):
         for line in self._get_kit_component_lines():
             line.product_uom_qty *= factor
             line.product_uom_change()
-
-        self.kit_previous_quantity = self.product_uom_qty
 
     def recompute_sequences(self):
         next_sequence = 1
