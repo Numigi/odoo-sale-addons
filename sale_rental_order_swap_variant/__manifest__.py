@@ -3,12 +3,12 @@
 {
     "name": "Sale Rental Order Swap Variant",
     "summary": "Allow to change an important product from a kit",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
-    "depends": ["sale_kit", ],
+    "depends": ["sale_kit", "sale_stock"],
     "data": [
         "wizard/sale_rental_order_swap_variant.xml",
         "views/product_template.xml",

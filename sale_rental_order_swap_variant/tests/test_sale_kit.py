@@ -75,6 +75,22 @@ class TestSaleKit(KitCase):
 
         assert self.order_line.product_uom_qty == new_quantity
 
+    def test_button_visible(self):
+        self.order_line.allow_change_product = True
+        assert self.order_line.change_variant_button_visible
+
+    def test_button_visible__change_variant_allowed(self):
+        self.order_line.allow_change_variant = True
+        assert self.order_line.change_variant_button_visible
+
+    def test_button_invisible(self):
+        assert not self.order_line.change_variant_button_visible
+
+    def test_button_invisible__order_done(self):
+        self.order_line.allow_change_product = True
+        self.order.state = "done"
+        assert not self.order_line.change_variant_button_visible
+
     def _change_variant(self):
         with self._open_wizard() as wizard:
             wizard.change_variant()
