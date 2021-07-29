@@ -19,17 +19,17 @@ class TestDeliveredQty(KitCase):
                 "order_id": cls.order.id,
                 "product_id": cls.kit.id,
                 "name": "Kit",
-                "product_uom_qty": 1,
+                "product_uom_qty": 2,
                 "product_uom": cls.unit.id,
                 "is_kit": True,
                 "kit_reference": "K1",
             }
         )
         cls.important_component_1 = cls._make_component_line(
-            "K1", cls.component_a, 1, True
+            "K1", cls.component_a, 4, True
         )
         cls.important_component_2 = cls._make_component_line(
-            "K1", cls.component_b, 2, True
+            "K1", cls.component_b, 10, True
         )
         cls.optional_component = cls._make_component_line(
             "K1", cls.component_z, 10, False
@@ -62,9 +62,6 @@ class TestDeliveredQty(KitCase):
         move._set_quantity_done(qty)
         move._action_done()
 
-    def test_no_component_delivered(self):
-        assert self.kit_line.qty_delivered == 0
-
     def test_link_between_kit_and_components(self):
         assert self.kit_line.kit_line_ids == (
             self.important_component_1
@@ -72,12 +69,19 @@ class TestDeliveredQty(KitCase):
             | self.optional_component
         )
 
-    def test_important_components_delivered(self):
-        self._deliver_component(self.important_component_1, 1)
-        self._deliver_component(self.important_component_2, 2)
+    def test_no_component_delivered(self):
+        assert self.kit_line.qty_delivered == 0
+
+    def test_fully_delivered(self):
+        self._deliver_component(self.important_component_1, 4)
+        assert self.kit_line.qty_delivered == 2
+
+    def test_partially_delivered(self):
+        self._deliver_component(self.important_component_1, 2)
         assert self.kit_line.qty_delivered == 1
 
-    def test_important_components_partially_delivered(self):
-        self._deliver_component(self.important_component_1, 1)
-        self._deliver_component(self.important_component_2, 1)
+    def test_component_with_zero_ordered_qty(self):
+        self.important_component_1.product_uom_qty = 0
         assert self.kit_line.qty_delivered == 0
+        self._deliver_component(self.important_component_1, 1)
+        assert self.kit_line.qty_delivered == 2

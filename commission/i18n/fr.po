@@ -397,7 +397,7 @@ msgstr "Pièce jointe principale"
 #. module: commission
 #: model:res.groups,name:commission.group_manager
 msgid "Manager"
-msgstr "Superviseur"
+msgstr "Gestionnaire"
 
 #. module: commission
 #: model_terms:ir.ui.view,arch_db:commission.commission_target_form
