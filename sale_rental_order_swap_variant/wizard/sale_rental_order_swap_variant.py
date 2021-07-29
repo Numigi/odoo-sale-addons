@@ -14,17 +14,25 @@ class SaleRentalOrderSwapVariant(models.TransientModel):
 
     @api.onchange("sale_line_id")
     def _onchange_sale_line_id(self):
-        active_variant = self.sale_line_id.product_id
+        self.product_id = self.sale_line_id.product_id
         self.quantity = self.sale_line_id.product_uom_qty
-        self.product_id = active_variant
         return {
             "domain": {
-                "product_id": [
-                    ("product_tmpl_id", "=", active_variant.product_tmpl_id.id),
-                    ("id", "!=", active_variant.id),
-                ]
+                "product_id": self._get_product_domain(),
             }
         }
+
+    def _get_product_domain(self):
+        active_variant = self.sale_line_id.product_id
+        if self.sale_line_id.allow_change_product:
+            return [
+                ("id", "!=", active_variant.id),
+            ]
+        else:
+            return [
+                ("product_tmpl_id", "=", active_variant.product_tmpl_id.id),
+                ("id", "!=", active_variant.id),
+            ]
 
     def change_variant(self):
         line = self.sale_line_id
