@@ -282,6 +282,24 @@ class CommissionTarget(models.Model):
             }
         )
 
+    @api.onchange("category_id")
+    def onchange_category_id_team_selection(self):
+        if self._is_based_on_team_targets():
+            self._select_all_teams()
+
+    def _is_based_on_team_targets(self):
+        return self.basis == "my_team_commissions"
+
+    def _select_all_teams(self):
+        self.included_teams_ids = self._search_available_teams()
+
+    def _search_available_teams(self):
+        return self.env["crm.team"].search(
+            [
+                ('user_id', '=', self.employee_id.user_id.id)
+            ]
+        )
+
     def set_confirmed_state(self):
         for target in self:
             target.state = "confirmed"
