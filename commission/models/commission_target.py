@@ -35,6 +35,9 @@ class CommissionTarget(models.Model):
         track_visibility="onchange",
         states={"draft": [("readonly", False)]},
     )
+    employee_user_id = fields.Many2one(
+        "res.users", related="employee_id.user_id", required=True
+    )
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
@@ -91,10 +94,10 @@ class CommissionTarget(models.Model):
         track_visibility="onchange",
     )
     included_teams_ids = fields.Many2many(
-        "hr.department",
+        "crm.team",
         "commission_target_included_teams_rel",
-        "department_id",
         "target_id",
+        "team_id",
     )
     fixed_rate = fields.Float(
         readonly=True,
@@ -200,11 +203,10 @@ class CommissionTarget(models.Model):
         self.base_amount = self.child_commission_amount
 
     def _get_child_targets(self):
-        children = self.env["commission.target"].search([]) - self
+        children = self.env["commission.target"].search([("date_range_id", "=", self.date_range_id.id)]) - self
         children = children.filtered(
-            lambda child: child.date_range_id == self.date_range_id
-            and child.category_id in self.category_id.child_category_ids
-            and child.employee_id.department_id in self.included_teams_ids
+            lambda child: child.category_id in self.category_id.child_category_ids
+            and child.employee_id.user_id.sale_team_id in self.included_teams_ids
             and child.company_id == self.company_id
         )
         return children
@@ -331,15 +333,15 @@ class CommissionTarget(models.Model):
 
     def _check_team_manager_access(self):
         user = self.env.user
-        departments = self._get_user_managed_departments()
+        teams = self._get_user_managed_teams()
 
         for target in self.sudo():
             employee = target.employee_id
 
             is_own_target = employee.user_id == user
-            is_own_department = employee.department_id in departments
+            is_own_team = employee.user_id.sale_team_id in teams
 
-            if not (is_own_target or is_own_department):
+            if not (is_own_target or is_own_team):
                 raise AccessError(
                     _(
                         "You are not allowed to access the target {} because "
@@ -360,13 +362,13 @@ class CommissionTarget(models.Model):
                     ).format(target.display_name)
                 )
 
-    def _get_user_managed_departments(self):
+    def _get_user_managed_teams(self):
         return (
-            self.env["hr.department"]
+            self.env["crm.team"]
             .sudo()
             .search(
                 [
-                    ("manager_id", "in", self.env.user.employee_ids.ids),
+                    ("user_id", "=", self.env.user.id),
                 ]
             )
         )
@@ -396,10 +398,10 @@ class CommissionTarget(models.Model):
         return []
 
     def _get_team_manager_domain(self):
-        departments = self._get_user_managed_departments()
+        teams = self._get_user_managed_teams()
         return [
             "|",
-            ("employee_id.department_id", "in", departments.ids),
+            ("employee_id.user_id.sale_team_id", "in", teams.ids),
             ("employee_id.user_id", "=", self.env.user.id),
         ]
 

@@ -33,10 +33,10 @@ class TestCommissionTeam(TestCommissionCase):
         )
         cls.manager_category.child_category_ids = cls.category
 
-        cls.department = cls._create_department("Dunder Mifflin", cls.manager)
-        cls.manager_target.included_teams_ids |= cls.department
+        cls.team = cls._create_team("Testing", cls.manager_user)
+        cls.manager_target.included_teams_ids |= cls.team
 
-        cls.employee.department_id = cls.department
+        cls.user.sale_team_id = cls.team
         cls.employee_target = cls._create_target(target_amount=100000, fixed_rate=0.05)
 
         cls.interval_rate = 0.05
@@ -66,13 +66,13 @@ class TestCommissionTeam(TestCommissionCase):
         assert self.manager_target.base_amount == 2000
 
     def test_multiple_teams(self):
-        new_department = self._create_department("Home Dipo", self.manager)
-        self.manager_target.included_teams_ids |= new_department
+        new_team = self._create_team("Multi", self.manager_user)
+        self.manager_target.included_teams_ids |= new_team
 
         new_user = self._create_user(name="Bob")
         new_employee = self._create_employee(user=new_user)
-        new_employee.department_id = new_department
-        new_employee_target = self._create_target(target_amount=100000, fixed_rate=0.05)
+        new_user.sale_team_id = new_team
+        new_employee_target = self._create_target(target_amount=100000, fixed_rate=0.05, employee=new_employee)
 
         children = self.manager_target._get_child_targets()
 
@@ -190,7 +190,7 @@ class TestCommissionTeam(TestCommissionCase):
         self._compute_employee_target()
 
     def test_compute_target_of_employee_not_in_own_team(self):
-        self.department.manager_id = self._create_employee()
+        self.team.user_id = self._create_employee().user_id
         with pytest.raises(AccessError):
             self._compute_employee_target()
 
