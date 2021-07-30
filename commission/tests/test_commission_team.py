@@ -33,12 +33,8 @@ class TestCommissionTeam(TestCommissionCase):
         )
         cls.manager_category.child_category_ids = cls.category
 
-        cls.department = cls.env["hr.department"].create(
-            {
-                "name": "Dunder Mifflin",
-                "manager_id": cls.manager.id,
-            }
-        )
+        cls.department = cls._create_department("Dunder Mifflin", cls.manager)
+        cls.manager_target.included_teams_ids |= cls.department
 
         cls.employee.department_id = cls.department
         cls.employee_target = cls._create_target(target_amount=100000, fixed_rate=0.05)
@@ -68,6 +64,20 @@ class TestCommissionTeam(TestCommissionCase):
         assert self.manager_target.child_target_ids == self.employee_target
         assert self.manager_target.child_commission_amount == 2000
         assert self.manager_target.base_amount == 2000
+
+    def test_multiple_teams(self):
+        new_department = self._create_department("Home Dipo", self.manager)
+        self.manager_target.included_teams_ids |= new_department
+
+        new_user = self._create_user(name="Bob")
+        new_employee = self._create_employee(user=new_user)
+        new_employee.department_id = new_department
+        new_employee_target = self._create_target(target_amount=100000, fixed_rate=0.05)
+
+        children = self.manager_target._get_child_targets()
+
+        assert self.employee_target in children
+        assert new_employee_target in children
 
     def test_child_targets_wrong_department(self):
         self.employee_target.employee_id = self._create_employee()

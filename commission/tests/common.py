@@ -176,3 +176,12 @@ class TestCommissionCase(SavepointCase):
         )
         invoice.action_invoice_open()
         return invoice
+
+    @classmethod
+    def _create_department(cls, name, manager):
+        return cls.env["hr.department"].create(
+            {
+                "name": name,
+                "manager_id": manager.id,
+            }
+        )

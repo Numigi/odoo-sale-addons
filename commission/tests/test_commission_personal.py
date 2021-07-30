@@ -116,9 +116,7 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_included_tag(self):
         self.category.included_tag_ids = self.included_tag
 
-        self.sale_order.so_tag_ids = (
-            self.included_tag
-        )
+        self.sale_order.so_tag_ids = self.included_tag
 
         self._compute_target()
         assert self.target.base_amount == 5000
@@ -126,9 +124,7 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_excluded_tag(self):
         self.category.excluded_tag_ids = self.excluded_tag
 
-        self.sale_order.so_tag_ids = (
-            self.excluded_tag
-        )
+        self.sale_order.so_tag_ids = self.excluded_tag
 
         self._compute_target()
         assert not self.target.base_amount
@@ -232,7 +228,10 @@ class TestCommissionPersonal(TestCommissionCase):
             }
         )
 
-    def _create_sale_order_line(self, sale_order,):
+    def _create_sale_order_line(
+        self,
+        sale_order,
+    ):
         return self.env["sale.order.line"].create(
             {
                 "product_id": self.product.id,
