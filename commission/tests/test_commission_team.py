@@ -72,7 +72,9 @@ class TestCommissionTeam(TestCommissionCase):
         new_user = self._create_user(name="Bob")
         new_employee = self._create_employee(user=new_user)
         new_user.sale_team_id = new_team
-        new_employee_target = self._create_target(target_amount=100000, fixed_rate=0.05, employee=new_employee)
+        new_employee_target = self._create_target(
+            target_amount=100000, fixed_rate=0.05, employee=new_employee
+        )
 
         children = self.manager_target._get_child_targets()
 

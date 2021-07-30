@@ -203,7 +203,12 @@ class CommissionTarget(models.Model):
         self.base_amount = self.child_commission_amount
 
     def _get_child_targets(self):
-        children = self.env["commission.target"].search([("date_range_id", "=", self.date_range_id.id)]) - self
+        children = (
+            self.env["commission.target"].search(
+                [("date_range_id", "=", self.date_range_id.id)]
+            )
+            - self
+        )
         children = children.filtered(
             lambda child: child.category_id in self.category_id.child_category_ids
             and child.employee_id.user_id.sale_team_id in self.included_teams_ids
@@ -295,9 +300,7 @@ class CommissionTarget(models.Model):
 
     def _search_available_teams(self):
         return self.env["crm.team"].search(
-            [
-                ('user_id', '=', self.employee_id.user_id.id)
-            ]
+            [("user_id", "=", self.employee_id.user_id.id)]
         )
 
     def set_confirmed_state(self):

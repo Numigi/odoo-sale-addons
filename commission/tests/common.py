@@ -179,9 +179,4 @@ class TestCommissionCase(SavepointCase):
 
     @classmethod
     def _create_team(cls, name, manager):
-        return cls.env["crm.team"].create(
-            {
-                "name": name,
-                "user_id": manager.id
-            }
-        )
+        return cls.env["crm.team"].create({"name": name, "user_id": manager.id})
