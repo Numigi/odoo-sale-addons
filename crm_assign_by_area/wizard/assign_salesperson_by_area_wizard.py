@@ -111,6 +111,6 @@ class AssignSalespersonByAreaWizard(models.Model):
         else:
             wizard_msg = _(
                 "There is no salesperson to assign. The partner's territories "
-                "might not link to any salesperson."
+                "might not be linked to any salesperson."
             )
         return wizard_msg
