@@ -28,5 +28,5 @@ class CrmLead(models.Model):
             "view_type": "form",
             "view_mode": "form",
             "target": "new",
-            "context": {"salesperson_ids": territories.mapped("salesperson_id.id")},
+            "context": {"territory_ids": territories.ids},
         }

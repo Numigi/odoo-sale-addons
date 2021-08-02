@@ -9,10 +9,12 @@
                 <field name="wizard_msg"/>
                 <group attrs="{'invisible': [('is_several_salespersons', '=', False)]}">
                     <group>
+                        <field name="available_territory_ids" invisible="1"/>
                         <field name="salesperson_id"
                                options="{'no_create': True}"
                                required="True"
                                attrs="{'invisible': [('is_several_salespersons', '=', False)]}"
+                               context="{'assign_salesperson_by_area_territory_ids': available_territory_ids}"
                         />
                     </group>
                     <group/>

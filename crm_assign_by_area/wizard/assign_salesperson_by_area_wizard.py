@@ -8,6 +8,7 @@ class AssignSalespersonByAreaWizard(models.Model):
     _name = "assign.salesperson.by.area.wizard"
     _description = "Assign Salesperson By Area Wizard"
 
+    available_territory_ids = fields.Many2many(comodel_name="res.territory")
     available_salesperson_ids = fields.Many2many(comodel_name="res.users")
     is_several_salespersons = fields.Boolean()
     wizard_msg = fields.Text(readonly=1)
@@ -16,16 +17,17 @@ class AssignSalespersonByAreaWizard(models.Model):
     @api.model
     def default_get(self, fields):
         res = super(AssignSalespersonByAreaWizard, self).default_get(fields)
-        context_salesperson_ids = self._context.get("salesperson_ids", [])
+        territory_ids = self._context.get("territory_ids", [])
+        territories = self.env["res.territory"].browse(territory_ids)
+        salespersons = territories.mapped("salesperson_id")
         vals = {
-            "available_salesperson_ids": [(6, 0, context_salesperson_ids)],
-            "is_several_salespersons": len(context_salesperson_ids) > 1,
-            "wizard_msg": self.get_wizard_msg(context_salesperson_ids),
+            "available_territory_ids": [(6, 0, territory_ids)],
+            "available_salesperson_ids": [(6, 0, salespersons.ids)],
+            "is_several_salespersons": len(salespersons) > 1,
+            "wizard_msg": self.get_wizard_msg(territories, salespersons),
         }
-        if len(context_salesperson_ids) == 1:
-            vals["salesperson_id"] = (
-                self.env["res.users"].browse(context_salesperson_ids[0]).id
-            )
+        if len(salespersons) == 1:
+            vals["salesperson_id"] = salespersons.id
         res.update(vals)
         return res
 
@@ -97,13 +99,22 @@ class AssignSalespersonByAreaWizard(models.Model):
         return {"crm.lead": "user_id", "res.partner": "user_id"}
 
     @api.model
-    def get_wizard_msg(self, context_salesperson_ids):
-        if len(context_salesperson_ids) == 1:
-            wizard_msg = (
-                _("%s will be assigned to the opportunity. Do you want to continue?")
-                % self.env["res.users"].browse(context_salesperson_ids[0]).display_name
+    def get_wizard_msg(self, territories, salespersons):
+        if len(salespersons) == 1:
+            related_territories = territories.filtered(
+                lambda r: r.salesperson_id == salespersons
             )
-        elif len(context_salesperson_ids) > 1:
+            related_territories_names = ", ".join(
+                related_territories.mapped("display_name")
+            )
+            wizard_msg = _(
+                "%s will be assigned to the record. Do you want to continue?"
+            ) % (
+                "{} ({})".format(
+                    salespersons[0].display_name, related_territories_names
+                )
+            )
+        elif len(salespersons) > 1:
             wizard_msg = _(
                 "Several salespersons could be assigned depending on the partner's "
                 "territories. Please choose the right seller."
