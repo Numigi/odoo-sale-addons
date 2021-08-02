@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
 
 
 class AssignSalespersonByAreaWizard(models.Model):
@@ -42,7 +41,7 @@ class AssignSalespersonByAreaWizard(models.Model):
     def action_confirm(self):
         self.ensure_one()
         if not self.salesperson_id:
-            raise ValidationError(_("There is no salesperson"))
+            raise AssertionError("There is no salesperson")
 
         # Get active record
         active_record = self.get_active_record()
@@ -61,15 +60,15 @@ class AssignSalespersonByAreaWizard(models.Model):
         active_model = context.get("active_model")
         active_id = context.get("active_id")
         if not (active_model and active_id):
-            raise ValidationError(_("Missing active_model or active_id context."))
+            raise AssertionError("Missing active_model or active_id context.")
 
         # Get active record
         active_record = self.env[context.get("active_model")].browse(
             context.get("active_id")
         )
         if not active_record:
-            raise ValidationError(
-                _("Cannot find any record with model '%s' and id '%s'.") % active_model,
+            raise AssertionError(
+                "Cannot find any record with model '%s' and id '%s'." % active_model,
                 active_id,
             )
         return active_record
@@ -86,8 +85,9 @@ class AssignSalespersonByAreaWizard(models.Model):
                 salesperson_field_name = field_name
                 break
         if not salesperson_field_name:
-            raise ValidationError(
-                _("There is no mapping to get salesperson field for model '%s'.")
+            raise AssertionError(
+                "There is no mapping to get salesperson field for model '%s'.\n"
+                "Check function get_salesperson_field_name_mapping()"
                 % active_record._name
             )
         return salesperson_field_name
