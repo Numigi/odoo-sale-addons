@@ -46,12 +46,6 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #. module: crm_assign_by_area
-#: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:72
-#, python-format
-msgid "Cannot find any record with model '%s' and id '%s'."
-msgstr "Cannot find any record with model '%s' and id '%s'."
-
-#. module: crm_assign_by_area
 #: model_terms:ir.ui.view,arch_db:crm_assign_by_area.assign_salesperson_by_area_wizard
 msgid "Confirm"
 msgstr "Confirmer"
@@ -107,12 +101,6 @@ msgid "Lead/Opportunity"
 msgstr "Piste/Opportunité"
 
 #. module: crm_assign_by_area
-#: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:64
-#, python-format
-msgid "Missing active_model or active_id context."
-msgstr "Missing active_model or active_id context."
-
-#. module: crm_assign_by_area
 #: code:addons/crm_assign_by_area/models/crm_lead.py:15
 #, python-format
 msgid "Please select a customer to assign salesperson."
@@ -140,18 +128,6 @@ msgstr "Territoire"
 #, python-format
 msgid "The customer %s has no territory to get salesperson."
 msgstr "Aucun territoire sur le Client pour assigner un vendeur."
-
-#. module: crm_assign_by_area
-#: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:90
-#, python-format
-msgid "There is no mapping to get salesperson field for model '%s'."
-msgstr "There is no mapping to get salesperson field for model '%s'."
-
-#. module: crm_assign_by_area
-#: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:45
-#, python-format
-msgid "There is no salesperson"
-msgstr "Pas de vendeur disponible"
 
 #. module: crm_assign_by_area
 #: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:112
