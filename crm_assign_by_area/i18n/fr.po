@@ -18,7 +18,7 @@ msgstr ""
 #. module: crm_assign_by_area
 #: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:103
 #, python-format
-msgid "%s will be assigned to the opportunity. Do you want to continue?"
+msgid "%s will be assigned to the record. Do you want to continue?"
 msgstr "%s sera assigné(e) à l'opportunité. Voulez-vous continuer?"
 
 #. module: crm_assign_by_area
