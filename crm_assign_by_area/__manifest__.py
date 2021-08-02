@@ -4,7 +4,7 @@
 {
     "name": "CRM Assign By Area",
     "summary": "This module adds ability to assign salesperson to crm pipeline and contact",
-    "version": "12.0.1.0.0",
+    "version": "1.0.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
