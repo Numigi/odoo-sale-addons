@@ -15,12 +15,18 @@ class ResUsers(models.Model):
         if context_territory_ids:
             result = []
             territories = self.env["res.territory"].browse(context_territory_ids[0][2])
-            for territory in territories:
-                salesperson = territory.salesperson_id
+            salespersons = territories.mapped("salesperson_id")
+            for salesperson in salespersons:
+                related_territories = territories.filtered(
+                    lambda r: r.salesperson_id == salesperson
+                )
                 result.append(
                     (
                         salesperson.id,
-                        "{} ({})".format(salesperson.name, territory.display_name),
+                        "{} ({})".format(
+                            salesperson.name,
+                            ", ".join(related_territories.mapped("display_name")),
+                        ),
                     )
                 )
             return result
