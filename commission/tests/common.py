@@ -178,10 +178,5 @@ class TestCommissionCase(SavepointCase):
         return invoice
 
     @classmethod
-    def _create_department(cls, name, manager):
-        return cls.env["hr.department"].create(
-            {
-                "name": name,
-                "manager_id": manager.id,
-            }
-        )
+    def _create_team(cls, name, manager):
+        return cls.env["crm.team"].create({"name": name, "user_id": manager.id})
