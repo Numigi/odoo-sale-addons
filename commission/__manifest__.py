@@ -17,6 +17,7 @@
         "base_extended_security",
         "sale_order_tag",
         "sale_stock",
+        "sales_team",
     ],
     "data": [
         "security/res_groups.xml",

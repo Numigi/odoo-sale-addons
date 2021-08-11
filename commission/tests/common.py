@@ -176,3 +176,7 @@ class TestCommissionCase(SavepointCase):
         )
         invoice.action_invoice_open()
         return invoice
+
+    @classmethod
+    def _create_team(cls, name, manager):
+        return cls.env["crm.team"].create({"name": name, "user_id": manager.id})
