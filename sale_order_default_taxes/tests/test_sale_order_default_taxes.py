@@ -13,7 +13,9 @@ class TestCRMAssignByArea(SavepointCase):
         cls.partner = cls.env.ref("base.main_partner")
         cls.tax_20 = cls.env["account.tax"].create({"name": "Tax 20%", "amount": 20})
         cls.tax_30 = cls.env["account.tax"].create({"name": "Tax 30%", "amount": 30})
-        cls.product = cls.env["product.product"].create({"name": "Product", "taxes_id": cls.tax_20})
+        cls.product = cls.env["product.product"].create(
+            {"name": "Product", "taxes_id": cls.tax_20}
+        )
 
     def test_sale_order_no_default_taxes(self):
         self.company.account_sale_tax_id = False
