@@ -13,7 +13,7 @@ class TestCRMAssignByArea(SavepointCase):
         cls.partner = cls.env.ref("base.main_partner")
         cls.tax_20 = cls.env["account.tax"].create({"name": "Tax 20%", "amount": 20})
         cls.tax_30 = cls.env["account.tax"].create({"name": "Tax 30%", "amount": 30})
-        cls.product = cls.env["product.product"].create({"name": "Product"})
+        cls.product = cls.env["product.product"].create({"name": "Product", "taxes_id": cls.tax_20})
 
     def test_sale_order_no_default_taxes(self):
         self.company.account_sale_tax_id = False
@@ -22,23 +22,13 @@ class TestCRMAssignByArea(SavepointCase):
             with form.order_line.new() as line:
                 line.product_id = self.product
             so = form.save()
-            self.assertTrue(not so.order_line.tax_id)
+            assert so.order_line.tax_id == so.order_line.product_id.taxes_id
 
     def test_sale_order_default_taxes_from_company(self):
-        self.company.account_sale_tax_id = self.tax_20
+        self.company.account_sale_tax_id = self.tax_30
         with Form(self.env["sale.order"]) as form:
             form.partner_id = self.partner
             with form.order_line.new() as line:
                 line.product_id = self.product
             so = form.save()
-            self.assertEqual(so.order_line.tax_id, self.tax_20)
-
-    def test_sale_order_default_taxes_from_product(self):
-        self.company.account_sale_tax_id = self.tax_20
-        self.product.write({"taxes_id": [(6, 0, [self.tax_30.id])]})
-        with Form(self.env["sale.order"]) as form:
-            form.partner_id = self.partner
-            with form.order_line.new() as line:
-                line.product_id = self.product
-            so = form.save()
-            self.assertEqual(so.order_line.tax_id, self.tax_30)
+            self.assertEqual(so.order_line.tax_id, self.company.account_sale_tax_id)

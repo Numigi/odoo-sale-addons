@@ -10,7 +10,7 @@ class SaleOrderLine(models.Model):
     @api.multi
     def _compute_tax_id(self):
         res = super()._compute_tax_id()
-        for record in self.filtered(lambda r: not r.tax_id):
+        for record in self:
             if record.company_id.account_sale_tax_id:
                 record.tax_id = record.company_id.account_sale_tax_id
         return res
