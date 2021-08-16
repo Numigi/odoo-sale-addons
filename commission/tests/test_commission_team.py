@@ -18,8 +18,14 @@ class TestCommissionTeam(TestCommissionCase):
             name="TeamManager", email="team-manager@testmail.com"
         )
         cls.team_manager_user.groups_id = cls.env.ref("commission.group_team_manager")
-
         cls.team_manager = cls._create_employee(user=cls.team_manager_user)
+
+        cls.president_user = cls._create_user(
+            name="President", email="president@testmail.com"
+        )
+        cls.president_user.groups_id = cls.env.ref("commission.group_team_manager")
+        cls.president = cls._create_employee(user=cls.president_user)
+        cls.team_manager.parent_id = cls.president
 
         cls.team_category = cls._create_category(
             name="Manager", basis="my_team_commissions"
@@ -192,6 +198,25 @@ class TestCommissionTeam(TestCommissionCase):
     def test_target_access_domain(self):
         targets = self._search_manager_targets()
         assert targets == self.employee_target | self.manager_target
+
+    def test_access__own_target(self):
+        self.manager_target.sudo(self.team_manager_user).check_extended_security_all()
+
+    def test_access__not_own_target(self):
+        self.manager_target.employee_id = self._create_employee()
+        with pytest.raises(AccessError):
+            self.manager_target.sudo(self.team_manager_user).check_extended_security_all()
+
+    def test_access__target_of_employee_in_own_team(self):
+        self.employee_target.sudo(self.team_manager_user).check_extended_security_all()
+
+    def test_access__target_of_employee_in_child_team(self):
+        self.employee_target.sudo(self.president_user).check_extended_security_all()
+
+    def test_access__target_of_employee_not_in_own_team(self):
+        self.team.user_id = self._create_employee().user_id
+        with pytest.raises(AccessError):
+            self.employee_target.sudo(self.team_manager_user).check_extended_security_all()
 
     def _compute_manager_target(self):
         self.manager_target.sudo(self.manager_user).compute()
