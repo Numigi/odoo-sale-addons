@@ -53,9 +53,15 @@ class TestCommissionPersonal(TestCommissionCase):
         cls.excluded_tag = cls.env["sale.order.tag"].create({"name": "Tables"})
 
     def test_compute_show_invoices(self):
+        self.target.set_confirmed_state()
         assert self.target.show_invoices
 
+    def test_compute_show_invoices__draft_state(self):
+        self.target.set_draft_state()
+        assert not self.target.show_invoices
+
     def test_compute_show_child_targets(self):
+        self.target.set_confirmed_state()
         assert not self.target.show_child_targets
 
     def test_view_invoice_lines(self):
@@ -197,10 +203,9 @@ class TestCommissionPersonal(TestCommissionCase):
         self.target.set_draft_state()
         assert self.target.state == "draft"
 
-    def test_compute_not_own_commission(self):
-        self.target.employee_id = self._create_employee()
+    def test_employee_can_not_compute_commissions(self):
         with pytest.raises(AccessError):
-            self._compute_target()
+            self.target.sudo(self.user).compute()
 
     def test_target_access_domain(self):
         targets = self._search_employee_targets()
@@ -212,7 +217,7 @@ class TestCommissionPersonal(TestCommissionCase):
         assert not targets
 
     def _compute_target(self):
-        self.target.sudo(self.user).compute()
+        self.target.sudo(self.manager_user).compute()
 
     def _search_employee_targets(self):
         domain = (
