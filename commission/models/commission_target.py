@@ -388,12 +388,19 @@ class CommissionTarget(models.Model):
                 )
 
     def _get_user_managed_teams(self):
+        managed_employees = self.env["hr.employee"].search(
+            [
+                ("id", "child_of", self.env.user.employee_ids.ids)
+            ]
+        )
+        managed_users = managed_employees.mapped("user_id")
+
         return (
             self.env["crm.team"]
             .sudo()
             .search(
                 [
-                    ("user_id", "=", self.env.user.id),
+                    ("user_id", "=", managed_users.ids),
                 ]
             )
         )
