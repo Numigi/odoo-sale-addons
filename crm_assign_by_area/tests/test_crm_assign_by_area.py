@@ -3,10 +3,9 @@
 
 from odoo.exceptions import ValidationError
 from odoo.tests import Form
-from odoo.tests.common import SavepointCase, post_install
+from odoo.tests.common import SavepointCase
 
 
-@post_install(True)
 class TestCRMAssignByArea(SavepointCase):
     @classmethod
     def setUpClass(cls):
