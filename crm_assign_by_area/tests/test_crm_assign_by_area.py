@@ -117,3 +117,20 @@ class TestCRMAssignByArea(SavepointCase):
             res = wizard.save()
             res.action_confirm()
             self.assertEqual(self.partner.user_id, self.user_1)
+
+    def test_salesperson_name_get_with_context(self):
+        self.assertEqual(
+            self.user_1.with_context(
+                assign_salesperson_by_area_territory_ids=[
+                    (6, 0, self.territory_has_salesperson_1.ids)
+                ]
+            ).name_get(),
+            [
+                (
+                    self.user_1.id,
+                    "{} ({})".format(
+                        self.user_1.name, self.territory_has_salesperson_1.display_name
+                    ),
+                )
+            ],
+        )

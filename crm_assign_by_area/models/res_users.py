@@ -10,7 +10,7 @@ class ResUsers(models.Model):
     @api.multi
     def name_get(self):
         context_territory_ids = self._context.get(
-            "assign_salesperson_by_area_territory_ids", {}
+            "assign_salesperson_by_area_territory_ids"
         )
         if context_territory_ids:
             result = []
