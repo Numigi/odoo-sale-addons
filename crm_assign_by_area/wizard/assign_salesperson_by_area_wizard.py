@@ -48,11 +48,8 @@ class AssignSalespersonByAreaWizard(models.Model):
         # Get active record
         active_record = self.get_active_record()
 
-        # Get salesperson field
-        salesperson_field_name = self.get_salesperson_field_name(active_record)
-
         # Set salesperson
-        active_record[salesperson_field_name] = self.salesperson_id
+        active_record["user_id"] = self.salesperson_id
 
     @api.multi
     def get_active_record(self):
@@ -74,29 +71,6 @@ class AssignSalespersonByAreaWizard(models.Model):
                 active_id,
             )
         return active_record
-
-    @api.model
-    def get_salesperson_field_name(self, active_record):
-        salesperson_field_name_mapping = self.get_salesperson_field_name_mapping()
-        salesperson_field_name = ""
-        for model_name, field_name in salesperson_field_name_mapping.items():
-            if (
-                model_name == active_record._name
-                and field_name in active_record._fields
-            ):
-                salesperson_field_name = field_name
-                break
-        if not salesperson_field_name:
-            raise AssertionError(
-                "There is no mapping to get salesperson field for model '%s'.\n"
-                "Check function get_salesperson_field_name_mapping()"
-                % active_record._name
-            )
-        return salesperson_field_name
-
-    @api.model
-    def get_salesperson_field_name_mapping(self):
-        return {"crm.lead": "user_id", "res.partner": "user_id"}
 
     @api.model
     def get_wizard_msg(self, territories, salespersons):
