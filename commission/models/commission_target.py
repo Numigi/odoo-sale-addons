@@ -127,14 +127,18 @@ class CommissionTarget(models.Model):
 
     def _compute_show_invoices(self):
         for target in self:
-            target.show_invoices = target.basis == "my_sales"
+            target.show_invoices = (
+                target.state != "draft" and target.basis == "my_sales"
+            )
 
     def _compute_show_child_targets(self):
         for target in self:
-            target.show_child_targets = target.basis == "my_team_commissions"
+            target.show_child_targets = (
+                target.state != "draft" and target.basis == "my_team_commissions"
+            )
 
     def compute(self):
-        self.check_extended_security_read()
+        self.check_extended_security_write()
         self = self.sudo()
 
         for target in self._sorted_by_category_dependency():
@@ -384,12 +388,19 @@ class CommissionTarget(models.Model):
                 )
 
     def _get_user_managed_teams(self):
+        managed_employees = self.env["hr.employee"].search(
+            [
+                ("id", "child_of", self.env.user.employee_ids.ids)
+            ]
+        )
+        managed_users = managed_employees.mapped("user_id")
+
         return (
             self.env["crm.team"]
             .sudo()
             .search(
                 [
-                    ("user_id", "=", self.env.user.id),
+                    ("user_id", "=", managed_users.ids),
                 ]
             )
         )
@@ -434,5 +445,6 @@ class CommissionTarget(models.Model):
     @api.model
     def get_read_access_actions(self):
         res = super().get_read_access_actions()
-        res.append("compute")
+        res.append("view_invoice_lines")
+        res.append("view_child_targets")
         return res
