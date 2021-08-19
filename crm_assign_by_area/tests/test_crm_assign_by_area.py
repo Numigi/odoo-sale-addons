@@ -63,35 +63,17 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_crm_cannot_assign_salesperson_if_crm_has_no_customer(self):
         with self.assertRaises(ValidationError):
-            try:
-                self.env["crm.lead"].create(
-                    {"name": "Pipeline"}
-                ).action_assign_salesperson()
-            except ValidationError as e:
-                self.assertTrue(
-                    "Please select a customer to assign salesperson." in str(e)
-                )
-                raise
+            self.env["crm.lead"].create(
+                {"name": "Pipeline"}
+            ).action_assign_salesperson()
 
     def test_crm_cannot_assign_salesperson_if_partner_has_no_territory(self):
         with self.assertRaises(ValidationError):
-            try:
-                self.crm.action_assign_salesperson()
-            except ValidationError as e:
-                self.assertTrue(
-                    "The customer %s has no territory to get salesperson."
-                    % self.partner.display_name
-                    in str(e)
-                )
-                raise
+            self.crm.action_assign_salesperson()
 
     def test_partner_cannot_assign_salesperson_if_partner_has_no_territory(self):
         with self.assertRaises(ValidationError):
-            try:
-                self.partner.action_assign_salesperson()
-            except ValidationError as e:
-                self.assertTrue("There is no territory to get salesperson." in str(e))
-                raise
+            self.partner.action_assign_salesperson()
 
     def test_crm_assign_salesperson_case_no_salesperson_to_assign(self):
         self.partner.zip = "100000"
@@ -106,11 +88,7 @@ class TestCRMAssignByArea(SavepointCase):
                 "There is no salesperson to assign. The partner's territories might not link to any salesperson.",
             )
             with self.assertRaises(ValidationError):
-                try:
-                    res.action_confirm()
-                except ValidationError as e:
-                    self.assertTrue("There is no salesperson" in str(e))
-                    raise
+                res.action_confirm()
 
     def test_crm_assign_salesperson_case_one_salesperson_to_assign(self):
         self.partner.zip = "200000"
@@ -164,11 +142,7 @@ class TestCRMAssignByArea(SavepointCase):
                 "There is no salesperson to assign. The partner's territories might not link to any salesperson.",
             )
             with self.assertRaises(ValidationError):
-                try:
-                    res.action_confirm()
-                except ValidationError as e:
-                    self.assertTrue("There is no salesperson" in str(e))
-                    raise
+                res.action_confirm()
 
     def test_partner_assign_salesperson_case_one_salesperson_to_assign(self):
         self.partner.zip = "200000"
