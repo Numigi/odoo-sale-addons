@@ -61,6 +61,14 @@ class TestCRMAssignByArea(SavepointCase):
             {"name": "Pipeline", "partner_id": cls.partner.id}
         )
 
+        wizard_env = cls.env["assign.salesperson.by.area.wizard"]
+        cls.wizard_crm_env = wizard_env.with_context(
+            active_id=cls.crm.id, active_model="crm.lead"
+        )
+        cls.wizard_partner_env = wizard_env.with_context(
+            active_id=cls.partner.id, active_model="res.partner"
+        )
+
     def test_crm_cannot_assign_salesperson_if_crm_has_no_customer(self):
         with self.assertRaises(ValidationError):
             self.env["crm.lead"].create(
@@ -77,11 +85,7 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_crm_assign_salesperson_case_no_salesperson_to_assign(self):
         self.partner.zip = "100000"
-        context = {"active_id": self.crm.id, "active_model": "crm.lead"}
-        context.update(self.crm.action_assign_salesperson().get("context"))
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_crm_env) as wizard:
             res = wizard.save()
             self.assertEqual(
                 res.wizard_msg,
@@ -92,11 +96,7 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_crm_assign_salesperson_case_one_salesperson_to_assign(self):
         self.partner.zip = "200000"
-        context = {"active_id": self.crm.id, "active_model": "crm.lead"}
-        context.update(self.crm.action_assign_salesperson().get("context"))
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_crm_env) as wizard:
             res = wizard.save()
             self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
@@ -104,19 +104,13 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_crm_assign_salesperson_case_several_salesperson_to_assign(self):
         self.partner.zip = "300000"
-        context = {"active_id": self.crm.id, "active_model": "crm.lead"}
-        context.update(self.crm.action_assign_salesperson().get("context"))
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_crm_env) as wizard:
             wizard.salesperson_id = self.user_2
             res = wizard.save()
             self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.crm.user_id, self.user_2)
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_crm_env) as wizard:
             wizard.salesperson_id = self.user_1
             res = wizard.save()
             res.action_confirm()
@@ -124,11 +118,7 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_partner_assign_salesperson_case_no_salesperson_to_assign(self):
         self.partner.zip = "100000"
-        context = {"active_id": self.partner.id, "active_model": "res.partner"}
-        context.update(self.partner.action_assign_salesperson().get("context"))
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_partner_env) as wizard:
             res = wizard.save()
             self.assertTrue(bool(res.wizard_msg))
             with self.assertRaises(ValidationError):
@@ -136,11 +126,7 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_partner_assign_salesperson_case_one_salesperson_to_assign(self):
         self.partner.zip = "200000"
-        context = {"active_id": self.partner.id, "active_model": "res.partner"}
-        context.update(self.partner.action_assign_salesperson().get("context"))
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_partner_env) as wizard:
             res = wizard.save()
             self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
@@ -148,19 +134,13 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_partner_assign_salesperson_case_several_salesperson_to_assign(self):
         self.partner.zip = "300000"
-        context = {"active_id": self.partner.id, "active_model": "res.partner"}
-        context.update(self.partner.action_assign_salesperson().get("context"))
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_partner_env) as wizard:
             wizard.salesperson_id = self.user_2
             res = wizard.save()
             self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.partner.user_id, self.user_2)
-        with Form(
-            self.env["assign.salesperson.by.area.wizard"].with_context(context)
-        ) as wizard:
+        with Form(self.wizard_partner_env) as wizard:
             wizard.salesperson_id = self.user_1
             res = wizard.save()
             res.action_confirm()
