@@ -74,27 +74,17 @@ class TestCRMAssignByArea(SavepointCase):
                 {"name": "Pipeline"}
             ).action_assign_salesperson()
 
-    def test_crm_cannot_assign_salesperson_if_partner_has_no_territory(self):
-        with self.assertRaises(ValidationError):
-            self.crm.action_assign_salesperson()
-
-    def test_partner_cannot_assign_salesperson_if_partner_has_no_territory(self):
-        with self.assertRaises(ValidationError):
-            self.partner.action_assign_salesperson()
-
     def test_crm_assign_salesperson_case_no_salesperson_to_assign(self):
         self.partner.zip = "100000"
         with Form(self.wizard_crm_env) as wizard:
             res = wizard.save()
-            self.assertTrue(bool(res.wizard_msg))
-            with self.assertRaises(ValidationError):
+            with self.assertRaises(AssertionError):
                 res.action_confirm()
 
     def test_crm_assign_salesperson_case_one_salesperson_to_assign(self):
         self.partner.zip = "200000"
         with Form(self.wizard_crm_env) as wizard:
             res = wizard.save()
-            self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.crm.user_id, self.user_1)
 
@@ -110,15 +100,13 @@ class TestCRMAssignByArea(SavepointCase):
         self.partner.zip = "100000"
         with Form(self.wizard_partner_env) as wizard:
             res = wizard.save()
-            self.assertTrue(bool(res.wizard_msg))
-            with self.assertRaises(ValidationError):
+            with self.assertRaises(AssertionError):
                 res.action_confirm()
 
     def test_partner_assign_salesperson_case_one_salesperson_to_assign(self):
         self.partner.zip = "200000"
         with Form(self.wizard_partner_env) as wizard:
             res = wizard.save()
-            self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.partner.user_id, self.user_1)
 
