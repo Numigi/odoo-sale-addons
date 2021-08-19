@@ -1,0 +1,2 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_assign_salesperson_by_area_wizard_user,assign_salesperson_by_area_wizard_user,model_assign_salesperson_by_area_wizard,base.group_user,1,1,1,1

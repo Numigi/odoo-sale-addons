@@ -13,7 +13,10 @@
     "depends": [
         "commission",
         "commission_payroll_preparation",
+        "crm_assign_by_area",
+        "crm_assign_in_house",
         "crm_brand",
+        "crm_team_by_industry",
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "l10n_ca",  # for testing sale_intercompany_service
