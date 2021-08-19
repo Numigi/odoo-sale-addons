@@ -17,11 +17,15 @@ class AssignSalespersonByAreaWizard(models.Model):
     @api.model
     def default_get(self, fields):
         res = super(AssignSalespersonByAreaWizard, self).default_get(fields)
-        territory_ids = self._context.get("territory_ids", [])
-        territories = self.env["res.territory"].browse(territory_ids)
+
+        active_record = self.get_active_record()
+        if self._context.get("active_model") == "crm.lead":
+            territories = active_record.partner_id.territory_ids
+        else:
+            territories = active_record.territory_ids
         salespersons = territories.mapped("salesperson_id")
         vals = {
-            "available_territory_ids": [(6, 0, territory_ids)],
+            "available_territory_ids": [(6, 0, territories.ids)],
             "available_salesperson_ids": [(6, 0, salespersons.ids)],
             "is_several_salespersons": len(salespersons) > 1,
             "wizard_msg": self.get_wizard_msg(territories, salespersons),

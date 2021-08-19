@@ -13,14 +13,6 @@ class CrmLead(models.Model):
         self.ensure_one()
         if not self.partner_id:
             raise ValidationError(_("Please select a customer to assign salesperson."))
-
-        territories = self.partner_id.territory_ids
-        if not territories:
-            raise ValidationError(
-                _("The customer %s has no territory to get salesperson.")
-                % self.partner_id.display_name
-            )
-
         return {
             "name": _("Assign Salesperson"),
             "type": "ir.actions.act_window",
@@ -28,5 +20,4 @@ class CrmLead(models.Model):
             "view_type": "form",
             "view_mode": "form",
             "target": "new",
-            "context": {"territory_ids": territories.ids},
         }
