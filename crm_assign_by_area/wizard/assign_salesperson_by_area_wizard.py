@@ -53,7 +53,6 @@ class AssignSalespersonByAreaWizard(models.Model):
 
     @api.multi
     def get_active_record(self):
-        self.ensure_one()
         context = self._context
         active_model = context.get("active_model")
         active_id = context.get("active_id")
