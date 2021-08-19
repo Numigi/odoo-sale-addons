@@ -62,10 +62,10 @@ class AssignSalespersonByAreaWizard(models.Model):
         active_record = self.env[context.get("active_model")].browse(
             context.get("active_id")
         )
-        if not active_record:
+        if not active_record.exists():
             raise AssertionError(
-                "Cannot find any record with model '%s' and id '%s'." % active_model,
-                active_id,
+                "Cannot find any record with model '%s' and id '%s'." %
+                (active_model, active_id)
             )
         return active_record
 
