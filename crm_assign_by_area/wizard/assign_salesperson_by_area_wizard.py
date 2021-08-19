@@ -16,7 +16,7 @@ class AssignSalespersonByAreaWizard(models.Model):
 
     @api.model
     def default_get(self, fields):
-        res = super(AssignSalespersonByAreaWizard, self).default_get(fields)
+        res = super().default_get(fields)
 
         active_record = self.get_active_record()
         if self._context.get("active_model") == "crm.lead":
