@@ -45,23 +45,18 @@ class AssignSalespersonByAreaWizard(models.Model):
         if not self.salesperson_id:
             raise AssertionError("There is no salesperson")
 
-        # Get active record
         active_record = self.get_active_record()
-
-        # Set salesperson
         active_record["user_id"] = self.salesperson_id
 
     @api.multi
     def get_active_record(self):
         self.ensure_one()
-        # Get active context
         context = self._context
         active_model = context.get("active_model")
         active_id = context.get("active_id")
         if not (active_model and active_id):
             raise AssertionError("Missing active_model or active_id context.")
 
-        # Get active record
         active_record = self.env[context.get("active_model")].browse(
             context.get("active_id")
         )
