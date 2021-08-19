@@ -101,12 +101,6 @@ class TestCRMAssignByArea(SavepointCase):
     def test_crm_assign_salesperson_case_several_salesperson_to_assign(self):
         self.partner.zip = "300000"
         with Form(self.wizard_crm_env) as wizard:
-            wizard.salesperson_id = self.user_2
-            res = wizard.save()
-            self.assertTrue(bool(res.wizard_msg))
-            res.action_confirm()
-            self.assertEqual(self.crm.user_id, self.user_2)
-        with Form(self.wizard_crm_env) as wizard:
             wizard.salesperson_id = self.user_1
             res = wizard.save()
             res.action_confirm()
@@ -130,12 +124,6 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_partner_assign_salesperson_case_several_salesperson_to_assign(self):
         self.partner.zip = "300000"
-        with Form(self.wizard_partner_env) as wizard:
-            wizard.salesperson_id = self.user_2
-            res = wizard.save()
-            self.assertTrue(bool(res.wizard_msg))
-            res.action_confirm()
-            self.assertEqual(self.partner.user_id, self.user_2)
         with Form(self.wizard_partner_env) as wizard:
             wizard.salesperson_id = self.user_1
             res = wizard.save()
