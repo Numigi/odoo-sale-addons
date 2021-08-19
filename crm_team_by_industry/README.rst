@@ -1,11 +1,14 @@
 CRM Team By Industry
 ====================
-This module adds new field Sales Team on Industry and suggests a corresponding Sales Team when user changing Main Industry on CRM
+This module adds new field Sales Team on Industry.
 
-New field Sales Team on Industry:
+.. image:: static/description/industry_form.png
 
-.. image:: static/description/industry_crm_team_id.png.png
+In the form view of a lead, after selecting an industry,
+the sales team is automatically filled.
 
+.. image:: static/description/crm_lead_form_1.png
+.. image:: static/description/crm_lead_form_2.png
 
 Contributors
 ------------

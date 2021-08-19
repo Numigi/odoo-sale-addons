@@ -3,7 +3,7 @@
 
 {
     "name": "CRM Team By Industry",
-    "summary": "This module adds ability to set CRM's Sales Team automatically from Main Industry",
+    "summary": "Assign leads to crm teams based on industries",
     "version": "1.0.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",

@@ -19,7 +19,7 @@ Usage
 
 - I press the button
 
-- If the customer(contact) has no territory, this popup will appear:
+- If the customer (or contact) has no territory, this popup will appear:
 
 .. image:: static/description/no_territory.png
 
@@ -36,7 +36,6 @@ Usage
 .. image:: static/description/several_salespersons_to_assign.png
 
 - After I press confirm, I see the Salesperson value is set
-
 
 Contributors
 ------------

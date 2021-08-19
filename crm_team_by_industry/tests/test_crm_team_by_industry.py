@@ -16,20 +16,15 @@ class TestCrmTeamByIndustry(SavepointCase):
     def test_onchange_main_industry_without_crm_team_id(self):
         with Form(self.env["crm.lead"]) as crm_form:
             crm_form.name = "CRM Test"
-            # CRM's sales team is default sales team
-            self.assertEqual(crm_form.team_id, self.default_sales_team)
+            assert crm_form.team_id == self.default_sales_team
             crm_form.industry_id = self.industry
-            # No change
-            self.assertEqual(crm_form.team_id, self.default_sales_team)
+            assert crm_form.team_id == self.default_sales_team
 
     def test_onchange_main_industry_with_crm_team_id(self):
-        # Add new_sale_team to industry
         self.industry.crm_team_id = self.new_sale_team
 
         with Form(self.env["crm.lead"]) as crm_form:
             crm_form.name = "CRM Test"
-            # CRM's sales team is default sales team
-            self.assertEqual(crm_form.team_id, self.default_sales_team)
+            assert crm_form.team_id == self.default_sales_team
             crm_form.industry_id = self.industry
-            # CRM's sales team is changed
-            self.assertEqual(crm_form.team_id, self.new_sale_team)
+            assert crm_form.team_id == self.new_sale_team

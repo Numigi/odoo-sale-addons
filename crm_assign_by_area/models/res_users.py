@@ -9,26 +9,27 @@ class ResUsers(models.Model):
 
     @api.multi
     def name_get(self):
+        territories = self._get_territories_from_context()
+        if territories:
+            return [
+                (user.id, user._get_name_with_territories(territories))
+                for user in self
+            ]
+        else:
+            return super().name_get()
+
+    def _get_territories_from_context(self):
         context_territory_ids = self._context.get(
             "assign_salesperson_by_area_territory_ids"
         )
         if context_territory_ids:
-            result = []
-            territories = self.env["res.territory"].browse(context_territory_ids[0][2])
-            salespersons = territories.mapped("salesperson_id")
-            for salesperson in salespersons:
-                related_territories = territories.filtered(
-                    lambda r: r.salesperson_id == salesperson
-                )
-                result.append(
-                    (
-                        salesperson.id,
-                        "{} ({})".format(
-                            salesperson.name,
-                            ", ".join(related_territories.mapped("display_name")),
-                        ),
-                    )
-                )
-            return result
+            return self.env["res.territory"].browse(context_territory_ids[0][2])
         else:
-            return super().name_get()
+            return None
+
+    def _get_name_with_territories(self, territories):
+        user_territories = territories.filtered(lambda r: r.salesperson_id == self)
+        return "{} ({})".format(
+            self.name,
+            ", ".join(user_territories.mapped("display_name"))
+        )
