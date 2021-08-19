@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-16 18:37+0000\n"
-"PO-Revision-Date: 2021-07-16 14:42-0400\n"
+"POT-Creation-Date: 2021-08-17 11:30+0000\n"
+"PO-Revision-Date: 2021-08-17 07:32-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -89,7 +89,7 @@ msgstr "Annulé"
 
 #. module: commission
 #: model:ir.actions.act_window,name:commission.action_category
-#: model:ir.ui.menu,name:commission.commission_category
+#: model:ir.ui.menu,name:commission.commission_category_menu
 msgid "Categories"
 msgstr "Catégories"
 
@@ -135,9 +135,15 @@ msgstr "Pourcentage de commissions"
 
 #. module: commission
 #: model:ir.model,name:commission.model_commission_target
+#: model:ir.model.fields,field_description:commission.field_account_invoice_line__commission_target_ids
 #: model_terms:ir.ui.view,arch_db:commission.commission_target_form
 msgid "Commission Target"
 msgstr "Cible de commission"
+
+#. module: commission
+#: model:ir.model.fields,field_description:commission.field_account_invoice_line__commission_target_count
+msgid "Commission Target Count"
+msgstr "Nombre de cibles de commissions"
 
 #. module: commission
 #: model:ir.model,name:commission.model_commission_target_rate
@@ -151,7 +157,7 @@ msgstr "Cibles de commissions"
 
 #. module: commission
 #: model:ir.module.category,name:commission.module_category_commission
-#: model:ir.ui.menu,name:commission.commission_root
+#: model:ir.ui.menu,name:commission.commission_root_menu
 msgid "Commissions"
 msgstr "Commissions"
 
@@ -286,12 +292,12 @@ msgstr "Abonnés(partenaires)"
 msgid "Grants access to commission targets of the user's managed departments."
 msgstr ""
 "Donne accès aux cibles de commissions des départements supervisés par "
-"l'utilisateur"
+"l'utilisateur."
 
 #. module: commission
 #: model:res.groups,comment:commission.group_user
 msgid "Grants access to the user's own commission targets."
-msgstr "Donne accès aux cibles de l'utilisateur"
+msgstr "Donne accès aux cibles de l'utilisateur."
 
 #. module: commission
 #: model:res.groups,comment:commission.group_manager
@@ -316,19 +322,19 @@ msgstr "ID"
 #: model:ir.model.fields,help:commission.field_commission_category__message_unread
 #: model:ir.model.fields,help:commission.field_commission_target__message_unread
 msgid "If checked new messages require your attention."
-msgstr "Si coché de nouveaux messages requierent votre attention"
+msgstr "Si coché de nouveaux messages requièrent votre attention."
 
 #. module: commission
 #: model:ir.model.fields,help:commission.field_commission_category__message_needaction
 #: model:ir.model.fields,help:commission.field_commission_target__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si coché de nouveaux messages requierent votre attention"
+msgstr "Si coché de nouveaux messages requièrent votre attention."
 
 #. module: commission
 #: model:ir.model.fields,help:commission.field_commission_category__message_has_error
 #: model:ir.model.fields,help:commission.field_commission_target__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Si coché, certains messages ont une erreur de livraison"
+msgstr "Si coché, certains messages ont une erreur de livraison."
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_category__included_tag_ids
@@ -336,22 +342,36 @@ msgid "Included Tag"
 msgstr "Tag inclus"
 
 #. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__included_teams_ids
+msgid "Included Teams"
+msgstr "Équipes incluses"
+
+#. module: commission
 #: selection:commission.category,rate_type:0
 msgid "Interval"
 msgstr "Intervalle"
 
 #. module: commission
+#: model:ir.model,name:commission.model_account_invoice_line
 #: model:ir.model.fields,field_description:commission.field_commission_target__invoice_line_ids
 msgid "Invoice Line"
 msgstr "Ligne de facture"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:302
+#: code:addons/commission/models/commission_target.py:328
 #: model:ir.actions.act_window,name:commission.action_invoice_lines
+#: model:ir.actions.act_window,name:commission.action_invoice_lines_no_target
+#: model:ir.ui.menu,name:commission.invoice_lines_menu
+#: model_terms:ir.ui.view,arch_db:commission.view_invoice_line_search
 #: model_terms:ir.ui.view,arch_db:commission.view_invoice_line_tree
 #, python-format
 msgid "Invoice Lines"
 msgstr "Lignes de facture"
+
+#. module: commission
+#: model:ir.ui.menu,name:commission.invoicing_menu
+msgid "Invoicing"
+msgstr "Facturation"
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_category__message_is_follower
@@ -397,7 +417,7 @@ msgstr "Pièce jointe principale"
 #. module: commission
 #: model:res.groups,name:commission.group_manager
 msgid "Manager"
-msgstr "Superviseur"
+msgstr "Gestionnaire"
 
 #. module: commission
 #: model_terms:ir.ui.view,arch_db:commission.commission_target_form
@@ -458,6 +478,11 @@ msgstr "Sommaire de la prochaine activité"
 #: model:ir.model.fields,field_description:commission.field_commission_target__activity_type_id
 msgid "Next Activity Type"
 msgstr "Type de la prochaine activité"
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.view_invoice_line_search
+msgid "No Commission Target"
+msgstr "Aucune cible liée"
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_category__message_needaction_counter
@@ -524,6 +549,11 @@ msgid "Reference"
 msgstr "Référence"
 
 #. module: commission
+#: model:ir.model.fields,help:commission.field_commission_target__employee_user_id
+msgid "Related user name for the resource to manage its access."
+msgstr "Nom de l'utilisateur lié à la ressource pour superviser son accès"
+
+#. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_category__activity_user_id
 #: model:ir.model.fields,field_description:commission.field_commission_target__activity_user_id
 msgid "Responsible User"
@@ -578,7 +608,7 @@ msgstr ""
 "État basé sur les activités\n"
 "Dépassé: Date butoir déjà passée\n"
 "Aujourd'hui: La date de l'activité est aujourd'hui\n"
-"Planifié: Activités futures"
+"Planifié: Activités futures."
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_target_rate__subtotal
@@ -602,12 +632,12 @@ msgstr "Cible pour la période"
 
 #. module: commission
 #: model:ir.actions.act_window,name:commission.action_target
-#: model:ir.ui.menu,name:commission.commission_target
+#: model:ir.ui.menu,name:commission.commission_target_menu
 msgid "Targets"
 msgstr "Cibles"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:308
+#: code:addons/commission/models/commission_target.py:334
 #, python-format
 msgid "Team Commissions"
 msgstr "Commissions de mon équipe"
@@ -656,6 +686,7 @@ msgid "Unread Messages Counter"
 msgstr "Comptoir des messages non lus"
 
 #. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_target__employee_user_id
 #: model:res.groups,name:commission.group_user
 msgid "User"
 msgstr "Utilisateur"
@@ -678,7 +709,12 @@ msgid "Website communication history"
 msgstr "Historique des communications du site web"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:345
+#: model_terms:ir.ui.view,arch_db:commission.view_invoice_line_search
+msgid "With Commission Target"
+msgstr "Avec cible liée"
+
+#. module: commission
+#: code:addons/commission/models/commission_target.py:371
 #, python-format
 msgid ""
 "You are not allowed to access the target {} because it is either not your "
@@ -688,7 +724,7 @@ msgstr ""
 "ou à un membre de votre équipe."
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:358
+#: code:addons/commission/models/commission_target.py:384
 #, python-format
 msgid ""
 "You are not allowed to access the target {} because it is not your own "

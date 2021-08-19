@@ -26,18 +26,18 @@ class TestDeliveredQty(KitCase):
             }
         )
         cls.important_component_1 = cls._make_component_line(
-            "K1", cls.component_a, 1, True
+            "K1", cls.component_a, 2, True
         )
         cls.important_component_2 = cls._make_component_line(
-            "K1", cls.component_b, 2, True
+            "K1", cls.component_b, 4, True
         )
         cls.optional_component = cls._make_component_line(
             "K1", cls.component_z, 10, False
         )
 
         cls.kit_line.copy({"order_id": cls.order.id, "kit_reference": "K2"})
-        cls._make_component_line("K2", cls.component_a, 1, True)
-        cls._make_component_line("K2", cls.component_b, 2, True)
+        cls._make_component_line("K2", cls.component_a, 10, True)
+        cls._make_component_line("K2", cls.component_b, 10, True)
         cls._make_component_line("K2", cls.component_z, 10, False)
 
         cls.order.action_confirm()
@@ -73,11 +73,13 @@ class TestDeliveredQty(KitCase):
         )
 
     def test_important_components_delivered(self):
-        self._deliver_component(self.important_component_1, 1)
-        self._deliver_component(self.important_component_2, 2)
+        self._deliver_component(self.important_component_1, 2)
         assert self.kit_line.qty_delivered == 1
 
     def test_important_components_partially_delivered(self):
         self._deliver_component(self.important_component_1, 1)
-        self._deliver_component(self.important_component_2, 1)
+        assert self.kit_line.qty_delivered == 0.5
+
+    def test_second_important_component_delivered(self):
+        self._deliver_component(self.important_component_2, 4)
         assert self.kit_line.qty_delivered == 0

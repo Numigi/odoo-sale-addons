@@ -81,7 +81,7 @@ class TestKitRental(KitRentalCase):
         assert service.product_readonly
         assert not service.product_uom_qty_readonly
         assert service.product_uom_readonly
-        assert service.handle_widget_invisible
+        assert not service.handle_widget_invisible
         assert service.trash_widget_invisible
         assert service.rental_date_from_required
         assert service.rental_date_from_editable
@@ -135,6 +135,11 @@ class TestKitRental(KitRentalCase):
         kit = self.get_kit_lines()
         kit.product_uom_change()
         assert not kit.price_unit
+
+    def test_kit_quantity_readonly(self):
+        self.add_kit_on_sale_order()
+        kit = self.get_kit_lines()
+        assert kit.product_uom_qty_readonly
 
     def test_kit_taxes_readonly(self):
         self.add_kit_on_sale_order()

@@ -46,27 +46,6 @@ class TestKitComponentSorting(SaleOrderLineCase):
             self.other_line_2,
         ]
 
-    def test_important_components_appear_before_non_important(self):
-        self.k1.sequence = 1
-        self.k2.sequence = 2
-        self.other_line_1.sequence = 3
-        self.other_line_2.sequence = 4
-
-        self.k1_2.is_important_kit_component = True
-        self.k2_2.is_important_kit_component = True
-
-        self.order.update_kit_component_sequences()
-        assert [l for l in self.order.order_line] == [
-            self.k1,
-            self.k1_2,
-            self.k1_1,
-            self.k2,
-            self.k2_2,
-            self.k2_1,
-            self.other_line_1,
-            self.other_line_2,
-        ]
-
     def test_reorder_kits(self):
         self.k1.sequence = 4
         self.k2.sequence = 1

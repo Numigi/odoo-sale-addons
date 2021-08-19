@@ -14,42 +14,50 @@ class TestCommissionTeam(TestCommissionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.manager_user = cls._create_user(
-            name="Manager", email="manager@testmail.com"
+        cls.team_manager_user = cls._create_user(
+            name="TeamManager", email="team-manager@testmail.com"
         )
-        cls.manager_user.groups_id = cls.env.ref("commission.group_team_manager")
+        cls.team_manager_user.groups_id = cls.env.ref("commission.group_team_manager")
+        cls.team_manager = cls._create_employee(user=cls.team_manager_user)
 
-        cls.manager = cls._create_employee(user=cls.manager_user)
+        cls.president_user = cls._create_user(
+            name="President", email="president@testmail.com"
+        )
+        cls.president_user.groups_id = cls.env.ref("commission.group_team_manager")
+        cls.president = cls._create_employee(user=cls.president_user)
+        cls.team_manager.parent_id = cls.president
 
-        cls.manager_category = cls._create_category(
+        cls.team_category = cls._create_category(
             name="Manager", basis="my_team_commissions"
         )
 
         cls.manager_target = cls._create_target(
-            employee=cls.manager,
-            category=cls.manager_category,
+            employee=cls.team_manager,
+            category=cls.team_category,
             target_amount=40000,
             fixed_rate=0.05,
         )
-        cls.manager_category.child_category_ids = cls.category
+        cls.team_category.child_category_ids = cls.category
 
-        cls.department = cls.env["hr.department"].create(
-            {
-                "name": "Dunder Mifflin",
-                "manager_id": cls.manager.id,
-            }
-        )
+        cls.team = cls._create_team("Testing", cls.team_manager_user)
+        cls.manager_target.included_teams_ids |= cls.team
 
-        cls.employee.department_id = cls.department
+        cls.user.sale_team_id = cls.team
         cls.employee_target = cls._create_target(target_amount=100000, fixed_rate=0.05)
 
         cls.interval_rate = 0.05
 
     def test_compute_show_invoices(self):
+        self.manager_target.set_confirmed_state()
         assert not self.manager_target.show_invoices
 
     def test_compute_show_child_targets(self):
+        self.manager_target.set_confirmed_state()
         assert self.manager_target.show_child_targets
+
+    def test_compute_show_child_targets__draft_state(self):
+        self.manager_target.set_draft_state()
+        assert not self.manager_target.show_child_targets
 
     def test_view_child_targets(self):
         self.manager_target.child_target_ids = self.employee_target
@@ -68,6 +76,22 @@ class TestCommissionTeam(TestCommissionCase):
         assert self.manager_target.child_target_ids == self.employee_target
         assert self.manager_target.child_commission_amount == 2000
         assert self.manager_target.base_amount == 2000
+
+    def test_multiple_teams(self):
+        new_team = self._create_team("Multi", self.team_manager_user)
+        self.manager_target.included_teams_ids |= new_team
+
+        new_user = self._create_user(name="Bob")
+        new_employee = self._create_employee(user=new_user)
+        new_user.sale_team_id = new_team
+        new_employee_target = self._create_target(
+            target_amount=100000, fixed_rate=0.05, employee=new_employee
+        )
+
+        children = self.manager_target._get_child_targets()
+
+        assert self.employee_target in children
+        assert new_employee_target in children
 
     def test_child_targets_wrong_department(self):
         self.employee_target.employee_id = self._create_employee()
@@ -106,7 +130,7 @@ class TestCommissionTeam(TestCommissionCase):
     @unpack
     def test_manager_completion_interval(self, slice_from, slice_to, completion):
         rate = self._create_target_rate(self.manager_target, slice_from, slice_to)
-        self.manager_category.rate_type = "interval"
+        self.team_category.rate_type = "interval"
         self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
         assert rate.completion_rate == completion
@@ -126,7 +150,7 @@ class TestCommissionTeam(TestCommissionCase):
             slice_to,
             self.interval_rate,
         )
-        self.manager_category.rate_type = "interval"
+        self.team_category.rate_type = "interval"
         self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
         assert rate.subtotal == subtotal
@@ -139,7 +163,7 @@ class TestCommissionTeam(TestCommissionCase):
         assert rset[1] == self.manager_target
 
     def test_no_child_categories(self):
-        self.manager_category.child_category_ids = None
+        self.team_category.child_category_ids = None
         self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
         assert self.manager_target.total_amount == 0
@@ -171,22 +195,28 @@ class TestCommissionTeam(TestCommissionCase):
             "commission_percentage"
         ) == self.employee_target.rate_ids.mapped("commission_percentage")
 
-    def test_compute_not_own_target(self):
-        self.manager_target.employee_id = self._create_employee()
-        with pytest.raises(AccessError):
-            self._compute_manager_target()
-
-    def test_compute_target_of_employee_in_own_team(self):
-        self._compute_employee_target()
-
-    def test_compute_target_of_employee_not_in_own_team(self):
-        self.department.manager_id = self._create_employee()
-        with pytest.raises(AccessError):
-            self._compute_employee_target()
-
     def test_target_access_domain(self):
         targets = self._search_manager_targets()
         assert targets == self.employee_target | self.manager_target
+
+    def test_access__own_target(self):
+        self.manager_target.sudo(self.team_manager_user).check_extended_security_all()
+
+    def test_access__not_own_target(self):
+        self.manager_target.employee_id = self._create_employee()
+        with pytest.raises(AccessError):
+            self.manager_target.sudo(self.team_manager_user).check_extended_security_all()
+
+    def test_access__target_of_employee_in_own_team(self):
+        self.employee_target.sudo(self.team_manager_user).check_extended_security_all()
+
+    def test_access__target_of_employee_in_child_team(self):
+        self.employee_target.sudo(self.president_user).check_extended_security_all()
+
+    def test_access__target_of_employee_not_in_own_team(self):
+        self.team.user_id = self._create_employee().user_id
+        with pytest.raises(AccessError):
+            self.employee_target.sudo(self.team_manager_user).check_extended_security_all()
 
     def _compute_manager_target(self):
         self.manager_target.sudo(self.manager_user).compute()
@@ -197,7 +227,7 @@ class TestCommissionTeam(TestCommissionCase):
     def _search_manager_targets(self):
         domain = (
             self.env["commission.target"]
-            .sudo(self.manager_user)
+            .sudo(self.team_manager_user)
             .get_extended_security_domain()
         )
         return self.env["commission.target"].search(domain)

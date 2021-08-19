@@ -14,8 +14,13 @@ class TestCommissionCase(SavepointCase):
 
         cls.user = cls._create_user()
         cls.user.groups_id = cls.env.ref("commission.group_user")
-
         cls.employee = cls._create_employee(user=cls.user)
+
+        cls.manager_user = cls._create_user(
+            name="Manager", email="manager@testmail.com"
+        )
+        cls.manager_user.groups_id = cls.env.ref("commission.group_manager")
+        cls.manager = cls._create_employee(user=cls.manager_user)
 
         cls.customer = cls.env["res.partner"].create({"name": "testing"})
 
@@ -176,3 +181,7 @@ class TestCommissionCase(SavepointCase):
         )
         invoice.action_invoice_open()
         return invoice
+
+    @classmethod
+    def _create_team(cls, name, manager):
+        return cls.env["crm.team"].create({"name": name, "user_id": manager.id})
