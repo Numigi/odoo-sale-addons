@@ -98,11 +98,7 @@ class TestCRMAssignByArea(SavepointCase):
             self.env["assign.salesperson.by.area.wizard"].with_context(context)
         ) as wizard:
             res = wizard.save()
-            self.assertEqual(
-                res.wizard_msg,
-                "%s will be assigned to the opportunity. Do you want to continue?"
-                % self.user_1.display_name,
-            )
+            self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.crm.user_id, self.user_1)
 
@@ -115,10 +111,7 @@ class TestCRMAssignByArea(SavepointCase):
         ) as wizard:
             wizard.salesperson_id = self.user_2
             res = wizard.save()
-            self.assertEqual(
-                res.wizard_msg,
-                "Several salespersons could be assigned depending on the partner's territories. Please choose the right seller.",
-            )
+            self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.crm.user_id, self.user_2)
         with Form(
@@ -137,10 +130,7 @@ class TestCRMAssignByArea(SavepointCase):
             self.env["assign.salesperson.by.area.wizard"].with_context(context)
         ) as wizard:
             res = wizard.save()
-            self.assertEqual(
-                res.wizard_msg,
-                "There is no salesperson to assign. The partner's territories might not link to any salesperson.",
-            )
+            self.assertTrue(bool(res.wizard_msg))
             with self.assertRaises(ValidationError):
                 res.action_confirm()
 
@@ -152,11 +142,7 @@ class TestCRMAssignByArea(SavepointCase):
             self.env["assign.salesperson.by.area.wizard"].with_context(context)
         ) as wizard:
             res = wizard.save()
-            self.assertEqual(
-                res.wizard_msg,
-                "%s will be assigned to the opportunity. Do you want to continue?"
-                % self.user_1.display_name,
-            )
+            self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.partner.user_id, self.user_1)
 
@@ -169,10 +155,7 @@ class TestCRMAssignByArea(SavepointCase):
         ) as wizard:
             wizard.salesperson_id = self.user_2
             res = wizard.save()
-            self.assertEqual(
-                res.wizard_msg,
-                "Several salespersons could be assigned depending on the partner's territories. Please choose the right seller.",
-            )
+            self.assertTrue(bool(res.wizard_msg))
             res.action_confirm()
             self.assertEqual(self.partner.user_id, self.user_2)
         with Form(
