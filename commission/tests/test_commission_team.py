@@ -25,7 +25,6 @@ class TestCommissionTeam(TestCommissionCase):
         )
         cls.president_user.groups_id = cls.env.ref("commission.group_team_manager")
         cls.president = cls._create_employee(user=cls.president_user)
-        cls.team_manager.parent_id = cls.president
 
         cls.team_category = cls._create_category(
             name="Manager", basis="my_team_commissions"
@@ -39,10 +38,12 @@ class TestCommissionTeam(TestCommissionCase):
         )
         cls.team_category.child_category_ids = cls.category
 
-        cls.team = cls._create_team("Testing", cls.team_manager_user)
-        cls.manager_target.included_teams_ids |= cls.team
+        cls.team = cls._create_team("Sales U.S.", cls.team_manager_user)
+        cls.team.member_ids = cls.user
+        cls.parent_team = cls._create_team("Sales North America", cls.president_user)
+        cls.parent_team.member_ids = cls.team_manager_user | cls.president_user
 
-        cls.user.sale_team_id = cls.team
+        cls.manager_target.included_teams_ids |= cls.team
         cls.employee_target = cls._create_target(target_amount=100000, fixed_rate=0.05)
 
         cls.interval_rate = 0.05
