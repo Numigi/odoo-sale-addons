@@ -19,7 +19,10 @@ USER odoo
 COPY commission /mnt/extra-addons/commission
 COPY commission_payroll_preparation /mnt/extra-addons/commission_payroll_preparation
 COPY commission_prorata /mnt/extra-addons/commission_prorata
+COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
+COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
+COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
@@ -36,8 +39,9 @@ COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
-COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
+COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
+COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
