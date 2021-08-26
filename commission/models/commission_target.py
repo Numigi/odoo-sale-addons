@@ -388,22 +388,20 @@ class CommissionTarget(models.Model):
                 )
 
     def _get_user_managed_teams(self):
-        managed_employees = self.env["hr.employee"].search(
-            [
-                ("id", "child_of", self.env.user.employee_ids.ids)
-            ]
-        )
-        managed_users = managed_employees.mapped("user_id")
+        all_teams = self.env["crm.team"].sudo().search([])
+        user = self.env.user
+        return all_teams.filtered(lambda team: self._is_user_managed_team(user, team))
 
-        return (
-            self.env["crm.team"]
-            .sudo()
-            .search(
-                [
-                    ("user_id", "=", managed_users.ids),
-                ]
-            )
-        )
+    def _is_user_managed_team(self, user, team, depth=10):
+        if depth == 0:
+            return False
+
+        if team.user_id == user:
+            return True
+
+        parent_team = team.user_id.sale_team_id
+        if parent_team:
+            return self._is_user_managed_team(user, parent_team, depth=depth - 1)
 
     def get_extended_security_domain(self):
         result = super().get_extended_security_domain()
