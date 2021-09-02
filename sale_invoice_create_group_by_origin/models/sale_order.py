@@ -7,11 +7,11 @@ from odoo import fields, models, api
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    """@api.multi
+    @api.multi
     def action_invoice_create(self, grouped=False, final=False):
         grouped = (
             self.env["ir.config_parameter"].get_param(
                 "sale_invoice_create_group_by_origin.config"
             )
             == "on"
-        )"""
+        )
