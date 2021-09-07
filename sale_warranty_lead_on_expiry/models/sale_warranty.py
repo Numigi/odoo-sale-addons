@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from .common import DEFAULT_DELAY_BETWEEN_LEADS
 
 
@@ -124,4 +124,4 @@ class Warranty(models.Model):
 
         :rtype: str
         """
-        return "End Of Warranty {}".format(self.reference)
+        return _("End Of Warranty {}").format(self.reference)
