@@ -63,5 +63,5 @@
         "website_sale_request_price_wishlist",
         "website_stock_availability_enhanced",
     ],
-    "installable": True,
+    "installable": False,
 }
