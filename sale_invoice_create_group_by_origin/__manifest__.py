@@ -11,6 +11,6 @@
     "category": "Sales",
     "summary": "",
     "depends": ["sale_management", "account"],
-    "data": [],
+    "data": ["views/res_config_settings_views.xml"],
     "installable": True,
 }
