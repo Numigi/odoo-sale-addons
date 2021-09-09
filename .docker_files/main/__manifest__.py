@@ -32,7 +32,7 @@
         # "sale_delivery_completion",
         # "sale_dynamic_price",
         # "sale_intercompany_service",
-        "sale_invoice_create_group_by_origin",
+        "sale_invoice_group_by_order",
         # "sale_invoice_email_warning",
         # "sale_invoice_no_follow",
         # "sale_kit",
