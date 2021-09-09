@@ -4,7 +4,7 @@
 from odoo.tests.common import SavepointCase
 
 
-class SaleCommitmentDateCase(SavepointCase):
+class TestInvoiceGrouping(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
