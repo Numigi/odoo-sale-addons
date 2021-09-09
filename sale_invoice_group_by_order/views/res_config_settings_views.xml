@@ -10,7 +10,7 @@
                     <div class="o_setting_right_pane">
                         <label for="invoice_grouping"/>
                         <div class="text-muted">
-                            How to automatically group invoices.
+                            How to automatically group invoices
                         </div>
                         <div class="content-group">
                             <div class="mt16">
