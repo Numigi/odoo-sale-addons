@@ -9,10 +9,10 @@ class ResConfigSettings(models.TransientModel):
 
     invoice_grouping = fields.Selection(
         [
-            ("on", "Group invoices by SO number."),
-            ("off", "Group invoices by partner and currency."),
+            ("on", "By SO number"),
+            ("off", "By partner and currency"),
         ],
-        default="on",
+        default="off",
         required=True,
         config_parameter="sale_invoice_create_group_by_origin.config",
     )
