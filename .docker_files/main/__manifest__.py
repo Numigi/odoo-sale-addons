@@ -58,6 +58,7 @@
         "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
         "web_view_google_map_itinerary",
+        "website_event_message_unpublished",
         "website_payment_message_enhanced",
         "website_sale_request_price",
         "website_sale_request_price_wishlist",

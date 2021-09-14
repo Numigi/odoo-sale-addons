@@ -60,6 +60,7 @@ COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY web_view_google_map_itinerary /mnt/extra-addons/web_view_google_map_itinerary
+COPY website_event_message_unpublished /mnt/extra-addons/website_event_message_unpublished
 COPY website_payment_message_enhanced /mnt/extra-addons/website_payment_message_enhanced
 COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
 COPY website_sale_request_price_wishlist /mnt/extra-addons/website_sale_request_price_wishlist
