@@ -12,6 +12,7 @@
     "summary": "Install all addons required for testing.",
     "depends": [
         "sale_invoice_group_by_order",
+        "sale_xmlrpc_compatible",
     ],
     "installable": True,
 }
