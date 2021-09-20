@@ -34,8 +34,8 @@ msgstr "<span>Nom*</span>"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details
-msgid "<span>Phone</span>"
-msgstr "<span>Téléphone</span>"
+msgid "<span>Phone*</span>"
+msgstr "<span>Téléphone*</span>"
 
 #. module: website_sale_request_price
 #: model_terms:ir.ui.view,arch_db:website_sale_request_price.request_price_details

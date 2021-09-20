@@ -139,8 +139,8 @@
                                             <div><input class="form-control" type="email" name="email" required="This field is required"/></div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <div><span>Phone</span></div>
-                                            <div><input class="form-control" type="tel" name="phone"/></div>
+                                            <div><span>Phone*</span></div>
+                                            <div><input class="form-control" type="tel" name="phone" required="This field is required"/></div>
                                         </div>
                                     </div>
                                 </t>
