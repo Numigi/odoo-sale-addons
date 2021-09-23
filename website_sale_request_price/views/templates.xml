@@ -152,6 +152,16 @@
                                         <textarea class="form-control" type="tel" name="additional_information"/>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <t t-set="warning_message" t-value="request.env.user.company_id.website_sale_request_price_message"/>
+                                        <div
+                                            t-if="warning_message"
+                                            t-raw="warning_message"
+                                            style="white-space: pre-wrap; margin-top: 16px;">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </main>
                         <footer class="modal-footer">
