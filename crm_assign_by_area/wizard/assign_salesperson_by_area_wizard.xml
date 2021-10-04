@@ -28,7 +28,7 @@
                             name="action_confirm"
                             type="object"
                             class="oe_highlight"
-                            attrs="{'invisible': ['|', ('wizard_msg', 'ilike', 'There is no salesperson to assign'),('wizard_msg', 'ilike', 'Aucun vendeur disponible')]}"
+                            attrs="{'invisible': [('salesperson_id', '=', False)]}"
                     />
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
