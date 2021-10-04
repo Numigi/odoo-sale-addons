@@ -11,8 +11,8 @@ class AssignSalespersonByAreaWizard(models.Model):
     available_territory_ids = fields.Many2many(comodel_name="res.territory")
     available_salesperson_ids = fields.Many2many(comodel_name="res.users")
     is_several_salespersons = fields.Boolean()
-    wizard_msg = fields.Text(readonly=1)
     salesperson_id = fields.Many2one(comodel_name="res.users")
+    wizard_msg = fields.Text(compute="_compute_wizard_msg")
 
     @api.model
     def default_get(self, fields):
@@ -69,8 +69,12 @@ class AssignSalespersonByAreaWizard(models.Model):
             )
         return active_record
 
-    @api.onchange("available_territory_ids", "available_salesperson_ids")
-    def onchange_set_wizard_msg(self):
+    @api.depends("available_territory_ids", "available_salesperson_ids")
+    def _compute_wizard_msg(self):
+        for wizard in self:
+            wizard.wizard_msg = wizard._get_wizard_msg()
+
+    def _get_wizard_msg(self):
         if len(self.available_salesperson_ids) == 1:
             related_territories = self.available_territory_ids.filtered(
                 lambda r: r.salesperson_id == self.available_salesperson_ids
@@ -78,7 +82,7 @@ class AssignSalespersonByAreaWizard(models.Model):
             related_territories_names = ", ".join(
                 related_territories.mapped("display_name")
             )
-            wizard_msg = _(
+            return _(
                 "%s will be assigned to the record. Do you want to continue?"
             ) % (
                 "{} ({})".format(
@@ -87,13 +91,12 @@ class AssignSalespersonByAreaWizard(models.Model):
                 )
             )
         elif len(self.available_salesperson_ids) > 1:
-            wizard_msg = _(
+            return _(
                 "Several salespersons could be assigned depending on the partner's "
                 "territories. Please choose the right seller."
             )
         else:
-            wizard_msg = _(
+            return _(
                 "There is no salesperson to assign. The partner's territories "
                 "might not be linked to any salesperson."
             )
-        self.wizard_msg = wizard_msg
