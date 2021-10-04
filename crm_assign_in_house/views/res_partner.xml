@@ -7,10 +7,14 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='sales_purchases']//field[@name='customer']" position="after">
-                <field name="in_house"/>
+                <field name="in_house"
+                    attrs="{'readonly': [('is_company', '=', False), ('parent_id', '!=', False)]}"/>
             </xpath>
             <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="attributes">
-                <attribute name="attrs">{'required': [('in_house', '=', True)]}</attribute>
+                <attribute name="attrs">{
+                    'required': [('in_house', '=', True)],
+                    'readonly': [('is_company', '=', False), ('parent_id', '!=', False)],
+                }</attribute>
             </xpath>
         </field>
     </record>
