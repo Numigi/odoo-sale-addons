@@ -10,6 +10,6 @@
     "maintainer": "Numigi",
     "license": "AGPL-3",
     "depends": ["crm_industry"],
-    "data": ["views/res_partner_industry.xml"],
+    "data": ["views/crm_lead.xml", "views/res_partner_industry.xml"],
     "installable": True,
 }
