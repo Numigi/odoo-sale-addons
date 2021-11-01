@@ -8,6 +8,9 @@ class RentalCase(KitCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.stock_user = cls.env.ref("base.user_demo")
+        cls.stock_user.groups_id = cls.env.ref("stock.group_stock_user")
+
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.uom_day = cls.env.ref("uom.product_uom_day")
         cls.rental_service = cls.env["product.product"].create(
@@ -94,7 +97,7 @@ class RentalCase(KitCase):
     @classmethod
     def process_move(cls, move, qty):
         move._set_quantity_done(qty)
-        move._action_done()
+        move.sudo(cls.stock_user)._action_done()
 
 
 class SaleOrderKitCase(RentalCase):

@@ -33,14 +33,14 @@ class StockMove(models.Model):
     def _action_done(self):
         result = super()._action_done()
 
-        important_rental_moves = self.filtered(
+        important_rental_moves = self.sudo().filtered(
             lambda m: m.is_important_component_move() and m.is_rental_move()
         )
         for move in important_rental_moves:
             move._update_sale_rental_service_line_delivered_qty()
             move._update_sale_rental_service_line_date_from()
 
-        important_return_moves = self.filtered(
+        important_return_moves = self.sudo().filtered(
             lambda m: m.is_important_component_move() and m.is_rental_return_move()
         )
         for move in important_return_moves:
