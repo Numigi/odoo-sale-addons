@@ -5,33 +5,34 @@
     <t t-name="website_sale_stock.product_availability">
         <div t-attf-class="availability_message_#{product_template}">
             <t t-if="show_product_availability">
-                <t t-if="enough_in_stock">
-                    <div t-if="show_available_qty" class="text-success mt16">
-                        <t t-esc="virtual_available"/> <t t-esc="uom_name"/> available
-                    </div>
+                <div t-if="always_show_available_qty" class="text-success mt16">
+                    <t t-esc="virtual_available"/> <t t-esc="uom_name"/> available
+                </div>
+                <t t-else="enough_in_stock">
                     <div t-else="show_available_qty_warning" class="text-warning mt16">
                         <i class="fa fa-exclamation-triangle" title="Warning" role="img" aria-label="Warning"/>
                         <t t-esc="virtual_available"/> <t t-esc="uom_name"/> available
-                    </div>
-                    <div t-else="show_replenishment_delay_message" class="mt16">
-                        <t t-esc="replenishment_delay_message"/>
                     </div>
                     <div t-else="show_in_stock" class="text-success mt16">
                         In stock
                     </div>
                 </t>
+                <div t-else="show_replenishment_delay_message" class="mt16">
+                    <t t-esc="replenishment_delay_message"/>
+                </div>
+                <div
+                    t-else="show_out_of_stock"
+                    class="text-danger mt16"
+                    >
+                    <i class="fa fa-exclamation-triangle" role="img" aria-label="Warning" title="Warning"/>
+                    Out of stock
+                </div>
+
                 <div
                     t-if="cart_qty"
                     class="text-warning mt8"
                     >
                     You already added <t t-esc="cart_qty" /> <t t-esc="uom_name" /> in your cart.
-                </div>
-                <div
-                    t-if="show_out_of_stock"
-                    class="text-danger mt16"
-                    >
-                    <i class="fa fa-exclamation-triangle" role="img" aria-label="Warning" title="Warning"/>
-                    Temporarily out of stock
                 </div>
             </t>
             <div
