@@ -12,6 +12,5 @@ class ProductTemplate(models.Model):
                 "threshold_warning",
                 "Indicate if the inventory is below a threshold and allow sales if not enough stock",
             ),
-            # TODO in v13+ to place more appropriately the new option : ('custom', )
         ]
     )
