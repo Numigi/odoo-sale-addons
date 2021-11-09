@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="product_template_form_view_show_available_threshold_on_threshold_warning" model="ir.ui.view">
+
+    <record id="product_template_form_view" model="ir.ui.view">
         <field name="name">Project Template Form: show available_threshold on threshold_warning</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="website_sale_stock.product_template_form_view_inherit_website_sale_stock"/>
         <field name="arch" type="xml">
             <field name="available_threshold" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', ('type', 'in', ['service', 'consu']), ('inventory_availability', 'not in', ('threshold', 'threshold_warning'))], 'required': [('inventory_availability', '=', 'threshold'), ('type', '=', 'product')]}</attribute>
+                <attribute name="attrs">{
+                    'invisible': [
+                        '|',
+                        ('type', '!=', 'product'),
+                        ('inventory_availability', 'not in', ('threshold', 'threshold_warning')),
+                    ],
+                    'required': [
+                        ('type', '=', 'product'),
+                        ('inventory_availability', '=', 'threshold'),
+                    ],
+                }</attribute>
             </field>
         </field>
     </record>
+
 </odoo>

@@ -15,28 +15,20 @@
                 <div t-else="show_in_stock" class="text-success mt16">
                     In stock
                 </div>
-                <div t-else="show_replenishment_delay" class="mt16">
-                    <t t-esc="replenishment_delay_message"/>
-                </div>
-                <div
-                    t-else="1"
-                    class="text-danger mt16"
-                    >
+                <div t-else="1" class="text-danger mt16">
                     <i class="fa fa-exclamation-triangle" role="img" aria-label="Warning" title="Warning"/>
-                    Out of stock
+                    Temporarily out of stock
                 </div>
 
-                <div
-                    t-if="cart_qty"
-                    class="text-warning mt8"
-                    >
+                <div t-if="show_replenishment_delay" class="mt16">
+                    <t t-esc="replenishment_delay_message"/>
+                </div>
+
+                <div t-if="cart_qty" class="text-warning mt8">
                     You already added <t t-esc="cart_qty" /> <t t-esc="uom_name" /> in your cart.
                 </div>
             </t>
-            <div
-                t-else="custom_message"
-                class="text-success mt16"
-                >
+            <div t-else="custom_message" class="text-success mt16">
                 <t t-esc="custom_message"/>
             </div>
         </div>

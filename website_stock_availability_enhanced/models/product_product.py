@@ -1,8 +1,12 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from datetime import datetime
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
+from odoo.addons.product_supplier_info_helpers.helpers import (
+    get_supplier_info_from_product,
+)
 
 
 class ProductProduct__enhanced_availability(models.Model):
@@ -20,26 +24,46 @@ class ProductProduct__enhanced_availability(models.Model):
 
     def compute_availability(self):
         for product in self:
-            sale_availability = product._get_sale_availability()
-            next_replenishment_qty = product._get_next_replenishment_quantity()
+            sale_availability = product.sudo().__get_sale_availability()
+            next_replenishment_qty = product.sudo().__get_next_replenishment_quantity()
             product.sale_availability = sale_availability
             product.replenishment_availability = (
                 sale_availability + next_replenishment_qty
             )
-
-    def _get_sale_availability(self):
-        current_qty = self.__get_current_qty()
-        out_qty = self.__get_outgoing_qty()
-        return current_qty - out_qty
-
-    def _get_next_replenishment_quantity(self):
-        picking = self.__get_next_receipt()
-        moves = picking.mapped("move_lines").filtered(lambda m: m.product_id == self)
-        return sum(m.product_qty for m in moves)
+            product.replenishment_delay = product.sudo().__get_replenishment_delay()
 
     def _set_enhanced_availability_info(self, info, add_qty):
         if self.__show_availability():
             self.__set_availability(info, add_qty)
+
+    def __get_sale_availability(self):
+        current_qty = self.__get_current_qty()
+        out_qty = self.__get_outgoing_qty()
+        return current_qty - out_qty
+
+    def __get_replenishment_delay(self):
+        picking = self.__get_next_receipt()
+        if picking:
+            delta = picking.scheduled_date - datetime.now()
+            return max(delta.days, 0)
+        else:
+            return self.__get_standard_replenishment_delay()
+
+    def __get_standard_replenishment_delay(self):
+        company = self.env.user.company_id
+        supplier_info = self.__get_main_supplier_info()
+        return company.security_lead + company.po_lead + (supplier_info.delay or 0)
+
+    def __get_main_supplier_info(self):
+        supplier_info = get_supplier_info_from_product(self).sorted(
+            key=lambda s: (0 if s.product_id else 1, s.sequence)
+        )
+        return supplier_info[:1]
+
+    def __get_next_replenishment_quantity(self):
+        picking = self.__get_next_receipt()
+        moves = picking.mapped("move_lines").filtered(lambda m: m.product_id == self)
+        return sum(m.product_qty for m in moves)
 
     def __set_availability(self, info, add_qty):
         info["show_availability"] = True
@@ -88,7 +112,7 @@ class ProductProduct__enhanced_availability(models.Model):
             ("location_dest_id.usage", "=", "internal"),
             ("location_id.usage", "=", "supplier"),
         ]
-        move = self.env["stock.move"].search(domain, limit=1)
+        move = self.env["stock.move"].search(domain, order="date_expected", limit=1)
         return move.picking_id
 
     def __get_current_qty(self):

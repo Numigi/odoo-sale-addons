@@ -1,6 +1,7 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import datetime, timedelta
 from odoo.tests.common import SavepointCase
 
 
@@ -19,6 +20,27 @@ class TestProductFields(SavepointCase):
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.receipt_type = cls.warehouse.in_type_id
+        cls.supplier = cls.env["res.partner"].create({"name": "My Supplier"})
+        cls.supplier_info = cls.env["product.supplierinfo"].create(
+            {
+                "product_tmpl_id": cls.product.product_tmpl_id.id,
+                "product_id": cls.product.id,
+                "name": cls.supplier.id,
+            },
+        )
+
+    def test_compute_availability_schedule__on_stock_move_assign(self):
+        self._add_stock_move(1, self.stock_location, self.customer_location)
+        assert self._find_queue_job()
+
+    def _find_queue_job(self):
+        jobs = self.env["queue.job"].search(
+            [
+                ("model_name", "=", "product.product"),
+                ("method_name", "=", "compute_availability"),
+            ]
+        )
+        return next((j for j in jobs if self.product == j.records), None)
 
     def test_sale_availability(self):
         self.product.compute_availability()
@@ -61,20 +83,48 @@ class TestProductFields(SavepointCase):
 
     def test_replenishment_availability__receipt(self):
         self._add_stock_move(
-            1, self.supplier_location, self.stock_location, picking_type=self.receipt_type
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
         )
         self.product.compute_availability()
         assert self.product.replenishment_availability == 1
 
     def test_replenishment_availability__receipt_with_two_moves(self):
         self._add_stock_move(
-            1, self.supplier_location, self.stock_location, picking_type=self.receipt_type
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
         )
         self._add_stock_move(
-            1, self.supplier_location, self.stock_location, picking_type=self.receipt_type
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
         )
         self.product.compute_availability()
         assert self.product.replenishment_availability == 2
+
+    def test_replenishment_delay(self):
+        move = self._add_stock_move(
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
+        )
+        move.picking_id.scheduled_date = datetime.now() + timedelta(days=100, seconds=1)
+        self.product.compute_availability()
+        assert self.product.replenishment_delay == 100
+
+    def test_replenishment_delay__no_incoming_move(self):
+        company = self.env.user.company_id
+        company.security_lead = 5
+        company.po_lead = 10
+        self.supplier_info.delay = 20
+        self.product.compute_availability()
+        assert self.product.replenishment_delay == 35
 
     def _add_stock_quant(self, quantity, location):
         return self.env["stock.quant"].create(
