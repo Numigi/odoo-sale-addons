@@ -36,17 +36,7 @@ class ProductTemplate(models.Model):
         )
 
         if "virtual_available" in info:
-            info["show_product_availability"] = self._get_show_product_availability()
-            info["always_show_available_qty"] = self._get_always_show_available_qty()
-            info["enough_in_stock"] = self._get_enough_in_stock(info, add_qty)
+            product = self.env['product.product'].sudo().browse(info['product_id'])
+            product._set_enhanced_availability_info(info, add_qty)
 
         return info
-
-    def _get_show_product_availability(self):
-        return self.inventory_availability not in ("never", "custom")
-
-    def _get_always_show_available_qty(self):
-        return self.inventory_availability == "always"
-
-    def _get_enough_in_stock(self, info, add_qty):
-        return info["virtual_available"] >= add_qty

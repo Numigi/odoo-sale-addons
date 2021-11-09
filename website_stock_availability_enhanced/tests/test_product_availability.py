@@ -23,56 +23,85 @@ class TestProductAvailability(SavepointCase):
         "threshold",
         "threshold_warning",
     )
-    def test_show_product_availability(self, inventory_availability):
+    def test_show_availability(self, inventory_availability):
         self.product_tmpl.inventory_availability = inventory_availability
-        info = self._get_combination_info()
-        assert info["show_product_availability"]
+        info = self._get_combination_info(1)
+        assert info["show_availability"]
 
     @data(
         "never",
         "custom",
     )
-    def test_not_show_product_availability(self, inventory_availability):
+    def test_not_show_availability(self, inventory_availability):
         self.product_tmpl.inventory_availability = inventory_availability
-        info = self._get_combination_info()
-        assert not info["show_product_availability"]
+        info = self._get_combination_info(1)
+        assert not info.get("show_availability")
 
-    def test_always_show_available_qty(self):
+    def test_show_available_qty(self):
         self.product_tmpl.inventory_availability = "always"
-        info = self._get_combination_info()
-        assert info["always_show_available_qty"]
+        info = self._get_combination_info(1)
+        assert info["show_available_qty"]
 
     @data(
         "threshold",
         "threshold_warning",
     )
-    def test_not_always_show_available_qty(self, inventory_availability):
+    def test_not_show_available_qty(self, inventory_availability):
         self.product_tmpl.inventory_availability = inventory_availability
-        info = self._get_combination_info()
-        assert not info["always_show_available_qty"]
+        info = self._get_combination_info(1)
+        assert not info.get("show_available_qty")
 
-    def test_enough_in_stock(self):
+    @data(
+        "threshold",
+        "threshold_warning",
+    )
+    def test_show_available_qty_warning(self, inventory_availability):
+        self.product_tmpl.inventory_availability = inventory_availability
+        self.product_tmpl.available_threshold = 1
+        self.product.sale_availability = 1
+        info = self._get_combination_info(1)
+        assert info["show_available_qty_warning"]
+
+    @data(
+        "threshold",
+        "threshold_warning",
+    )
+    def test_not_show_available_qty_warning(self, inventory_availability):
+        self.product_tmpl.inventory_availability = inventory_availability
+        self.product_tmpl.available_threshold = 1
+        self.product.sale_availability = 2
+        info = self._get_combination_info(1)
+        assert not info.get("show_available_qty_warning")
+
+    def test_show_in_stock(self):
         self.product_tmpl.inventory_availability = "threshold"
-        self._add_quant(1)
-        info = self._get_combination_info()
-        assert info["enough_in_stock"]
+        self.product_tmpl.available_threshold = 1
+        self.product.sale_availability = 2
+        info = self._get_combination_info(1)
+        assert info["show_in_stock"]
 
-    def test_not_enough_in_stock(self):
+    def test_not_show_in_stock(self):
         self.product_tmpl.inventory_availability = "threshold"
-        info = self._get_combination_info()
-        assert not info["enough_in_stock"]
+        self.product_tmpl.available_threshold = 1
+        info = self._get_combination_info(1)
+        assert not info.get("show_in_stock")
 
-    def _get_combination_info(self):
+    def test_show_replenishment_delay(self):
+        self.product_tmpl.inventory_availability = "threshold"
+        self.product.replenishment_delay = 10
+        self.product.replenishment_availability = 1
+        info = self._get_combination_info(1)
+        assert info["show_replenishment_delay"]
+        assert "10" in info["replenishment_delay_message"]
+
+    def test_not_show_replenishment_delay(self):
+        self.product_tmpl.inventory_availability = "threshold"
+        self.product.replenishment_availability = 1
+        info = self._get_combination_info(2)
+        assert not info.get("show_replenishment_delay")
+        assert not info.get("replenishment_delay_message")
+
+    def _get_combination_info(self, add_qty):
         return self.product_tmpl.with_context(
             website_sale_stock_get_quantity=True
-        )._get_combination_info()
-
-    def _add_quant(self, quantity):
-        location = self.env.ref("stock.warehouse0").lot_stock_id
-        self.env["stock.quant"].create(
-            {
-                "quantity": quantity,
-                "location_id": location.id,
-                "product_id": self.product.id,
-            }
-        )
+        )._get_combination_info(add_qty=add_qty)
