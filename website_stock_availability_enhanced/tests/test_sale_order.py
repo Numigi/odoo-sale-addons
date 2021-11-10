@@ -47,7 +47,7 @@ class TestSaleOrder(SavepointCase):
         assert not self.line_1.displayed_delay
 
     def test_update_cart__with_delay(self):
-        self.product.inventory_availability = "threshold_warning"
+        self.product.inventory_availability = "threshold"
         self.product.replenishment_availability = 10
         self.product.replenishment_delay = 2
         self._update_cart()

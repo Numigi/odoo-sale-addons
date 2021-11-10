@@ -16,14 +16,17 @@ class ProductProduct__enhanced_availability(models.Model):
 
     replenishment_delay = fields.Integer(
         company_dependent=True,
+        string="Next Replenishment Delay",
     )
     replenishment_availability = fields.Float(
         digits=dp.get_precision("Product Unit of Measure"),
         company_dependent=True,
+        string="Quantity Available Including Next Replenishment",
     )
     sale_availability = fields.Float(
         digits=dp.get_precision("Product Unit of Measure"),
         company_dependent=True,
+        string="Quantity Available For Sales",
     )
 
     def _compute_quantities(self):
@@ -32,6 +35,10 @@ class ProductProduct__enhanced_availability(models.Model):
         if website:
             for product in self:
                 product.virtual_available = product.replenishment_availability
+
+    def schedule_compute_availability(self):
+        for product in self:
+            product.with_delay().compute_availability()
 
     def compute_availability(self):
         for product in self.sudo().__iter_products_per_company():
@@ -167,7 +174,8 @@ class ProductProduct__enhanced_availability(models.Model):
             ("location_id.company_id", "=", self.__get_company_id()),
         ]
         field = "quantity"
-        res = self.env["stock.quant"].read_group(domain, [field], [field])
+        group_by = "product_id"
+        res = self.env["stock.quant"].read_group(domain, [field], [group_by])
         return res[0][field] if res else 0
 
     def __get_outgoing_qty(self):
@@ -178,13 +186,14 @@ class ProductProduct__enhanced_availability(models.Model):
             ("location_id.company_id", "=", self.__get_company_id()),
         ]
         field = "product_qty"
-        res = self.env["stock.move"].read_group(domain, [field], [field])
+        group_by = "product_id"
+        res = self.env["stock.move"].read_group(domain, [field], [group_by])
         return res[0][field] if res else 0
 
     def __get_pending_stock_move_domain(self):
         return [
             ("product_id", "=", self.id),
-            ("state", "not in", ("done", "cancel", "done")),
+            ("state", "not in", ("draft", "cancel", "done")),
         ]
 
     def __get_company(self):

@@ -13,7 +13,7 @@ class StockMove(models.Model):
     def write(self, vals):
         super().write(vals)
 
-        if "state" in vals:
-            self.mapped("product_id").with_delay().compute_availability()
+        if "state" in vals or "date_expected" in vals:
+            self.mapped("product_id").schedule_compute_availability()
 
         return True

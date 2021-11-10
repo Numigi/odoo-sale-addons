@@ -14,6 +14,7 @@
   branch: "12.0"
   includes:
     - base_extended_security
+    - test_http_request
 
 - url: https://github.com/Numigi/odoo-partner-addons
   branch: "12.0"

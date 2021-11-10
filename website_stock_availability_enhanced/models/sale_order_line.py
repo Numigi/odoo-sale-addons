@@ -8,7 +8,7 @@ class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
 
-    displayed_delay = fields.Char()
+    displayed_delay = fields.Char(readonly=True)
 
     def _update_displayed_delay(self):
         info = self.product_id._get_enhanced_availability_info(0)
