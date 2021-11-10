@@ -43,6 +43,7 @@ class TestProductAvailability(SavepointCase):
         self.product_tmpl.inventory_availability = "always"
         info = self._get_combination_info(1)
         assert info["show_available_qty"]
+        assert info["available_qty"] == 0
 
     @data(
         "threshold",
@@ -63,6 +64,7 @@ class TestProductAvailability(SavepointCase):
         self.product.sale_availability = 1
         info = self._get_combination_info(1)
         assert info["show_available_qty_warning"]
+        assert info["available_qty"] == 1
 
     @data(
         "threshold",
@@ -95,6 +97,7 @@ class TestProductAvailability(SavepointCase):
         info = self._get_combination_info(1)
         assert info["show_replenishment_delay"]
         assert "10" in info["replenishment_delay_message"]
+        assert info["replenishment_delay"] == 10
 
     def test_not_show_replenishment_delay(self):
         self.product_tmpl.inventory_availability = "threshold"

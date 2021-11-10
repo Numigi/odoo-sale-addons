@@ -6,13 +6,13 @@
         <div t-attf-class="availability_message_#{product_template}">
             <t t-if="show_availability">
                 <div t-if="show_available_qty" class="text-success mt16">
-                    <t t-esc="virtual_available"/> <t t-esc="uom_name"/> available
+                    <t t-esc="available_qty"/> <t t-esc="uom_name"/> available
                 </div>
-                <div t-else="show_available_qty_warning" class="text-warning mt16">
+                <div t-elif="show_available_qty_warning" class="text-warning mt16">
                     <i class="fa fa-exclamation-triangle" title="Warning" role="img" aria-label="Warning"/>
-                    <t t-esc="virtual_available"/> <t t-esc="uom_name"/> available
+                    <t t-esc="available_qty"/> <t t-esc="uom_name"/> available
                 </div>
-                <div t-else="show_in_stock" class="text-success mt16">
+                <div t-elif="show_in_stock" class="text-success mt16">
                     In stock
                 </div>
                 <div t-else="1" class="text-danger mt16">

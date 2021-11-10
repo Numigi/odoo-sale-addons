@@ -13,7 +13,7 @@ var xml_load = ajax.loadXML(
 
 ProductConfiguratorMixin._onChangeCombinationStock = function (ev, $parent, combination) {
     if (this.isWebsite && isMainProduct($parent, combination)){
-        if (shouldDisableAddToCart(combination)) {
+        if (shouldDisableAddToCart($parent, combination)) {
             disableAddToCart($parent)
         }
 
@@ -23,7 +23,7 @@ ProductConfiguratorMixin._onChangeCombinationStock = function (ev, $parent, comb
     }
 };
 
-function shouldDisableAddToCart(combination) {
+function shouldDisableAddToCart($parent, combination) {
     var qty = $parent.find('input[name="add_qty"]').val();
     return combination.add_to_cart_threshold < qty
 }
@@ -57,7 +57,7 @@ function isMainProduct($parent, combination) {
     } else {
         product_id = $parent.find('.product_id').val();
     }
-    var isMainProduct = (
+    return (
         combination.product_id &&
         ($parent.is('.js_main_product') || $parent.is('.main_product')) &&
         combination.product_id === parseInt(product_id)

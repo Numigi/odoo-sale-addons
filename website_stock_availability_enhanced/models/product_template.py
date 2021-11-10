@@ -17,6 +17,19 @@ class ProductTemplate(models.Model):
         ]
     )
 
+    replenishment_delay = fields.Integer(
+        related='product_variant_ids.replenishment_delay',
+        readonly=False,
+    )
+    replenishment_availability = fields.Float(
+        related='product_variant_ids.replenishment_availability',
+        readonly=False,
+    )
+    sale_availability = fields.Float(
+        related='product_variant_ids.sale_availability',
+        readonly=False,
+    )
+
     @api.multi
     def _get_combination_info(
         self,
@@ -27,7 +40,10 @@ class ProductTemplate(models.Model):
         parent_combination=False,
         only_template=False,
     ):
-        info = super()._get_combination_info(
+        get_quantity = self._context.get("website_sale_stock_get_quantity")
+        self = self.with_context(website_sale_stock_get_quantity=False)
+
+        info = super(ProductTemplate, self)._get_combination_info(
             combination=combination,
             product_id=product_id,
             add_qty=add_qty,
@@ -36,8 +52,9 @@ class ProductTemplate(models.Model):
             only_template=only_template,
         )
 
-        if "virtual_available" in info:
-            product = self.env["product.product"].sudo().browse(info["product_id"])
-            product._set_enhanced_availability_info(info, add_qty)
+        product_id = info["product_id"]
+        if get_quantity and product_id:
+            product = self.env["product.product"].sudo().browse(product_id)
+            info.update(product._get_enhanced_availability_info(add_qty))
 
         return info

@@ -14,6 +14,7 @@
         "website_sale_stock",
     ],
     "data": [
+        "data/ir_cron.xml",
         "data/queue_job_function.xml",
         "views/assets.xml",
         "views/product_template.xml",

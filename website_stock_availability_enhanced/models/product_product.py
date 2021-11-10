@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
+from odoo.http import request
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.addons.product_supplier_info_helpers.helpers import (
@@ -25,6 +26,13 @@ class ProductProduct__enhanced_availability(models.Model):
         company_dependent=True,
     )
 
+    def _compute_quantities(self):
+        super()._compute_quantities()
+        website = request and getattr(request, 'website', None)
+        if website:
+            for product in self:
+                product.virtual_available = product.replenishment_availability
+
     def compute_availability(self):
         for product in self.sudo().__iter_products_per_company():
             sale_availability = product.__get_sale_availability()
@@ -35,9 +43,21 @@ class ProductProduct__enhanced_availability(models.Model):
             )
             product.replenishment_delay = product.sudo().__get_replenishment_delay()
 
-    def _set_enhanced_availability_info(self, info, add_qty):
+    def _get_enhanced_availability_info(self, add_qty):
+        info = {
+            "cart_qty": self.cart_qty,
+            "product_template": self.product_tmpl_id.id,
+            "product_type": self.type,
+            "uom_name": self.uom_id.name,
+        }
+
         if self.__show_availability():
             self.__set_availability(info, add_qty)
+
+        if self.custom_message:
+            info["custom_message"] = self.custom_message
+
+        return info
 
     def __iter_products_per_company(self):
         all_companies = self.env["res.company"].search([])
@@ -50,7 +70,7 @@ class ProductProduct__enhanced_availability(models.Model):
     def __get_sale_availability(self):
         current_qty = self.__get_current_qty()
         out_qty = self.__get_outgoing_qty()
-        return current_qty - out_qty
+        return max(current_qty - out_qty, 0)
 
     def __get_replenishment_delay(self):
         picking = self.__get_next_receipt()
@@ -84,9 +104,11 @@ class ProductProduct__enhanced_availability(models.Model):
 
         if self.__show_available_qty():
             info["show_available_qty"] = True
+            info["available_qty"] = self.__get_available_qty()
 
         elif self.__show_available_qty_warning(add_qty):
             info["show_available_qty_warning"] = True
+            info["available_qty"] = self.__get_available_qty()
 
         elif self.__show_in_stock(add_qty):
             info["show_in_stock"] = True
@@ -94,6 +116,7 @@ class ProductProduct__enhanced_availability(models.Model):
         elif self.__show_replenishment_delay(add_qty):
             info["show_replenishment_delay"] = True
             info["replenishment_delay_message"] = self.__get_replenishment_message()
+            info["replenishment_delay"] = self.replenishment_delay
 
     def __show_availability(self):
         return self.inventory_availability not in ("never", "custom")
@@ -102,16 +125,23 @@ class ProductProduct__enhanced_availability(models.Model):
         return self.inventory_availability == "always"
 
     def __show_available_qty_warning(self, add_qty):
+        available_qty = self.__get_available_qty()
         is_threshold = self.inventory_availability in ("threshold", "threshold_warning")
-        qty_below_threshold = self.sale_availability <= self.available_threshold
-        enough_available = add_qty <= self.sale_availability
+        qty_below_threshold = available_qty <= self.available_threshold
+        enough_available = add_qty <= available_qty
         return is_threshold and qty_below_threshold and enough_available
 
     def __show_in_stock(self, add_qty):
-        return self.sale_availability >= add_qty
+        return self.__get_available_qty() >= add_qty
 
     def __show_replenishment_delay(self, add_qty):
-        return self.replenishment_availability >= add_qty
+        return self.__get_replenishment_qty() >= add_qty
+
+    def __get_available_qty(self):
+        return self.sale_availability - self.cart_qty
+
+    def __get_replenishment_qty(self):
+        return self.replenishment_availability - self.cart_qty
 
     def __get_replenishment_message(self):
         return _(
