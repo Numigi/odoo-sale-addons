@@ -10,22 +10,25 @@ from odoo.addons.product_supplier_info_helpers.helpers import (
 
 
 class ProductProduct__enhanced_availability(models.Model):
+
     _inherit = "product.product"
 
-    replenishment_delay = fields.Integer()
+    replenishment_delay = fields.Integer(
+        company_dependent=True,
+    )
     replenishment_availability = fields.Float(
         digits=dp.get_precision("Product Unit of Measure"),
-        readonly=True,
+        company_dependent=True,
     )
     sale_availability = fields.Float(
         digits=dp.get_precision("Product Unit of Measure"),
-        readonly=True,
+        company_dependent=True,
     )
 
     def compute_availability(self):
-        for product in self:
-            sale_availability = product.sudo().__get_sale_availability()
-            next_replenishment_qty = product.sudo().__get_next_replenishment_quantity()
+        for product in self.sudo().__iter_products_per_company():
+            sale_availability = product.__get_sale_availability()
+            next_replenishment_qty = product.__get_next_replenishment_quantity()
             product.sale_availability = sale_availability
             product.replenishment_availability = (
                 sale_availability + next_replenishment_qty
@@ -35,6 +38,14 @@ class ProductProduct__enhanced_availability(models.Model):
     def _set_enhanced_availability_info(self, info, add_qty):
         if self.__show_availability():
             self.__set_availability(info, add_qty)
+
+    def __iter_products_per_company(self):
+        all_companies = self.env["res.company"].search([])
+
+        for product in self:
+            companies = product.company_id or all_companies
+            for company in companies:
+                yield product.with_context(force_company=company.id)
 
     def __get_sale_availability(self):
         current_qty = self.__get_current_qty()
@@ -50,13 +61,16 @@ class ProductProduct__enhanced_availability(models.Model):
             return self.__get_standard_replenishment_delay()
 
     def __get_standard_replenishment_delay(self):
-        company = self.env.user.company_id
+        company = self.__get_company()
         supplier_info = self.__get_main_supplier_info()
         return company.security_lead + company.po_lead + (supplier_info.delay or 0)
 
     def __get_main_supplier_info(self):
-        supplier_info = get_supplier_info_from_product(self).sorted(
-            key=lambda s: (0 if s.product_id else 1, s.sequence)
+        company_id = self.__get_company_id()
+        supplier_info = (
+            get_supplier_info_from_product(self)
+            .sorted(key=lambda s: (0 if s.product_id else 1, s.sequence))
+            .filtered(lambda s: not s.company_id or s.company_id.id == company_id)
         )
         return supplier_info[:1]
 
@@ -109,8 +123,9 @@ class ProductProduct__enhanced_availability(models.Model):
     def __get_next_receipt(self):
         domain = [
             *self.__get_pending_stock_move_domain(),
-            ("location_dest_id.usage", "=", "internal"),
             ("location_id.usage", "=", "supplier"),
+            ("location_dest_id.usage", "=", "internal"),
+            ("location_dest_id.company_id", "=", self.__get_company_id()),
         ]
         move = self.env["stock.move"].search(domain, order="date_expected", limit=1)
         return move.picking_id
@@ -119,6 +134,7 @@ class ProductProduct__enhanced_availability(models.Model):
         domain = [
             ("product_id", "=", self.id),
             ("location_id.usage", "=", "internal"),
+            ("location_id.company_id", "=", self.__get_company_id()),
         ]
         field = "quantity"
         res = self.env["stock.quant"].read_group(domain, [field], [field])
@@ -129,6 +145,7 @@ class ProductProduct__enhanced_availability(models.Model):
             *self.__get_pending_stock_move_domain(),
             ("location_dest_id.usage", "=", "customer"),
             ("location_id.usage", "=", "internal"),
+            ("location_id.company_id", "=", self.__get_company_id()),
         ]
         field = "product_qty"
         res = self.env["stock.move"].read_group(domain, [field], [field])
@@ -139,3 +156,9 @@ class ProductProduct__enhanced_availability(models.Model):
             ("product_id", "=", self.id),
             ("state", "not in", ("done", "cancel", "done")),
         ]
+
+    def __get_company(self):
+        return self.env["res.company"].browse(self.__get_company_id())
+
+    def __get_company_id(self):
+        return self._context.get("force_company")

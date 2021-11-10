@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
+
     _inherit = "product.template"
 
     inventory_availability = fields.Selection(
@@ -36,7 +37,7 @@ class ProductTemplate(models.Model):
         )
 
         if "virtual_available" in info:
-            product = self.env['product.product'].sudo().browse(info['product_id'])
+            product = self.env["product.product"].sudo().browse(info["product_id"])
             product._set_enhanced_availability_info(info, add_qty)
 
         return info

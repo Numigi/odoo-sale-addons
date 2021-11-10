@@ -10,12 +10,14 @@ class TestProductAvailability(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.company = cls.env.user.company_id
         cls.product = cls.env["product.product"].create(
             {
                 "name": "My Product",
                 "type": "product",
             }
         )
+        cls.product = cls.product.with_context(force_company=cls.company.id)
         cls.product_tmpl = cls.product.product_tmpl_id
 
     @data(
