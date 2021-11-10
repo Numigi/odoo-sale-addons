@@ -13,7 +13,7 @@ var xml_load = ajax.loadXML(
 
 ProductConfiguratorMixin._onChangeCombinationStock = function (ev, $parent, combination) {
     if (this.isWebsite && isMainProduct($parent, combination)){
-        if (shouldDisableAddToCart($parent, combination)) {
+        if (combination.disable_add_to_cart) {
             disableAddToCart($parent)
         }
 
@@ -22,11 +22,6 @@ ProductConfiguratorMixin._onChangeCombinationStock = function (ev, $parent, comb
         })
     }
 };
-
-function shouldDisableAddToCart($parent, combination) {
-    var qty = $parent.find('input[name="add_qty"]').val();
-    return combination.add_to_cart_threshold < qty
-}
 
 function disableAddToCart($parent) {
     $parent.find('#add_to_cart').addClass('disabled');

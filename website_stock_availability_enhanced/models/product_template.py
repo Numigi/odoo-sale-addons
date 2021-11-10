@@ -8,6 +8,19 @@ class ProductTemplate(models.Model):
 
     _inherit = "product.template"
 
+    block_website_sales_based_on = fields.Selection(
+        [
+            (
+                "sale_availability",
+                "Quantity Available For Sales",
+            ),
+            (
+                "replenishment_availability",
+                "Quantity Available Including Next Replenishment",
+            ),
+        ],
+        default="replenishment_availability",
+    )
     inventory_availability = fields.Selection(
         selection_add=[
             (
@@ -16,17 +29,16 @@ class ProductTemplate(models.Model):
             ),
         ]
     )
-
     replenishment_delay = fields.Integer(
-        related='product_variant_ids.replenishment_delay',
+        related="product_variant_ids.replenishment_delay",
         readonly=False,
     )
     replenishment_availability = fields.Float(
-        related='product_variant_ids.replenishment_availability',
+        related="product_variant_ids.replenishment_availability",
         readonly=False,
     )
     sale_availability = fields.Float(
-        related='product_variant_ids.sale_availability',
+        related="product_variant_ids.sale_availability",
         readonly=False,
     )
 
