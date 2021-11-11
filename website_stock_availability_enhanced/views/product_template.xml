@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="product_template_form_view_show_available_threshold_on_threshold_warning" model="ir.ui.view">
-        <field name="name">Project Template Form: show available_threshold on threshold_warning</field>
+
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">Product Template Form: show available_threshold on threshold_warning</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="website_sale_stock.product_template_form_view_inherit_website_sale_stock"/>
         <field name="arch" type="xml">
             <field name="available_threshold" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', ('type', 'in', ['service', 'consu']), ('inventory_availability', 'not in', ('threshold', 'threshold_warning'))], 'required': [('inventory_availability', '=', 'threshold'), ('type', '=', 'product')]}</attribute>
+                <attribute name="attrs">{
+                    'invisible': [
+                        '|',
+                        ('type', '!=', 'product'),
+                        ('inventory_availability', 'not in', ('threshold', 'threshold_warning')),
+                    ],
+                    'required': [
+                        ('type', '=', 'product'),
+                        ('inventory_availability', '=', 'threshold'),
+                    ],
+                }</attribute>
+            </field>
+            <field name="available_threshold" position="after">
+                <field
+                    name="block_website_sales_based_on"
+                    required="1"
+                    attrs="{'invisible': [('inventory_availability', 'not in', ('threshold', 'always'))]}"
+                    string="Prevent Sales Based On"
+                    />
+                <field name="sale_availability" readonly="1"/>
+                <field name="replenishment_availability" readonly="1"/>
+                <label for="replenishment_delay"/>
+                <div>
+                    <field name="replenishment_delay" class="oe_inline" readonly="1"/>
+                    <span> day(s)</span>
+                </div>
             </field>
         </field>
     </record>
+
 </odoo>
