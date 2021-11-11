@@ -20,17 +20,12 @@
                 }</attribute>
             </field>
             <field name="available_threshold" position="after">
-                <field name="block_website_sales_based_on" required="1"/>
-            </field>
-        </field>
-    </record>
-
-    <record id="product_template_form_with_available_quantity" model="ir.ui.view">
-        <field name="name">Product Form: show extra availability fields</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="stock.view_template_property_form"/>
-        <field name="arch" type="xml">
-            <group name="operations" position="inside">
+                <field
+                    name="block_website_sales_based_on"
+                    required="1"
+                    attrs="{'invisible': [('inventory_availability', 'not in', ('threshold', 'always'))]}"
+                    string="Prevent Sales Based On"
+                    />
                 <field name="sale_availability" readonly="1"/>
                 <field name="replenishment_availability" readonly="1"/>
                 <label for="replenishment_delay"/>
@@ -38,7 +33,7 @@
                     <field name="replenishment_delay" class="oe_inline" readonly="1"/>
                     <span> day(s)</span>
                 </div>
-            </group>
+            </field>
         </field>
     </record>
 

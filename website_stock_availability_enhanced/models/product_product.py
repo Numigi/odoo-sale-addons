@@ -120,7 +120,7 @@ class ProductProduct__enhanced_availability(models.Model):
         elif self.__show_in_stock(add_qty):
             info["show_in_stock"] = True
 
-        elif self.__disable_add_to_cart(add_qty):
+        if self.__disable_add_to_cart(add_qty):
             info["disable_add_to_cart"] = True
 
         if self.__show_replenishment_delay(add_qty):
@@ -148,8 +148,9 @@ class ProductProduct__enhanced_availability(models.Model):
         return self.__get_available_qty() < add_qty <= self.__get_replenishment_qty()
 
     def __disable_add_to_cart(self, add_qty):
-        available = self[self.block_website_sales_based_on] - self.cart_qty
-        return available < add_qty
+        if self.inventory_availability in ("always", "threshold"):
+            available = self[self.block_website_sales_based_on] - self.cart_qty
+            return available < add_qty
 
     def __get_available_qty(self):
         return self.sale_availability - self.cart_qty

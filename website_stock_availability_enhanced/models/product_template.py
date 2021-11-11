@@ -12,11 +12,11 @@ class ProductTemplate(models.Model):
         [
             (
                 "sale_availability",
-                "Quantity Available For Sales",
+                "Quantity available for sales",
             ),
             (
                 "replenishment_availability",
-                "Quantity Available Including Next Replenishment",
+                "Quantity available including next replenishment",
             ),
         ],
         default="replenishment_availability",

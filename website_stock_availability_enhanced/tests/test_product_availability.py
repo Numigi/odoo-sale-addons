@@ -106,8 +106,12 @@ class TestProductAvailability(SavepointCase):
         assert not info.get("show_replenishment_delay")
         assert not info.get("replenishment_delay_message")
 
-    def test_block_website_sales_based_on__sale_available(self):
-        self.product_tmpl.inventory_availability = "threshold"
+    @data(
+        "always",
+        "threshold",
+    )
+    def test_block_website_sales_based_on__sale_available(self, inventory_availability):
+        self.product_tmpl.inventory_availability = inventory_availability
         self.product.sale_availability = 0
         self.product.replenishment_availability = 1
         self.product.block_website_sales_based_on = "sale_availability"
@@ -119,6 +123,18 @@ class TestProductAvailability(SavepointCase):
         self.product.sale_availability = 0
         self.product.replenishment_availability = 1
         self.product.block_website_sales_based_on = "replenishment_availability"
+        info = self._get_combination_info(1)
+        assert not info.get("disable_add_to_cart")
+
+    @data(
+        "never",
+        "threshold_warning",
+        "custom",
+    )
+    def test_disable_add_to_cart__no_blocking_availability(self, inventory_availability):
+        self.product_tmpl.inventory_availability = inventory_availability
+        self.product.sale_availability = 0
+        self.product.replenishment_availability = 0
         info = self._get_combination_info(1)
         assert not info.get("disable_add_to_cart")
 
