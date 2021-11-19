@@ -24,6 +24,7 @@
         "commission",
         "commission_payroll_preparation",
         "commission_prorata",
+        "contract_invoice_offset",
         "payment_auto_confirm_sale_order",
         "purchase_sale_inter_company_route",
         "sale_commitment_date_update",
