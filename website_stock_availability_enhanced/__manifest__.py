@@ -1,5 +1,5 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Website Stock Availability Enhanced",
     "summary": "Enhance the display of product availability on the website",
@@ -7,7 +7,7 @@
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "depends": [
         "queue_job",
         "purchase",

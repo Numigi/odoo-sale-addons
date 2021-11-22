@@ -56,6 +56,7 @@ COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
+COPY sale_timesheet_invoicing_period /mnt/extra-addons/sale_timesheet_invoicing_period
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
