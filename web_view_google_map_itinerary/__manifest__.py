@@ -1,5 +1,5 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Web View Google Map Itinerary",
@@ -8,7 +8,7 @@
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "depends": ["web_google_maps"],
     "data": ["views/templates.xml"],
     "qweb": ["static/src/xml/web_view_google_map_itinerary.xml"],
