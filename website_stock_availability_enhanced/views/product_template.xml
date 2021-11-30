@@ -26,10 +26,18 @@
                     attrs="{'invisible': [('inventory_availability', 'not in', ('threshold', 'always'))]}"
                     string="Prevent Sales Based On"
                     />
-                <field name="sale_availability" readonly="1"/>
-                <field name="replenishment_availability" readonly="1"/>
-                <label for="replenishment_delay"/>
-                <div>
+                <field name="sale_availability" readonly="1"
+                    attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"
+                    />
+                <field name="replenishment_availability" readonly="1"
+                    attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"
+                    />
+                <label for="replenishment_delay"
+                    attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"
+                    />
+                <div
+                    attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"
+                    >
                     <field name="replenishment_delay" class="oe_inline" readonly="1"/>
                     <span> day(s)</span>
                 </div>
