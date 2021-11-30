@@ -73,15 +73,15 @@ class TestProductAvailability(SavepointCase):
     def test_not_show_available_qty_warning(self, inventory_availability):
         self.product_tmpl.inventory_availability = inventory_availability
         self.product_tmpl.available_threshold = 1
-        self.product.sale_availability = 2
+        self.product.sale_availability = 3
         info = self._get_combination_info(1)
         assert not info.get("show_available_qty_warning")
 
     def test_show_in_stock(self):
         self.product_tmpl.inventory_availability = "threshold"
-        self.product_tmpl.available_threshold = 1
-        self.product.sale_availability = 2
-        info = self._get_combination_info(1)
+        self.product_tmpl.available_threshold = 0
+        self.product.sale_availability = 3
+        info = self._get_combination_info(2)
         assert info["show_in_stock"]
 
     def test_not_show_in_stock(self):
@@ -93,16 +93,18 @@ class TestProductAvailability(SavepointCase):
     def test_show_replenishment_delay(self):
         self.product_tmpl.inventory_availability = "threshold"
         self.product.replenishment_delay = 10
-        self.product.replenishment_availability = 1
-        info = self._get_combination_info(1)
+        self.product.available_threshold = 5
+        self.product.sale_availability = 10
+        info = self._get_combination_info(5)
         assert info["show_replenishment_delay"]
         assert "10" in info["replenishment_delay_message"]
         assert info["replenishment_delay"] == 10
 
     def test_not_show_replenishment_delay(self):
         self.product_tmpl.inventory_availability = "threshold"
-        self.product.replenishment_availability = 1
-        info = self._get_combination_info(2)
+        self.product.available_threshold = 4
+        self.product.sale_availability = 10
+        info = self._get_combination_info(5)
         assert not info.get("show_replenishment_delay")
         assert not info.get("replenishment_delay_message")
 

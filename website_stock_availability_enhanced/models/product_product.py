@@ -31,10 +31,12 @@ class ProductProduct__enhanced_availability(models.Model):
 
     def _compute_quantities(self):
         super()._compute_quantities()
-        website = request and getattr(request, 'website', None)
+        website = request and getattr(request, "website", None)
         if website:
             for product in self:
-                product.virtual_available = product[product.block_website_sales_based_on]
+                product.virtual_available = product[
+                    product.block_website_sales_based_on
+                ]
 
     def schedule_compute_availability(self):
         for product in self:
@@ -135,17 +137,26 @@ class ProductProduct__enhanced_availability(models.Model):
         return self.inventory_availability == "always"
 
     def __show_available_qty_warning(self, add_qty):
-        available_qty = self.__get_available_qty()
         is_threshold = self.inventory_availability in ("threshold", "threshold_warning")
-        qty_below_threshold = available_qty <= self.available_threshold
-        enough_available = add_qty <= available_qty
-        return is_threshold and qty_below_threshold and enough_available
+        return (
+            is_threshold
+            and self.__is_qty_below_threshold(add_qty)
+            and self.__has_enough_in_stock(add_qty)
+        )
 
     def __show_in_stock(self, add_qty):
-        return add_qty <= self.__get_available_qty()
+        return self.__has_enough_in_stock(add_qty)
 
     def __show_replenishment_delay(self, add_qty):
-        return self.__get_available_qty() < add_qty <= self.__get_replenishment_qty()
+        is_threshold = self.inventory_availability in ("threshold", "threshold_warning")
+        return is_threshold and self.__is_qty_below_threshold(add_qty)
+
+    def __has_enough_in_stock(self, add_qty):
+        return add_qty <= self.__get_available_qty()
+
+    def __is_qty_below_threshold(self, add_qty):
+        available_qty = self.__get_available_qty()
+        return available_qty - add_qty <= self.available_threshold
 
     def __disable_add_to_cart(self, add_qty):
         if self.inventory_availability in ("always", "threshold"):
