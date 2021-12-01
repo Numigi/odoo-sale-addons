@@ -102,18 +102,12 @@ The module adds the option to show inventory below a threshold and allow sales.
 
 Replenishment Delay Message
 ---------------------------
-In the website form of the product, messages are added in certain context.
+In the website form of the product, when the quantity available (minus the requested quantity)
+is below the threshold defined on the product, a message special message is shown to the user.
 
-If the quantity selected is between
-the quantity currently available and the quantity available after the next replenishment,
-a message will be displayed.
+.. image:: static/description/product_availability_threshold.png
 
 .. image:: static/description/website_product_replenishment_message.png
-
-If the quantity selected is above the quantity available after the next replenishment,
-the message will not be displayed.
-
-.. image:: static/description/website_product_replenishment_message_not_shown.png
 
 After checking out the order, the delay displayed to the customer is written on the sale order line.
 
