@@ -11,7 +11,9 @@
         "contract",
         "contract_invoice_start_end_dates",
     ],
-    "data": [],
+    "data": [
+        "views/contract_line.xml",
+    ],
     "license": "AGPL-3",
     "installable": True,
 }
