@@ -76,14 +76,15 @@ class TestContract(SavepointCase):
         self.line._onchange_invoicing_offset()
         assert self.line.recurring_next_date == invoicing_date
 
-    @data(
-        (0, date(2021, 12, 1)),
-        (1, date(2021, 11, 1)),
-        (2, date(2021, 10, 1)),
-    )
-    @unpack
-    def test_month_offset(self, interval, invoicing_date):
-        self.line.invoicing_offset_interval = interval
-        self.line.invoicing_offset_rule_type = "monthly"
+    def test_create_invoice(self):
+        self.line.invoicing_offset_interval = 30
+        self.line.invoicing_offset_rule_type = "daily"
         self.line._onchange_invoicing_offset()
-        assert self.line.recurring_next_date == invoicing_date
+        assert self.line.recurring_next_date == date(2021, 11, 1)
+        assert not self.line.last_date_invoiced
+        self.contract.recurring_create_invoice()
+        assert self.line.recurring_next_date == date(2021, 12, 2)
+        assert self.line.last_date_invoiced == date(2021, 12, 31)
+        self.contract.recurring_create_invoice()
+        assert self.line.recurring_next_date == date(2022, 1, 2)
+        assert self.line.last_date_invoiced == date(2022, 1, 31)
