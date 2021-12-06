@@ -9,7 +9,7 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
-      - ./website_stock_availability_enhanced:/mnt/extra-addons/website_stock_availability_enhanced
+      - ./contract_invoice_offset:/mnt/extra-addons/contract_invoice_offset
     ports:
       - "8069:8069"
       - "8071:8071"

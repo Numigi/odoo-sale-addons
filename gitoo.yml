@@ -44,6 +44,17 @@
     - web_trash_condition
     - web_list_column_width
 
+- url: https://github.com/oca/account-closing
+  branch: "12.0"
+  includes:
+    - account_invoice_start_end_dates
+
+- url: https://github.com/oca/contract
+  branch: "12.0"
+  includes:
+    - contract
+    - contract_invoice_start_end_dates
+
 - url: https://github.com/oca/crm
   branch: "12.0"
   includes:
