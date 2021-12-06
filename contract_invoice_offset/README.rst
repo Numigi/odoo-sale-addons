@@ -16,7 +16,7 @@ start and end dates from the contract line to the invoice line.
 
 Invoicing Offset Field
 ~~~~~~~~~~~~~~~~~~~~~~
-In a contract, there is a field ``Invoicing Offset``.
+In a contract line, there is a field ``Invoicing Offset``.
 
 .. image:: static/description/vanilla_contract_invoicing_offset.png
 
@@ -25,8 +25,8 @@ It allows to have a difference between the invoiced period and the invoice date.
 
 The value is computed. It is either ``1`` or ``0`` depending other fields of the contract line.
 
-Contraint On Invoicing Date
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Constraint On Invoicing Date
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The module comes with a constraint that prevent having an invoicing date prior to the invoiced period.
 
 This contraint is arbitrary.
@@ -48,14 +48,14 @@ In the recurring item, I notice a new field ``Invoicing Offset``.
 
 .. image:: static/description/contract_item_invoicing_offset.png
 
-This field allows to enter a number of months. I enter ``2`` months.
+This field allows to enter a number of days or weeks. I enter ``2`` weeks.
 
-This number of months is then used to determine the ``Date of Next Invoice``.
+This value is then used to determine the ``Date of Next Invoice``.
 
 .. image:: static/description/contract_item_date_of_next_invoice.png
 
 After creating the invoices for this contract,
-I notice that the date of invoice is ``2`` months prior to the invoiced period.
+I notice that the date of invoice is ``2`` weeks prior to the invoiced period.
 
 .. image:: static/description/invoice_form.png
 
