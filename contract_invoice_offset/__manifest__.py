@@ -9,7 +9,6 @@
     "website": "https://numigi.com",
     "depends": [
         "contract",
-        "contract_invoice_start_end_dates",
     ],
     "data": [
         "views/contract_line.xml",

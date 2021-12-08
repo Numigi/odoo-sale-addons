@@ -52,6 +52,7 @@ class TestSaleTimesheet(SavepointCase):
         )
 
         cls.order.action_confirm()
+        cls.order_line = cls.order.order_line
         cls.task = cls.order.tasks_ids
 
     @data(
@@ -66,6 +67,7 @@ class TestSaleTimesheet(SavepointCase):
         line = self._make_timesheet(date=date(2021, 1, 2))
         self._invoice_order(date_from, date_to)
         assert line.timesheet_invoice_id
+        assert self.order_line.qty_invoiced == 1
 
     @data(
         (date(2021, 1, 3), False),
@@ -76,6 +78,7 @@ class TestSaleTimesheet(SavepointCase):
         line = self._make_timesheet(date=date(2021, 1, 2))
         self._invoice_order(date_from, date_to)
         assert not line.timesheet_invoice_id
+        assert not self.order_line.qty_invoiced
 
     def _invoice_order(self, date_from, date_to):
         with self.open_wizard() as wizard:
