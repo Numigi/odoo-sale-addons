@@ -2,14 +2,14 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import pytest
-from .common import TestCommissionCase
+from .common import CommissionCase
 from datetime import date
 from ddt import ddt, data, unpack
 from odoo.exceptions import AccessError
 
 
 @ddt
-class TestCommissionTeam(TestCommissionCase):
+class TestCommissionTeam(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -99,10 +99,17 @@ class TestCommissionTeam(TestCommissionCase):
         self._compute_manager_target()
         assert not self.manager_target.child_target_ids
 
-    def test_child_targets_wrong_company(self):
+    def test_filter_by_company__active(self):
+        self.manager_target.category_id.filter_by_company = True
         self.employee_target.company_id = self._create_company(name="Other Company")
         self._compute_manager_target()
         assert not self.manager_target.child_target_ids
+
+    def test_filter_by_company__inactive(self):
+        self.manager_target.category_id.filter_by_company = False
+        self.employee_target.company_id = self._create_company(name="Other Company")
+        self._compute_manager_target()
+        assert self.manager_target.child_target_ids == self.employee_target
 
     def test_child_targets_date_out_of_range(self):
         wrong_date_range = self._create_date_range(

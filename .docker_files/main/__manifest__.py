@@ -12,6 +12,7 @@
     "summary": "Install all addons required for testing.",
     "depends": [
         "commission",
+        "commission_intercompany_service",
         "commission_payroll_preparation",
         "crm_assign_by_area",
         "crm_assign_in_house",

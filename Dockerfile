@@ -17,6 +17,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 USER odoo
 
 COPY commission /mnt/extra-addons/commission
+COPY commission_intercompany_service /mnt/extra-addons/commission_intercompany_service
 COPY commission_payroll_preparation /mnt/extra-addons/commission_payroll_preparation
 COPY commission_prorata /mnt/extra-addons/commission_prorata
 COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area

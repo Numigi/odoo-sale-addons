@@ -2,13 +2,13 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import pytest
-from .common import TestCommissionCase
+from .common import CommissionCase
 from ddt import ddt, data, unpack
 from odoo.exceptions import ValidationError
 
 
 @ddt
-class TestCommissionInterval(TestCommissionCase):
+class TestCommissionInterval(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -72,7 +72,7 @@ class TestCommissionInterval(TestCommissionCase):
         assert not new_rate.subtotal
 
 
-class TestRatesPropagation(TestCommissionCase):
+class TestRatesPropagation(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

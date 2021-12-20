@@ -5,7 +5,7 @@ from odoo.tests.common import SavepointCase
 from datetime import date
 
 
-class TestCommissionCase(SavepointCase):
+class CommissionCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
