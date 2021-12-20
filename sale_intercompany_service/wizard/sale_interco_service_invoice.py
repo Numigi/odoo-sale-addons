@@ -273,10 +273,10 @@ class SaleIntercoServiceInvoice(models.TransientModel):
         account = product.categ_id.intercompany_expense_account_id
         if account:
             return account
-        else:
-            return self.env["account.invoice.line"].get_invoice_line_account(
-                "in_invoice", product, self.supplier_position_id, self.interco_company_id
-            )
+
+        return self.env["account.invoice.line"].get_invoice_line_account(
+            "in_invoice", product, self.supplier_position_id, self.interco_company_id
+        )
 
     def _make_customer_invoice(self, invoice):
         self = self.with_context(
@@ -352,7 +352,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             force_company=self.interco_company_id.id,
             company_id=self.interco_company_id.id,
         ).sudo()
-        account = self.env["account.invoice.line"].get_invoice_line_account(
+        account = invoice_line.get_invoice_line_account(
             "out_invoice", product, self.customer_position_id, self.interco_company_id
         )
         return {
