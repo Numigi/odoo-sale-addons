@@ -3,11 +3,11 @@
 
 from ddt import ddt, data
 from lxml import etree
-from .common import TestCommissionCase
+from .common import CommissionCase
 
 
 @ddt
-class TestViews(TestCommissionCase):
+class TestViews(CommissionCase):
 
     @data(
         "view_invoice_lines",

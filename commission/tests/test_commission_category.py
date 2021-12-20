@@ -3,10 +3,10 @@
 
 import pytest
 from odoo.exceptions import ValidationError
-from .common import TestCommissionCase
+from .common import CommissionCase
 
 
-class TestCommissionCategory(TestCommissionCase):
+class TestCommissionCategory(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

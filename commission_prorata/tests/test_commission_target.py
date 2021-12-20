@@ -4,7 +4,7 @@
 from .common import ProrataCase
 
 
-class TestWizard(ProrataCase):
+class TestCommissionTarget(ProrataCase):
     def test_compute_updates_eligible_amount(self):
         prorata = 0.5
         self.target.prorata_days_worked = prorata

@@ -2,14 +2,14 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import pytest
-from .common import TestCommissionCase
+from .common import CommissionCase
 from odoo.exceptions import AccessError, ValidationError
 from datetime import date
 from ddt import ddt, data
 
 
 @ddt
-class TestCommissionPersonal(TestCommissionCase):
+class TestCommissionPersonal(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -91,6 +91,18 @@ class TestCommissionPersonal(TestCommissionCase):
         self.invoice.state = state
         invoices = self.target._get_invoices()
         assert not invoices
+
+    def test_filter_by_company__active(self):
+        self.target.category_id.filter_by_company = True
+        self.target.company_id = self._create_company(name="Other Company")
+        invoices = self.target._get_invoices()
+        assert not invoices
+
+    def test_filter_by_company__inactive(self):
+        self.target.category_id.filter_by_company = False
+        self.target.company_id = self._create_company(name="Other Company")
+        invoices = self.target._get_invoices()
+        assert invoices
 
     @data(date(2020, 5, 17), date(2020, 7, 17))
     def test_find_invoice_correct_date_range(self, correct_date):

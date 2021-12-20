@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-17 11:30+0000\n"
-"PO-Revision-Date: 2021-08-17 07:32-0400\n"
+"POT-Creation-Date: 2021-12-20 17:43+0000\n"
+"PO-Revision-Date: 2021-12-20 12:44-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -259,6 +259,11 @@ msgid "Excluded Tag"
 msgstr "Tag exclus"
 
 #. module: commission
+#: model:ir.model.fields,field_description:commission.field_commission_category__filter_by_company
+msgid "Filter By Company"
+msgstr "Filtrer par société"
+
+#. module: commission
 #: selection:commission.category,rate_type:0
 msgid "Fixed"
 msgstr "Fixe"
@@ -358,7 +363,7 @@ msgid "Invoice Line"
 msgstr "Ligne de facture"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:328
+#: code:addons/commission/models/commission_target.py:344
 #: model:ir.actions.act_window,name:commission.action_invoice_lines
 #: model:ir.actions.act_window,name:commission.action_invoice_lines_no_target
 #: model:ir.ui.menu,name:commission.invoice_lines_menu
@@ -637,7 +642,7 @@ msgid "Targets"
 msgstr "Cibles"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:334
+#: code:addons/commission/models/commission_target.py:350
 #, python-format
 msgid "Team Commissions"
 msgstr "Commissions de mon équipe"
@@ -714,7 +719,7 @@ msgid "With Commission Target"
 msgstr "Avec cible liée"
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:371
+#: code:addons/commission/models/commission_target.py:387
 #, python-format
 msgid ""
 "You are not allowed to access the target {} because it is either not your "
@@ -724,7 +729,7 @@ msgstr ""
 "ou à un membre de votre équipe."
 
 #. module: commission
-#: code:addons/commission/models/commission_target.py:384
+#: code:addons/commission/models/commission_target.py:400
 #, python-format
 msgid ""
 "You are not allowed to access the target {} because it is not your own "

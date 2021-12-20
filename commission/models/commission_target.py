@@ -175,12 +175,17 @@ class CommissionTarget(models.Model):
             ]
         )
         invoices = invoices.filtered(
-            lambda inv: inv.company_id == self.company_id
-            and inv.user_id == self.employee_id.user_id
+            lambda inv: inv.user_id == self.employee_id.user_id
             and inv.date_invoice <= self.date_end
             and inv.type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
+
+        if self.category_id.filter_by_company:
+            invoices = invoices.filtered(
+                lambda inv: inv.company_id == self.company_id
+            )
+
         return invoices
 
     def _compute_invoiced_amount(self):
@@ -193,13 +198,19 @@ class CommissionTarget(models.Model):
 
     def _is_included_invoice_line(self, line):
         included = self.category_id.included_tag_ids
-        tags = line.sale_line_ids.order_id.so_tag_ids
+        tags = self._get_related_sale_order_tags(line)
         return not included or bool(included & tags)
 
     def _is_excluded_invoice_line(self, line):
         excluded = self.category_id.excluded_tag_ids
-        tags = line.sale_line_ids.order_id.so_tag_ids
+        tags = self._get_related_sale_order_tags(line)
         return bool(excluded & tags)
+
+    def _get_related_sale_order_tags(self, invoice_line):
+        return self._get_related_sale_order(invoice_line).so_tag_ids
+
+    def _get_related_sale_order(self, invoice_line):
+        return invoice_line.mapped("sale_line_ids.order_id")[:1]
 
     def _update_base_amount_my_team_commissions(self):
         self.child_target_ids = self._get_child_targets()
@@ -208,7 +219,7 @@ class CommissionTarget(models.Model):
 
     def _get_child_targets(self):
         children = (
-            self.env["commission.target"].search(
+            self.env["commission.target"].sudo().search(
                 [("date_range_id", "=", self.date_range_id.id)]
             )
             - self
@@ -216,8 +227,13 @@ class CommissionTarget(models.Model):
         children = children.filtered(
             lambda child: child.category_id in self.category_id.child_category_ids
             and child.employee_id.user_id.sale_team_id in self.included_teams_ids
-            and child.company_id == self.company_id
         )
+
+        if self.category_id.filter_by_company:
+            children = children.filtered(
+                lambda child: child.company_id == self.company_id
+            )
+
         return children
 
     def _compute_child_commission_amount(self):

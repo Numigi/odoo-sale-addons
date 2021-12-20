@@ -50,6 +50,7 @@ class CommissionCategory(models.Model):
         "tag_id",
         track_visibility="onchange",
     )
+    filter_by_company = fields.Boolean()
 
     def _sorted_by_dependencies(self):
         return self.sorted(lambda c: len(c._get_all_children()))

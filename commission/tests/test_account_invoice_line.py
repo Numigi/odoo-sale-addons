@@ -1,10 +1,10 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from .common import TestCommissionCase
+from .common import CommissionCase
 
 
-class TestAccountInvoiceLine(TestCommissionCase):
+class TestAccountInvoiceLine(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
