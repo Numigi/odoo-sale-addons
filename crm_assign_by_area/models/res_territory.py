@@ -7,4 +7,8 @@ from odoo import fields, models
 class ResTerritory(models.Model):
     _inherit = "res.territory"
 
-    salesperson_id = fields.Many2one(comodel_name="res.users", string="Salesperson")
+    salesperson_id = fields.Many2one(
+        comodel_name="res.users",
+        string="Salesperson",
+        track_visibility="onchange",
+    )
