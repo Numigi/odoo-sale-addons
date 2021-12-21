@@ -408,3 +408,58 @@ class TestIntercoInvoices(IntercoServiceCase):
     def _open_summary_from_invoice(self, invoice):
         action = invoice.sudo(self.user).open_interco_service_summary()
         return self.wizard_obj.browse(action["res_id"])
+
+
+class TestIntercompanyAccounts(IntercoServiceCase):
+
+    def test_intercompany_revenue_account(self):
+        account = self._get_any_account(self.mother_company)
+        product = self.product.with_context(force_company=self.mother_company.id)
+        product.categ_id.intercompany_revenue_account_id = account
+
+        self.order.action_confirm()
+        self.wizard.validate()
+
+        line = self._get_interco_invoice_line()
+        assert line.account_id == account
+
+    def test_final_customer_invoice_revenue_account(self):
+        account = self._get_any_account(self.subsidiary)
+        product = self.product.with_context(force_company=self.subsidiary.id)
+        product.categ_id.intercompany_revenue_account_id = account
+
+        self.order.action_confirm()
+        self.wizard.validate()
+
+        line = self._get_final_customer_invoice_line()
+        assert line.account_id != account
+
+    def test_intercompany_expense_account(self):
+        account = self._get_any_account(self.subsidiary)
+        product = self.product.with_context(force_company=self.subsidiary.id)
+        product.categ_id.intercompany_expense_account_id = account
+
+        self.order.action_confirm()
+        self.wizard.validate()
+
+        line = self._get_interco_supplier_invoice_line()
+        assert line.account_id == account
+
+    def _get_interco_supplier_invoice_line(self):
+        invoice = self.order_line.invoice_lines.invoice_id
+        supplier_invoice = invoice.sudo().interco_supplier_invoice_id
+        return supplier_invoice.invoice_line_ids
+
+    def _get_interco_invoice_line(self):
+        invoice = self.order_line.invoice_lines.invoice_id
+        return invoice.invoice_line_ids
+
+    def _get_final_customer_invoice_line(self):
+        invoice = self.order_line.invoice_lines.invoice_id
+        customer_invoice = invoice.sudo().interco_customer_invoice_id
+        return customer_invoice.invoice_line_ids
+
+    def _get_any_account(self, company):
+        return self.env["account.account"].sudo().search(
+            [("company_id", "=", company.id)], limit=1
+        )

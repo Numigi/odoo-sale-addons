@@ -3,16 +3,17 @@
 
 {
     "name": "Sale Inter-Company Service",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Sell to a customer on behalf of another company",
-    "depends": ["sale_management"],
+    "depends": ["sale_management", "base_view_inheritance_extension"],
     "data": [
         "views/account_invoice.xml",
+        "views/product_category.xml",
         "views/res_config_settings.xml",
         "views/sale_order.xml",
         "wizard/sale_interco_service_invoice.xml",

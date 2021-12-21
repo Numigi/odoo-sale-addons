@@ -193,14 +193,22 @@ class SaleIntercoServiceInvoice(models.TransientModel):
                 "is_interco_service": True,
             }
         )
-        self._update_invoice_line_discount(invoice)
+
+        for line in invoice.invoice_line_ids:
+            self._update_invoice_line_account(line)
+            self._update_invoice_line_discount(line)
+
         invoice.compute_taxes()
 
-    def _update_invoice_line_discount(self, invoice):
-        for line in invoice.invoice_line_ids:
-            line.discount = 100 * (
-                1 - (1 - line.discount / 100) * (1 - self.discount / 100)
-            )
+    def _update_invoice_line_discount(self, line):
+        line.discount = 100 * (
+            1 - (1 - line.discount / 100) * (1 - self.discount / 100)
+        )
+
+    def _update_invoice_line_account(self, line):
+        account = line.product_id.categ_id.intercompany_revenue_account_id
+        if account:
+            line.account_id = account
 
     def _make_supplier_invoice(self, invoice):
         self = self.with_context(
@@ -245,15 +253,9 @@ class SaleIntercoServiceInvoice(models.TransientModel):
         ]
 
     def _get_single_supplier_invoice_line_vals(self, invoice_line):
-        product = invoice_line.product_id.with_context(
-            force_company=self.interco_company_id.id,
-            company_id=self.interco_company_id.id,
-        ).sudo()
-        account = self.env["account.invoice.line"].get_invoice_line_account(
-            "in_invoice", product, self.supplier_position_id, self.interco_company_id
-        )
+        account = self._get_interco_expense_account(invoice_line)
         return {
-            "product_id": product.id,
+            "product_id": invoice_line.product_id.id,
             "uom_id": invoice_line.uom_id.id,
             "quantity": invoice_line.quantity,
             "name": invoice_line.name,
@@ -261,6 +263,20 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             "discount": invoice_line.discount,
             "account_id": account.id,
         }
+
+    def _get_interco_expense_account(self, invoice_line):
+        product = invoice_line.product_id.with_context(
+            force_company=self.interco_company_id.id,
+            company_id=self.interco_company_id.id,
+        ).sudo()
+
+        account = product.categ_id.intercompany_expense_account_id
+        if account:
+            return account
+
+        return self.env["account.invoice.line"].get_invoice_line_account(
+            "in_invoice", product, self.supplier_position_id, self.interco_company_id
+        )
 
     def _make_customer_invoice(self, invoice):
         self = self.with_context(

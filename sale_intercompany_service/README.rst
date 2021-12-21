@@ -167,6 +167,16 @@ the combined discount on the interco invoices is 28%.
 
 	10% + (1 - 10%) * 20% = 28%
 
+Intercompany Accounts
+---------------------
+Since version ``12.0.1.1.0`` of the module, 2 new accounts can be defined on product categories.
+
+.. image:: static/description/product_category_accounts.png
+
+When these accounts are defined, they are used on intercompany invoices.
+
+However, they are not used on the final invoice to the customer.
+
 Known Issues
 ------------
 
