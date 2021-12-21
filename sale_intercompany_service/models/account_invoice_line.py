@@ -17,10 +17,10 @@ class AccountInvoiceLine(models.Model):
             account = product.categ_id.intercompany_revenue_account_id
             if account:
                 return account
-        
+
         if self.interco_service_type == "interco_supplier":
             account = product.categ_id.intercompany_expense_account_id
             if account:
                 return account
-        
+
         return super().get_invoice_line_account(type, product, fpos, company)

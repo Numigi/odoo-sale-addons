@@ -352,7 +352,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             force_company=self.interco_company_id.id,
             company_id=self.interco_company_id.id,
         ).sudo()
-        account = invoice_line.get_invoice_line_account(
+        account = self.env["account.invoice.line"].get_invoice_line_account(
             "out_invoice", product, self.customer_position_id, self.interco_company_id
         )
         return {

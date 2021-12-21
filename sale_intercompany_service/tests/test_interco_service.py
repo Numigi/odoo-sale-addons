@@ -414,13 +414,25 @@ class TestIntercompanyAccounts(IntercoServiceCase):
 
     def test_intercompany_revenue_account(self):
         account = self._get_any_account(self.mother_company)
-        self.product.categ_id.intercompany_revenue_account_id = account
+        product = self.product.with_context(force_company=self.mother_company.id)
+        product.categ_id.intercompany_revenue_account_id = account
 
         self.order.action_confirm()
         self.wizard.validate()
 
         line = self._get_interco_invoice_line()
         assert line.account_id == account
+
+    def test_final_customer_invoice_revenue_account(self):
+        account = self._get_any_account(self.subsidiary)
+        product = self.product.with_context(force_company=self.subsidiary.id)
+        product.categ_id.intercompany_revenue_account_id = account
+
+        self.order.action_confirm()
+        self.wizard.validate()
+
+        line = self._get_final_customer_invoice_line()
+        assert line.account_id != account
 
     def test_intercompany_expense_account(self):
         account = self._get_any_account(self.subsidiary)
@@ -441,6 +453,11 @@ class TestIntercompanyAccounts(IntercoServiceCase):
     def _get_interco_invoice_line(self):
         invoice = self.order_line.invoice_lines.invoice_id
         return invoice.invoice_line_ids
+
+    def _get_final_customer_invoice_line(self):
+        invoice = self.order_line.invoice_lines.invoice_id
+        customer_invoice = invoice.sudo().interco_customer_invoice_id
+        return customer_invoice.invoice_line_ids
 
     def _get_any_account(self, company):
         return self.env["account.account"].sudo().search(

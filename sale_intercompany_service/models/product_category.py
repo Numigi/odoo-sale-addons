@@ -10,10 +10,12 @@ class ProductCategory(models.Model):
 
     intercompany_revenue_account_id = fields.Many2one(
         'account.account',
+        company_dependent=True,
         domain=[('deprecated', '=', False)],
     )
 
     intercompany_expense_account_id = fields.Many2one(
         'account.account',
+        company_dependent=True,
         domain=[('deprecated', '=', False)],
     )
