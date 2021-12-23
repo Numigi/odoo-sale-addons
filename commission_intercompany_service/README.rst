@@ -33,6 +33,9 @@ the ``Filter By Company`` box on the commission category must be unchecked.
 
 .. image:: static/description/commission_category_filter_by_company.png
 
+The module also prevents intercompany invoices to be included in the computation of commissions.
+Only the final invoice to the customer is included.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

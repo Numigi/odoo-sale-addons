@@ -28,7 +28,7 @@ class AccountInvoice(models.Model):
         store=True,
     )
 
-    @api.depends("interco_service_order_id", "type")
+    @api.depends("interco_service_order_id", "type", "is_interco_service")
     def _compute_interco_service_type(self):
         for invoice in self:
             if invoice.is_interco_service:

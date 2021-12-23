@@ -12,3 +12,9 @@ class CommissionTarget(models.Model):
         orders = super()._get_related_sale_order(invoice_line)
         interco_orders = invoice_line.mapped("invoice_id.interco_service_order_id")
         return orders | interco_orders
+
+    def _get_invoices(self):
+        invoices = super()._get_invoices()
+        return invoices.filtered(
+            lambda inv: inv.interco_service_type != "interco_customer"
+        )
