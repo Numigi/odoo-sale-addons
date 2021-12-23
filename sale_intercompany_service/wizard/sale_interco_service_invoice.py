@@ -235,7 +235,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
                 "fiscal_position_id": self.supplier_position_id.id,
                 "interco_service_order_id": self.order_id.id,
                 "is_interco_service": True,
-                "user_id": None,
+                "user_id": self.order_id.user_id.id,
             }
         )
 
@@ -304,7 +304,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
                 "fiscal_position_id": self.customer_position_id.id,
                 "interco_service_order_id": self.order_id.id,
                 "is_interco_service": True,
-                "user_id": None,
+                "user_id": self.order_id.user_id.id,
             }
         )
 

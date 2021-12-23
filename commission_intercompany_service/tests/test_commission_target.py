@@ -48,7 +48,21 @@ class TestCommissionTarget(CommissionCase):
         orders = self.target._get_related_sale_order(self.invoice_line)
         assert orders == self.order
 
-    def test_intercompany_(self):
+    def test_get_related_intercompany_order(self):
         self.invoice.interco_service_order_id = self.order
         orders = self.target._get_related_sale_order(self.invoice_line)
         assert orders == self.order
+
+    def test_final_customer_invoice(self):
+        self.order.company_id = self._make_new_company()
+        self.invoice.interco_service_order_id = self.order
+        self.invoice.is_interco_service = True
+        assert self.invoice in self.target._get_invoices()
+
+    def test_intercompany_invoice(self):
+        self.invoice.interco_service_order_id = self.order
+        self.invoice.is_interco_service = True
+        assert self.invoice not in self.target._get_invoices()
+
+    def _make_new_company(self):
+        return self.env["res.company"].create({"name": "New Company"})
