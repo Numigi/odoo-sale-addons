@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">Partner Form: Add parent filter on secondary industry</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_industry_secondary.view_partner_form_industry"/>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <field name="industry_id" position="attributes">
+                <attribute name="domain">[('parent_id', '=', False)]</attribute>
+            </field>
+            <xpath expr="//page[@name='sales_purchases']//field[@name='secondary_industry_ids']" position="attributes">
+                <attribute name="domain">[('parent_id', '=', industry_id), ('parent_id', '!=', False)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

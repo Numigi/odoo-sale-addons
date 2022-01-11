@@ -24,6 +24,7 @@ COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
 COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
 COPY crm_filter_no_activity /mnt/extra-addons/crm_filter_no_activity
+COPY crm_industry_parent_filter /mnt/extra-addons/crm_industry_parent_filter
 COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
