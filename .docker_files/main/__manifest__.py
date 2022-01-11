@@ -18,6 +18,7 @@
         "crm_assign_in_house",
         "crm_brand",
         "crm_filter_no_activity",
+        "crm_industry_parent_filter",
         "crm_team_by_industry",
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
