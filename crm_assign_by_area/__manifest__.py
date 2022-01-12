@@ -9,7 +9,7 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "LGPL-3",
-    "depends": ["forward_sorting_area", "crm"],
+    "depends": ["crm_forward_sorting_area"],
     "data": [
         "views/crm_lead.xml",
         "views/res_partner.xml",

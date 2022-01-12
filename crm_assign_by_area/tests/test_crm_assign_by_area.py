@@ -56,45 +56,37 @@ class TestCRMAssignByArea(SavepointCase):
 
         # Partner
         cls.partner = cls.env["res.partner"].create({"name": "Partner"})
-        cls.crm = cls.env["crm.lead"].create(
-            {"name": "Pipeline", "partner_id": cls.partner.id}
-        )
+        cls.lead = cls.env["crm.lead"].create({"name": "Pipeline"})
 
         wizard_env = cls.env["assign.salesperson.by.area.wizard"]
         cls.wizard_crm_env = wizard_env.with_context(
-            active_id=cls.crm.id, active_model="crm.lead"
+            active_id=cls.lead.id, active_model="crm.lead"
         )
         cls.wizard_partner_env = wizard_env.with_context(
             active_id=cls.partner.id, active_model="res.partner"
         )
 
-    def test_crm_cannot_assign_salesperson_if_crm_has_no_customer(self):
-        with self.assertRaises(ValidationError):
-            self.env["crm.lead"].create(
-                {"name": "Pipeline"}
-            ).action_assign_salesperson()
-
     def test_crm_assign_salesperson_case_no_salesperson_to_assign(self):
-        self.partner.zip = "100000"
+        self.lead.zip = "100000"
         with Form(self.wizard_crm_env) as wizard:
             res = wizard.save()
             with self.assertRaises(AssertionError):
                 res.action_confirm()
 
     def test_crm_assign_salesperson_case_one_salesperson_to_assign(self):
-        self.partner.zip = "200000"
+        self.lead.zip = "200000"
         with Form(self.wizard_crm_env) as wizard:
             res = wizard.save()
             res.action_confirm()
-            self.assertEqual(self.crm.user_id, self.user_1)
+            self.assertEqual(self.lead.user_id, self.user_1)
 
     def test_crm_assign_salesperson_case_several_salesperson_to_assign(self):
-        self.partner.zip = "300000"
+        self.lead.zip = "300000"
         with Form(self.wizard_crm_env) as wizard:
             wizard.salesperson_id = self.user_1
             res = wizard.save()
             res.action_confirm()
-            self.assertEqual(self.crm.user_id, self.user_1)
+            self.assertEqual(self.lead.user_id, self.user_1)
 
     def test_partner_assign_salesperson_case_no_salesperson_to_assign(self):
         self.partner.zip = "100000"
