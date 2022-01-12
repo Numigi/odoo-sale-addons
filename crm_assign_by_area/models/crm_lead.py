@@ -11,8 +11,6 @@ class CrmLead(models.Model):
     @api.multi
     def action_assign_salesperson(self):
         self.ensure_one()
-        if not self.partner_id:
-            raise ValidationError(_("Please select a customer to assign salesperson."))
         return {
             "name": _("Assign Salesperson"),
             "type": "ir.actions.act_window",

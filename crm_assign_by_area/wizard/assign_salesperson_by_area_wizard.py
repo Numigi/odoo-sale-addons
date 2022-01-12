@@ -19,10 +19,7 @@ class AssignSalespersonByAreaWizard(models.Model):
         res = super().default_get(fields)
 
         active_record = self.get_active_record()
-        if self._context.get("active_model") == "crm.lead":
-            territories = active_record.partner_id.territory_ids
-        else:
-            territories = active_record.territory_ids
+        territories = active_record.territory_ids
         salespersons = territories.mapped("salesperson_id")
         vals = {
             "available_territory_ids": [(6, 0, territories.ids)],
