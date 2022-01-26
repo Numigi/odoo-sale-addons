@@ -59,6 +59,17 @@ class IntercoServiceCase(SavepointCase):
         cls.price_unit = 200
         cls.quantity = 15
 
+        order_line_vals = {
+            "name": cls.order_line_name,
+            "product_id": cls.product.id,
+            "product_uom": cls.product.uom_id.id,
+            "product_uom_qty": cls.quantity,
+            "price_unit": cls.price_unit,
+        }
+        note_line_vals = {
+            "display_type": "line_note",
+            "name": "Some Note",
+        }
         cls.order = cls.env["sale.order"].create(
             {
                 "company_id": cls.mother_company.id,
@@ -67,22 +78,10 @@ class IntercoServiceCase(SavepointCase):
                 "partner_shipping_id": cls.delivery_address.id,
                 "fiscal_position_id": cls.interco_position.id,
                 "is_interco_service": True,
-                "order_line": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.order_line_name,
-                            "product_id": cls.product.id,
-                            "product_uom": cls.product.uom_id.id,
-                            "product_uom_qty": cls.quantity,
-                            "price_unit": cls.price_unit,
-                        },
-                    )
-                ],
+                "order_line": [(0, 0, order_line_vals), (0, 0, note_line_vals)],
             }
         )
-        cls.order_line = cls.order.order_line
+        cls.order_line = cls.order.order_line[0]
         cls.order_line.discount = 10
         cls.order_line._compute_tax_id()
 

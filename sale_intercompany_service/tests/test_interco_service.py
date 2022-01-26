@@ -99,10 +99,10 @@ class TestIntercoInvoices(IntercoServiceCase):
         cls.invoice = cls.invoice_line.invoice_id
 
         cls.supplier_invoice = cls.invoice.sudo().interco_supplier_invoice_id
-        cls.supplier_invoice_line = cls.supplier_invoice.invoice_line_ids
+        cls.supplier_invoice_line = cls.supplier_invoice.invoice_line_ids[0]
 
         cls.customer_invoice = cls.invoice.sudo().interco_customer_invoice_id
-        cls.customer_invoice_line = cls.customer_invoice.invoice_line_ids
+        cls.customer_invoice_line = cls.customer_invoice.invoice_line_ids[0]
 
     def test_interco_invoice_tax_amount_not_matching(self):
         self.invoice.tax_line_ids[0].amount += 0.01
@@ -293,16 +293,16 @@ class TestIntercompanyAccounts(IntercoServiceCase):
     def _get_interco_supplier_invoice_line(self):
         invoice = self.order_line.invoice_lines.invoice_id
         supplier_invoice = invoice.sudo().interco_supplier_invoice_id
-        return supplier_invoice.invoice_line_ids
+        return supplier_invoice.invoice_line_ids[0]
 
     def _get_interco_invoice_line(self):
         invoice = self.order_line.invoice_lines.invoice_id
-        return invoice.invoice_line_ids
+        return invoice.invoice_line_ids[0]
 
     def _get_final_customer_invoice_line(self):
         invoice = self.order_line.invoice_lines.invoice_id
         customer_invoice = invoice.sudo().interco_customer_invoice_id
-        return customer_invoice.invoice_line_ids
+        return customer_invoice.invoice_line_ids[0]
 
     def _get_any_account(self, company):
         return self.env["account.account"].sudo().search(
