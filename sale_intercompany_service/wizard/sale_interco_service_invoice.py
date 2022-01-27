@@ -255,6 +255,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
     def _get_single_supplier_invoice_line_vals(self, invoice_line):
         account = self._get_interco_expense_account(invoice_line)
         return {
+            "display_type": invoice_line.display_type,
             "product_id": invoice_line.product_id.id,
             "uom_id": invoice_line.uom_id.id,
             "quantity": invoice_line.quantity,
@@ -356,6 +357,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             "out_invoice", product, self.customer_position_id, self.interco_company_id
         )
         return {
+            "display_type": invoice_line.display_type,        
             "product_id": product.id,
             "uom_id": invoice_line.uom_id.id,
             "quantity": invoice_line.quantity,
