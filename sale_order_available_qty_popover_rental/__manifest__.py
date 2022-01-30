@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     'category': 'Sales',
     'version': '0.1',
-    'depends': ['stock_rental','sale_rental','sale_order_available_qty_popover'],
+    'depends': ['stock_rental', 'sale_rental', 'sale_order_available_qty_popover'],
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
