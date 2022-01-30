@@ -3,7 +3,7 @@
 
 {
     'name': "Sale Order Available Qty Popover Rental",
-    'summary': "",
+    'summary': "Inherit Compute of Qty Popover",
     'author': "Numigi",
     'maintener': "Numigi",
     'website': "https://bit.ly/numigi-com",
@@ -11,10 +11,6 @@
     'category': 'Sales',
     'version': '0.1',
     'depends': ['stock_rental', 'sale_rental', 'sale_order_available_qty_popover'],
-    'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
-    ],
+    'data': [],
     "installable": True,
 }
