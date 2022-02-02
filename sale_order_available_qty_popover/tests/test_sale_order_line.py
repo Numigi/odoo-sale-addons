@@ -1,10 +1,10 @@
 # © 2020 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import SavepointCase, tagged
 from ..models.sale_order_line import RED, YELLOW, GREEN
 
-
+@tagged('popover')
 class TestSaleOrderLine(SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -63,8 +63,10 @@ class TestSaleOrderLine(SavepointCase):
         )
 
     def test_one_quant(self):
+        """Odoo Live Codinfg ----------------------------------"""
         qty = 10
         self._add_quant(self.product, self.location_1, qty)
+        print('---------------------- mada live cofing ------------------')
         assert self.line.available_qty_for_popover == qty
 
     def test_two_quants_in_different_warehoues(self):
