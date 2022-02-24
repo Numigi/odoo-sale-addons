@@ -18,6 +18,7 @@ order is displayed.
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+* Komit (https://komit-consulting.com)
 
 More information
 ----------------
