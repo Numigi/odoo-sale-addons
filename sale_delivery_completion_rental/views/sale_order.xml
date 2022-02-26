@@ -53,4 +53,26 @@
         </field>
     </record>
 
+    <record id="sale_quotation_list" model="ir.ui.view">
+        <field name="name">Sale Quotation List: add rental return completion</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="return_rate" string="Return"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sale_order_list" model="ir.ui.view">
+        <field name="name">Sale Order List: add rental return completion</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="return_rate" string="Return"/>
+            </tree>
+        </field>
+    </record>
+
 </odoo>

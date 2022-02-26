@@ -7,7 +7,9 @@ from odoo import fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    return_rate = fields.Char(compute="_compute_return_rate", string="Return")
+    return_rate = fields.Char(
+        compute="_compute_return_rate", string="Return", store=True
+    )
 
     def _compute_return_rate(self):
         for order in self:
