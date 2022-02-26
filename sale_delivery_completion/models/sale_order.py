@@ -8,7 +8,7 @@ class SaleOrder(models.Model):
 
     _inherit = "sale.order"
 
-    completion_rate = fields.Char(compute="_compute_completion_rate")
+    completion_rate = fields.Char(compute="_compute_completion_rate", store=True)
 
     def _compute_completion_rate(self):
         for order in self:
