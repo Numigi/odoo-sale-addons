@@ -1,7 +1,7 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -10,6 +10,7 @@ class SaleOrder(models.Model):
 
     completion_rate = fields.Char(compute="_compute_completion_rate", store=True)
 
+    @api.depends("order_line", "order_line.qty_delivered", "order_line.product_uom_qty")
     def _compute_completion_rate(self):
         for order in self:
             order.completion_rate = order._get_completion_rate()

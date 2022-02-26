@@ -1,7 +1,7 @@
 # © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -11,6 +11,9 @@ class SaleOrder(models.Model):
         compute="_compute_return_rate", string="Return", store=True
     )
 
+    @api.depends(
+        "order_line", "order_line.rental_returned_qty", "order_line.product_uom_qty"
+    )
     def _compute_return_rate(self):
         for order in self:
             order.return_rate = order._get_return_rate()
