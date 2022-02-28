@@ -182,7 +182,7 @@
     />
 
     <record id="stock_quant_rented_action" model="ir.actions.act_window">
-        <field name="name">Rented Units</field>
+        <field name="name">Rented Stock</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">stock.quant</field>
         <field name="view_mode">tree,form,graph,pivot</field>
@@ -201,7 +201,7 @@
 
     <menuitem
         id="rental_product_rented_unit_menu"
-        name="Rented Units"
+        name="Rented Stock"
         parent="rental_product_menu"
         action="stock_quant_rented_action"
         sequence="38"
