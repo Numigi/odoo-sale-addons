@@ -4,7 +4,7 @@
     <menuitem
         id="rental_menu_root"
         name="Rentals"
-        sequence="1"
+        sequence="8"
         web_icon="sale_rental_app,static/description/menu_icon.png"
     />
 
