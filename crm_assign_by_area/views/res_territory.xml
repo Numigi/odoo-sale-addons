@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_territory_tree" model="ir.ui.view">
+        <field name="name">res.territory.tree</field>
+        <field name="model">res.territory</field>
+        <field name="inherit_id" ref="forward_sorting_area.res_territory_tree"/>
+        <field name="arch" type="xml">
+            <field name="fsa_ids" position="after">
+                <field name="salesperson_id"/>
+            </field>
+      </field>
+    </record>
+
+</odoo>

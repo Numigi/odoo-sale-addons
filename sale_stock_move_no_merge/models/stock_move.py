@@ -12,6 +12,7 @@ class StockMove(models.Model):
         'sale.order.line',
         'Destination Sale Order Line',
         compute='_compute_destination_sale_line_id',
+        compute_sudo=True,
     )
 
     def _compute_destination_sale_line_id(self):

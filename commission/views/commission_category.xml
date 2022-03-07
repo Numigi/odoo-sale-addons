@@ -56,6 +56,9 @@
                                 domain="[('id', '!=', id)]"
                                 />
                         </group>
+                        <group>
+                            <field name="filter_by_company"/>
+                        </group>
                     </group>
                 </sheet>
                 <field name="id" invisible="1"/>

@@ -1,17 +1,24 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Website Stock Availability Enhanced",
-    "summary": "Indicate if the inventory is below a threshold without blocking the sale",
-    "version": "12.0.1.0.0",
+    "summary": "Enhance the display of product availability on the website",
+    "version": "2.0.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
-    "license": "AGPL-3",
-    "depends": ["website_sale_stock"],
+    "license": "LGPL-3",
+    "depends": [
+        "queue_job",
+        "purchase",
+        "website_sale_stock",
+    ],
     "data": [
+        "data/ir_cron.xml",
+        "data/queue_job_function.xml",
+        "views/assets.xml",
         "views/product_template.xml",
-        "views/website_stock_availability_enhanced_templates.xml",
+        "views/sale_order.xml",
     ],
     "installable": True,
 }

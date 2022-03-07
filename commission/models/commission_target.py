@@ -35,6 +35,9 @@ class CommissionTarget(models.Model):
         track_visibility="onchange",
         states={"draft": [("readonly", False)]},
     )
+    employee_user_id = fields.Many2one(
+        "res.users", related="employee_id.user_id", required=True
+    )
     company_id = fields.Many2one(
         "res.company", default=lambda self: self.env.user.company_id, required=True
     )
@@ -69,7 +72,7 @@ class CommissionTarget(models.Model):
     )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
-    last_compute_date = fields.Datetime()
+    last_compute_date = fields.Datetime(readonly=True)
     invoice_line_ids = fields.Many2many(
         "account.invoice.line",
         "commission_target_invoice_line_rel",
@@ -89,6 +92,12 @@ class CommissionTarget(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
         track_visibility="onchange",
+    )
+    included_teams_ids = fields.Many2many(
+        "crm.team",
+        "commission_target_included_teams_rel",
+        "target_id",
+        "team_id",
     )
     fixed_rate = fields.Float(
         readonly=True,
@@ -118,14 +127,18 @@ class CommissionTarget(models.Model):
 
     def _compute_show_invoices(self):
         for target in self:
-            target.show_invoices = target.basis == "my_sales"
+            target.show_invoices = (
+                target.state != "draft" and target.basis == "my_sales"
+            )
 
     def _compute_show_child_targets(self):
         for target in self:
-            target.show_child_targets = target.basis == "my_team_commissions"
+            target.show_child_targets = (
+                target.state != "draft" and target.basis == "my_team_commissions"
+            )
 
     def compute(self):
-        self.check_extended_security_read()
+        self.check_extended_security_write()
         self = self.sudo()
 
         for target in self._sorted_by_category_dependency():
@@ -162,12 +175,17 @@ class CommissionTarget(models.Model):
             ]
         )
         invoices = invoices.filtered(
-            lambda inv: inv.company_id == self.company_id
-            and inv.user_id == self.employee_id.user_id
+            lambda inv: inv.user_id == self.employee_id.user_id
             and inv.date_invoice <= self.date_end
             and inv.type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
+
+        if self.category_id.filter_by_company:
+            invoices = invoices.filtered(
+                lambda inv: inv.company_id == self.company_id
+            )
+
         return invoices
 
     def _compute_invoiced_amount(self):
@@ -180,34 +198,42 @@ class CommissionTarget(models.Model):
 
     def _is_included_invoice_line(self, line):
         included = self.category_id.included_tag_ids
-        tags = line.sale_line_ids.order_id.so_tag_ids
+        tags = self._get_related_sale_order_tags(line)
         return not included or bool(included & tags)
 
     def _is_excluded_invoice_line(self, line):
         excluded = self.category_id.excluded_tag_ids
-        tags = line.sale_line_ids.order_id.so_tag_ids
+        tags = self._get_related_sale_order_tags(line)
         return bool(excluded & tags)
 
+    def _get_related_sale_order_tags(self, invoice_line):
+        return self._get_related_sale_order(invoice_line).so_tag_ids
+
+    def _get_related_sale_order(self, invoice_line):
+        return invoice_line.mapped("sale_line_ids.order_id")[:1]
+
     def _update_base_amount_my_team_commissions(self):
-        self._get_child_targets()
         self.child_target_ids = self._get_child_targets()
         self.child_commission_amount = self._compute_child_commission_amount()
         self.base_amount = self.child_commission_amount
 
     def _get_child_targets(self):
         children = (
-            self.env["commission.target"].search(
-                [
-                    ("employee_id.department_id.manager_id", "=", self.employee_id.id),
-                ]
+            self.env["commission.target"].sudo().search(
+                [("date_range_id", "=", self.date_range_id.id)]
             )
             - self
         )
         children = children.filtered(
-            lambda child: child.date_range_id == self.date_range_id
-            and child.category_id in self.category_id.child_category_ids
-            and child.company_id == self.company_id
+            lambda child: child.category_id in self.category_id.child_category_ids
+            and child.employee_id.user_id.sale_team_id in self.included_teams_ids
         )
+
+        if self.category_id.filter_by_company:
+            children = children.filtered(
+                lambda child: child.company_id == self.company_id
+            )
+
         return children
 
     def _compute_child_commission_amount(self):
@@ -281,6 +307,22 @@ class CommissionTarget(models.Model):
             }
         )
 
+    @api.onchange("category_id")
+    def onchange_category_id_team_selection(self):
+        if self._is_based_on_team_targets():
+            self._select_all_teams()
+
+    def _is_based_on_team_targets(self):
+        return self.basis == "my_team_commissions"
+
+    def _select_all_teams(self):
+        self.included_teams_ids = self._search_available_teams()
+
+    def _search_available_teams(self):
+        return self.env["crm.team"].search(
+            [("user_id", "=", self.employee_id.user_id.id)]
+        )
+
     def set_confirmed_state(self):
         for target in self:
             target.state = "confirmed"
@@ -332,15 +374,15 @@ class CommissionTarget(models.Model):
 
     def _check_team_manager_access(self):
         user = self.env.user
-        departments = self._get_user_managed_departments()
+        teams = self._get_user_managed_teams()
 
         for target in self.sudo():
             employee = target.employee_id
 
             is_own_target = employee.user_id == user
-            is_own_department = employee.department_id in departments
+            is_own_team = employee.user_id.sale_team_id in teams
 
-            if not (is_own_target or is_own_department):
+            if not (is_own_target or is_own_team):
                 raise AccessError(
                     _(
                         "You are not allowed to access the target {} because "
@@ -361,16 +403,21 @@ class CommissionTarget(models.Model):
                     ).format(target.display_name)
                 )
 
-    def _get_user_managed_departments(self):
-        return (
-            self.env["hr.department"]
-            .sudo()
-            .search(
-                [
-                    ("manager_id", "in", self.env.user.employee_ids.ids),
-                ]
-            )
-        )
+    def _get_user_managed_teams(self):
+        all_teams = self.env["crm.team"].sudo().search([])
+        user = self.env.user
+        return all_teams.filtered(lambda team: self._is_user_managed_team(user, team))
+
+    def _is_user_managed_team(self, user, team, depth=10):
+        if depth == 0:
+            return False
+
+        if team.user_id == user:
+            return True
+
+        parent_team = team.user_id.sale_team_id
+        if parent_team:
+            return self._is_user_managed_team(user, parent_team, depth=depth - 1)
 
     def get_extended_security_domain(self):
         result = super().get_extended_security_domain()
@@ -397,10 +444,10 @@ class CommissionTarget(models.Model):
         return []
 
     def _get_team_manager_domain(self):
-        departments = self._get_user_managed_departments()
+        teams = self._get_user_managed_teams()
         return [
             "|",
-            ("employee_id.department_id", "in", departments.ids),
+            ("employee_id.user_id.sale_team_id", "in", teams.ids),
             ("employee_id.user_id", "=", self.env.user.id),
         ]
 
@@ -412,5 +459,6 @@ class CommissionTarget(models.Model):
     @api.model
     def get_read_access_actions(self):
         res = super().get_read_access_actions()
-        res.append("compute")
+        res.append("view_invoice_lines")
+        res.append("view_child_targets")
         return res

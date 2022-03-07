@@ -14,6 +14,12 @@
   branch: "12.0"
   includes:
     - base_extended_security
+    - test_http_request
+
+- url: https://github.com/Numigi/odoo-partner-addons
+  branch: "12.0"
+  includes:
+    - forward_sorting_area
 
 - url: https://github.com/Numigi/odoo-product-addons
   branch: "12.0"
@@ -26,15 +32,33 @@
   includes:
     - stock_rental
 
+- url: https://github.com/Numigi/odoo-purchase-addons
+  branch: "12.0"
+  includes:
+    - product_supplier_info_helpers
+
 - url: https://github.com/Numigi/odoo-web-addons
   branch: "12.0"
   includes:
     - web_handle_condition
     - web_trash_condition
+    - web_list_column_width
+
+- url: https://github.com/oca/account-closing
+  branch: "12.0"
+  includes:
+    - account_invoice_start_end_dates
+
+- url: https://github.com/oca/contract
+  branch: "12.0"
+  includes:
+    - contract
+    - contract_invoice_start_end_dates
 
 - url: https://github.com/oca/crm
   branch: "12.0"
   includes:
+    - crm_industry
     - crm_lead_product
 
 - url: https://github.com/OCA/multi-company
@@ -43,10 +67,25 @@
     - account_invoice_inter_company
     - purchase_sale_inter_company
 
+- url: https://github.com/oca/partner-contact
+  branch: "12.0"
+  includes:
+    - partner_industry_secondary
+
 - url: https://github.com/oca/product-attribute
   branch: "12.0"
   includes:
     - product_brand
+
+- url: https://github.com/oca/queue
+  branch: "12.0"
+  includes:
+    - queue_job
+
+- url: https://github.com/OCA/social
+  branch: "12.0"
+  includes:
+  - mail_improved_tracking_value
 
 - url: https://github.com/OCA/stock-logistics-workflow.git
   branch: "12.0"
