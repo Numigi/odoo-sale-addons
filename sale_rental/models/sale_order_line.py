@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
     is_rental_order = fields.Boolean(related="order_id.is_rental")
@@ -18,6 +17,17 @@ class SaleOrderLine(models.Model):
     rental_date_from_required = fields.Boolean()
     rental_date_to_editable = fields.Boolean()
     is_rental_service = fields.Boolean()
+
+    @api.onchange('is_rental_order')
+    def is_rental_order_change(self):
+        if self.is_rental_order is True:
+            return {
+                'domain': {'product_id': [('can_be_rented', '=', True)]}
+            }
+        else :
+            return {
+                'domain': {'product_id': [('can_be_rented', '=', False)]}
+            }
 
     @api.onchange("product_id")
     def product_id_change(self):
@@ -176,7 +186,6 @@ class SaleOrderLine(models.Model):
 
 
 class SaleOrderLineWithRentalDates(models.Model):
-
     _inherit = "sale.order.line"
 
     expected_rental_date = fields.Datetime()
