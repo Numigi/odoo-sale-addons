@@ -16,32 +16,32 @@
                 <field name="taxes_readonly" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('product_updatable', '=', False), ('product_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('product_updatable', '=', False), ('product_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    [('product_uom_qty_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': [('product_uom_qty_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('qty_invoiced', '&gt;', 0), ('price_unit_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('price_unit_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('qty_invoiced', '&gt;', 0), ('taxes_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('taxes_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
@@ -56,32 +56,32 @@
                 <field name="taxes_readonly" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('product_updatable', '=', False), ('product_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('product_updatable', '=', False), ('product_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_uom_qty']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    [('product_uom_qty_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': [('product_uom_qty_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_uom']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('state', 'in', ('sale', 'done', 'cancel')), ('product_uom_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('qty_invoiced', '&gt;', 0), ('price_unit_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('price_unit_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='tax_id']" position="attributes">
-                <attribute name="attrs" operation="python_dict" key="readonly">
-                    ['|', ('qty_invoiced', '&gt;', 0), ('taxes_readonly', '=', True)]
+                <attribute name="attrs">
+                    {'readonly': ['|', ('qty_invoiced', '&gt;', 0), ('taxes_readonly', '=', True)]}
                 </attribute>
                 <attribute name="force_save">1</attribute>
             </xpath>
