@@ -18,6 +18,31 @@ class AccountInvoice(models.Model):
         "account.invoice", ondelete="restrict"
     )
     is_interco_service = fields.Boolean()
+    interco_service_type = fields.Selection(
+        [
+            ("interco_supplier", "Interco Supplier"),
+            ("interco_customer", "Interco Customer"),
+            ("customer", "Customer"),
+        ],
+        compute="_compute_interco_service_type",
+        store=True,
+    )
+
+    @api.depends("interco_service_order_id", "type", "is_interco_service")
+    def _compute_interco_service_type(self):
+        for invoice in self:
+            if invoice.is_interco_service:
+                invoice.interco_service_type = invoice._get_interco_service_type()
+
+    def _get_interco_service_type(self):
+        if self.type in ("in_invoice", "in_refund"):
+            return "interco_supplier"
+
+        order = self.interco_service_order_id.sudo()
+        if order.company_id == self.company_id:
+            return "interco_customer"
+        else:
+            return "customer"
 
     def open_interco_service_summary(self):
         order = self.sudo().interco_service_order_id

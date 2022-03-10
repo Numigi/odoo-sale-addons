@@ -139,8 +139,8 @@
                                             <div><input class="form-control" type="email" name="email" required="This field is required"/></div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <div><span>Phone</span></div>
-                                            <div><input class="form-control" type="tel" name="phone"/></div>
+                                            <div><span>Phone*</span></div>
+                                            <div><input class="form-control" type="tel" name="phone" required="This field is required"/></div>
                                         </div>
                                     </div>
                                 </t>
@@ -150,6 +150,16 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <textarea class="form-control" type="tel" name="additional_information"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <t t-set="warning_message" t-value="request.env.user.company_id.website_sale_request_price_message"/>
+                                        <div
+                                            t-if="warning_message"
+                                            t-raw="warning_message"
+                                            style="white-space: pre-wrap; margin-top: 16px;">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

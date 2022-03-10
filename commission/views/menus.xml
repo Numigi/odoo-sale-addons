@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <menuitem id="commission_root" name="Commissions" sequence="1"/>
-    <menuitem id="commission_target" name="Targets" parent="commission_root" action="action_target" sequence="10"/>
-    <menuitem id="commission_category" 
-                name="Categories" 
-                parent="commission_root" 
-                action="action_category" 
-                sequence="20"/>
+    <menuitem
+        id="commission_root_menu"
+        name="Commissions"
+        sequence="1"
+        />
+
+    <menuitem
+        id="commission_target_menu"
+        name="Targets"
+        parent="commission_root_menu"
+        action="action_target"
+        sequence="10"
+        />
+
+    <menuitem
+        id="invoicing_menu"
+        name="Invoicing"
+        parent="commission_root_menu"
+        sequence="11"
+        />
+
+    <menuitem
+        id="invoice_lines_menu"
+        name="Invoice Lines"
+        parent="invoicing_menu"
+        action="action_invoice_lines_no_target"
+        sequence="1"
+        />
+
+    <menuitem
+        id="commission_category_menu" 
+        name="Categories" 
+        parent="commission_root_menu" 
+        action="action_category" 
+        sequence="20"
+        />
 
 </odoo>

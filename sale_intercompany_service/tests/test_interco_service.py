@@ -3,163 +3,7 @@
 
 import pytest
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
-
-
-class IntercoServiceCase(SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.interco_discount = 20
-
-        cls.mother_company = cls._create_company("Mother Company")
-        cls.mother_company.interco_service_discount = cls.interco_discount
-        cls.mother_partner = cls.mother_company.partner_id
-
-        cls.subsidiary = cls._create_company("Subsidiary")
-        cls.subsidiary_partner = cls.subsidiary.partner_id
-
-        cls.interco_position = cls._get_fiscal_position(cls.mother_company, "Ontario")
-        cls._set_fiscal_position(
-            cls.subsidiary_partner, cls.mother_company, cls.interco_position
-        )
-
-        cls.mother_position = cls._get_fiscal_position(cls.subsidiary, "Quebec")
-        cls._set_fiscal_position(
-            cls.mother_partner, cls.subsidiary, cls.mother_position
-        )
-
-        cls.customer_position = cls._get_fiscal_position(cls.subsidiary, "Manitoba")
-        cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer", "company_id": None}
-        )
-        cls._set_fiscal_position(cls.customer, cls.subsidiary, cls.customer_position)
-
-        cls.delivery_address = cls.env["res.partner"].create(
-            {"name": "Delivery Address", "type": "delivery", "company_id": None}
-        )
-
-        cls.product = cls.env["product.product"].create(
-            {
-                "name": "My Product",
-                "type": "service",
-                "company_id": None,
-                "invoice_policy": "order",
-            }
-        )
-
-        cls.product.taxes_id = cls._get_customer_tax(cls.mother_company, "HST 15%")
-        cls.product.taxes_id |= cls._get_customer_tax(cls.subsidiary, "HST 13%")
-        cls.product.supplier_taxes_id = cls._get_supplier_tax(cls.subsidiary, "HST 13%")
-
-        cls.user = cls.env.ref("base.user_demo")
-        cls.user.groups_id = cls.env.ref("sales_team.group_sale_salesman_all_leads")
-        cls._set_user_company(cls.mother_company)
-        cls.env = cls.env(user=cls.user)
-
-        cls.order_line_name = "Order Line Description"
-        cls.price_unit = 200
-        cls.quantity = 15
-
-        cls.order = cls.env["sale.order"].create(
-            {
-                "company_id": cls.mother_company.id,
-                "partner_id": cls.customer.id,
-                "partner_invoice_id": cls.subsidiary.partner_id.id,
-                "partner_shipping_id": cls.delivery_address.id,
-                "fiscal_position_id": cls.interco_position.id,
-                "is_interco_service": True,
-                "order_line": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.order_line_name,
-                            "product_id": cls.product.id,
-                            "product_uom": cls.product.uom_id.id,
-                            "product_uom_qty": cls.quantity,
-                            "price_unit": cls.price_unit,
-                        },
-                    )
-                ],
-            }
-        )
-        cls.order_line = cls.order.order_line
-        cls.order_line.discount = 10
-        cls.order_line._compute_tax_id()
-
-        action = cls.order.open_interco_service_invoice_wizard()
-        cls.wizard_obj = cls.env["sale.interco.service.invoice"]
-        cls.wizard = cls.wizard_obj.browse(action["res_id"])
-
-    @staticmethod
-    def _get_customer_tax(company, tax_description):
-        tax = (
-            company.env["account.tax"]
-            .sudo()
-            .search(
-                [
-                    ("description", "ilike", tax_description),
-                    ("company_id", "=", company.id),
-                    ("type_tax_use", "=", "sale"),
-                ],
-                limit=1,
-            )
-        )
-        assert tax
-        return tax
-
-    @staticmethod
-    def _get_supplier_tax(company, tax_description):
-        tax = (
-            company.env["account.tax"]
-            .sudo()
-            .search(
-                [
-                    ("description", "ilike", tax_description),
-                    ("company_id", "=", company.id),
-                    ("type_tax_use", "=", "purchase"),
-                ],
-                limit=1,
-            )
-        )
-        assert tax
-        return tax
-
-    @staticmethod
-    def _get_fiscal_position(company, position_name):
-        position = (
-            company.env["account.fiscal.position"]
-            .sudo()
-            .search(
-                [("name", "ilike", position_name), ("company_id", "=", company.id)],
-                limit=1,
-            )
-        )
-        assert position
-        return position
-
-    @staticmethod
-    def _set_fiscal_position(partner, company, position):
-        partner.with_context(
-            force_company=company.id
-        ).property_account_position_id = position
-
-    @classmethod
-    def _create_company(cls, name):
-        company = cls.env["res.company"].create({"name": name})
-        company.partner_id.company_id = False
-        cls.env.user.company_ids |= company
-        cls.env.user.company_id = company
-        account_chart = cls.env.ref("l10n_ca.ca_en_chart_template_en")
-        account_chart.try_loading_for_current_company()
-        return company
-
-    @classmethod
-    def _set_user_company(cls, company):
-        cls.user.sudo().write(
-            {"company_id": company.id, "company_ids": [(6, 0, [company.id])]}
-        )
+from .common import IntercoServiceCase
 
 
 class TestWizard(IntercoServiceCase):
@@ -255,10 +99,10 @@ class TestIntercoInvoices(IntercoServiceCase):
         cls.invoice = cls.invoice_line.invoice_id
 
         cls.supplier_invoice = cls.invoice.sudo().interco_supplier_invoice_id
-        cls.supplier_invoice_line = cls.supplier_invoice.invoice_line_ids
+        cls.supplier_invoice_line = cls.supplier_invoice.invoice_line_ids[0]
 
         cls.customer_invoice = cls.invoice.sudo().interco_customer_invoice_id
-        cls.customer_invoice_line = cls.customer_invoice.invoice_line_ids
+        cls.customer_invoice_line = cls.customer_invoice.invoice_line_ids[0]
 
     def test_interco_invoice_tax_amount_not_matching(self):
         self.invoice.tax_line_ids[0].amount += 0.01
@@ -302,6 +146,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert self.invoice.account_id.company_id == self.mother_company
         assert self.invoice.journal_id.company_id == self.mother_company
         assert self.invoice.amount_tax
+        assert self.invoice.user_id == self.user
 
     def test_interco_invoice_line(self):
         # The interco discount is added to the customer discount
@@ -323,7 +168,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert invoice.account_id.internal_type == "payable"
         assert invoice.account_id.company_id == self.subsidiary
         assert invoice.amount_tax
-        assert not invoice.user_id
+        assert invoice.user_id == self.user
 
     def test_interco_supplier_invoice_line(self):
         line = self.supplier_invoice_line
@@ -351,7 +196,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert invoice.account_id.company_id == self.subsidiary
         assert invoice.partner_shipping_id == self.delivery_address
         assert invoice.amount_tax
-        assert not invoice.user_id
+        assert invoice.user_id == self.user
 
     def test_interco_customer_invoice_line(self):
         line = self.customer_invoice_line
@@ -362,6 +207,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert line.discount == 10  # discount defined on sale order line
         assert line.price_unit == self.price_unit
         assert line.account_id.company_id == self.subsidiary
+        assert line.analytic_tag_ids == self.tag
 
         tax = line.invoice_line_tax_ids
         assert tax.company_id == self.subsidiary
@@ -408,3 +254,58 @@ class TestIntercoInvoices(IntercoServiceCase):
     def _open_summary_from_invoice(self, invoice):
         action = invoice.sudo(self.user).open_interco_service_summary()
         return self.wizard_obj.browse(action["res_id"])
+
+
+class TestIntercompanyAccounts(IntercoServiceCase):
+
+    def test_intercompany_revenue_account(self):
+        account = self._get_any_account(self.mother_company)
+        product = self.product.with_context(force_company=self.mother_company.id)
+        product.categ_id.intercompany_revenue_account_id = account
+
+        self.order.action_confirm()
+        self.wizard.validate()
+
+        line = self._get_interco_invoice_line()
+        assert line.account_id == account
+
+    def test_final_customer_invoice_revenue_account(self):
+        account = self._get_any_account(self.subsidiary)
+        product = self.product.with_context(force_company=self.subsidiary.id)
+        product.categ_id.intercompany_revenue_account_id = account
+
+        self.order.action_confirm()
+        self.wizard.validate()
+
+        line = self._get_final_customer_invoice_line()
+        assert line.account_id != account
+
+    def test_intercompany_expense_account(self):
+        account = self._get_any_account(self.subsidiary)
+        product = self.product.with_context(force_company=self.subsidiary.id)
+        product.categ_id.intercompany_expense_account_id = account
+
+        self.order.action_confirm()
+        self.wizard.validate()
+
+        line = self._get_interco_supplier_invoice_line()
+        assert line.account_id == account
+
+    def _get_interco_supplier_invoice_line(self):
+        invoice = self.order_line.invoice_lines.invoice_id
+        supplier_invoice = invoice.sudo().interco_supplier_invoice_id
+        return supplier_invoice.invoice_line_ids[0]
+
+    def _get_interco_invoice_line(self):
+        invoice = self.order_line.invoice_lines.invoice_id
+        return invoice.invoice_line_ids[0]
+
+    def _get_final_customer_invoice_line(self):
+        invoice = self.order_line.invoice_lines.invoice_id
+        customer_invoice = invoice.sudo().interco_customer_invoice_id
+        return customer_invoice.invoice_line_ids[0]
+
+    def _get_any_account(self, company):
+        return self.env["account.account"].sudo().search(
+            [("company_id", "=", company.id)], limit=1
+        )

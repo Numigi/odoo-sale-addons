@@ -1,12 +1,12 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import pytest
 from odoo.exceptions import ValidationError
-from .common import TestCommissionCase
+from .common import CommissionCase
 
 
-class TestCommissionCategory(TestCommissionCase):
+class TestCommissionCategory(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

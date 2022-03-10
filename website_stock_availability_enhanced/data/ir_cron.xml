@@ -1,0 +1,15 @@
+<odoo noupdate="1">
+
+    <record id="compute_availability_cron" model="ir.cron">
+        <field name="name">Update website availability on products</field>
+        <field name="model_id" ref="product.model_product_product"/>
+        <field name="state">code</field>
+        <field name="code">model.search([]).schedule_compute_availability()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+</odoo>

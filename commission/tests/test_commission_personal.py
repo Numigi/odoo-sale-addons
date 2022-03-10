@@ -1,15 +1,15 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import pytest
-from .common import TestCommissionCase
+from .common import CommissionCase
 from odoo.exceptions import AccessError, ValidationError
 from datetime import date
 from ddt import ddt, data
 
 
 @ddt
-class TestCommissionPersonal(TestCommissionCase):
+class TestCommissionPersonal(CommissionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -53,9 +53,15 @@ class TestCommissionPersonal(TestCommissionCase):
         cls.excluded_tag = cls.env["sale.order.tag"].create({"name": "Tables"})
 
     def test_compute_show_invoices(self):
+        self.target.set_confirmed_state()
         assert self.target.show_invoices
 
+    def test_compute_show_invoices__draft_state(self):
+        self.target.set_draft_state()
+        assert not self.target.show_invoices
+
     def test_compute_show_child_targets(self):
+        self.target.set_confirmed_state()
         assert not self.target.show_child_targets
 
     def test_view_invoice_lines(self):
@@ -85,6 +91,18 @@ class TestCommissionPersonal(TestCommissionCase):
         self.invoice.state = state
         invoices = self.target._get_invoices()
         assert not invoices
+
+    def test_filter_by_company__active(self):
+        self.target.category_id.filter_by_company = True
+        self.target.company_id = self._create_company(name="Other Company")
+        invoices = self.target._get_invoices()
+        assert not invoices
+
+    def test_filter_by_company__inactive(self):
+        self.target.category_id.filter_by_company = False
+        self.target.company_id = self._create_company(name="Other Company")
+        invoices = self.target._get_invoices()
+        assert invoices
 
     @data(date(2020, 5, 17), date(2020, 7, 17))
     def test_find_invoice_correct_date_range(self, correct_date):
@@ -116,9 +134,7 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_included_tag(self):
         self.category.included_tag_ids = self.included_tag
 
-        self.sale_order.so_tag_ids = (
-            self.included_tag
-        )
+        self.sale_order.so_tag_ids = self.included_tag
 
         self._compute_target()
         assert self.target.base_amount == 5000
@@ -126,9 +142,7 @@ class TestCommissionPersonal(TestCommissionCase):
     def test_excluded_tag(self):
         self.category.excluded_tag_ids = self.excluded_tag
 
-        self.sale_order.so_tag_ids = (
-            self.excluded_tag
-        )
+        self.sale_order.so_tag_ids = self.excluded_tag
 
         self._compute_target()
         assert not self.target.base_amount
@@ -201,10 +215,9 @@ class TestCommissionPersonal(TestCommissionCase):
         self.target.set_draft_state()
         assert self.target.state == "draft"
 
-    def test_compute_not_own_commission(self):
-        self.target.employee_id = self._create_employee()
+    def test_employee_can_not_compute_commissions(self):
         with pytest.raises(AccessError):
-            self._compute_target()
+            self.target.sudo(self.user).compute()
 
     def test_target_access_domain(self):
         targets = self._search_employee_targets()
@@ -216,7 +229,7 @@ class TestCommissionPersonal(TestCommissionCase):
         assert not targets
 
     def _compute_target(self):
-        self.target.sudo(self.user).compute()
+        self.target.sudo(self.manager_user).compute()
 
     def _search_employee_targets(self):
         domain = (
@@ -232,7 +245,10 @@ class TestCommissionPersonal(TestCommissionCase):
             }
         )
 
-    def _create_sale_order_line(self, sale_order,):
+    def _create_sale_order_line(
+        self,
+        sale_order,
+    ):
         return self.env["sale.order.line"].create(
             {
                 "product_id": self.product.id,

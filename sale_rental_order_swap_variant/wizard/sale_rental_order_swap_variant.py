@@ -2,32 +2,38 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
 
 
 class SaleRentalOrderSwapVariant(models.TransientModel):
     _name = "sale.rental.order.swap.variant"
     _description = "Sale Rental Order Swap Variant"
 
-    active_product_id = fields.Many2one("product.product", readonly=True, required=True)
+    sale_line_id = fields.Many2one("sale.order.line")
     product_id = fields.Many2one("product.product", required=True)
+    quantity = fields.Float(required=True)
 
-    @api.onchange("active_product_id")
-    def _onchange_active_product_id(self):
+    @api.onchange("sale_line_id")
+    def _onchange_sale_line_id(self):
+        self.product_id = self.sale_line_id.product_id
+        self.quantity = self.sale_line_id.product_uom_qty
         return {
             "domain": {
-                "product_id": [
-                    ("product_tmpl_id", "=", self.active_product_id.product_tmpl_id.id),
-                    ("id", "!=", self.active_product_id.id),
-                ]
+                "product_id": self._get_product_domain(),
             }
         }
 
-    @api.multi
+    def _get_product_domain(self):
+        active_variant = self.sale_line_id.product_id
+        if self.sale_line_id.allow_change_product:
+            return [
+                ("id", "!=", active_variant.id),
+            ]
+        else:
+            return [
+                ("product_tmpl_id", "=", active_variant.product_tmpl_id.id),
+                ("id", "!=", active_variant.id),
+            ]
+
     def change_variant(self):
-        self.ensure_one()
-        context = self._context
-        if context.get("active_model") != "sale.order.line":
-            raise ValidationError(_("Cannot find any active sale order line"))
-        sale_line = self.env["sale.order.line"].browse(context["active_id"])
-        sale_line.change_variant(self.product_id)
+        line = self.sale_line_id
+        line.change_variant(self.product_id, self.quantity)

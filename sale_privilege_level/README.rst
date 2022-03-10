@@ -1,5 +1,5 @@
 Sale Privilege Level
-=====================
+====================
 This module adds privilege levels on partners.
 
 .. contents:: Table of Contents
