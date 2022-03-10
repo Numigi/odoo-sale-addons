@@ -1,0 +1,89 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_rental_app
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-28 09:12+0000\n"
+"PO-Revision-Date: 2022-02-28 09:12+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_rental_app
+#: model:ir.ui.menu,name:sale_rental_app.rental_analysis_menu
+msgid "Analysis"
+msgstr "Analyse"
+
+#. module: sale_rental_app
+#: model:ir.ui.menu,name:sale_rental_app.rental_order_menu
+msgid "Orders"
+msgstr "Commandes"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.action_rental_orders_to_invoice
+#: model:ir.ui.menu,name:sale_rental_app.rental_order_to_invoice_menu
+msgid "Orders to Invoice"
+msgstr "Commandes à facturer"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.product_product_action
+#: model:ir.ui.menu,name:sale_rental_app.rental_product_product_menu
+msgid "Product Variants"
+msgstr "Variantes d'article"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.product_template_action
+#: model:ir.ui.menu,name:sale_rental_app.rental_product_menu
+#: model:ir.ui.menu,name:sale_rental_app.rental_product_template_menu
+msgid "Products"
+msgstr "Articles"
+
+#. module: sale_rental_app
+#: model:ir.ui.menu,name:sale_rental_app.rental_quotation_menu
+msgid "Quotations"
+msgstr "Devis"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.action_rental_orders
+msgid "Rental Orders"
+msgstr "Commandes de location"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.action_rental_quotations
+msgid "Rental Quotations"
+msgstr "Soumissions de location"
+
+#. module: sale_rental_app
+#: model:ir.ui.menu,name:sale_rental_app.rental_analysis_rental_menu
+#: model:ir.ui.menu,name:sale_rental_app.rental_menu
+#: model:ir.ui.menu,name:sale_rental_app.rental_menu_root
+msgid "Rentals"
+msgstr "Locations"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.action_rental_report_all
+msgid "Rentals Analysis"
+msgstr "Analyse des locations"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.stock_quant_rented_action
+#: model:ir.ui.menu,name:sale_rental_app.rental_product_rented_unit_menu
+msgid "Rented Stock"
+msgstr "Stock loué"
+
+#. module: sale_rental_app
+#: model:ir.actions.act_window,name:sale_rental_app.stock_quant_available_action
+#: model:ir.ui.menu,name:sale_rental_app.rental_product_stock_available_menu
+msgid "Stock Available for Rental"
+msgstr "Stock disponible à la location"
+
+#. module: sale_rental_app
+#: model:ir.ui.menu,name:sale_rental_app.rental_to_invoice_menu
+msgid "To Invoice"
+msgstr "À facturer"

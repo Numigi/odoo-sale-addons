@@ -2,22 +2,17 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    "name": "Sale Rental",
+    "name": "Sale Rental Portal",
     "version": "1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Sales",
-    "summary": "Allow to rent equipments",
-    "depends": ["sale_kit", "sale_stock", "stock_rental"],
+    "summary": "Inherit portal view",
+    "depends": ["sale_rental", "portal"],
     "data": [
-        "data/ir_cron.xml",
-        "views/sale_order.xml",
-        "views/product_template.xml",
-        "views/menu.xml",
-        "views/res_config_settings.xml",
-        "report/sale_report_views.xml",
+        "views/sale_portal_templates.xml",
     ],
     "installable": True,
 }
