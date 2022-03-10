@@ -207,6 +207,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         assert line.discount == 10  # discount defined on sale order line
         assert line.price_unit == self.price_unit
         assert line.account_id.company_id == self.subsidiary
+        assert line.analytic_tag_ids == self.tag
 
         tax = line.invoice_line_tax_ids
         assert tax.company_id == self.subsidiary
