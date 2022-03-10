@@ -3,6 +3,7 @@
 
 from collections import defaultdict
 from odoo import api, fields, models
+from odoo.addons import decimal_precision as dp
 
 
 class SaleOrderLine(models.Model):
@@ -18,6 +19,17 @@ class SaleOrderLine(models.Model):
     kit_initialized = fields.Boolean()
     available_kit_references = fields.Char(related="order_id.available_kit_references")
     next_kit_reference = fields.Char(related="order_id.next_kit_reference")
+    qty_delivered_method = fields.Selection(selection_add=[("kit", "Kit")])
+    kit_previous_quantity = fields.Float(
+        digits=dp.get_precision("Product Unit of Measure")
+    )
+
+    kit_line_ids = fields.One2many(
+        "sale.order.line", "kit_id", "Components", readonly=True, copy=False
+    )
+    kit_id = fields.Many2one(
+        "sale.order.line", "Kit", store=True, compute="_compute_kit_id", copy=False
+    )
 
     @api.onchange("product_id")
     def product_id_change(self):
@@ -25,8 +37,16 @@ class SaleOrderLine(models.Model):
         self.is_kit = self.product_id.is_kit
         return res
 
+    @api.onchange("product_uom", "product_uom_qty")
+    def product_uom_change(self):
+        super().product_uom_change()
+
+        if self.is_kit:
+            self.price_unit = 0
+
     def initialize_kit(self):
         self.kit_reference = self.next_kit_reference
+        self.kit_previous_quantity = self.product_uom_qty
         self.add_kit_components()
         self.set_kit_line_readonly_conditions()
         self.kit_initialized = True
@@ -35,7 +55,7 @@ class SaleOrderLine(models.Model):
         self.handle_widget_invisible = False
         self.trash_widget_invisible = False
         self.product_readonly = True
-        self.product_uom_qty_readonly = True
+        self.product_uom_qty_readonly = False
         self.product_uom_readonly = True
         self.kit_reference_readonly = True
 
@@ -49,9 +69,15 @@ class SaleOrderLine(models.Model):
         new_line.kit_reference = self.kit_reference
         new_line.is_kit_component = True
         new_line.is_important_kit_component = kit_line.is_important
+        self._set_kit_component_display_type(new_line, kit_line)
         self._set_kit_component_product_and_quantity(new_line, kit_line)
         self._set_kit_component_readonly_conditions(new_line, kit_line)
+        self._set_kit_component_name(new_line, kit_line)
+        self._set_kit_component_discount(new_line)
         return new_line
+
+    def _set_kit_component_display_type(self, new_line, kit_line):
+        new_line.display_type = kit_line.display_type
 
     def _set_kit_component_product_and_quantity(self, new_line, kit_line):
         new_line.set_product_and_quantity(
@@ -60,6 +86,15 @@ class SaleOrderLine(models.Model):
             uom=kit_line.uom_id,
             qty=kit_line.quantity,
         )
+
+    def _set_kit_component_name(self, new_line, kit_line):
+        if kit_line.name:
+            new_line.name = kit_line.name
+
+    def _set_kit_component_discount(self, new_line):
+        discount = self.product_id.kit_discount
+        if discount:
+            new_line.discount = discount * 100
 
     def set_product_and_quantity(self, order, product, uom, qty):
         self.product_id = product
@@ -72,12 +107,32 @@ class SaleOrderLine(models.Model):
 
     def _set_kit_component_readonly_conditions(self, new_line, kit_line):
         is_important = kit_line.is_important
-        new_line.handle_widget_invisible = is_important
+        new_line.handle_widget_invisible = False
         new_line.trash_widget_invisible = is_important
         new_line.product_readonly = is_important
         new_line.product_uom_qty_readonly = is_important
         new_line.product_uom_readonly = is_important
         new_line.kit_reference_readonly = is_important
+
+    def _update_kit_component_quantities(self):
+        factor = self._get_kit_components_quantity_factor()
+
+        if factor != 1:
+            self._apply_kit_components_quantity_factor(factor)
+
+        self.kit_previous_quantity = self.product_uom_qty
+
+    def _get_kit_components_quantity_factor(self):
+        return (
+            self.product_uom_qty / self.kit_previous_quantity
+            if self.kit_previous_quantity
+            else 1
+        )
+
+    def _apply_kit_components_quantity_factor(self, factor):
+        for line in self._get_kit_component_lines():
+            line.product_uom_qty *= factor
+            line.product_uom_change()
 
     def recompute_sequences(self):
         next_sequence = 1
@@ -101,26 +156,6 @@ class SaleOrderLine(models.Model):
     def sorted_by_kit_sequence(self):
         return self.sorted(key=lambda l: l.kit_sequence)
 
-    def sorted_by_importance(self):
-        return self.sorted(key=lambda l: 0 if l.is_important_kit_component else 1)
-
-
-class SaleOrderLineWithLinkBetweenLines(models.Model):
-
-    _inherit = "sale.order.line"
-
-    kit_line_ids = fields.One2many(
-        "sale.order.line", "kit_id", "Components", readonly=True, copy=False
-    )
-    kit_id = fields.Many2one(
-        "sale.order.line", "Kit", store=True, compute="_compute_kit_id", copy=False
-    )
-
-    @api.depends("kit_reference")
-    def _compute_kit_id(self):
-        for line in self:
-            line.kit_id = line._get_kit_line()
-
     def _get_kit_line(self):
         if self.is_kit or not self.kit_reference:
             return None
@@ -129,13 +164,15 @@ class SaleOrderLineWithLinkBetweenLines(models.Model):
             lambda l: l.is_kit and l.kit_reference == self.kit_reference
         )[0:1]
 
+    def _get_kit_component_lines(self):
+        return self.order_id.order_line.filtered(
+            lambda l: not l.is_kit and l.kit_reference == self.kit_reference
+        )
 
-class SaleOrderLineDeliveredQty(models.Model):
-    """Add the logic related to the delivered qty of a kit."""
-
-    _inherit = "sale.order.line"
-
-    qty_delivered_method = fields.Selection(selection_add=[("kit", "Kit")])
+    @api.depends("kit_reference")
+    def _compute_kit_id(self):
+        for line in self:
+            line.kit_id = line._get_kit_line()
 
     @api.depends("is_kit")
     def _compute_qty_delivered_method(self):
@@ -145,7 +182,7 @@ class SaleOrderLineDeliveredQty(models.Model):
         )
         kits.update({"qty_delivered_method": "kit"})
 
-    @api.depends("kit_line_ids", "kit_line_ids.qty_delivered")
+    @api.depends("product_uom_qty", "kit_line_ids", "kit_line_ids.qty_delivered")
     def _compute_qty_delivered(self):
         super()._compute_qty_delivered()
         kit_lines = self.filtered(lambda l: l.qty_delivered_method == "kit")
@@ -156,7 +193,18 @@ class SaleOrderLineDeliveredQty(models.Model):
             line.qty_delivered = line._get_kit_qty_delivered()
 
     def _get_kit_qty_delivered(self):
-        important_components = self.kit_line_ids.filtered(
-            lambda l: l.is_important_kit_component
-        )
-        return all(l.qty_delivered >= l.product_uom_qty for l in important_components)
+        ratio = self._get_kit_qty_delivered_ratio()
+        return ratio * self.product_uom_qty
+
+    def _get_kit_qty_delivered_ratio(self):
+        component = self._get_first_important_component()
+
+        if component.product_uom_qty:
+            return component.qty_delivered / component.product_uom_qty
+        elif component.qty_delivered:
+            return 1
+        else:
+            return 0
+
+    def _get_first_important_component(self):
+        return self.kit_line_ids.filtered("is_important_kit_component")[:1]

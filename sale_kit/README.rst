@@ -62,9 +62,7 @@ You may neither change the product, nor the quantity:
 
 .. image:: static/description/important_component_fields.png
 
-You may not move the line:
-
-.. image:: static/description/important_component_handle.png
+You may move the line, but you may not move it to another kit.
 
 Non-Important Components
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -101,6 +99,80 @@ To add a component to a kit, you have to select the proper ``Kit Reference``.
 .. image:: static/description/kit_reference.png
 
 .. image:: static/description/kit_with_new_component.png
+
+Custom Quantity
+---------------
+Since version ``1.1.0`` of the module, it is possible to change the quantity on a kit.
+
+.. image:: static/description/kit_quantity_editable.png
+
+When changing the quantity on the ``Kit`` line, component quantities are updated.
+
+.. image:: static/description/kit_quantity_editable_2.png
+
+Behind the scene, the quantities on each line are multipled by a factor determined
+by the previous kit quantitiy and the new kit quantity.
+
+If the quantity was previously 2 and the new quantity is 3, quantities on components are multiplied by 1.5.
+
+.. image:: static/description/kit_quantity_editable_3.png
+
+..
+
+    Watch out if you manually change the quantities on a component and then change the quantity on the kit,
+    you may end up with odd quantities on the component.
+
+Delivered Quantities
+--------------------
+A kit is a product of type ``Service``.
+
+It is not moved through inventory. Only the components are.
+
+However, the delivered quantity of a kit is based on the delivered quantity of
+its first important component (in order of sequence).
+
+.. image:: static/description/kit_delivered_quantity.png
+
+In the above example, the first important component (``Component A``) has 3 units delivered over 4.
+This component is delivered at 75%.
+
+The delivered quantity on the kit is therefore:
+
+..
+
+    2.000 x 75% = 1.500
+
+Sale Prices
+-----------
+Since version ``1.1.0`` of the module, the unit prices are only defined on the components.
+The kit itself has no price.
+
+.. image:: static/description/kit_price.png
+
+On the kit, you may define a global discount to apply to the components.
+
+.. image:: static/description/kit_price_discount.png
+
+On the sale order, this discount is applied by default on each component.
+
+.. image:: static/description/kit_components_with_discount.png
+
+..
+
+    If a price-excluded discount was defined on a pricelist item
+    for one of the component, the discount defined on the kit is prioritized
+    by the system.
+
+Component Descriptions
+----------------------
+Since version ``1.1.0`` of the module, you may define custom descriptions for
+the components of a kit.
+
+.. image:: static/description/kit_component_custom_description.png
+
+If the description is let empty, the standard behavior of Odoo is applied.
+
+.. image:: static/description/sale_order_with_custom_descriptions.png
 
 Contributors
 ------------

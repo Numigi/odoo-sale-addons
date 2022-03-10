@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <form position="inside">
                 <field name="is_interco_service" invisible="1"/>
+                <field name="interco_service_type" invisible="1"/>
             </form>
             <div name="button_box" position="inside">
                 <button name="open_interco_service_summary"
@@ -18,6 +19,14 @@
                     attrs="{'invisible': [('is_interco_service', '=', False)]}"
                     />
             </div>
+            <xpath expr="//field[@name='invoice_line_ids']//tree" position="inside">
+                <field name="interco_service_type" invisible="1"/>
+            </xpath>
+            <field name="invoice_line_ids" position="attributes">
+                <attribute name="context" operation="python_dict" key="default_interco_service_type">
+                    interco_service_type
+                </attribute>
+            </field>
         </field>
     </record>
 
@@ -28,6 +37,7 @@
         <field name="arch" type="xml">
             <form position="inside">
                 <field name="is_interco_service" invisible="1"/>
+                <field name="interco_service_type" invisible="1"/>
             </form>
             <xpath expr="//sheet/div" position="before">
                 <div class="oe_button_box" name="button_box">
@@ -40,6 +50,14 @@
                         />
                 </div>
             </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//tree" position="inside">
+                <field name="interco_service_type" invisible="1"/>
+            </xpath>
+            <field name="invoice_line_ids" position="attributes">
+                <attribute name="context" operation="python_dict" key="default_interco_service_type">
+                    interco_service_type
+                </attribute>
+            </field>
         </field>
     </record>
 

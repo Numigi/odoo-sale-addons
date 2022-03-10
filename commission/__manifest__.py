@@ -3,7 +3,7 @@
 
 {
     "name": "Commission",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -17,6 +17,7 @@
         "base_extended_security",
         "sale_order_tag",
         "sale_stock",
+        "sales_team",
     ],
     "data": [
         "security/res_groups.xml",

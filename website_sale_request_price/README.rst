@@ -2,6 +2,8 @@ Website Sale Request Price
 ==========================
 - This module adds an option to hide the price of a product when it reaches a threshold and allows the user to request for price through a form that will send an email to the sales team and create a CRM lead.
 
+.. contents:: Table of Contents
+
 Module flow
 -----------
 
@@ -78,6 +80,21 @@ Configuration
 - Configuration in Website section of General Settings
 
 .. image:: static/description/website_sale_request_price_config.png
+
+Warning Message
+---------------
+Since version ``1.3.0`` of the module, it is possible to define an optional warning message.
+
+.. image:: static/description/warning_message_setting.png
+
+This message will be displayed inside the price request window.
+
+.. image:: static/description/warning_message_website.png
+
+The message is defined per company and is translatable.
+
+In order to translate the message, you need to reopen the website settings
+in the proper language.
 
 Roadmap
 --------
