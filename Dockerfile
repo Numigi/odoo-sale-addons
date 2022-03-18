@@ -55,6 +55,7 @@ COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
 COPY sale_privilege_level_delivery /mnt/extra-addons/sale_privilege_level_delivery
 COPY sale_privilege_level_payment /mnt/extra-addons/sale_privilege_level_payment
 COPY sale_privilege_level_pricelist /mnt/extra-addons/sale_privilege_level_pricelist
+COPY sale_privilege_level_rental_pricelist /mnt/extra-addons/sale_privilege_level_rental_pricelist
 COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
