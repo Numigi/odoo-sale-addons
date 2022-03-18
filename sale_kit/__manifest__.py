@@ -11,6 +11,7 @@
     "category": "Sales",
     "summary": "Allow to use kits on sale orders",
     "depends": [
+        "base_view_inheritance_extension",
         "product_kit",
         "sale_order_line_readonly_conditions",
     ],
