@@ -14,6 +14,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/sale_privilege_level.xml",
+        "views/res_partner.xml",
     ],
     "installable": True,
 }

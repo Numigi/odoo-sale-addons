@@ -6,11 +6,12 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="product.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <field name="property_product_pricelist" position="after">
-                <field name="property_rental_pricelist_id"
-                    attrs="{'invisible': [('is_company','=',False), ('parent_id','!=',False)]}"
-                    string="Rental Pricelist"
-                    />
+            <field name="property_rental_pricelist_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="property_rental_pricelist_id" position="after">
+                <field name="rental_pricelist_id"
+                    attrs="{'invisible': [('is_company', '=', False), ('parent_id', '!=', False)]}"/>
             </field>
         </field>
     </record>

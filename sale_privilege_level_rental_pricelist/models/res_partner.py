@@ -1,6 +1,7 @@
 # © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import threading
 from odoo import api, fields, models
 
 
@@ -8,15 +9,13 @@ class ResPartner(models.Model):
 
     _inherit = "res.partner"
 
-    property_rental_pricelist = fields.Many2one(
-        compute="_compute_property_rental_pricelist",
-        company_dependent=False,
-    )
-
     @api.depends("privilege_level_id", "country_id")
-    def _compute_property_rental_pricelist(self):
+    def _compute_rental_pricelist(self):
+        if _is_testing_other_module(self._context):
+            return super()._compute_rental_pricelist()
+
         for partner in self:
-            partner.property_rental_pricelist = partner.sudo()._get_rental_pricelist()
+            partner.rental_pricelist_id = partner.sudo()._get_rental_pricelist()
 
     def _get_rental_pricelist(self):
         privilege_level = self.get_privilege_level()
@@ -26,3 +25,9 @@ class ResPartner(models.Model):
             .filtered(lambda e: e.matches_partner(self))
         )
         return pricelist_entries.mapped("pricelist_id")[:1]
+
+
+def _is_testing_other_module(context):
+    return getattr(threading.currentThread(), "testing", False) and not context.get(
+        "testing_sale_privilege_level_pricelist"
+    )

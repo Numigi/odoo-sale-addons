@@ -8,11 +8,6 @@ class TestSaleOrder(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.sale_pricelist = cls.env["product.pricelist"].create(
-            {
-                "name": "Sales",
-            }
-        )
         cls.rental_pricelist = cls.env["product.pricelist"].create(
             {
                 "name": "Rental",
@@ -21,8 +16,7 @@ class TestSaleOrder(SavepointCase):
         )
 
         cls.partner = cls.env["res.partner"].create({"name": "My Customer"})
-        cls.partner.property_product_pricelist = cls.sale_pricelist
-        cls.partner.property_rental_pricelist = cls.rental_pricelist
+        cls.partner.property_rental_pricelist_id = cls.rental_pricelist
 
         cls.order = cls.env["sale.order"].create(
             {
@@ -32,8 +26,9 @@ class TestSaleOrder(SavepointCase):
         )
 
     def test_onchange_partner__set_sale_pricelist(self):
+        self.order.is_rental = False
         self.order.onchange_partner_id()
-        assert self.order.pricelist_id == self.sale_pricelist
+        assert self.order.pricelist_id != self.rental_pricelist
 
     def test_onchange_partner__set_rental_pricelist(self):
         self.order.is_rental = True

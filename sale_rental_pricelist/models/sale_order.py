@@ -11,6 +11,5 @@ class SaleOrder(models.Model):
     @api.onchange("is_rental", "partner_id")
     def onchange_partner_id(self):
         super().onchange_partner_id()
-
         if self.is_rental:
-            self.pricelist_id = self.partner_id.property_rental_pricelist
+            self.pricelist_id = self.partner_id.rental_pricelist_id

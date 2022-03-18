@@ -23,18 +23,18 @@ class TestSalePrivilegeLevelPricelist(SalePrivilegeLevelPricelistCase):
 
     def test_country_with_specific_pricelist(self):
         self.partner.country_id = self.canada
-        assert self.partner.property_rental_pricelist == self.pricelist_canada
+        assert self.partner.rental_pricelist_id == self.pricelist_canada
 
         self.partner.country_id = self.france
-        assert self.partner.property_rental_pricelist == self.pricelist_france
+        assert self.partner.rental_pricelist_id == self.pricelist_france
 
     def test_country_with_no_specific_pricelist(self):
         self.partner.country_id = self.belgium
-        assert self.partner.property_rental_pricelist == self.pricelist_world
+        assert self.partner.rental_pricelist_id == self.pricelist_world
 
     def test_no_country(self):
         self.partner.country_id = False
-        assert self.partner.property_rental_pricelist == self.pricelist_world
+        assert self.partner.rental_pricelist_id == self.pricelist_world
 
     def test_pricelist_sequence(self):
         self.partner.country_id = self.france
@@ -42,4 +42,4 @@ class TestSalePrivilegeLevelPricelist(SalePrivilegeLevelPricelistCase):
             lambda l: l.pricelist_id == self.pricelist_world
         )
         world_entry.sequence = -1
-        assert self.partner.property_rental_pricelist == self.pricelist_world
+        assert self.partner.rental_pricelist_id == self.pricelist_world

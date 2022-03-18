@@ -14,12 +14,15 @@
                 <field name="rental_pricelist_ids" colspan="2" nolabel="1">
                     <tree editable="bottom">
                         <field name="sequence" widget="handle"/>
-                        <field name="pricelist_id"/>
+                        <field name="pricelist_id" domain="[('rental', '=', True)]"/>
                         <field name="country_group_ids" widget="many2many_tags"/>
                         <field name="company_id" groups="base.group_multi_company"/>
                     </tree>
                 </field>
             </field>
+            <xpath expr="//field[@name='pricelist_ids']//field[@name='pricelist_id']" position="attributes">
+                <attribute name="domain">[('rental', '=', False)]</attribute>
+            </xpath>
         </field>
     </record>
 
