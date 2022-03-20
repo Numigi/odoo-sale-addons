@@ -18,16 +18,15 @@ class SaleOrderLine(models.Model):
     rental_date_to_editable = fields.Boolean()
     is_rental_service = fields.Boolean()
 
-    @api.onchange('is_rental_order')
+    @api.onchange("is_rental_order")
     def is_rental_order_change(self):
-        if self.is_rental_order is True:
-            return {
-                'domain': {'product_id': [('can_be_rented', '=', True)]}
+        return {
+            "domain": {
+                "product_id": [("can_be_rented", "=", True)]
+                if self.is_rental_order
+                else [("can_be_rented", "=", False)]
             }
-        else :
-            return {
-                'domain': {'product_id': [('can_be_rented', '=', False)]}
-            }
+        }
 
     @api.onchange("product_id")
     def product_id_change(self):
