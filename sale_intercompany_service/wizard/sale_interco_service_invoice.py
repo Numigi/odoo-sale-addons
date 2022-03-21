@@ -365,4 +365,12 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             "price_unit": invoice_line.price_unit,
             "discount": invoice_line.sale_line_ids[:1].discount,
             "account_id": account.id,
+            "analytic_tag_ids": [
+                (4, t.id) for t in self._get_customer_analytic_tags(invoice_line)
+            ],
         }
+
+    def _get_customer_analytic_tags(self, invoice_line):
+        return invoice_line.analytic_tag_ids.filtered(
+            lambda t: not t.company_id
+        )

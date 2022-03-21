@@ -50,6 +50,8 @@ class IntercoServiceCase(SavepointCase):
         cls.product.taxes_id |= cls._get_customer_tax(cls.subsidiary, "HST 13%")
         cls.product.supplier_taxes_id = cls._get_supplier_tax(cls.subsidiary, "HST 13%")
 
+        cls.tag = cls.env["account.analytic.tag"].create({"name": "My Tag"})
+
         cls.user = cls.env.ref("base.user_demo")
         cls.user.groups_id = cls.env.ref("sales_team.group_sale_salesman_all_leads")
         cls._set_user_company(cls.mother_company)
@@ -65,6 +67,7 @@ class IntercoServiceCase(SavepointCase):
             "product_uom": cls.product.uom_id.id,
             "product_uom_qty": cls.quantity,
             "price_unit": cls.price_unit,
+            "analytic_tag_ids": [(4, cls.tag.id)],
         }
         note_line_vals = {
             "display_type": "line_note",
