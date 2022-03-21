@@ -68,6 +68,7 @@ class SaleRentalPortal(CustomerPortal):
                 ("create_date", ">", date_begin),
                 ("create_date", "<=", date_end),
             ]
+
         is_rental = kw.get("rental") and int(kw.get("rental")) == 1
         values["page_name"] = "rental" if is_rental else "order"
         domain += [("is_rental", "=", True if is_rental else False)]
