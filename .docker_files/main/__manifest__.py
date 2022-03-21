@@ -58,6 +58,7 @@
         "sale_privilege_level_website",
         "sale_rental",
         "sale_rental_order_swap_variant",
+        "sale_rental_portal",
         "sale_rental_pricelist",
         "sale_stock_move_no_merge",
         "sale_timesheet_invoicing_period",
