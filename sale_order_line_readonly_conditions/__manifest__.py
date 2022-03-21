@@ -12,9 +12,6 @@
     "summary": "Adds predicates to make fields readonly on a sale order line.",
     "depends": [
         "sale",
-        "web_trash_condition",
-        "web_handle_condition",
-        "base_view_inheritance_extension",
     ],
     "data": ["views/sale_order.xml"],
     "installable": True,
