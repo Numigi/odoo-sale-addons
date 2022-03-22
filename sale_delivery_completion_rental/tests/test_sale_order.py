@@ -46,11 +46,10 @@ class TestSaleOrder(SavepointCase):
 
     def test_partial_returned(self):
         rental_picking = self.so.picking_ids.filtered(
-            lambda r: any(
-                r.state not in ("done", "cancel")
-                and r.move_lines.mapped("location_id.is_rental_customer_location")
-            )
+            lambda r: r.state not in ("done", "cancel")
+            and any(r.move_lines.mapped("location_id.is_rental_customer_location"))
         )
+        
         rental_picking.move_ids_without_package.write({"quantity_done": 10})
         rental_picking.button_validate()
         rental_picking.move_ids_without_package._action_done()
@@ -58,11 +57,10 @@ class TestSaleOrder(SavepointCase):
 
     def test_fully_returned(self):
         rental_picking = self.so.picking_ids.filtered(
-            lambda r: any(
-                r.state not in ("done", "cancel")
-                and r.move_lines.mapped("location_id.is_rental_customer_location")
-            )
+            lambda r: r.state not in ("done", "cancel")
+            and any(r.move_lines.mapped("location_id.is_rental_customer_location"))
         )
+        
         rental_picking.move_ids_without_package.write({"quantity_done": 100})
         rental_picking.button_validate()
         assert self.so.return_rate == "100%"

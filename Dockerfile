@@ -20,6 +20,7 @@ COPY commission /mnt/extra-addons/commission
 COPY commission_intercompany_service /mnt/extra-addons/commission_intercompany_service
 COPY commission_payroll_preparation /mnt/extra-addons/commission_payroll_preparation
 COPY commission_prorata /mnt/extra-addons/commission_prorata
+COPY contract_invoice_offset /mnt/extra-addons/contract_invoice_offset
 COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
 COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
@@ -43,6 +44,7 @@ COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
+COPY sale_order_available_qty_popover_rental /mnt/extra-addons/sale_order_available_qty_popover_rental
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
@@ -55,9 +57,12 @@ COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
 COPY sale_privilege_level_delivery /mnt/extra-addons/sale_privilege_level_delivery
 COPY sale_privilege_level_payment /mnt/extra-addons/sale_privilege_level_payment
 COPY sale_privilege_level_pricelist /mnt/extra-addons/sale_privilege_level_pricelist
+COPY sale_privilege_level_rental_pricelist /mnt/extra-addons/sale_privilege_level_rental_pricelist
 COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
+COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
+COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_timesheet_invoicing_period /mnt/extra-addons/sale_timesheet_invoicing_period
 COPY sale_warranty /mnt/extra-addons/sale_warranty
