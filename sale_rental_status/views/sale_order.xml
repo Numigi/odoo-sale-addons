@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_quotation_tree" model="ir.ui.view">
+        <field name="name">Sale Quotation List: add rental status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="rental_status"/>
+            </field>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-success">rental_status == 'rented'</attribute>
+                <attribute name="decoration-warning">rental_status in ('partially_delivered', 'delivered')</attribute>
+                <attribute name="decoration-it">rental_status in ('partially_delivered','partially_returned')</attribute>
+                <attribute name="decoration-info">rental_status in ('partially_returned', 'returned')</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_tree" model="ir.ui.view">
+        <field name="name">Sale Order List: add rental status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="invoice_status" position="after">
+                <field name="rental_status"/>
+            </field>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-success">rental_status == 'rented'</attribute>
+                <attribute name="decoration-warning">rental_status in ('partially_delivered', 'delivered')</attribute>
+                <attribute name="decoration-it">rental_status in ('partially_delivered','partially_returned')</attribute>
+                <attribute name="decoration-info">rental_status in ('partially_returned', 'returned')</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">Sale Order Form: add rental status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="before">
+                <label for="rental_status" string=""/>
+                <div>
+                    <field name="rental_status"
+                           class="badge badge-pill"
+                           style="color: #FFFFFF; background-color: #28a744; outline-color: #28a744; outline-style: solid;"
+                           attrs="{'invisible': [('rental_status', '!=', 'rented')]}"
+                    />
+                    <field name="rental_status"
+                           class="badge badge-pill"
+                           style="color: #ef8d22; background-color: #FFFFFF; outline-color: #ef8d22; outline-style: solid;"
+                           attrs="{'invisible': [('rental_status', '!=', 'partially_delivered')]}"
+                    />
+                    <field name="rental_status"
+                           class="badge badge-pill"
+                           style="color: #FFFFFF; background-color: #ef8d22; outline-color: #ef8d22; outline-style: solid;"
+                           attrs="{'invisible': [('rental_status', '!=', 'delivered')]}"
+                    />
+                    <field name="rental_status"
+                           class="badge badge-pill"
+                           style="color: #0c7cba; background-color: #FFFFFF; outline-color: #0c7cba; outline-style: solid;"
+                           attrs="{'invisible': [('rental_status', '!=', 'partially_returned')]}"
+                    />
+                    <field name="rental_status"
+                           class="badge badge-pill"
+                           style="color: #FFFFFF; background-color: #0c7cba; outline-color: #0c7cba;"
+                           attrs="{'invisible': [('rental_status', '!=', 'returned')]}"
+                    />
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="sale_order_kanban" model="ir.ui.view">
+        <field name="name">Sale Order Kanban: add rental status</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sale_order_kanban"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="rental_status"/>
+            </field>
+            <xpath expr="//div[hasclass('o_kanban_record_top','mb16')]" position="after">
+                <div name="rental_status" class="o_kanban_record_body" style="display: flex; justify-content: flex-end">
+                    <span class="badge badge-pill"
+                          t-att-style="record.rental_status.raw_value === 'rented' ? 'color: #FFFFFF; background-color: #28a744; outline-color: #28a744; outline-style: solid;' :
+                              ( record.rental_status.raw_value === 'partially_delivered' ? 'color: #ef8d22; background-color: #FFFFFF; outline-color: #ef8d22; outline-style: solid;' :
+                              ( record.rental_status.raw_value === 'delivered' ? 'color: #FFFFFF; background-color: #ef8d22; outline-color: #ef8d22; outline-style: solid;' :
+                              ( record.rental_status.raw_value === 'partially_returned' ? 'color: #0c7cba; background-color: #FFFFFF; outline-color: #0c7cba; outline-style: solid;' :
+                              ( record.rental_status.raw_value === 'returned' ? 'color: #FFFFFF; background-color: #0c7cba; outline-color: #0c7cba; outline-style: solid;' : '' ))))
+                          "
+                    >
+                        <field name="rental_status"/>
+                    </span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_search" model="ir.ui.view">
+        <field name="name">Sale Order Search: add rental status filter</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <separator/>
+                <filter name="rented" string="Rented" domain="[('rental_status', '=', 'rented')]"/>
+                <filter name="partially_delivered" string="Partially Delivered" domain="[('rental_status', '=', 'partially_delivered')]"/>
+                <filter name="delivered" string="Delivered" domain="[('rental_status', '=', 'delivered')]"/>
+                <filter name="partially_returned" string="Partially Returned" domain="[('rental_status', '=', 'partially_returned')]"/>
+                <filter name="returned" string="Returned" domain="[('rental_status', '=', 'returned')]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
