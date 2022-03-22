@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="lead_form" model="ir.ui.view">
+        <field name="name">CRM Lead: add Territories</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <field name="fsa_id" invisible="1"/>
+                <field name="territory_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="opportunity_form" model="ir.ui.view">
+        <field name="name">CRM Opportunity: add Territories</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <field name="fsa_id" invisible="1"/>
+                <field name="territory_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

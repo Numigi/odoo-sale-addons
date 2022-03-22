@@ -45,6 +45,12 @@ class SaleOrder(models.Model):
             line._compute_tax_id()
 
     @api.onchange("order_line")
+    def update_kit_component_quantities(self):
+        kits = self.order_line.filtered(lambda l: l.is_kit and l.product_uom_qty)
+        for kit in kits:
+            kit._update_kit_component_quantities()
+
+    @api.onchange("order_line")
     def unlink_dangling_kit_components(self):
         kits = self.get_kits_per_reference()
         dangling_lines = self.order_line.filtered(
@@ -66,11 +72,7 @@ class SaleOrder(models.Model):
 
         kits.update({"kit_sequence": 0})
 
-        sorted_components = (
-            components.sorted_by_sequence()
-            .sorted_by_kit_sequence()
-            .sorted_by_importance()
-        )
+        sorted_components = components.sorted_by_sequence().sorted_by_kit_sequence()
         sorted_components.recompute_kit_sequences(kits)
 
         all_lines = kits | components | other_lines

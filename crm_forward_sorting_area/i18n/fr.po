@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* forward_sorting_area
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-12 15:04+0000\n"
+"PO-Revision-Date: 2022-01-12 10:04-0500\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: crm_forward_sorting_area
+#: model:ir.model.fields,field_description:crm_forward_sorting_area.field_crm_lead__fsa_id
+msgid "FSA"
+msgstr "RTA"
+
+#. module: crm_forward_sorting_area
+#: model:ir.model,name:crm_forward_sorting_area.model_forward_sortation_area
+msgid "Forward Sorting Area"
+msgstr "Régions de tri d'acheminement"
+
+#. module: crm_forward_sorting_area
+#: model:ir.model,name:crm_forward_sorting_area.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr ""
+
+#. module: crm_forward_sorting_area
+#: model:ir.model.fields,field_description:crm_forward_sorting_area.field_forward_sortation_area__lead_ids
+msgid "Leads"
+msgstr ""
+
+#. module: crm_forward_sorting_area
+#: model:ir.model.fields,field_description:crm_forward_sorting_area.field_crm_lead__territory_ids
+msgid "Territories"
+msgstr "Territoires"

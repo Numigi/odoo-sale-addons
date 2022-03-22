@@ -1,39 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_rental
+#	* sale_rental
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0+e\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-21 16:11+0000\n"
-"PO-Revision-Date: 2020-09-21 12:15-0400\n"
+"POT-Creation-Date: 2022-02-28 05:11+0000\n"
+"PO-Revision-Date: 2022-02-28 05:11+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.3\n"
-"Last-Translator: \n"
-"Language: fr\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: sale_rental
 #: model:ir.model.fields,help:sale_rental.field_sale_order_line__qty_delivered_method
-msgid ""
-"According to product configuration, the delivered quantity can be "
-"automatically computed by mechanism :\n"
+msgid "According to product configuration, the delivered quantity can be automatically computed by mechanism :\n"
 "  - Manual: the quantity is set manually on the line\n"
-"  - Analytic From expenses: the quantity is the quantity sum from posted "
-"expenses\n"
-"  - Timesheet: the quantity is the sum of hours recorded on tasks linked to "
-"this sale line\n"
+"  - Analytic From expenses: the quantity is the quantity sum from posted expenses\n"
+"  - Timesheet: the quantity is the sum of hours recorded on tasks linked to this sale line\n"
 "  - Stock Moves: the quantity comes from confirmed pickings\n"
-msgstr ""
+""
+msgstr "Selon la configuration du produit, la quantité livrée peut être automatiquement calculée par mécanisme:\n"
+"   - Manuel: la quantité est définie manuellement sur la ligne\n"
+"   - Analytique des dépenses: la quantité est la somme des dépenses enregistrées\n"
+"   - Feuilles de temps: la quantité est la somme des heures enregistrées sur les tâches liées à cette ligne de vente\n"
+"   - Mouvements de stock: la quantité provient des transferts confirmés\n"
+""
 
 #. module: sale_rental
 #: selection:sale.order.line,qty_delivered_method:0
 msgid "Analytic From Expenses"
-msgstr ""
+msgstr "Analytique des dépenses"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_product_product__can_be_rented
@@ -49,12 +49,12 @@ msgstr "Peut être loué"
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Paramètres de config"
 
 #. module: sale_rental
 #: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_form
@@ -68,11 +68,8 @@ msgstr "Date de fin"
 
 #. module: sale_rental
 #: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
-msgid ""
-"Enter the number of hours before a rental is considered to be one more day"
-msgstr ""
-"Entrez le nombre d'heures maximal avant qu'un jour supplémentaire soit "
-"compté pour la location"
+msgid "Enter the number of hours before a rental is considered to be one more day"
+msgstr "Entrez le nombre d'heures maximal avant qu'un jour supplémentaire soit compté pour la location"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__expected_rental_date
@@ -83,6 +80,12 @@ msgstr "Date de location attendue"
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__expected_return_date
 msgid "Expected Return Date"
 msgstr "Date de retour attendue"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_sale_report__is_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.view_order_product_search
+msgid "Is Rental"
+msgstr "Est la location"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__is_rental_service
@@ -107,12 +110,12 @@ msgstr "Quantité retournée du kit"
 #. module: sale_rental
 #: selection:sale.order.line,qty_delivered_method:0
 msgid "Manual"
-msgstr ""
+msgstr "Manuel"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__qty_delivered_method
 msgid "Method to update delivered qty"
-msgstr ""
+msgstr "Appliquer des routes spécifiques"
 
 #. module: sale_rental
 #: model:ir.ui.menu,name:sale_rental.rental_order_menu
@@ -122,22 +125,22 @@ msgstr "Commandes"
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_procurement_group
 msgid "Procurement Group"
-msgstr ""
+msgstr "Groupe d'approvisionnement"
 
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Article"
 
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modèle d'article"
 
 #. module: sale_rental
 #: model:ir.ui.menu,name:sale_rental.rental_quotation_menu
 msgid "Quotations"
-msgstr "Soumissions"
+msgstr "Devis"
 
 #. module: sale_rental
 #: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_form_with_rental_return_smart_button
@@ -217,13 +220,8 @@ msgid "Rental Service"
 msgstr "Service de location"
 
 #. module: sale_rental
-#: model:ir.model.fields,field_description:sale_rental.field_res_company__rental_buffer
-#: model:ir.model.fields,field_description:sale_rental.field_res_config_settings__rental_buffer
-msgid "Rental Buffer"
-msgstr "Marge de fin de location"
-
-#. module: sale_rental
 #: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_search
+#: model_terms:ir.ui.view,arch_db:sale_rental.view_order_product_search
 msgid "Rentals"
 msgstr "Locations"
 
@@ -240,25 +238,30 @@ msgstr "Quantité retournée"
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_sale_order
 msgid "Sale Order"
-msgstr ""
+msgstr "Bon de commande"
+
+#. module: sale_rental
+#: model:ir.model,name:sale_rental.model_sale_report
+msgid "Sales Analysis Report"
+msgstr "Rapport d'analyse des ventes"
 
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Ligne de bons de commande"
 
 #. module: sale_rental
 #: model:ir.model,name:sale_rental.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Mouvement de stock"
 
 #. module: sale_rental
 #: selection:sale.order.line,qty_delivered_method:0
 msgid "Stock Moves"
-msgstr ""
+msgstr "Mouvements de stocks"
 
 #. module: sale_rental
-#: code:addons/sale_rental/models/sale_order_line.py:119
+#: code:addons/sale_rental/models/sale_order_line.py:121
 #, python-format
 msgid "The kit {} can not be rented."
 msgstr "Le kit {} ne peut pas être loué."
@@ -273,6 +276,5 @@ msgstr "Le service de location {} doit avoir l'unité de mesure jour(s)."
 #: model:ir.actions.server,name:sale_rental.rental_service_qty_delivered_update_cron_ir_actions_server
 #: model:ir.cron,cron_name:sale_rental.rental_service_qty_delivered_update_cron
 #: model:ir.cron,name:sale_rental.rental_service_qty_delivered_update_cron
-msgid ""
-"Update the delivered quantity on sale order lines of type rental service"
+msgid "Update the delivered quantity on sale order lines of type rental service"
 msgstr "Mise à jour des quantités livrées sur ligne de SO de location"

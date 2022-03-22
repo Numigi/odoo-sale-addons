@@ -18,10 +18,6 @@ A payroll entry will be created with the amount taking into account the prorata.
 
 .. image:: static/description/entry.png
 
-Configuration
--------------
-No configuration is required after installation.
-
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

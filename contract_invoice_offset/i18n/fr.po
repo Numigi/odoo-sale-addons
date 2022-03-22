@@ -1,0 +1,51 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* contract_invoice_offset
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-06 14:00+0000\n"
+"PO-Revision-Date: 2021-12-06 14:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: contract_invoice_offset
+#: model_terms:ir.ui.view,arch_db:contract_invoice_offset.contract_line_form
+msgid "<span>before the start of the next period</span>"
+msgstr "<span>avant le début de la prochaine période</span>"
+
+#. module: contract_invoice_offset
+#: model:ir.model,name:contract_invoice_offset.model_contract_line
+msgid "Contract Line"
+msgstr ""
+
+#. module: contract_invoice_offset
+#: selection:contract.line,invoicing_offset_rule_type:0
+msgid "Day(s)"
+msgstr "Jour(s)"
+
+#. module: contract_invoice_offset
+#: model_terms:ir.ui.view,arch_db:contract_invoice_offset.contract_line_form
+msgid "Invoicing Offset"
+msgstr "Décalage de facturation"
+
+#. module: contract_invoice_offset
+#: model:ir.model.fields,field_description:contract_invoice_offset.field_contract_line__invoicing_offset_interval
+msgid "Invoicing Offset Interval"
+msgstr "Décalage de facturation - intervalle"
+
+#. module: contract_invoice_offset
+#: model:ir.model.fields,field_description:contract_invoice_offset.field_contract_line__invoicing_offset_rule_type
+msgid "Invoicing Offset Type"
+msgstr "Décalage de facturation - type"
+
+#. module: contract_invoice_offset
+#: selection:contract.line,invoicing_offset_rule_type:0
+msgid "Week(s)"
+msgstr "Semaine(s)"

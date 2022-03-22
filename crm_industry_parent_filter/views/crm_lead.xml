@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="lead_form" model="ir.ui.view">
+        <field name="name">CRM Lead Form: Add parent filter on secondary industry</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_industry.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="industry_id" position="attributes">
+                <attribute name="domain">[('parent_id', '=', False)]</attribute>
+            </field>
+            <field name="secondary_industry_ids" position="attributes">
+                <attribute name="domain">[('parent_id', '=', industry_id), ('parent_id', '!=', False)]</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="opportunity_form" model="ir.ui.view">
+        <field name="name">CRM Opportunity Form: Add parent filter on secondary industry</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_industry.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="industry_id" position="attributes">
+                <attribute name="domain">[('parent_id', '=', False)]</attribute>
+            </field>
+            <field name="secondary_industry_ids" position="attributes">
+                <attribute name="domain">[('parent_id', '=', industry_id), ('parent_id', '!=', False)]</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

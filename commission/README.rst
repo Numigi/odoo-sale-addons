@@ -41,8 +41,8 @@ Categories are templates for the commissions targets.
 
 Clicking on "Create" brings up the Category creation menu, allowing you to select different options that will function as a template for targets.
 
-**Fields**
-
+Fields
+~~~~~~
 * Name: Name of the category for easier grouping
 * Rate Type: Type of rate used to calculate commissions
 
@@ -54,8 +54,8 @@ Clicking on "Create" brings up the Category creation menu, allowing you to selec
   * My Sales: Commissions calculated on the basis of personal sales
   * My Team Commissions: Commissions calculated on the basis of the user's team's total commissions
 
-**Tags**
-
+Tags
+~~~~
 For categories based on personal sales, you have the option to select included or excluded tags to help with invoice filtering.
 
 If only included tags are added, then only invoices linked with a sale order with the selected tags will be taken into account.
@@ -76,13 +76,25 @@ These tags are then applied on sale orders. The filtering will occur through the
 
 .. image:: static/description/sale_tag.png
 
-**Child categories**
+Child Categories
+~~~~~~~~~~~~~~~~
 
 For categories based on team sales, you have the option to select other categories to help with invoice filtering.
 
 You cannot add a category as its own child category.
 
 .. image:: static/description/child_category.png
+
+Multi Company Filter
+~~~~~~~~~~~~~~~~~~~~
+Since version ``12.0.1.1.0`` of the module, it is possible to enable (or disable) multi-company filters
+for the computation of a commission target.
+
+.. image:: static/description/commission_category_filter_by_company.png
+
+If the box is unchecked, invoices from all companies are included in order to compute the total of a target.
+
+Before version ``12.0.1.1.0``, only invoices from the same company would be included.
 
 Targets
 -------
@@ -120,10 +132,6 @@ Users with the manager role have access to create, view and update commission ta
 Users with the team manager role can only view the commission targets of the members of their team.
 
 Users the with user role can only view their own commission targets.
-
-Configuration
--------------
-No configuration is required after installation.
 
 Contributors
 ------------
