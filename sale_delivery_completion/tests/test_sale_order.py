@@ -70,4 +70,16 @@ class TestSaleOrder(SavepointCase):
     def test_if_no_stockable_product__then_fully_delivered(self):
         self.product_1.type = "service"
         self.product_2.type = "service"
-        assert self.sale_order.completion_rate == "100%"
+
+        sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.customer.id,
+                "pricelist_id": self.env.ref("product.list0").id,
+                "order_line": [
+                    (0, 0, self._get_so_line_vals(self.product_1, self.unit, 10)),
+                    (0, 0, self._get_so_line_vals(self.product_2, self.unit, 10)),
+                    (0, 0, self._get_so_line_vals(self.service, self.unit, 1)),
+                ],
+            }
+        )
+        assert sale_order.completion_rate == "100%"
