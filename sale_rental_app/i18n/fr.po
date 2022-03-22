@@ -47,7 +47,7 @@ msgstr "Articles"
 #. module: sale_rental_app
 #: model:ir.ui.menu,name:sale_rental_app.rental_quotation_menu
 msgid "Quotations"
-msgstr "Devis"
+msgstr "Soumissions"
 
 #. module: sale_rental_app
 #: model:ir.actions.act_window,name:sale_rental_app.action_rental_orders
