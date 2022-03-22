@@ -44,6 +44,7 @@ COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
+COPY sale_order_available_qty_popover_rental /mnt/extra-addons/sale_order_available_qty_popover_rental
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
@@ -60,6 +61,7 @@ COPY sale_privilege_level_rental_pricelist /mnt/extra-addons/sale_privilege_leve
 COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
+COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_timesheet_invoicing_period /mnt/extra-addons/sale_timesheet_invoicing_period
