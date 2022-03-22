@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='kit_line_ids']//field[@name='is_important']" position="after">
                 <field name="allow_change_variant" attrs="{'readonly': [('is_important', '=', False)]}" force_save="1"/>
+                <field name="allow_change_product" attrs="{'readonly': [('is_important', '=', False)]}" force_save="1"/>
             </xpath>
         </field>
     </record>

@@ -8,6 +8,9 @@ class RentalCase(KitCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.stock_user = cls.env.ref("base.user_demo")
+        cls.stock_user.groups_id = cls.env.ref("stock.group_stock_user")
+
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.uom_day = cls.env.ref("uom.product_uom_day")
         cls.rental_service = cls.env["product.product"].create(
@@ -59,23 +62,23 @@ class RentalCase(KitCase):
 
     @classmethod
     def deliver_important_components(cls):
-        cls.deliver_product(cls.component_1a, 1)
-        cls.deliver_product(cls.component_1b, 2)
+        cls.deliver_product(cls.component_1a, 2)
+        cls.deliver_product(cls.component_1b, 4)
 
     @classmethod
     def deliver_important_components_partially(cls):
         cls.deliver_product(cls.component_1a, 1)
-        cls.deliver_product(cls.component_1b, 1)
+        cls.deliver_product(cls.component_1b, 2)
 
     @classmethod
     def return_important_components(cls):
-        cls.return_product(cls.component_1a, 1)
-        cls.return_product(cls.component_1b, 2)
+        cls.return_product(cls.component_1a, 2)
+        cls.return_product(cls.component_1b, 4)
 
     @classmethod
     def return_important_components_partially(cls):
         cls.return_product(cls.component_1a, 1)
-        cls.return_product(cls.component_1b, 1)
+        cls.return_product(cls.component_1b, 2)
 
     @classmethod
     def deliver_product(cls, sale_line, qty):
@@ -94,7 +97,7 @@ class RentalCase(KitCase):
     @classmethod
     def process_move(cls, move, qty):
         move._set_quantity_done(qty)
-        move._action_done()
+        move.sudo(cls.stock_user)._action_done()
 
 
 class SaleOrderKitCase(RentalCase):
@@ -113,8 +116,8 @@ class SaleOrderKitCase(RentalCase):
             }
         )
 
-        cls.component_1a = cls.make_component_line("K1", cls.component_a, 1, True)
-        cls.component_1b = cls.make_component_line("K1", cls.component_b, 2, True)
+        cls.component_1a = cls.make_component_line("K1", cls.component_a, 2, True)
+        cls.component_1b = cls.make_component_line("K1", cls.component_b, 4, True)
         cls.component_1z = cls.make_component_line("K1", cls.component_z, 10, False)
 
         cls.service_1 = cls.make_service_line("K1", cls.rental_service, None, None, 1)

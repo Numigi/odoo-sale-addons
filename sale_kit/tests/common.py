@@ -82,9 +82,10 @@ class SaleOrderLineCase(KitCase):
             }
         )
 
-    @classmethod
-    def new_so_line(cls, vals=None):
-        return cls.env["sale.order.line"].new(vals or {})
+    def new_so_line(self, vals=None):
+        vals = vals or {}
+        vals["order_id"] = self.order.id
+        return self.env["sale.order.line"].new(vals)
 
     def add_kit_on_sale_order(self):
         kit_line = self.new_so_line()
@@ -99,6 +100,7 @@ class SaleOrderLineCase(KitCase):
     def select_product(line, product):
         line.product_id = product
         line.product_id_change()
+        line.product_uom_change()
 
     def get_kit_lines(self):
         return self.order.order_line.filtered(lambda l: l.is_kit)

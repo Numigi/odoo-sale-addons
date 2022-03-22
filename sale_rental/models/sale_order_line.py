@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
     is_rental_order = fields.Boolean(related="order_id.is_rental")
@@ -18,6 +17,17 @@ class SaleOrderLine(models.Model):
     rental_date_from_required = fields.Boolean()
     rental_date_to_editable = fields.Boolean()
     is_rental_service = fields.Boolean()
+
+    @api.onchange('is_rental_order')
+    def is_rental_order_change(self):
+        if self.is_rental_order is True:
+            return {
+                'domain': {'product_id': [('can_be_rented', '=', True)]}
+            }
+        else :
+            return {
+                'domain': {'product_id': [('can_be_rented', '=', False)]}
+            }
 
     @api.onchange("product_id")
     def product_id_change(self):
@@ -36,7 +46,7 @@ class SaleOrderLine(models.Model):
     def product_uom_change(self):
         super().product_uom_change()
 
-        if self._is_rented_kit() or self._is_rented_kit_component():
+        if self._is_rented_kit_component():
             self.price_unit = 0
 
     @api.onchange("rental_date_from", "rental_date_to")
@@ -112,8 +122,13 @@ class SaleOrderLine(models.Model):
         super().initialize_kit()
 
         if self.is_rental_order:
-            self._add_kit_rental_service_to_order()
             self._add_readonly_flags_for_rented_kit()
+
+    def add_kit_components(self):
+        if self.is_rental_order:
+            self._add_kit_rental_service_to_order()
+
+        super().add_kit_components()
 
     def _check_kit_can_be_rented(self):
         if not self.product_id.can_be_rented:
@@ -127,6 +142,7 @@ class SaleOrderLine(models.Model):
         self.order_id.order_line |= service_line
 
     def _add_readonly_flags_for_rented_kit(self):
+        self.product_uom_qty_readonly = True
         self.price_unit_readonly = True
         self.taxes_readonly = True
 
@@ -148,7 +164,7 @@ class SaleOrderLine(models.Model):
         new_line.product_readonly = True
         new_line.product_uom_qty_readonly = False
         new_line.product_uom_readonly = True
-        new_line.handle_widget_invisible = True
+        new_line.handle_widget_invisible = False
         new_line.trash_widget_invisible = True
         new_line.rental_date_from_required = True
         new_line.rental_date_from_editable = True
@@ -162,10 +178,6 @@ class SaleOrderLine(models.Model):
         new_line.rental_date_from = datetime.now()
         return new_line
 
-    def sorted_by_importance(self):
-        result = super().sorted_by_importance()
-        return result.sorted(key=lambda l: 0 if l.is_rental_service else 1)
-
     def _is_rented_kit(self):
         return self.is_kit and self.is_rental_order
 
@@ -174,7 +186,6 @@ class SaleOrderLine(models.Model):
 
 
 class SaleOrderLineWithRentalDates(models.Model):
-
     _inherit = "sale.order.line"
 
     expected_rental_date = fields.Datetime()
@@ -340,7 +351,7 @@ class SaleOrderLineWithRentalServiceReturnedQty(models.Model):
             line.qty_delivered = line._get_rental_service_qty_delivered()
 
     def _get_rental_service_qty_delivered(self):
-        if self.kit_delivered_qty <= 0:
+        if self.kit_delivered_qty < 1:
             return 0
 
         if self.kit_returned_qty > 0:

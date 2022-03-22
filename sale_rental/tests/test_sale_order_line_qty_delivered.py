@@ -16,20 +16,20 @@ class TestKitRental(SaleOrderKitCase):
         self.deliver_important_components()
         self.return_important_components()
 
-        assert self.component_1a.rental_returned_qty == 1
-        assert self.component_1b.rental_returned_qty == 2
+        assert self.component_1a.rental_returned_qty == 2
+        assert self.component_1b.rental_returned_qty == 4
         assert self.kit_line.qty_delivered == 1
         assert self.kit_line.rental_returned_qty == 1
 
     def test_important_components_partially_delivered(self):
         self.deliver_important_components_partially()
-        assert self.kit_line.qty_delivered == 0
+        assert self.kit_line.qty_delivered == 0.5
 
     def test_important_components_partially_returned(self):
         self.deliver_important_components()
         self.return_important_components_partially()
         assert self.component_1a.rental_returned_qty == 1
-        assert self.component_1b.rental_returned_qty == 1
+        assert self.component_1b.rental_returned_qty == 2
         assert self.kit_line.qty_delivered == 1
         assert self.kit_line.rental_returned_qty == 0
 
@@ -45,7 +45,7 @@ class TestKitRental(SaleOrderKitCase):
         self.service_1.product_uom_qty = number_of_days
         assert self.service_1.qty_delivered == number_of_days
 
-    def test_service_line_qty_delivered__kit_not_delivered(self):
+    def test_service_line_qty_delivered__kit_not_fully_delivered(self):
         self.deliver_product(self.component_1a, 1)
         self.service_1.product_uom_qty = 20
         assert self.service_1.qty_delivered == 0

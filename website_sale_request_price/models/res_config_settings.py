@@ -1,5 +1,5 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
 
@@ -12,6 +12,10 @@ class ResConfigSettings(models.TransientModel):
     )
     website_sale_request_price_threshold = fields.Float(
         config_parameter="website_sale_request_price_threshold"
+    )
+    website_sale_request_price_message = fields.Text(
+        related="company_id.website_sale_request_price_message",
+        readonly=False,
     )
     website_sale_request_price_mail_template = fields.Many2one(
         "mail.template",

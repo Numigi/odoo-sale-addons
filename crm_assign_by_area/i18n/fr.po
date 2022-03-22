@@ -1,0 +1,147 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* crm_assign_by_area
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-21 11:17+0000\n"
+"PO-Revision-Date: 2021-07-21 11:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_assign_by_area
+#: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:103
+#, python-format
+msgid "%s will be assigned to the record. Do you want to continue?"
+msgstr "%s sera assigné(e) à l'opportunité. Voulez-vous continuer?"
+
+#. module: crm_assign_by_area
+#: code:addons/crm_assign_by_area/models/crm_lead.py:25
+#: code:addons/crm_assign_by_area/models/res_partner.py:19
+#: model_terms:ir.ui.view,arch_db:crm_assign_by_area.crm_case_form_view_oppor
+#: model_terms:ir.ui.view,arch_db:crm_assign_by_area.view_partner_form
+#, python-format
+msgid "Assign Salesperson"
+msgstr "Assigner Vendeur"
+
+#. module: crm_assign_by_area
+#: model:ir.model,name:crm_assign_by_area.model_assign_salesperson_by_area_wizard
+msgid "Assign Salesperson By Area Wizard"
+msgstr "Wizard d'Assignation de Vendeur par Territoire"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__available_salesperson_ids
+msgid "Available Salesperson"
+msgstr "Vendeurs Disponibles"
+
+#. module: crm_assign_by_area
+#: model_terms:ir.ui.view,arch_db:crm_assign_by_area.assign_salesperson_by_area_wizard
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: crm_assign_by_area
+#: model_terms:ir.ui.view,arch_db:crm_assign_by_area.assign_salesperson_by_area_wizard
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: crm_assign_by_area
+#: model:ir.model,name:crm_assign_by_area.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__is_several_salespersons
+msgid "Is Several Salespersons"
+msgstr "Plusieurs Vendeurs sont disponibles"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: crm_assign_by_area
+#: model:ir.model,name:crm_assign_by_area.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Piste/Opportunité"
+
+#. module: crm_assign_by_area
+#: code:addons/crm_assign_by_area/models/crm_lead.py:15
+#, python-format
+msgid "Please select a customer to assign salesperson."
+msgstr "Please select a customer to assign salesperson."
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__salesperson_id
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_res_territory__salesperson_id
+msgid "Salesperson"
+msgstr "Vendeur"
+
+#. module: crm_assign_by_area
+#: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:107
+#, python-format
+msgid "Several salespersons could be assigned depending on the partner's territories. Please choose the right seller."
+msgstr "Plusieurs vendeurs pourraient être assignés selon les territoires du client. Veuillez choisir le bon vendeur."
+
+#. module: crm_assign_by_area
+#: model:ir.model,name:crm_assign_by_area.model_res_territory
+msgid "Territory"
+msgstr "Territoire"
+
+#. module: crm_assign_by_area
+#: code:addons/crm_assign_by_area/models/crm_lead.py:20
+#, python-format
+msgid "The customer %s has no territory to get salesperson."
+msgstr "Aucun territoire sur le Client pour assigner un vendeur."
+
+#. module: crm_assign_by_area
+#: code:addons/crm_assign_by_area/wizard/assign_salesperson_by_area_wizard.py:112
+#, python-format
+msgid "There is no salesperson to assign. The partner's territories might not be linked to any salesperson."
+msgstr "Aucun vendeur disponible. Les territoires du client ne sont peut-être pas assignés à un vendeur."
+
+#. module: crm_assign_by_area
+#: code:addons/crm_assign_by_area/models/res_partner.py:16
+#, python-format
+msgid "There is no territory to get salesperson."
+msgstr "Aucun territoire pour assigner le vendeur."
+
+#. module: crm_assign_by_area
+#: model:ir.model.fields,field_description:crm_assign_by_area.field_assign_salesperson_by_area_wizard__wizard_msg
+msgid "Wizard Msg"
+msgstr "Message du Wizard"

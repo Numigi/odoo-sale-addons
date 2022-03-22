@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_category_form" model="ir.ui.view">
+        <field name="name">Product Category Form: add interco properties</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="account.view_category_property_form"/>
+        <field name="arch" type="xml">
+            <group name="account_property" position="inside">
+                <group name="account_stock_property"
+                    string="Account Intercompany Properties"
+                    groups="account.group_account_user"
+                    >
+                    <field name="intercompany_revenue_account_id" string="Revenue Account"/>
+                    <field name="intercompany_expense_account_id" string="Expense Account"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

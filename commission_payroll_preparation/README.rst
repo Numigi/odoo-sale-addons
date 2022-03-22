@@ -20,10 +20,6 @@ After confirmation, the proper fields will be updated payroll entry will be gene
 
 .. image:: static/description/payroll.png
 
-Configuration
--------------
-No configuration is required after installation.
-
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
