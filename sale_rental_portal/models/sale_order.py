@@ -3,7 +3,7 @@
 from odoo import models, api, _
 
 
-class SaleOrderInherit(models.Model):
+class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     @api.multi

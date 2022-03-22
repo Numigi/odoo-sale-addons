@@ -10,31 +10,29 @@ from odoo.addons.portal.controllers.portal import (
 
 
 class SaleRentalPortal(CustomerPortal):
-    def _prepare_portal_layout_values(self):
-        values = super(SaleRentalPortal, self)._prepare_portal_layout_values()
+    def _prepare_portal_layout_values_inherit(self, values):
         partner = request.env.user.partner_id
+        partner_id = partner.commercial_partner_id.id
         SaleOrder = request.env["sale.order"]
-        order_domain = [
-            "&",
-            ("message_partner_ids", "child_of", [partner.commercial_partner_id.id]),
-            ("state", "in", ["sale", "done"]),
-            ("is_rental", "=", False),
-        ]
-        rental_domain = [
-            "&",
-            ("message_partner_ids", "child_of", [partner.commercial_partner_id.id]),
-            ("state", "in", ["sale", "done"]),
-            ("is_rental", "=", True),
-        ]
-        order_count = SaleOrder.search_count(order_domain)
-        rental_count = SaleOrder.search_count(rental_domain)
+        order_ids = SaleOrder.search(
+            [
+                ("message_partner_ids", "child_of", [partner_id]),
+                ("state", "in", ["sale", "done"]),
+            ]
+        )
+        rentals_ids = order_ids.filtered(lambda x: x.is_rental)
+        sales_ids = order_ids - rentals_ids
         values.update(
             {
-                "order_count": order_count,
-                "rental_count": rental_count,
+                "order_count": len(sales_ids),
+                "rental_count": len(rentals_ids),
             }
         )
         return values
+
+    def _prepare_portal_layout_values(self):
+        values = super(SaleRentalPortal, self)._prepare_portal_layout_values()
+        return self._prepare_portal_layout_values_inherit(values)
 
     @http.route(
         ["/my/orders", "/my/orders/page/<int:page>"],
@@ -71,20 +69,9 @@ class SaleRentalPortal(CustomerPortal):
                 ("create_date", "<=", date_end),
             ]
 
-        if kw.get("rental") and int(kw.get("rental")) == 1:
-            values.update(
-                {
-                    "page_name": "rental",
-                }
-            )
-            domain += [("is_rental", "=", True)]
-        else:
-            values.update(
-                {
-                    "page_name": "order",
-                }
-            )
-            domain += [("is_rental", "=", False)]
+        is_rental = kw.get("rental") and int(kw.get("rental")) == 1
+        values["page_name"] = "rental" if is_rental else "order"
+        domain += [("is_rental", "=", True if is_rental else False)]
 
         # count for pager
         order_count = SaleOrder.search_count(domain)
