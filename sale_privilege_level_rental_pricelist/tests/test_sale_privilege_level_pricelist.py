@@ -43,3 +43,7 @@ class TestSalePrivilegeLevelPricelist(SalePrivilegeLevelPricelistCase):
         )
         world_entry.sequence = -1
         assert self.partner.rental_pricelist_id == self.pricelist_world
+
+    def test_fallback_public_pricelist(self):
+        self.partner.privilege_level_id = False
+        assert self.partner.rental_pricelist_id == self.env.ref("product.list0")
