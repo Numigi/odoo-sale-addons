@@ -24,7 +24,9 @@ class ResPartner(models.Model):
             .sorted("sequence")
             .filtered(lambda e: e.matches_partner(self))
         )
-        return pricelist_entries.mapped("pricelist_id")[:1]
+        pricelist = pricelist_entries.mapped("pricelist_id")[:1]
+
+        return pricelist or self.env.ref("product.list0", raise_if_not_found=False)
 
 
 def _is_testing_other_module(context):
