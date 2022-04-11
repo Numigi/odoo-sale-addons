@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_rental_analysis_search" model="ir.ui.view">
+        <field name="name">Sale Rental Analysis Search</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <filter name="Quotations" position="attributes">
+                <attribute name="string">Rental Quotations</attribute>
+            </filter>
+            <filter name="Sales" position="attributes">
+                <attribute name="string">Rental Orders</attribute>
+            </filter>
+            <filter name="is_rental" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </filter>
+        </field>
+    </record>
+
+</odoo>
