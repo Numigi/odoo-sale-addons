@@ -3,7 +3,7 @@
 {
     "name": "Sale Rental App",
     "summary": "Add Rentals menu",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
