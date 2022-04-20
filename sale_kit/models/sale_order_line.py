@@ -10,6 +10,8 @@ class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
 
+    sequence = fields.Integer(default=99999)
+
     is_kit = fields.Boolean()
     kit_sequence = fields.Integer()
     is_kit_component = fields.Boolean()
