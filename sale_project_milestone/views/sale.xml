@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- Form View -->
+    <record id="view_sale_order_milestone_form" model="ir.ui.view">
+        <field name="name">sale Order Milestone Form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_invoice']" position="before">
+                        <button name="action_view_millestone"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-tasks"
+                            attrs="{'invisible': [('milestone_count', '=', 0)]}">
+                            <field name="milestone_count" widget="statinfo" string="Milestones"/>
+                        </button>
+            </xpath>
+            <field name="payment_term_id" position="after">
+                <field name="milestone_ids" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="project_milestone_sale_form" model="ir.ui.view">
+        <field name="name">Project Milestone Sale</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone_estimated_hours.project_milestone_estimated_hours_form"/>
+        <field name="arch" type="xml">
+            <field name="target_date" position="after">
+                <field name="sale_line_id" context="{'create': False, 'edit': False, 'delete': False}"/>
+                <field name="order_id" invisible="True"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
