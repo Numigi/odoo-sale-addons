@@ -30,6 +30,8 @@
 - url: https://github.com/Numigi/odoo-project-addons
   branch: "12.0"
   includes:
+    - project_milestone
+    - project_milestone_enhanced
     - project_milestone_estimated_hours
 
 - url: https://github.com/Numigi/odoo-stock-addons
