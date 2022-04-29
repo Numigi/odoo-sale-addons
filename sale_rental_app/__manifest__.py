@@ -3,13 +3,17 @@
 {
     "name": "Sale Rental App",
     "summary": "Add Rentals menu",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
     "depends": ["sale_rental"],
-    "data": ["views/sale_order.xml", "views/menu.xml"],
+    "data": [
+        "views/sale_order.xml",
+        "views/sale_report.xml",
+        "views/menu.xml",
+    ],
     "installable": True,
     "application": True,
 }

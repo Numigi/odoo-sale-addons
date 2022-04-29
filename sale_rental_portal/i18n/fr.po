@@ -43,13 +43,13 @@ msgstr "Date Commande"
 #: code:addons/sale_rental_portal/models/sale_order.py:14
 #, python-format
 msgid "Quotation"
-msgstr "Devis"
+msgstr "Soumission"
 
 #. module: sale_rental_portal
 #: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_menu_sale
 #: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_sale
 msgid "Quotations"
-msgstr "Devis"
+msgstr "Soumissions"
 
 #. module: sale_rental_portal
 #: code:addons/sale_rental_portal/controllers/portal.py:59

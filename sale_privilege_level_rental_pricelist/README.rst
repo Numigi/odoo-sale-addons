@@ -33,6 +33,12 @@ It is computed based on the partner's privilege level (2).
 
 .. image:: static/description/partner_form.png
 
+Default Pricelist
+~~~~~~~~~~~~~~~~~
+By default, if a partner has no privilege level defined, the public pricelist is used for rental.
+
+.. image:: static/description/partner_default_rental_pricelist.png
+
 Known Issues
 ------------
 If a customer does not have a privilege level defined, its rental pricelist will be empty.

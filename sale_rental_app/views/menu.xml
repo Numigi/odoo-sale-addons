@@ -20,6 +20,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">sale.order</field>
         <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="view_id" ref="sale_quotation_search"/>
         <field name="search_view_id" ref="sale_quotation_search"/>
         <field name="domain">
             [
@@ -32,6 +33,48 @@
                 'default_is_rental': True,
             }
         </field>
+    </record>
+
+    <record id="action_rental_quotations_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="sale.view_sale_order_kanban"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale.view_order_form"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_calendar" model="ir.actions.act_window.view">
+        <field name="sequence" eval="4"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="sale.view_sale_order_calendar"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_pivot" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="sale.view_sale_order_pivot"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
+    </record>
+
+    <record id="action_rental_quotations_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="6"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale.view_sale_order_graph"/>
+        <field name="act_window_id" ref="action_rental_quotations"/>
     </record>
 
     <menuitem
@@ -60,6 +103,48 @@
                 ('state', 'not in', ('draft', 'sent', 'cancel')),
             ]
         </field>
+    </record>
+
+    <record id="action_rental_orders_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sale.view_order_tree"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="sale.view_sale_order_kanban"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale.view_order_form"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_calendar" model="ir.actions.act_window.view">
+        <field name="sequence" eval="4"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="sale.view_sale_order_calendar"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_pivot" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="sale.view_sale_order_pivot"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
+    </record>
+
+    <record id="action_rental_orders_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="6"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale.view_sale_order_graph"/>
+        <field name="act_window_id" ref="action_rental_orders"/>
     </record>
 
     <menuitem
@@ -220,7 +305,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">graph,pivot</field>
         <field name="view_id"/>
-        <field name="search_view_id" ref="sale.view_order_product_search"/>
+        <field name="search_view_id" ref="sale_rental_analysis_search"/>
         <field name="domain">
             [
                 ('is_rental', '=', True),

@@ -140,7 +140,7 @@ msgstr "Modèle d'article"
 #. module: sale_rental
 #: model:ir.ui.menu,name:sale_rental.rental_quotation_menu
 msgid "Quotations"
-msgstr "Devis"
+msgstr "Soumissions"
 
 #. module: sale_rental
 #: model_terms:ir.ui.view,arch_db:sale_rental.sale_order_form_with_rental_return_smart_button
