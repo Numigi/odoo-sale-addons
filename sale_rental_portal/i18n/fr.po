@@ -19,7 +19,7 @@ msgstr ""
 #: code:addons/sale_rental_portal/models/sale_order.py:16
 #, python-format
 msgid "Locations"
-msgstr ""
+msgstr "Location"
 
 #. module: sale_rental_portal
 #: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_menu_sale
