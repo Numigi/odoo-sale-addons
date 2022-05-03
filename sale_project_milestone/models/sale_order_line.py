@@ -162,6 +162,5 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _update_estimated_hours(self):
-
-        for sol in self:
+        for sol in self.filtered("milestone_id"):
             sol.milestone_id.estimated_hours = sol._convert_qty_company_hours()
