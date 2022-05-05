@@ -13,6 +13,6 @@ class SaleOrder(models.Model):
             if record.state in ("draft", "sent", "cancel"):
                 record.type_name = _("Quotation")
             elif record.is_rental is True:
-                record.type_name = _("Locations")
+                record.type_name = _("Rental")
             else:
                 record.type_name = _("Sales Order")

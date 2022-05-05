@@ -28,7 +28,7 @@
                   priority="25">
             <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
                 <t t-if="rental_count" t-call="portal.portal_docs_entry">
-                    <t t-set="title">My Locations</t>
+                    <t t-set="title">My Rentals</t>
                     <t t-set="url" t-value="'/my/orders?rental=1'"/>
                     <t t-set="count" t-value="rental_count"/>
                 </t>
@@ -51,8 +51,8 @@
                 </li>
                 <li t-if="page_name == 'rental' or sale_order and sale_order.is_rental == true"
                     t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}">
-                    <a t-if="sale_order" t-attf-href="/my/orders?{{ keep_query() }}">My Locations</a>
-                    <t t-else="">My Locations</t>
+                    <a t-if="sale_order" t-attf-href="/my/orders?{{ keep_query() }}">My Rentals</a>
+                    <t t-else="">My Rentals</t>
                 </li>
                 <li t-if="sale_order" class="breadcrumb-item active">
                     <span t-field="sale_order.type_name"/>
@@ -82,7 +82,7 @@
                                 <span class='d-block d-md-none'>Ref.</span>
                             </th>
                             <th t-if="page_name == 'rental'">
-                                <span class='d-none d-md-inline'>Locations #</span>
+                                <span class='d-none d-md-inline'>Rental #</span>
                                 <span class='d-block d-md-none'>Ref.</span>
                             </th>
                             <th class="text-right">Order Date</th>

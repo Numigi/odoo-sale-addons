@@ -1,31 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_rental_portal
+# 	* sale_rental_portal
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191106\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-09 14:53+0000\n"
-"PO-Revision-Date: 2022-03-09 14:53+0000\n"
+"POT-Creation-Date: 2022-05-05 16:46+0000\n"
+"PO-Revision-Date: 2022-05-05 12:46-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-
-#. module: sale_rental_portal
-#: code:addons/sale_rental_portal/models/sale_order.py:16
-#, python-format
-msgid "Locations"
-msgstr ""
-
-#. module: sale_rental_portal
-#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_menu_sale
-#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_rental
-msgid "My Locations"
-msgstr "Mes Locations"
+"X-Generator: Poedit 2.3\n"
 
 #. module: sale_rental_portal
 #: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_menu_sale
@@ -34,7 +24,13 @@ msgid "My Orders"
 msgstr "Mes commandes"
 
 #. module: sale_rental_portal
-#: code:addons/sale_rental_portal/controllers/portal.py:58
+#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_menu_sale
+#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_rental
+msgid "My Rentals"
+msgstr "Mes Locations"
+
+#. module: sale_rental_portal
+#: code:addons/sale_rental_portal/controllers/portal.py:56
 #, python-format
 msgid "Order Date"
 msgstr "Date Commande"
@@ -52,10 +48,16 @@ msgid "Quotations"
 msgstr "Soumissions"
 
 #. module: sale_rental_portal
-#: code:addons/sale_rental_portal/controllers/portal.py:59
+#: code:addons/sale_rental_portal/controllers/portal.py:57
 #, python-format
 msgid "Reference"
 msgstr "Référence"
+
+#. module: sale_rental_portal
+#: code:addons/sale_rental_portal/models/sale_order.py:16
+#, python-format
+msgid "Rental"
+msgstr "Location"
 
 #. module: sale_rental_portal
 #: model:ir.model,name:sale_rental_portal.model_sale_order
@@ -69,8 +71,7 @@ msgid "Sales Order"
 msgstr "Bon de commande"
 
 #. module: sale_rental_portal
-#: code:addons/sale_rental_portal/controllers/portal.py:60
+#: code:addons/sale_rental_portal/controllers/portal.py:58
 #, python-format
 msgid "Stage"
 msgstr "Étape"
-
