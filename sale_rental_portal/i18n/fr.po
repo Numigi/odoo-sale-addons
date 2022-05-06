@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191106\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-05 16:46+0000\n"
-"PO-Revision-Date: 2022-05-05 12:46-0400\n"
+"POT-Creation-Date: 2022-05-06 13:57+0000\n"
+"PO-Revision-Date: 2022-05-06 09:58-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -25,7 +25,7 @@ msgstr "Mes commandes"
 
 #. module: sale_rental_portal
 #: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_menu_sale
-#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_sale
 msgid "My Rentals"
 msgstr "Mes Locations"
 
@@ -43,7 +43,6 @@ msgstr "Soumission"
 
 #. module: sale_rental_portal
 #: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_menu_sale
-#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_home_sale
 msgid "Quotations"
 msgstr "Soumissions"
 
@@ -60,6 +59,11 @@ msgid "Rental"
 msgstr "Location"
 
 #. module: sale_rental_portal
+#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_orders
+msgid "Rental #"
+msgstr "Location #"
+
+#. module: sale_rental_portal
 #: model:ir.model,name:sale_rental_portal.model_sale_order
 msgid "Sale Order"
 msgstr "Bon de commande"
@@ -69,6 +73,11 @@ msgstr "Bon de commande"
 #, python-format
 msgid "Sales Order"
 msgstr "Bon de commande"
+
+#. module: sale_rental_portal
+#: model_terms:ir.ui.view,arch_db:sale_rental_portal.portal_my_orders
+msgid "Sales Order #"
+msgstr "Bon de commande #"
 
 #. module: sale_rental_portal
 #: code:addons/sale_rental_portal/controllers/portal.py:58
