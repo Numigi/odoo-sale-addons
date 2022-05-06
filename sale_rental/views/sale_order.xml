@@ -43,10 +43,10 @@
                 }"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-                <attribute name="context" operation="python_dict" key="search_default_can_be_rented">is_rental_order</attribute>
+                <attribute name="context" operation="python_dict" key="is_rental_sale_order">is_rental_order</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
-                <attribute name="context" operation="python_dict" key="search_default_can_be_rented">is_rental_order</attribute>
+                <attribute name="context" operation="python_dict" key="is_rental_sale_order">is_rental_order</attribute>
             </xpath>
         </field>
     </record>

@@ -184,6 +184,18 @@ This is the same behavior as for the components of a kit.
 
 .. image:: static/description/sale_order_line_moved_after.png
 
+Filtering Products on Sales Orders
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Since version ``1.1.0`` of the module, a new configuration parameter is available.
+
+.. image:: static/description/product_filter_config.png
+
+When the box is checked, only products with the box ``Can be Rented`` checked can be selected on rental orders.
+
+.. image:: static/description/rental_sale_order_with_product_filter.png
+
+Also, when the box is checked, products with ``Can be Rented`` unchecked can not be selected on non-rental orders.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
