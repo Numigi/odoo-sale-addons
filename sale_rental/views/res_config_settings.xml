@@ -19,6 +19,17 @@
                             <field name="rental_buffer"/>
                         </div>
                     </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="rental_filter_products_on_orders"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="rental_filter_products_on_orders"/>
+                            <div class="text-muted">
+                                Only products of type "can be rented" can be selected in rental orders
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </xpath>
         </field>
