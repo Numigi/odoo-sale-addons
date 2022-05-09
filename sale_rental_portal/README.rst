@@ -1,15 +1,39 @@
 Sale Rental Portal
 ==================
-This module is used to separate list of Sales Orders and Rentals Orders in customer portal
 
-Configuration
--------------
-Install the module from Applications app
+.. contents:: Table of Contents
 
-Usage
------
-After module installation, we have two menu My Orders and My Locations appear on the portal /my/
-1. My Orders : /my/orders
-List all the Sales Orders
-2. My Locations : /my/orders?rental=1
-List all the Rentals Orders
+Description
+-----------
+This module separates rental orders from other sales orders on the portal.
+
+.. image:: static/description/portal_menu.png
+
+My Orders
+~~~~~~~~~
+The section ``My Orders`` shows confirmed orders, except rental orders.
+
+.. image:: static/description/sales_order_list.png
+
+.. image:: static/description/sales_order_form.png
+
+My Rentals
+~~~~~~~~~~
+The section ``My Rentals`` shows confirmed rental orders.
+
+.. image:: static/description/rental_order_list.png
+
+.. image:: static/description/rental_order_form.png
+
+Quotations
+~~~~~~~~~~
+The section ``Quotations`` is unchanged.
+It show both rental and non-rental quotations.
+
+Contributors
+------------
+* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+More information
+----------------
+* Meet us at https://bit.ly/numigi-com
