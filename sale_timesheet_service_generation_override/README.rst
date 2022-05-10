@@ -12,7 +12,8 @@ Description
 -----------
 
 Override Odoo sources method which generated projects and tasks using product service tracking from sales confirmation,
-to give possibility to add new services trackings
+to give possibility to add new services trackings.
+Code optimization.
 
 
 Contributors
