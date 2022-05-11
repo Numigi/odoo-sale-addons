@@ -21,7 +21,15 @@ class ProductTemplate(models.Model):
         company_dependent=True,
         copy=True,
         index=True,
-        domain=[("sale_line_id", "=", False)],
+        domain=[
+            "&",
+            "|",
+            "&",
+            ("sale_line_id", "=", False),
+            ("project_id", "=", False),
+            ("sale_line_id", "=", False),
+            ("project_id.billable_type", "=", "no"),
+        ],
     )
 
     @api.onchange("service_tracking")
@@ -35,15 +43,6 @@ class ProductTemplate(models.Model):
 
         elif service_tracking == "milestone_new_project":
             self.project_id = False
-            res["domain"] = {
-                "milestone_template_id": [
-                    ("sale_line_id", "=", False),
-                    ("project_id", "=", False),
-                    "|",
-                    ("sale_line_id", "=", False),
-                    ("project_id.billable_type", "=", "no"),
-                ]
-            }
 
         else:
             self.milestone_template_id = False

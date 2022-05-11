@@ -8,7 +8,7 @@ class TestMilestone(MilestoneCase):
     def test_product_new_milestone_existing_project_elements(self):
         product = self.product_new_milestone_existing_project
         test1, test2, test3 = self.nb_elements_tests(
-            product, nb_milestones=1, nb_tasks=0, nb_projects=1
+            product, nb_milestones=1, nb_tasks=3, nb_projects=1
         )
         assert test1
         assert test2

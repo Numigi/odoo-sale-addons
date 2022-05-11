@@ -2,6 +2,19 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models, api
+from odoo.addons.sale_timesheet_service_generation_override.models import (
+    sale_order_line as class_sale_order_line,
+)
+
+class_sale_order_line.SERVICE_TRACKING_EXISTING_PROJECT = [
+    "task_global_project",
+    "milestone_existing_project",
+]
+class_sale_order_line.SERVICE_TRACKING_NEW_PROJECT = [
+    "project_only",
+    "task_new_project",
+    "milestone_new_project",
+]
 
 
 class SaleOrderLine(models.Model):
@@ -11,48 +24,28 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _timesheet_service_generation(self):
-        sol_null = self.env["sale.order.line"]
-
-        for sol in self:
-            self -= sol._case_milestone_service_tracking(sol_null)
-
+        self = self.with_context(milestones_no_copy=True)
         return super(SaleOrderLine, self)._timesheet_service_generation()
 
     @api.multi
-    def _case_milestone_service_tracking(self, sol_null):
-        sol_milestone = self.milestone_id
+    def _create_service_tracking_existing_project(self, service_tracking, product):
+        res = super(SaleOrderLine, self)._create_service_tracking_existing_project(
+            service_tracking, product
+        )
 
-        if not sol_milestone:
-            return self._milestone_service_tracking(sol_null)
+        if res and service_tracking == "milestone_existing_project":
 
-        return sol_null
+            if not self.milestone_id:
+                project = product.with_context(force_company=self.company_id.id).project_id
+                project.use_milestones = True
+                self._create_milestone(product, project)
 
-    @api.multi
-    def _milestone_service_tracking(self, sol_null):
-        product = self.product_id
-        service_tracking = product.service_tracking
+            return False
 
-        if service_tracking == "milestone_existing_project":
-            self._milestone_existing_project(product)
-            return self
-
-        elif service_tracking == "milestone_new_project":
-            project_template = product.project_template_id
-            sol_project = self._project_creation(project_template.id)
-            self._create_milestone(product, sol_project, project_template)
-            return self
-
-        return sol_null
+        return res
 
     @api.multi
-    def _milestone_existing_project(self, product):
-        project = product.with_context(force_company=self.company_id.id).project_id
-
-        if project:
-            self._create_milestone(product, project, False)
-
-    @api.multi
-    def _create_milestone(self, product, project, project_template):
+    def _create_milestone(self, product, project):
         milestone = self.env["project.milestone"].create(
             self._values_create_milestone(product, project)
         )
@@ -70,8 +63,6 @@ class SaleOrderLine(models.Model):
         else:
             milestone.project_id = project
 
-        if project_template:
-            project.with_context(active_test=False).tasks.write({"milestone_id": milestone.id})
         return milestone
 
     @api.multi
@@ -128,17 +119,29 @@ class SaleOrderLine(models.Model):
         return parents, child_tasks
 
     @api.multi
-    def _project_creation(self, project_template_id):
-        order = self.order_id
-        sol_project = self.with_context(milestones_no_copy=True)._timesheet_create_project()
-        sol_project.name = order.name
+    def _create_service_tracking_new_project_option(self, project, service_tracking, product):
+        res = super(SaleOrderLine, self)._create_service_tracking_new_project_option(
+            project, service_tracking, product
+        )
 
-        if project_template_id:
-            sol_project.with_context(active_test=False).tasks.filtered(
+        if res and service_tracking == "milestone_new_project":
+            self._milestone_project_creation(project, product)
+            return False
+
+        return res
+
+    @api.multi
+    def _milestone_project_creation(self, project, product):
+        order = self.order_id
+        project.name = order.name
+        self._create_milestone(product, project)
+
+        if product.project_template_id:
+            project.with_context(active_test=False).tasks.filtered(
                 lambda task: not task.active
             ).write(self._values_project_creation(order))
 
-        return sol_project
+        return project
 
     @api.multi
     def _values_project_creation(self, order):

@@ -9,17 +9,17 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": """Add two new service tracking products to generate or update milestones
+    "summary": """Add two new services trackings products to generate or update milestones
     generated from a sale order line of a confirmed sale_order""",
     "depends": [
         "project_milestone_estimated_hours",
-        "sale_timesheet",
+        "sale_timesheet_service_generation_override",
+        "web_domain_field",
     ],
     "data": [
         "views/product.xml",
         "views/project_milestone.xml",
         "views/sale.xml",
-        "views/project.xml",
     ],
     "installable": True,
 }

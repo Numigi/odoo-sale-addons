@@ -24,10 +24,7 @@ class SaleOrderLine(models.Model):
                 service_tracking = product.service_tracking
 
                 if service_tracking:
-                    (
-                        map_projects,
-                        do_maps_projects,
-                    ) = sol._create_service_tracking(
+                    (map_projects, do_maps_projects,) = sol._create_service_tracking(
                         map_projects,
                         do_maps_projects,
                         product,
@@ -55,7 +52,9 @@ class SaleOrderLine(models.Model):
                 map_projects = self._do_maps_projects(map_projects, orders)
                 do_maps_projects = False
 
-            map_projects = self._create_service_tracking_new_project(map_projects, product, service_tracking)
+            map_projects = self._create_service_tracking_new_project(
+                map_projects, product, service_tracking
+            )
 
         return map_projects, do_maps_projects
 
@@ -68,6 +67,9 @@ class SaleOrderLine(models.Model):
                 project = product.with_context(force_company=self.company_id.id).project_id
                 self._timesheet_create_task(project=project)
 
+            return False
+        return True
+
     @api.multi
     def _do_maps_projects(self, map_projects, orders):
         sol = self.search(
@@ -77,9 +79,7 @@ class SaleOrderLine(models.Model):
                 ("product_id.service_tracking", "in", SERVICE_TRACKING_NEW_PROJECT),
             ]
         )
-        sol_with_project = sol.filtered(
-            lambda sol: not sol.product_id.project_template_id
-        )
+        sol_with_project = sol.filtered(lambda sol: not sol.product_id.project_template_id)
         map_projects["map_so_project"] = {
             sol.order_id.id: sol.project_id for sol in sol_with_project
         }
@@ -113,7 +113,7 @@ class SaleOrderLine(models.Model):
                 (order_id, project_template_id)
             ) or map_projects["map_so_project"].get(order_id)
             self.project_id = project
-        self._create_service_tracking_new_project_option(project, service_tracking)
+        self._create_service_tracking_new_project_option(project, service_tracking, product)
 
         return map_projects
 
@@ -129,12 +129,13 @@ class SaleOrderLine(models.Model):
         return False
 
     @api.multi
-    def _create_service_tracking_new_project_option(self, project, service_tracking):
+    def _create_service_tracking_new_project_option(self, project, service_tracking, product):
 
         if service_tracking == "task_new_project":
+            self._timesheet_create_task(project=project)
+            return False
 
-            if not self.task_id:
-                self._timesheet_create_task(project=project)
+        return True
 
 
 class_sale_order_line._timesheet_service_generation = (

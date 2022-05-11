@@ -129,7 +129,7 @@ class MilestoneCase(SavepointCase):
         sale = cls.generate_sale_order_confirmed(product)
         milestones = sale.milestone_ids
         test1 = len(milestones) == nb_milestones
-        test2 = len(milestones.with_context(active_test=False).project_task_ids) == nb_tasks
+        test2 = len(milestones.project_id.with_context(active_test=False).tasks) == nb_tasks
         test3 = len(milestones.project_id) == nb_projects
         return test1, test2, test3
 
@@ -156,7 +156,7 @@ class MilestoneCase(SavepointCase):
         test5 = project.sale_order_id == sale
         test6 = project.sale_line_id == order_line
         if create_tasks:
-            tasks = milestones.with_context(active_test=False).project_task_ids
+            tasks = milestones.project_id.with_context(active_test=False).tasks
             test7 = len(tasks.filtered(lambda task: task.sale_line_id & order_line)) == 3
             test8 = tasks.filtered(lambda task: task.parent_id).parent_id & tasks
             return test1, test2, test3, test4, test5, test6, test7, test8

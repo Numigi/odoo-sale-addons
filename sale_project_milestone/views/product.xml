@@ -20,8 +20,9 @@
                 }</attribute>
             </xpath>
             <xpath expr="//field[@name='project_id']" position="before">
-                <field name="milestone_template_id"
-                       attrs="{'invisible':[('service_tracking','!=','milestone_new_project')]}"/>
+                <field name="milestone_template_id" options="{'no_create': True}"
+                       attrs="{'invisible':[('service_tracking','!=','milestone_new_project')]}"
+                       context="{'form_view_ref': 'sale_project_milestone.project_milestone_estimated_hours_form'}"/>
             </xpath>
         </field>
     </record>
