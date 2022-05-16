@@ -244,6 +244,7 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
         self.assertEqual(
             len(sale_order.invoice_ids), 2, "A second invoice should have been created from the SO"
         )
+
         self.assertTrue(
             float_is_zero(
                 invoice2.amount_total - so_line_ordered_task_new_project.price_unit * 3,
