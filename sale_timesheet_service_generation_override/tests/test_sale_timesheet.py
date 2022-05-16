@@ -5,10 +5,6 @@ from odoo.exceptions import UserError
 
 from odoo.addons.sale_timesheet.tests.common import TestCommonSaleTimesheetNoChart
 
-import logging
-_logger = logging.getLogger(__name__)
-
-
 
 class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
     """This test suite provide tests for the 3 main flows of selling services:
@@ -249,13 +245,6 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
             len(sale_order.invoice_ids), 2, "A second invoice should have been created from the SO"
         )
 
-
-        _logger.warning(
-            "Line 252 invoice2.amount_total : {}, so_line_ordered_task_new_project.price_unit : {}"
-            .format(invoice2.amount_total, so_line_ordered_task_new_project.price_unit)
-        )
-
-
         self.assertTrue(
             float_is_zero(
                 invoice2.amount_total - so_line_ordered_task_new_project.price_unit * 3,
@@ -439,14 +428,6 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
         # invoice SO
         invoice_id1 = sale_order.action_invoice_create()
         invoice1 = self.env["account.invoice"].browse(invoice_id1)
-
-
-        _logger.warning(
-            "Line 435 invoice1.amount_total : {}, so_line_deliver_global_project.price_unit : {}"
-            .format(invoice1.amount_total, so_line_deliver_global_project.price_unit)
-        )
-
-
         self.assertTrue(
             float_is_zero(
                 invoice1.amount_total - so_line_deliver_global_project.price_unit * 10.5,
