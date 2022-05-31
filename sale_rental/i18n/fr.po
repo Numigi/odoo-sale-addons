@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-06 15:32+0000\n"
-"PO-Revision-Date: 2022-05-06 11:34-0400\n"
+"POT-Creation-Date: 2022-05-31 19:49+0000\n"
+"PO-Revision-Date: 2022-05-31 15:50-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -55,6 +55,14 @@ msgid "Can be Rented"
 msgstr "Peut être loué"
 
 #. module: sale_rental
+#: model:ir.model.fields,help:sale_rental.field_stock_move__is_rental
+msgid ""
+"Check this box if this location is used for products rented to a customer."
+msgstr ""
+"Cocher cette case si cet emplacement est utilisé pour les articles loués à "
+"des clients."
+
+#. module: sale_rental
 #: model:ir.model,name:sale_rental.model_res_company
 msgid "Companies"
 msgstr "Sociétés"
@@ -98,10 +106,20 @@ msgid "Filter Rental Products on Orders"
 msgstr "Filtrer sur les articles de location dans les commandes"
 
 #. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move__is_ongoing_rental
+msgid "Is Ongoing Rental"
+msgstr "Est une location en cours"
+
+#. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_sale_report__is_rental
 #: model_terms:ir.ui.view,arch_db:sale_rental.view_order_product_search
 msgid "Is Rental"
-msgstr "Est la location"
+msgstr "Est une location"
+
+#. module: sale_rental
+#: model:ir.model.fields,field_description:sale_rental.field_stock_move__is_rental
+msgid "Is Rental Customer Location"
+msgstr "Est un emplacement location client"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__is_rental_service
@@ -295,11 +313,6 @@ msgstr "Le kit {} ne peut pas être loué."
 #, python-format
 msgid "The rental service {} must have the unit of measure day(s)."
 msgstr "Le service de location {} doit avoir l'unité de mesure jour(s)."
-
-#. module: sale_rental
-#: selection:sale.order.line,qty_delivered_method:0
-msgid "Timesheets"
-msgstr ""
 
 #. module: sale_rental
 #: model:ir.actions.server,name:sale_rental.rental_service_qty_delivered_update_cron_ir_actions_server
