@@ -3,7 +3,7 @@
 {
     "name": "Sale Rental App",
     "summary": "Add Rentals menu",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
@@ -11,6 +11,7 @@
     "depends": ["sale_rental"],
     "data": [
         "views/sale_order.xml",
+        "views/stock_move_line.xml",
         "views/sale_report.xml",
         "views/menu.xml",
     ],

@@ -3,11 +3,43 @@
 
 from datetime import datetime
 from odoo import api, fields, models
+from odoo.tools.float_utils import float_compare
 
 
 class StockMove(models.Model):
 
     _inherit = "stock.move"
+
+    is_rental = fields.Boolean(
+        related="location_dest_id.is_rental_customer_location",
+        store=True,
+    )
+    is_ongoing_rental = fields.Boolean(
+        compute="_compute_is_ongoing_rental",
+        store=True,
+    )
+
+    @api.depends("state", "move_dest_ids.state")
+    def _compute_is_ongoing_rental(self):
+        for move in self:
+            move.is_ongoing_rental = move._get_is_ongoing_rental()
+
+    def _get_is_ongoing_rental(self):
+        if not self.is_rental:
+            return False
+
+        if self.state != "done":
+            return False
+
+        if self._is_completely_returned():
+            return False
+
+        return True
+
+    def _is_completely_returned(self):
+        returned_moves = self.move_dest_ids.filtered(lambda m: m.state == "done")
+        returned_qty = sum(returned_moves.mapped("product_qty"))
+        return not float_compare(returned_qty, self.product_qty, 2)
 
     @api.multi
     def write(self, vals):
