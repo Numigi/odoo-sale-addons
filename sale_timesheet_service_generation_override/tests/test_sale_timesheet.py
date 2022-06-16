@@ -83,7 +83,6 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
             "The created project should be linked to the analytic account of the SO",
         )
 
-
         # create invoice
         invoice_id1 = sale_order.action_invoice_create()[0]
         invoice1 = self.env["account.invoice"].browse(invoice_id1)
