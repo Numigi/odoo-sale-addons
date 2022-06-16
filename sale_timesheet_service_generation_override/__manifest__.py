@@ -8,7 +8,8 @@
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
-    "category": "Project",
+    "sequence": 24,
+    "category": "Hidden",
     "summary": """Override Odoo sources method which generated projects and tasks at sale confirmation""",
     "depends": [
         "sale_timesheet",
