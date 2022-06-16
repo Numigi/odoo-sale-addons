@@ -61,34 +61,20 @@ class RentalCase(KitCase):
         )
 
     @classmethod
-    def deliver_important_components(cls):
-        cls.deliver_product(cls.component_1a, 2)
-        cls.deliver_product(cls.component_1b, 4)
+    def deliver_product(cls, sale_line, qty=None):
+        if qty is None:
+            qty = sale_line.product_uom_qty
 
-    @classmethod
-    def deliver_important_components_partially(cls):
-        cls.deliver_product(cls.component_1a, 1)
-        cls.deliver_product(cls.component_1b, 2)
-
-    @classmethod
-    def return_important_components(cls):
-        cls.return_product(cls.component_1a, 2)
-        cls.return_product(cls.component_1b, 4)
-
-    @classmethod
-    def return_important_components_partially(cls):
-        cls.return_product(cls.component_1a, 1)
-        cls.return_product(cls.component_1b, 2)
-
-    @classmethod
-    def deliver_product(cls, sale_line, qty):
         candidat_moves = sale_line.move_ids.filtered(
             lambda m: m.is_rental_move() and not m.is_processed_move()
         )
         cls.process_move(candidat_moves[0], qty)
 
     @classmethod
-    def return_product(cls, sale_line, qty):
+    def return_product(cls, sale_line, qty=None):
+        if qty is None:
+            qty = sale_line.product_uom_qty
+
         candidat_moves = sale_line.move_ids.filtered(
             lambda m: m.is_rental_return_move() and not m.is_processed_move()
         )
@@ -126,3 +112,23 @@ class SaleOrderKitCase(RentalCase):
         cls.component_2a = cls.make_component_line("K2", cls.component_a, 1, True)
 
         cls.order.action_confirm()
+
+    @classmethod
+    def deliver_important_components(cls):
+        cls.deliver_product(cls.component_1a, 2)
+        cls.deliver_product(cls.component_1b, 4)
+
+    @classmethod
+    def deliver_important_components_partially(cls):
+        cls.deliver_product(cls.component_1a, 1)
+        cls.deliver_product(cls.component_1b, 2)
+
+    @classmethod
+    def return_important_components(cls):
+        cls.return_product(cls.component_1a, 2)
+        cls.return_product(cls.component_1b, 4)
+
+    @classmethod
+    def return_important_components_partially(cls):
+        cls.return_product(cls.component_1a, 1)
+        cls.return_product(cls.component_1b, 2)

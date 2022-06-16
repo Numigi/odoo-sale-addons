@@ -61,6 +61,7 @@ COPY sale_privilege_level_rental_pricelist /mnt/extra-addons/sale_privilege_leve
 COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_project_milestone /mnt/extra-addons/sale_project_milestone
 COPY sale_rental /mnt/extra-addons/sale_rental
+COPY sale_rental_app /mnt/extra-addons/sale_rental_app
 COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
 COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist

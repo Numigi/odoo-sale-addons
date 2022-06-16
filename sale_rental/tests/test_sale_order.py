@@ -63,6 +63,23 @@ class TestSaleOrder(SaleOrderCase):
         super().setUpClass()
         cls.order.action_confirm()
 
+    def test_stock_move__is_ongoing_rental(self):
+        move = self.get_rental_move(self.line_1)
+        return_move = self.get_return_move(self.line_1)
+
+        assert not move.is_ongoing_rental
+        assert not return_move.is_ongoing_rental
+
+        self.deliver_product(self.line_1)
+
+        assert move.is_ongoing_rental
+        assert not return_move.is_ongoing_rental
+
+        self.return_product(self.line_1)
+
+        assert not move.is_ongoing_rental
+        assert not return_move.is_ongoing_rental
+
     def test_rental_move_product(self):
         rental_move_1 = self.get_rental_move(self.line_1)
         assert rental_move_1.product_id == self.product_1
