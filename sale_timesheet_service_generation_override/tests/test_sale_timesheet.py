@@ -30,6 +30,7 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
         4. add new SO line (ordered service)
         5. create new invoice
         """
+
         # create SO and confirm it
         sale_order = self.env["sale.order"].create(
             {
