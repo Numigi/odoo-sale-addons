@@ -244,13 +244,21 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
         self.assertEqual(
             len(sale_order.invoice_ids), 2, "A second invoice should have been created from the SO"
         )
-        self.assertTrue(
-            float_is_zero(
-                invoice2.amount_total - so_line_ordered_task_new_project.price_unit * 3,
-                precision_digits=2,
-            ),
-            "Sale: invoice generation on timesheets product is wrong",
-        )
+
+        invoice2_amount_total = invoice2.amount_total
+        so_line_ordered_task_new_project_amount_total = so_line_ordered_task_new_project.price_unit * 3
+        if invoice2_amount_total.is_integer() and so_line_ordered_task_new_project_amount_total.is_integer():
+            self.assertTrue((int(invoice2_amount_total) - int(so_line_ordered_task_new_project_amount_total)) == 0,
+                "Sale: invoice generation on timesheets product is wrong",
+            )
+        else:
+            self.assertTrue(
+                float_is_zero(
+                    invoice2.amount_total - so_line_ordered_task_new_project.price_unit * 3,
+                    precision_digits=2,
+                ),
+                "Sale: invoice generation on timesheets product is wrong",
+            )
 
         self.assertFalse(
             timesheet1.timesheet_invoice_id,
@@ -427,13 +435,20 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
         # invoice SO
         invoice_id1 = sale_order.action_invoice_create()
         invoice1 = self.env["account.invoice"].browse(invoice_id1)
-        self.assertTrue(
-            float_is_zero(
-                invoice1.amount_total - so_line_deliver_global_project.price_unit * 10.5,
-                precision_digits=2,
-            ),
+        invoice1_amount_total = invoice1.amount_total
+        so_line_deliver_global_project_amount_total = so_line_deliver_global_project.price_unit * 10.5
+        if invoice1_amount_total.is_integer() and so_line_deliver_global_project_amount_total.is_integer():
+            self.assertTrue((int(invoice1_amount_total) - int(so_line_deliver_global_project_amount_total)) == 0,
             "Sale: invoice generation on timesheets product is wrong",
-        )
+            )
+        else:
+            self.assertTrue(
+                float_is_zero(
+                    invoice1.amount_total - so_line_deliver_global_project.price_unit * 10.5,
+                    precision_digits=2,
+                ),
+                "Sale: invoice generation on timesheets product is wrong",
+            )
         self.assertEqual(
             timesheet1.timesheet_invoice_id,
             invoice1,
