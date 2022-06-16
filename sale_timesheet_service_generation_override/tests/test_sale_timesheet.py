@@ -39,6 +39,7 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
                 "pricelist_id": self.pricelist_usd.id,
             }
         )
+
         so_line_ordered_project_only = self.env["sale.order.line"].create(
             {
                 "name": self.product_order_timesheet4.name,
