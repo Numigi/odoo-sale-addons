@@ -28,8 +28,8 @@ class Product(models.Model):
     def _search(self, args, *args_, **kwargs):
         is_rental_sale_order = self._context.get("is_rental_sale_order")
 
-        if is_rental_sale_order is not None and _should_filter_products(self.env):
-            args = AND([args or [], [("can_be_rented", "=", is_rental_sale_order)]])
+        if is_rental_sale_order and _should_filter_products(self.env):
+            args = AND([args or [], [("can_be_rented", "=", True)]])
 
         return super()._search(args, *args_, **kwargs)
 
