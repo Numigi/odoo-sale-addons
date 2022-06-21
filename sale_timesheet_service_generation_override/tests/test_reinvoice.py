@@ -461,7 +461,7 @@ class TestReInvoice(TestCommonSaleTimesheetNoChart):
         )
 
         # create second invoice lines and validate it
-        invoice_lineB1 = self.env["account.invoice.line"].create(
+        self.env["account.invoice.line"].create(
             {
                 "name": self.product_deliver_sales_price.name,
                 "product_id": self.product_deliver_sales_price.id,

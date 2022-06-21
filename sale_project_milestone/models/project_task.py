@@ -1,7 +1,7 @@
 # © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, api
+from odoo import models, api
 
 
 class ProjectTask(models.Model):
@@ -17,7 +17,7 @@ class ProjectTask(models.Model):
     @api.multi
     def write(self, vals):
         res = super(ProjectTask, self).write(vals)
-        if not "sale_line_id" in vals and "milestone_id" in vals and vals["milestone_id"]:
+        if "sale_line_id" not in vals and "milestone_id" in vals and vals["milestone_id"]:
             self._update_milestone_sale_line_id()
         return res
 

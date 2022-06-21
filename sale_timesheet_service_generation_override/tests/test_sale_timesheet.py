@@ -248,7 +248,11 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
         )
         self.assertTrue(
             float_is_zero(
-                invoice2.amount_total - so_line_ordered_task_new_project.price_unit * 3,
+                invoice2.amount_total
+                - (
+                    (so_line_ordered_task_new_project.price_unit * 3)
+                    * (1 + (sum(so_line_ordered_task_new_project.tax_id.mapped("amount")) / 100))
+                ),
                 precision_digits=2,
             ),
             "Sale: invoice generation on timesheets product is wrong",
@@ -431,7 +435,11 @@ class TestSaleTimesheet(TestCommonSaleTimesheetNoChart):
         invoice1 = self.env["account.invoice"].browse(invoice_id1)
         self.assertTrue(
             float_is_zero(
-                invoice1.amount_total - so_line_deliver_global_project.price_unit * 10.5,
+                invoice1.amount_total
+                - (
+                    (so_line_deliver_global_project.price_unit * 10.5)
+                    * (1 + (sum(so_line_deliver_global_project.tax_id.mapped("amount")) / 100))
+                ),
                 precision_digits=2,
             ),
             "Sale: invoice generation on timesheets product is wrong",

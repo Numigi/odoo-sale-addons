@@ -4,7 +4,6 @@
 import json
 
 from odoo import fields, models, api
-from lxml import etree
 
 
 class ProjectMilestone(models.Model):
