@@ -60,7 +60,7 @@ class TestProductSearch(common.SavepointCase):
 
     def test_search__not_rental_order(self):
         context = {"is_rental_sale_order": False}
-        assert not self._search(context)
+        assert self._search(context)
 
     def test_search__not_rental_order__not_rental_product(self):
         context = {"is_rental_sale_order": False}

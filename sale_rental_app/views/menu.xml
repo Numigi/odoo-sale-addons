@@ -266,29 +266,39 @@
         sequence="36"
     />
 
-    <record id="stock_quant_rented_action" model="ir.actions.act_window">
+    <record id="rented_stock_action" model="ir.actions.act_window">
         <field name="name">Rented Stock</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">stock.quant</field>
-        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
         <field name="view_type">form</field>
+        <field name="search_view_id" ref="stock_move_line_search"/>
         <field name="domain">
             [
-                ('location_id.is_rental_customer_location','=',True),
+                ('move_id.is_ongoing_rental', '=', True),
             ]
-        </field>
-        <field name="context">
-            {
-                'search_default_productgroup': 1,
-            }
         </field>
     </record>
 
+    <record id="rented_stock_action_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="stock_move_line_rented_tree"/>
+        <field name="act_window_id" ref="rented_stock_action"/>
+    </record>
+
+    <record id="rented_stock_action_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_move_line_rented_form"/>
+        <field name="act_window_id" ref="rented_stock_action"/>
+    </record>
+
     <menuitem
-        id="rental_product_rented_unit_menu"
+        id="rented_stock_menu"
         name="Rented Stock"
         parent="rental_product_menu"
-        action="stock_quant_rented_action"
+        action="rented_stock_action"
         sequence="38"
     />
 
