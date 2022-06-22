@@ -190,11 +190,7 @@ Since version ``1.1.0`` of the module, a new configuration parameter is availabl
 
 .. image:: static/description/product_filter_config.png
 
-When the box is checked, only products with the box ``Can be Rented`` checked can be selected on rental orders.
-
-.. image:: static/description/rental_sale_order_with_product_filter.png
-
-Also, when the box is checked, products with ``Can be Rented`` unchecked can not be selected on non-rental orders.
+When the box is checked, products with the box ``Can be Rented`` checked are not selectable on non-rental orders.
 
 Contributors
 ------------
