@@ -28,12 +28,15 @@ class Product(models.Model):
     def _search(self, args, *args_, **kwargs):
         is_rental_sale_order = self._context.get("is_rental_sale_order")
 
-        if is_rental_sale_order and _should_filter_products(self.env):
+        if _should_filter_on_sales_orders(self.env):
+            args = AND([args or [], [("can_be_rented", "=", is_rental_sale_order)]])
+
+        elif is_rental_sale_order:
             args = AND([args or [], [("can_be_rented", "=", True)]])
 
         return super()._search(args, *args_, **kwargs)
 
 
-def _should_filter_products(env):
+def _should_filter_on_sales_orders(env):
     value = env["ir.config_parameter"].sudo().get_param(FILTER_PRODUCTS_ON_ORDERS)
     return value == "True"

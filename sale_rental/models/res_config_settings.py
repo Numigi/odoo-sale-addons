@@ -11,6 +11,6 @@ class ResConfigSettings(models.TransientModel):
 
     rental_buffer = fields.Integer(related="company_id.rental_buffer", readonly=False)
     rental_filter_products_on_orders = fields.Boolean(
-        string="Filter Rental Products on Orders",
+        string="Filter Rental Products on Sales Orders",
         config_parameter=FILTER_PRODUCTS_ON_ORDERS,
     )

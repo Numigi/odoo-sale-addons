@@ -26,7 +26,18 @@
                         <div class="o_setting_right_pane">
                             <label for="rental_filter_products_on_orders"/>
                             <div class="text-muted">
-                                Only products of type "can be rented" can be selected in rental orders
+                                <p>
+                                    If checked, rentable products are selectable on rental orders only.
+                                </p>
+                                <p>
+                                    If unchecked, rentable products can be selected on rental and non-rental orders.
+                                </p>
+                                <p>
+                                    In both cases, non-rentable products are not selectable on rental orders.
+                                </p>
+                                <p>
+                                    In both cases, non-saleable products are not selectable on any type of order.
+                                </p>
                             </div>
                         </div>
                     </div>
