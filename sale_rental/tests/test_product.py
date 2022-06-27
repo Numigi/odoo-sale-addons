@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
+from ddt import ddt, data
 from odoo.tests import common
 from odoo.exceptions import ValidationError
 from ..models.product_product import FILTER_PRODUCTS_ON_ORDERS
@@ -35,47 +36,42 @@ class TestProduct(common.SavepointCase):
             self.rental_service.uom_id = self.uom_hour
 
 
+@ddt
 class TestProductSearch(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env["ir.config_parameter"].set_param(
-            FILTER_PRODUCTS_ON_ORDERS, "True"
-        )
-        cls.product = cls.env["product.product"].create(
-            {
-                "name": "My Rented Product",
-                "can_be_rented": True,
-            }
-        )
+        cls.product = cls.env["product.product"].create({"name": "My Rented Product"})
 
-    def test_search__rental_order(self):
-        context = {"is_rental_sale_order": True}
-        assert self._search(context)
-
-    def test_search__rental_order__not_rental_product(self):
-        context = {"is_rental_sale_order": True}
-        self.product.can_be_rented = False
-        assert not self._search(context)
-
-    def test_search__not_rental_order(self):
-        context = {"is_rental_sale_order": False}
-        assert not self._search(context)
-
-    def test_search__not_rental_order__not_rental_product(self):
-        context = {"is_rental_sale_order": False}
-        self.product.can_be_rented = False
-        assert self._search(context)
-
-    def test_search__context_variable_not_defined(self):
-        assert self._search({})
-
-    def test_system_parameter_deactivated(self):
+    @data(
+        (True, False, False),
+        (True, True, True),
+        (False, False, True),
+        (False, True, False),
+    )
+    def test_filter_on_sales_orders_activated(self, args):
         self.env["ir.config_parameter"].set_param(
-            FILTER_PRODUCTS_ON_ORDERS, "False"
+            FILTER_PRODUCTS_ON_ORDERS, "True",
         )
-        context = {"is_rental_sale_order": False}
-        assert self._search(context)
+        self.product.can_be_rented = args[0]
+        context = {"is_rental_sale_order": args[1]}
+        product = self._search(context)
+        assert bool(product) is args[2]
+
+    @data(
+        (True, False, True),
+        (True, True, True),
+        (False, False, True),
+        (False, True, False),
+    )
+    def test_filter_on_sales_orders_deactivated(self, args):
+        self.env["ir.config_parameter"].set_param(
+            FILTER_PRODUCTS_ON_ORDERS, "False",
+        )
+        self.product.can_be_rented = args[0]
+        context = {"is_rental_sale_order": args[1]}
+        product = self._search(context)
+        assert bool(product) is args[2]
 
     def _search(self, context):
         return (

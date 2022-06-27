@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 19:49+0000\n"
-"PO-Revision-Date: 2022-05-31 15:50-0400\n"
+"POT-Creation-Date: 2022-06-23 13:23+0000\n"
+"PO-Revision-Date: 2022-06-23 09:28-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -102,8 +102,40 @@ msgstr "Date de retour attendue"
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_res_config_settings__rental_filter_products_on_orders
-msgid "Filter Rental Products on Orders"
-msgstr "Filtrer sur les articles de location dans les commandes"
+msgid "Filter Rental Products on Sales Orders"
+msgstr "Filtrer sur les articles de location dans les commandes de vente"
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
+msgid "If checked, rentable products are selectable on rental orders only."
+msgstr ""
+"Si coché, les articles pouvant être loués peuvent seulement être "
+"sélectionnés dans des commandes de location."
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
+msgid ""
+"If unchecked, rentable products can be selected on rental and non-rental "
+"orders."
+msgstr ""
+"Si non coché, les articles pouvant être loués peuvent être sélectionnés dans "
+"des commandes de location et des commandes de vente."
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
+msgid ""
+"In both cases, non-rentable products are not selectable on rental orders."
+msgstr ""
+"Dans les deux cas, les articles qui ne peuvent pas être loués ne sont pas "
+"sélectionnables dans des commandes de location."
+
+#. module: sale_rental
+#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
+msgid ""
+"In both cases, non-saleable products are not selectable on any type of order."
+msgstr ""
+"Dans les deux cas, les articles qui ne peuvent pas être vendus ne sont pas "
+"sélectionnables dans des commandes de vente ou de location."
 
 #. module: sale_rental
 #: model:ir.model.fields,field_description:sale_rental.field_stock_move__is_ongoing_rental
@@ -150,14 +182,6 @@ msgstr "Manuel"
 #: model:ir.model.fields,field_description:sale_rental.field_sale_order_line__qty_delivered_method
 msgid "Method to update delivered qty"
 msgstr "Appliquer des routes spécifiques"
-
-#. module: sale_rental
-#: model_terms:ir.ui.view,arch_db:sale_rental.rental_settings
-msgid ""
-"Only products of type \"can be rented\" can be selected in rental orders"
-msgstr ""
-"Seuls les articles de type \"Peut être loué\" pourront être sélectionné dans "
-"la commande"
 
 #. module: sale_rental
 #: model:ir.ui.menu,name:sale_rental.rental_order_menu
