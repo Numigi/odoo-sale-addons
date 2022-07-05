@@ -36,7 +36,7 @@ class SaleOrderLine(models.Model):
         )
 
         for move in moves_done:
-            is_delivery = move.location_dest_id.usage in ("customer", "supplier")
+            is_delivery = _is_delivery_move(move)
             if is_delivery:
                 if not move.origin_returned_move_id or (
                     move.origin_returned_move_id and move.to_refund
@@ -50,3 +50,16 @@ class SaleOrderLine(models.Model):
                 )
 
         return qty
+
+
+def _is_delivery_move(move):
+    """Check whether the move is a stock return
+
+    Stock moves to supplier locations are deliveries,
+    except in the case of a dropship return.
+    """
+    origin_usage = move.location_id.usage
+    destination_usage = move.location_dest_id.usage
+    return destination_usage == "customer" or (
+        destination_usage == "supplier" and origin_usage != "customer"
+    )
