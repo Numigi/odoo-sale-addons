@@ -6,9 +6,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
         <field name="arch" type="xml">
-            <field name="margin" position="after">
+            <xpath expr="//group[@name='sale_total']//field[@name='margin']" position="after">
                 <field name="margin_percent" string="Margin (%)" widget="percentage"/>
-            </field>
+            </xpath>
         </field>
     </record>
 
@@ -18,7 +18,7 @@
         <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="after">
-                <field name="margin_percent" string="Margin" widget="percentage"/>
+                <field name="margin_percent" string="Margin (%)" widget="percentage"/>
             </xpath>
         </field>
     </record>
@@ -28,8 +28,8 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="after">
-                <field name="margin_percent" string="Margin" widget="percentage"/>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="before">
+                <field name="margin_percent" string="Margin (%)" widget="percentage"/>
             </xpath>
         </field>
     </record>
