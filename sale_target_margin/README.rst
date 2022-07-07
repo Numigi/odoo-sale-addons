@@ -4,13 +4,13 @@ Sale Target Margin
 Overview
 ---------
 
-This module allows to manage acceptable sale margins.
+This module allows to manage target sales margins.
 
 Description
 -----------
 
-The module allows to determine, on a category of articles, a minimum and maximum target margin.
-On the sale order lines, the margin (%) will change color according to the minimum and maximum target margin.
+The module allows to determine, on a Product Category, a minimum and maximum target margin.
+On the Sale Order Lines, the Margin (%) will change color according to the minimum and maximum target margin defined.
 Color indicators are:
 
 ** Green: a sale price for which the margin (%) is higher than the defined maximum target margin.
@@ -20,17 +20,18 @@ Color indicators are:
 Usage
 ------
 
-1- Go to the form view of an article category.
+1- Go to the form view of Product Category.
 A new Sales section is present with the following 2 fields:
 
-** Max. Target Margin
 ** Min. Target Margin
+** Max. Target Margin
 
-Set the 2 fields, The set minimum margin must be lower than the set maximum margin.
+Set the 2 fields. The set minimum margin must be lower than the set maximum margin.
 
 .. image:: static/description/target_margin.png
 
-2- Create a sale order with lines, the target (%) color will be changed
+2- Create a Sale Order, add a Product and define a Sale Price.  
+The Margin (%) field will take the appropriate color based on the Target Margin defined on the Category of the Product.
 
 .. image:: static/description/margin_percentage_colored.png
 
