@@ -13,9 +13,9 @@ It allows to display the line in form view instead of editable list view.
 
 Usage
 -----
-* Go to a sale order and click on the `Edit` button.
+* Go to a sale order and click on the ``Edit`` button.
 * Add or update a sale order line.
-* The sale order line displayed in form view instead of editable tree view.
+* The sale order line is displayed in form view instead of editable tree view.
 
 .. image:: static/description/sale_order_line_form_view.png
 
