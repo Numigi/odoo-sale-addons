@@ -18,6 +18,6 @@ USER odoo
 
 COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
-
+COPY .docker_files/numigi_test_crm_minoumissek /mnt/extra-addons/numigi_test_crm_minoumissek
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo

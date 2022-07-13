@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "numigi_test_crm_minoumissek",
         "sale_invoice_group_by_order",
         "sale_xmlrpc_compatible",
     ],
