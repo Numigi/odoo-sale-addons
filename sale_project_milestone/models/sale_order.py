@@ -17,7 +17,6 @@ class SaleOrder(models.Model):
     @api.multi
     @api.depends("milestone_ids")
     def _get_milestone_count(self):
-
         for order in self:
             order.milestone_count = len(order.milestone_ids)
 

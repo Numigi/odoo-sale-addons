@@ -19,7 +19,6 @@
         "views/product.xml",
         "views/project_milestone.xml",
         "views/sale.xml",
-        "views/project.xml",
     ],
     "installable": True,
 }

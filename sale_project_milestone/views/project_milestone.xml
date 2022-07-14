@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <odoo>
 
     <record id="project_milestone_sale_form" model="ir.ui.view">
