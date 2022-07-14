@@ -14,6 +14,20 @@ class SaleOrderLine(models.Model):
         index=True,
     )
 
+    @api.multi
+    def write(self, vals):
+        res = super().write(vals)
+
+        if "product_uom_qty" in vals:
+            self._update_milestone_estimated_hours()
+
+        return res
+
+    @api.multi
+    def _update_milestone_estimated_hours(self):
+        for line in self.filtered("milestone_id"):
+            line.milestone_id.estimated_hours = line._convert_qty_company_hours()
+
     def _timesheet_service_generation(self):
         lines_existing_project = self.filtered(
             lambda l: l.is_service
@@ -41,6 +55,10 @@ class SaleOrderLine(models.Model):
         vals = self._get_milestone_new_project_vals()
         self.milestone_id = self._create_milestone(vals)
 
+        template = self.product_id.milestone_template_id
+        if template:
+            self._copy_tasks_from_milestone_template(template)
+
     def _get_milestone_existing_project_vals(self):
         vals = self._get_milestone_common_vals()
         vals["project_id"] = self.product_id.project_id.id
@@ -61,6 +79,41 @@ class SaleOrderLine(models.Model):
     def _create_milestone(self, vals):
         return self.env["project.milestone"].create(vals)
 
+    def _copy_tasks_from_milestone_template(self, template):
+        for task in template.project_task_ids:
+            self._copy_milestone_task(task)
+
+    def _copy_milestone_task(self, template_task):
+        vals = self._get_milestone_task_vals(template_task)
+        task = template_task.copy(vals)
+
+        for template_subtask in template_task.child_ids:
+            vals = self._get_milestone_subtask_vals(template_subtask)
+            vals["parent_id"] = task.id
+            subtask = template_subtask.copy(vals)
+
+        return task
+
+    def _get_milestone_task_vals(self, task):
+        vals = self._get_milestone_task_common_vals(task)
+        vals["milestone_id"] = self.milestone_id.id
+        return vals
+
+    def _get_milestone_subtask_vals(self, subtask):
+        vals = self._get_milestone_task_common_vals(subtask)
+        return vals
+
+    def _get_milestone_task_common_vals(self, task):
+        return {
+            "name": task.name,
+            "partner_id": self.order_id.partner_id.id,
+            "email_from": self.order_id.partner_id.email,
+            "project_id": self.milestone_id.project_id.id,
+            "sale_line_id": self.id,
+            "company_id": self.company_id.id,
+            "user_id": False,
+        }
+
     def _setup_new_project(self):
         project = self._find_project_matching_template()
 
@@ -77,70 +130,3 @@ class SaleOrderLine(models.Model):
                 == self.product_id.project_template_id
             ):
                 return line.project_id
-
-    #    @api.multi
-    #    def write(self, vals):
-    #        res = super().write(vals)
-    #
-    #        if "product_uom_qty" in vals:
-    #            self._update_estimated_hours()
-    #
-    #        return res
-    #
-    #    @api.multi
-    #    def _update_estimated_hours(self):
-    #        for sol in self.filtered("milestone_id"):
-    #            sol.milestone_id.estimated_hours = sol._convert_qty_company_hours()
-    #
-    #    @api.multi
-    #    def _values_create_milestone(self, product, project):
-    #        return {
-    #            "name": "%s" % product.name,
-    #            "project_id": project.id,
-    #            "sale_line_id": self.id,
-    #            "estimated_hours": self._convert_qty_company_hours(),
-    #        }
-    #
-    #    @api.multi
-    #    def _create_milestone_tasks(self, template_tasks, project, milestone):
-    #        defaults = self._values_create_milestone_tasks(project, milestone)
-    #        parents = {}
-    #        child_tasks = {}
-    #
-    #        for task in template_tasks:
-    #            parents, child_tasks = self._create_milestone_parent_tasks(
-    #                defaults, task, parents, child_tasks
-    #            )
-    #
-    #        for task, parent_task in child_tasks.items():
-    #            defaults.update({"name": task.name, "parent_id": parents[parent_task]})
-    #            task.copy(defaults)
-    #
-    #    @api.multi
-    #    def _values_create_milestone_tasks(self, project, milestone):
-    #        sale_line_name_parts = self.name.split("\n")
-    #        partner = self.order_id.partner_id
-    #        return {
-    #            "project_id": project.id,
-    #            "sale_line_id": self.id,
-    #            "partner_id": partner.id,
-    #            "email_from": partner.email,
-    #            "milestone_id": milestone.id,
-    #            "user_id": False,
-    #            "email_cc": False,
-    #            "company_id": self.company_id.id,
-    #            "description": "<br/>".join(sale_line_name_parts[1:]),
-    #        }
-    #
-    #    @api.multi
-    #    def _create_milestone_parent_tasks(self, defaults, task, parents, child_tasks):
-    #        parent = task.parent_id
-    #
-    #        if not parent:
-    #            defaults["name"] = task.name
-    #            parents[task] = task.copy(defaults).id
-    #
-    #        else:
-    #            child_tasks[task] = parent
-    #
-    #        return parents, child_tasks

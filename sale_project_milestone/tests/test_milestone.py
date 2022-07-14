@@ -35,6 +35,14 @@ class TestMilestone(SavepointCase):
             }
         )
 
+        cls.subtask = cls.env["project.task"].create(
+            {
+                "name": "My Subtask",
+                "project_id": cls.project.id,
+                "parent_id": cls.task.id,
+            }
+        )
+
         cls.product = cls.env["product.product"].create(
             {
                 "name": "My Product",
@@ -218,3 +226,45 @@ class TestMilestone(SavepointCase):
         assert line_2.project_id
         assert line_1.project_id == line_2.project_id
 
+    def test_template_milestone_with_tasks(self):
+        self.product.write(
+            {
+                "service_tracking": "milestone_new_project",
+                "project_id": self.project.id,
+                "milestone_template_id": self.milestone_template.id,
+            }
+        )
+        self.task.milestone_id = self.milestone_template
+
+        self.order.action_confirm()
+        assert not self.order_line.task_id
+
+        milestone = self.order_line.milestone_id
+        assert milestone
+
+        task = milestone.project_task_ids
+        assert task
+        assert task != self.task
+        assert task.name == self.task.name
+        assert task.sale_line_id == self.order_line
+
+        subtask = task.child_ids
+        assert subtask
+        assert subtask != self.subtask
+        assert subtask.name == self.subtask.name
+        assert subtask.sale_line_id == self.order_line
+
+    def test_change_quantity(self):
+        self.product.write(
+            {
+                "service_tracking": "milestone_existing_project",
+                "project_id": self.project.id,
+            }
+        )
+        self.order.action_confirm()
+
+        milestone = self.order_line.milestone_id
+        assert milestone.estimated_hours == self.number_of_hours
+
+        self.order_line.product_uom_qty = 9
+        assert milestone.estimated_hours == 9
