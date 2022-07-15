@@ -11,7 +11,13 @@
     "summary": "",
     "depends": ["crm","website_crm"],
     "data": [
-        # "views/res_config_settings_views.xml"
+        "views/crm_team.xml",
+        "views/crm_lead_views.xml",
+
+        'data/data_crm_team.xml',
+        'data/data_res_config.xml',
+        'data/service_cron.xml',
+
         ],
     "installable": True,
 }

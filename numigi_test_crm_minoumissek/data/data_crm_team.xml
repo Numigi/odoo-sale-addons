@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+        <!--  Les équipes commerciales -->
+        <record id="crm_team_equip_tech" model="crm.team">
+            <field name="sequence">1</field>
+            <field name="name">Équipe Support Technique</field>
+            <field name="id">1</field>
+        </record>
+        <record id="crm_team_equip_vent" model="crm.team">
+            <field name="sequence">2</field>
+            <field name="name"> Équipe ventes</field>
+            <field name="id">2</field>
+        </record>
+        <record id="crm_team_equip_sav" model="crm.team">
+            <field name="sequence">3</field>
+            <field name="name">Équipe SAV</field>
+            <field name="id">3</field>
+        </record>
+
+    </data>
+</odoo>

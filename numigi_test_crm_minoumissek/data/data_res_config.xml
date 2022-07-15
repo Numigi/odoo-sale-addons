@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+        <function model="ir.config_parameter" name="set_param" eval="('crm.group_use_lead', 'True')"/>
+        <function model="ir.config_parameter" name="set_param" eval="('crm.generate_lead_from_alias', 'True')"/>
+    </data>
+</odoo>
