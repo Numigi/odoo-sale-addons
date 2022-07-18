@@ -3,14 +3,13 @@
 
 {
     "name": "Sale Project Milestone",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": """Add two new service tracking products to generate or update milestones
-    generated from a sale order line of a confirmed sale_order""",
+    "summary": "Generate project milestones from sales orders",
     "depends": [
         "project_milestone_estimated_hours",
         "sale_timesheet",

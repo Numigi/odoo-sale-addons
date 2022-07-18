@@ -133,6 +133,6 @@ msgstr "Tâche"
 #: code:addons/sale_project_milestone/models/product_product.py:43
 #: code:addons/sale_project_milestone/models/product_template.py:58
 #, python-format
-msgid "You can't select simultaneously project template and milestone template."
+msgid "You can not simultaneously select a project template and a milestone template."
 msgstr "Vous ne pouvez pas sélectionner simultanément un modèle de projet et un modèle de jalon."
 
