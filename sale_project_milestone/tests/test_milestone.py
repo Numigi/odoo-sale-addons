@@ -47,6 +47,8 @@ class TestMilestone(SavepointCase):
             {
                 "name": "My Product",
                 "type": "service",
+                "uom_id": cls.uom_hour.id,
+                "uom_po_id": cls.uom_hour.id,
             }
         )
         cls.product_2 = cls.product.copy()
