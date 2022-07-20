@@ -85,6 +85,7 @@ class TestMilestone(SavepointCase):
         assert milestone
         assert milestone.project_id == self.project
         assert milestone.estimated_hours == self.number_of_hours
+        assert milestone.sale_line_id == self.order_line
 
     def test_milestone_in_new_project(self):
         self.product.write(
@@ -105,6 +106,19 @@ class TestMilestone(SavepointCase):
         assert project == milestone.project_id
         assert project != self.project_template
         assert self.project_template.name in project.name
+        assert project.use_milestones
+
+    def test_tasks_not_duplicated_in_new_project(self):
+        self.product.write(
+            {
+                "service_tracking": "milestone_new_project",
+                "project_template_id": self.project_template.id,
+            }
+        )
+        self.task.project_id = self.project_template
+        self.order.action_confirm()
+        project = self.order_line.project_id
+        assert not project.tasks
 
     def test_two_milestones_in_same_project(self):
         self.product.write(
@@ -235,6 +249,7 @@ class TestMilestone(SavepointCase):
             }
         )
         self.task.milestone_id = self.milestone_template
+        self.subtask.milestone_id = self.milestone_template
 
         self.order.action_confirm()
         assert not self.order_line.task_id
@@ -242,7 +257,7 @@ class TestMilestone(SavepointCase):
         milestone = self.order_line.milestone_id
         assert milestone
 
-        task = milestone.project_task_ids
+        task = milestone.project_task_ids.filtered(lambda t: not t.parent_id)
         assert task
         assert task != self.task
         assert task.name == self.task.name
@@ -253,6 +268,7 @@ class TestMilestone(SavepointCase):
         assert subtask != self.subtask
         assert subtask.name == self.subtask.name
         assert subtask.sale_line_id == self.order_line
+        assert subtask.milestone_id == milestone
 
     def test_change_quantity(self):
         self.product.write(
@@ -268,3 +284,20 @@ class TestMilestone(SavepointCase):
 
         self.order_line.product_uom_qty = 9
         assert milestone.estimated_hours == 9
+
+    def test_change_milestone_on_task(self):
+        self.product.write(
+            {
+                "service_tracking": "milestone_existing_project",
+                "project_id": self.project.id,
+            }
+        )
+        self.order.action_confirm()
+
+        milestone = self.order_line.milestone_id
+
+        task = self.env["project.task"].new({})
+        task.milestone_id = milestone
+        task._onchange_milestone_id_set_sale_order_line()
+
+        assert task.sale_line_id == self.order_line

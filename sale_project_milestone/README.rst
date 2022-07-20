@@ -38,7 +38,7 @@ The title of milestone is the description of the sales order line.
 
 Create milestone in new project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When selecting this option, you may either select a project template or a milestone template.
+When selecting this option, you may select a project template and / or a milestone template.
 
 .. image:: static/description/product_milestone_new_project.png
 
@@ -63,8 +63,6 @@ This behavior is coherent with the option ``Create a task in a new project``.
 Usage
 -----
 I create a new product with the option ``Create milestone in new project``.
-
-.. image:: static/description/product_milestone_existing_project.png
 
 I select a milestone template for this product.
 

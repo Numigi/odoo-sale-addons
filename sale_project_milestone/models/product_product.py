@@ -24,12 +24,3 @@ class ProductProduct(models.Model):
             self.milestone_template_id = False
 
         return res
-
-    @api.onchange("project_template_id", "milestone_template_id")
-    def _onchange_template_project_milestone(self):
-        if self.project_template_id and self.milestone_template_id:
-            raise ValidationError(
-                _(
-                    "You can not simultaneously select a project template and a milestone template."
-                )
-            )

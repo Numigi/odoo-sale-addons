@@ -15,9 +15,9 @@
         "sale_timesheet",
     ],
     "data": [
-        "views/product.xml",
+        "views/product_template.xml",
         "views/project_milestone.xml",
-        "views/sale.xml",
+        "views/sale_order.xml",
     ],
     "installable": True,
 }

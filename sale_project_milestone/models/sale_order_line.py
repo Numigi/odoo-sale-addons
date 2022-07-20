@@ -59,6 +59,8 @@ class SaleOrderLine(models.Model):
         if template:
             self._copy_tasks_from_milestone_template(template)
 
+        self.project_id.use_milestones = True
+
     def _get_milestone_existing_project_vals(self):
         vals = self._get_milestone_common_vals()
         vals["project_id"] = self.product_id.project_id.id
@@ -74,13 +76,17 @@ class SaleOrderLine(models.Model):
         return {
             "name": self.name,
             "estimated_hours": self._convert_qty_company_hours(),
+            "sale_line_id": self.id,
         }
 
     def _create_milestone(self, vals):
         return self.env["project.milestone"].create(vals)
 
     def _copy_tasks_from_milestone_template(self, template):
-        for task in template.project_task_ids:
+        all_tasks = template.project_task_ids
+        parent_tasks = all_tasks - all_tasks.mapped("child_ids")
+
+        for task in parent_tasks:
             self._copy_milestone_task(task)
 
     def _copy_milestone_task(self, template_task):
@@ -88,27 +94,19 @@ class SaleOrderLine(models.Model):
         task = template_task.copy(vals)
 
         for template_subtask in template_task.child_ids:
-            vals = self._get_milestone_subtask_vals(template_subtask)
+            vals = self._get_milestone_task_vals(template_subtask)
             vals["parent_id"] = task.id
             subtask = template_subtask.copy(vals)
 
         return task
 
     def _get_milestone_task_vals(self, task):
-        vals = self._get_milestone_task_common_vals(task)
-        vals["milestone_id"] = self.milestone_id.id
-        return vals
-
-    def _get_milestone_subtask_vals(self, subtask):
-        vals = self._get_milestone_task_common_vals(subtask)
-        return vals
-
-    def _get_milestone_task_common_vals(self, task):
         return {
             "name": task.name,
             "partner_id": self.order_id.partner_id.id,
             "email_from": self.order_id.partner_id.email,
             "project_id": self.milestone_id.project_id.id,
+            "milestone_id": self.milestone_id.id,
             "sale_line_id": self.id,
             "company_id": self.company_id.id,
             "user_id": False,
@@ -120,7 +118,7 @@ class SaleOrderLine(models.Model):
         if project:
             self.project_id = project
         else:
-            self._timesheet_create_project()
+            self.with_context(project_no_copy_tasks=True)._timesheet_create_project()
 
     def _find_project_matching_template(self):
         for line in self.order_id.order_line:

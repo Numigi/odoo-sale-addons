@@ -20,10 +20,7 @@
                 <field name="milestone_template_id"
                         attrs="{'invisible':[('service_tracking','!=','milestone_new_project')]}"
                         domain="[
-                            '&amp;',
                             ('sale_line_id', '=', False),
-                            '|',
-                            ('project_id', '=', False),
                             ('project_id.billable_type', '=', 'no'),
                         ]"
                         />

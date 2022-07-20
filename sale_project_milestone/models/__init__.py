@@ -5,6 +5,8 @@ from . import (
     product_template,
     product_product,
     project_milestone,
+    project_project,
+    project_task,
     sale_order,
     sale_order_line,
 )
