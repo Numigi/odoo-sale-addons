@@ -17,12 +17,11 @@ class SaleOrder(models.Model):
     @api.multi
     @api.depends("milestone_ids")
     def _get_milestone_count(self):
-
         for order in self:
             order.milestone_count = len(order.milestone_ids)
 
     @api.multi
-    def action_view_millestone(self):
+    def action_view_milestone(self):
         milestone_ids = self.milestone_ids.ids
         action = self.env.ref("project_milestone.project_milestone_action").read()[0]
 
@@ -30,7 +29,7 @@ class SaleOrder(models.Model):
             action["domain"] = [("id", "in", milestone_ids)]
 
         elif len(milestone_ids) == 1:
-            action = self._get_action_view_millestone(action)
+            action = self._get_action_view_milestone(action)
             action["res_id"] = milestone_ids[0]
 
         else:
@@ -39,7 +38,7 @@ class SaleOrder(models.Model):
         return action
 
     @api.multi
-    def _get_action_view_millestone(self, action):
+    def _get_action_view_milestone(self, action):
         form_view = [(self.env.ref("project_milestone.project_milestone_view_form").id, "form")]
 
         if "views" in action:

@@ -1,18 +1,15 @@
 # © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import api, models
 
 
 class ProjectTask(models.Model):
 
     _inherit = "project.task"
 
-    milestone_sale_line_id = fields.Many2one(
-        "sale.order.line",
-        string="Sale order's product",
-        related="milestone_id.sale_line_id",
-        index=True,
-        compute_sudo=True,
-        store=True,
-    )
+    @api.onchange("milestone_id")
+    def _onchange_milestone_id_set_sale_order_line(self):
+        sale_line = self.milestone_id.sale_line_id
+        if sale_line:
+            self.sale_line_id = sale_line
