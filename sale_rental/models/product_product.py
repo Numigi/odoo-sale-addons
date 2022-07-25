@@ -26,14 +26,9 @@ class Product(models.Model):
 
     @api.model
     def _search(self, args, *args_, **kwargs):
-        is_rental_sale_order = self._context.get("is_rental_sale_order")
-
         if _should_filter_on_sales_orders(self.env):
-            args = AND([args or [], [("can_be_rented", "=", is_rental_sale_order)]])
-
-        elif is_rental_sale_order:
-            args = AND([args or [], [("can_be_rented", "=", True)]])
-
+            if self._context.get("is_rental_sale_order"):
+                args = AND([args or [], [("can_be_rented", "=", True)]])
         return super()._search(args, *args_, **kwargs)
 
 
