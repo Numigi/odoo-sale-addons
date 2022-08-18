@@ -74,7 +74,7 @@ class SaleOrderLine(models.Model):
 
     def _get_milestone_common_vals(self):
         return {
-            "name": self.name,
+            "name": self.product_id.display_name,
             "estimated_hours": self._convert_qty_company_hours(),
             "sale_line_id": self.id,
         }
