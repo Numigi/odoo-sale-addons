@@ -19,6 +19,8 @@ class CrmLead(models.Model):
         readonly=True,
     )
 
+    zip = fields.Char('Zip', track_visibility='onchange', change_default=True)
+
     @api.depends("zip")
     def _compute_fsa_id(self):
         areas = {
