@@ -18,7 +18,7 @@ I notice a new field `Territories`. This field is computed based on the postal c
 
 .. image:: static/description/lead.png
 
-I Change Zip field value, the updated value is logged in chatter.
+I change the value of the ``Zip`` field, the updated value is logged in chatter.
 
 .. image:: static/description/log_zip_update_in_chatter.png
 
