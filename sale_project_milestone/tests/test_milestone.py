@@ -303,3 +303,18 @@ class TestMilestone(SavepointCase):
         task._onchange_milestone_id_set_sale_order_line()
 
         assert task.sale_line_id == self.order_line
+
+    def test_set_task_milestone_empty(self):
+        self.product.write(
+            {
+                "service_tracking": "milestone_existing_project",
+                "project_id": self.project.id,
+            }
+        )
+        self.order.action_confirm()
+        milestone = self.order_line.milestone_id
+        task = self.env["project.task"].new({})
+        task.milestone_id = milestone
+        task.milestone_id = False
+        assert not task.sale_line_id
+
