@@ -92,6 +92,11 @@ In the form view of a task, if I change the milestone, the related sales order l
 
 .. image:: static/description/task_form_milestone_changed.png
 
+Release
+-------
+Since version ``1.2.0`` of the module, we set False in the field sale order line if the milestone is removed from the task.
+Also the filter on the sale order line field is improved according to the project and the milestone associated with the task.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

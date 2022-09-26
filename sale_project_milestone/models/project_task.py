@@ -18,22 +18,16 @@ class ProjectTask(models.Model):
 
     @api.onchange("milestone_id")
     def _onchange_milestone_id_set_sale_order_line(self):
-        if not self.milestone_id:
-            self.sale_line_id = False
-        sale_line = self.milestone_id.sale_line_id
-        if sale_line:
-            self.sale_line_id = sale_line
-        else:
-            self.sale_line_id = False
+        self.sale_line_id = self.milestone_id.sale_line_id \
+            if self.milestone_id else False
 
     @api.onchange("milestone_id")
     def _onchange_domain_sale_line_id(self):
         # Compute sale_line_id domain using project's sale order
         if self.milestone_id:
             return {'domain':
-                    {'sale_line_id': [('milestone_id', '=',
-                      self.milestone_id.id)]
-                     }
+                    {'sale_line_id':
+                     [('milestone_id', '=', self.milestone_id.id)]}
                     }
         elif not self.milestone_id and self.project_id.sale_order_id:
             condition = [('order_id', '=', self.project_id.sale_order_id.id)]
