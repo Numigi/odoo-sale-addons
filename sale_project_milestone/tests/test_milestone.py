@@ -316,5 +316,5 @@ class TestMilestone(SavepointCase):
         task = self.env["project.task"].new({})
         task.milestone_id = milestone
         task.milestone_id = False
-        assert not task.sale_line_id
+        assert task.sale_line_id
 
