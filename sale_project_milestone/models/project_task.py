@@ -18,9 +18,10 @@ class ProjectTask(models.Model):
 
     @api.onchange("milestone_id")
     def _onchange_milestone_id_set_sale_order_line(self):
-        sale_line = self.milestone_id.sale_line_id
-        if sale_line:
-            self.sale_line_id = sale_line
+        if self.milestone_id :
+            sale_line = self.milestone_id.sale_line_id
+            if sale_line:
+                self.sale_line_id = sale_line
 
     @api.onchange("milestone_id")
     def _onchange_domain_sale_line_id(self):
