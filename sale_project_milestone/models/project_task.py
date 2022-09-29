@@ -28,8 +28,8 @@ class ProjectTask(models.Model):
         # Compute sale_line_id domain using project's sale order
         if self.milestone_id:
             return {'domain':
-                    {'sale_line_id': [('milestone_id', '=',
-                      self.milestone_id.id)]
+                    {'sale_line_id':
+                         [('milestone_id', '=',self.milestone_id.id)]
                      }
                     }
         elif not self.milestone_id and self.project_id.sale_order_id:
