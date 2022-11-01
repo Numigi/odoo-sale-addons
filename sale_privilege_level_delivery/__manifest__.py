@@ -11,6 +11,10 @@
     "category": "Sales",
     "summary": "Integrate privilege levels with carriers",
     "depends": ["sale_privilege_level", "delivery"],
-    "data": ["views/delivery_carrier.xml", "views/sale_privilege_level.xml"],
+    "data": [
+        "views/delivery_carrier.xml",
+        "views/sale_privilege_level.xml",
+        "views/res_partner.xml",
+    ],
     "installable": True,
 }
