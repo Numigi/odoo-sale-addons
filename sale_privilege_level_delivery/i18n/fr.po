@@ -28,6 +28,11 @@ msgid "Delivery Carriers"
 msgstr "Méthodes de livraison"
 
 #. module: sale_privilege_level_delivery
+#: model:ir.model.fields,field_description:sale_privilege_level_delivery.field_sale_privilege_level__default_delivery_carrier_id
+msgid "Default delivery carrier"
+msgstr "Méthode de livraison par défaut"
+
+#. module: sale_privilege_level_delivery
 #: model:ir.model,name:sale_privilege_level_delivery.model_delivery_carrier
 #: model_terms:ir.ui.view,arch_db:sale_privilege_level_delivery.sale_privilege_level_form
 msgid "Delivery Methods"

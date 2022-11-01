@@ -5,8 +5,12 @@ from odoo import fields, models
 
 
 class SalePrivilegeLevel(models.Model):
-
     _inherit = "sale.privilege.level"
+
+    default_delivery_carrier_id = fields.Many2one(
+        "delivery.carrier",
+        "Default delivery carrier",
+    )
 
     delivery_carrier_ids = fields.Many2many(
         "delivery.carrier",
