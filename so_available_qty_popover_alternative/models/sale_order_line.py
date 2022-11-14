@@ -20,7 +20,19 @@ class SaleOrderLine(models.Model):
     def _get_available_qty_for_popover(self):
         self.ensure_one()
         if self.product_id:
-            return self.product_id.get_warehouse_qty(self.order_id.warehouse_id)
+            res = self.product_id.with_context(
+                from_sale_order=True, is_rental_sale=self.order_id.is_rental,warehouse=self.order_id.warehouse_id.id
+            )._compute_quantities_dict(
+                self._context.get("lot_id"),
+                self._context.get("owner_id"),
+                self._context.get("package_id"),
+                self._context.get("from_date"),
+                self._context.get("to_date"),
+            )
+            return res.get(self.product_id.id).get("qty_available")
+        return self.product_id.with_context(company_owned=True).qty_available
+
+
 
     @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id")
     def _compute_available_qty_popover_color(self):

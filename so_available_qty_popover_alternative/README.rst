@@ -2,7 +2,7 @@ Sale Order Available Qty Popover Alternative
 ============================================
 This module compute the product sale order line availability based on the chosen sale warehouse .
 
-.. image:: static/description/sale_order.png
+.. image:: static/description/sale_order_warehouse.png
 
 .. image:: static/description/widget.png
 
