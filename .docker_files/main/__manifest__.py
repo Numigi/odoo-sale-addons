@@ -70,6 +70,7 @@
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
+        "sale_order_available_qty_popover_alternative",
         "web_view_google_map_itinerary",
         "website_event_message_unpublished",
         "website_payment_message_enhanced",
