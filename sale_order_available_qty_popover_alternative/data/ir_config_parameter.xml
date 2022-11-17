@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <function model="ir.config_parameter" name="set_param">
+        <value type="char">sale_order_available_qty_popover_alternative.so_popover_alternative</value>
+        <value type="char">True</value>
+    </function>
+
+</odoo>

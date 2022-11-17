@@ -12,6 +12,8 @@ RED = "#ee1010"
 class TestSaleOrderLine(TestSaleOrderLine):
 
     def create_order_and_get_line(self, qty, warehouse_id):
+        self.env["ir.config_parameter"].set_param(
+            'sale_order_available_qty_popover_alternative.so_popover_alternative', "True")
         sale_order = self.env["sale.order"].create(
             {
                 "partner_id": self.env.user.partner_id.id,

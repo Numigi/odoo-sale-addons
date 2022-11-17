@@ -3,6 +3,8 @@
 
 from odoo import api, fields, models
 
+ALMOST_OUT_OF_STOCK_PARAM = "sale_order_available_qty_popover.almost_out_of_stock_qty"
+SO_POPOVER_ALTER_PARAM = 'sale_order_available_qty_popover_alternative.so_popover_alternative'
 GREEN = "#246b03"
 YELLOW = "#fad817"
 RED = "#ee1010"
@@ -19,6 +21,10 @@ class SaleOrderLine(models.Model):
 
     def _get_available_qty_for_popover(self):
         self.ensure_one()
+        so_popover_alternative = self.env['ir.config_parameter'].sudo().get_param(
+            SO_POPOVER_ALTER_PARAM)
+        if not so_popover_alternative:
+            return self.product_id.with_context(company_owned=True).qty_available
         if self.product_id:
             res = self.product_id.with_context(
                 from_sale_order=True, is_rental_sale=self.order_id.is_rental,warehouse=self.order_id.warehouse_id.id
@@ -30,12 +36,33 @@ class SaleOrderLine(models.Model):
                 self._context.get("to_date"),
             )
             return res.get(self.product_id.id).get("qty_available")
-        return self.product_id.with_context(company_owned=True).qty_available
 
 
 
     @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id")
     def _compute_available_qty_popover_color(self):
+        so_popover_alternative = self.env['ir.config_parameter'].sudo().get_param(
+            SO_POPOVER_ALTER_PARAM)
+        if not so_popover_alternative:
+            return self._compute_color()
+        else:
+            return self._compute_alternative_color()
+
+    def _compute_color(self):
+        almost_out_of_stock = int(
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param(ALMOST_OUT_OF_STOCK_PARAM, 2)
+        )
+        for line in self:
+            if line.available_qty_for_popover > almost_out_of_stock:
+                line.available_qty_popover_color = GREEN
+            elif line.available_qty_for_popover:
+                line.available_qty_popover_color = YELLOW
+            else:
+                line.available_qty_popover_color = RED
+
+    def _compute_alternative_color(self):
         for line in self:
             if line.available_qty_for_popover >= line.product_uom_qty:
                 line.available_qty_popover_color = GREEN

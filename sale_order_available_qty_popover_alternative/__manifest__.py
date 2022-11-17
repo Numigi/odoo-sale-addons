@@ -11,7 +11,7 @@
     "category": "Sales",
     "summary": "Add a widget to view the available quantity of a product",
     "depends": ["sale_order_available_qty_popover", "sale_order_available_qty_popover_rental"],
-    "data": [],
+    "data": ['data/ir_config_parameter.xml'],
     "qweb": [],
     "installable": True,
 }
