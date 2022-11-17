@@ -3,6 +3,10 @@
 
 from odoo import api, fields, models
 
+import logging
+
+_logger = logging.getLogger(__name__)
+
 ALMOST_OUT_OF_STOCK_PARAM = "sale_order_available_qty_popover.almost_out_of_stock_qty"
 SO_POPOVER_ALTER_PARAM = "sale_order_available_qty_popover_alternative.so_popover_alternative"
 GREEN = "#246b03"
@@ -19,8 +23,11 @@ class SaleOrderLine(models.Model):
         for line in self:
             so_popover_alternative = self.env['ir.config_parameter'].sudo().get_param(
                 SO_POPOVER_ALTER_PARAM, False)
+            _logger.warn('SO_POPOVER_ALTER_PARAM:%s', so_popover_alternative)
+
             if so_popover_alternative:
                 line.available_qty_for_popover = line._get_available_qty_for_popover_alternative()
+                _logger.warn('value is %s', line._get_available_qty_for_popover_alternative())
             else:
                 line.available_qty_for_popover = line._get_available_qty_for_popover()
 
