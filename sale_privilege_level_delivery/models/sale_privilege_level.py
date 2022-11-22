@@ -7,9 +7,11 @@ from odoo import fields, models
 class SalePrivilegeLevel(models.Model):
     _inherit = "sale.privilege.level"
 
-    default_delivery_carrier_id = fields.Many2one(
+    default_delivery_carrier_id = fields.Many2oneb(
         "delivery.carrier",
-        "Default delivery carrier",
+        string="Default Delivery Method",
+        help="This field allows you to select, among the Delivery Methods defined for this privilege level,"
+             "the Delivery Method to be used by default for all partners belonging to this privilege level."
     )
 
     delivery_carrier_ids = fields.Many2many(
