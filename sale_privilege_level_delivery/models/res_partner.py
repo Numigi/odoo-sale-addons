@@ -23,4 +23,13 @@ class ResPartner(models.Model):
         else:
             self.property_delivery_carrier_id = False
 
+    @api.multi
+    def write(self, vals):
+        res = super(ResPartner, self).write(vals)
+        for partner in self:
+            if 'privilege_level_id' in vals:
+                privilege_level_id = self.env['sale.privilege.level'].browse(vals['privilege_level_id'])
+                partner.property_delivery_carrier_id = privilege_level_id.default_delivery_carrier_id.id
+        return res
+
 
