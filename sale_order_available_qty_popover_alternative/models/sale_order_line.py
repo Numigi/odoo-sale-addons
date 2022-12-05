@@ -36,7 +36,6 @@ class SaleOrderLine(models.Model):
         if self.product_id:
             res = self.product_id.with_context(
                     from_sale_order=True,
-                    is_rental_sale=self.order_id.is_rental,
                     warehouse=self.order_id.warehouse_id.id,
                 )._compute_quantities_dict(
                     self._context.get("lot_id"),
