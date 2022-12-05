@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Add a widget to view the available quantity of a product",
-    "depends": ["sale_order_available_qty_popover", "sale_order_available_qty_popover_rental"],
+    "depends": ["sale_order_available_qty_popover"],
     "data": ['views/res_config_settings.xml'],
     "qweb": [],
     "installable": True,
