@@ -4,7 +4,7 @@
     <record id="event_registration_form" model="ir.ui.view">
         <field name="name">Event Registration: add sale_order_status</field>
         <field name="model">event.registration</field>
-        <field name="inherit_id" ref="event_sale.view_event_registration_ticket_form"/>
+        <field name="inherit_id" ref="event_sale.event_registration_ticket_view_form"/>
         <field name="arch" type="xml">
             <field name="sale_order_id" position="after">
                 <field name="sale_order_state"/>

@@ -4,7 +4,6 @@
     <record id="action_confirmed_attendees" model="ir.actions.act_window">
         <field name="name">Confirmed Sale Orders</field>
         <field name="res_model">event.registration</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar,graph</field>
         <field name="context">{
             'default_event_id': active_id,
