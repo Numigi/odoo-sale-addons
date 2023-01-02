@@ -11,6 +11,9 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "crm_brand",
+        "delivery_carrier_fixed_over",
+        "event_sale_order_status",
         "sale_invoice_group_by_order",
         "sale_xmlrpc_compatible",
     ],

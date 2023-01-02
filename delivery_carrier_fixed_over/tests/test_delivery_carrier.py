@@ -1,4 +1,4 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests.common import SavepointCase
@@ -16,7 +16,7 @@ class TestDeliveryCarrier(SavepointCase):
         cls.delivery_product = cls.env["product.product"].create({"name": "Delivery"})
 
         cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer", "customer": True}
+            {"name": "My Customer", "customer_rank": 1}
         )
 
         cls.order = cls.env["sale.order"].create(

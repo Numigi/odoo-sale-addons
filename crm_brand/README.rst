@@ -2,7 +2,7 @@ CRM Brand
 =========
 This module adds product brands to leads and opportunities.
 
-.. image:: static/description/lead_form.png
+.. image:: crm_brand/static/description/lead_form.png
 
 Contributors
 ------------
