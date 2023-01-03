@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
@@ -9,7 +9,6 @@ class PricelistWithDynamicPrice(models.Model):
 
     _inherit = "product.pricelist"
 
-    @api.multi
     def _compute_price_rule(self, products_qty_partner, date=False, uom_id=False):
         """Apply the rounding and surcharge defined on dynamic products."""
         result = super()._compute_price_rule(

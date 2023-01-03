@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from ddt import data, ddt, unpack
@@ -11,17 +11,15 @@ class TestDynamicPrice(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.product = cls.env["product.product"].create(
-            {
+        vals_list = {
                 "name": "Product A",
                 "type": "product",
                 "price_type": "dynamic",
-                "minimum_margin": 0,
                 "margin": 0,
                 "price_rounding": 0,
                 "price_surcharge": 0,
             }
-        )
+        cls.product = cls.env["product.product"].create(vals_list)
 
     @data(
         # cost, margin, expected_margin_amount
@@ -37,7 +35,7 @@ class TestDynamicPrice(SavepointCase):
         self.product._onchange_set_margin_amount()
         self.product.refresh()
         assert float_round(self.product.margin_amount, 2) == expected_margin_amount
-
+    #
     @data(
         # cost, margin, rounding, surcharge, expected_price
         (100, 0.20, "1", 0, 125),

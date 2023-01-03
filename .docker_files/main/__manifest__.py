@@ -17,6 +17,7 @@
         "payment_auto_confirm_sale_order",
         "sale_default_term_on_company",
         "sale_delivery_completion",
+        "sale_dynamic_price",
         "sale_invoice_group_by_order",
         "sale_xmlrpc_compatible",
     ],

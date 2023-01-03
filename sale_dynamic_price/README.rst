@@ -10,7 +10,7 @@ As member of the group `Sales / Manager`, I go to the form view of a product.
 
 In the `General Information` tab, I find a new block of fields related to the price.
 
-.. image:: static/description/product_general_information_tab.png
+.. image:: sale_dynamic_price/static/description/product_general_information_tab.png
 
 The field `Price Type` allows 2 options:
 
@@ -30,7 +30,7 @@ The field `Price Type` allows 2 options:
 
 I select the option `Dynamic`.
 
-.. image:: static/description/product_with_dynamic_option.png
+.. image:: sale_dynamic_price/static/description/product_with_dynamic_option.png
 
 The sale price is now read-only and that 4 new fields have appeared:
 
@@ -45,7 +45,7 @@ The sale price is now read-only and that 4 new fields have appeared:
     * Decimal number (i.e. 0.30)
     * Percentage (i.e. 30%).
 
-.. image:: static/description/product_margin_field.png
+.. image:: sale_dynamic_price/static/description/product_margin_field.png
 
 2- Margin Amount
 
@@ -57,7 +57,7 @@ The sale price is now read-only and that 4 new fields have appeared:
 
         `Cost x ((1 / (1 - Margin) - 1))`
 
-.. image:: static/description/product_margin_amount_field.png
+.. image:: sale_dynamic_price/static/description/product_margin_amount_field.png
 
 3- Rounding
 
@@ -65,7 +65,7 @@ The sale price is now read-only and that 4 new fields have appeared:
 
     The `Rounding` is an amount used to round the sale price.
 
-.. image:: static/description/product_rounding_field.png
+.. image:: sale_dynamic_price/static/description/product_rounding_field.png
 
 4- Surcharge
 
@@ -75,7 +75,7 @@ The sale price is now read-only and that 4 new fields have appeared:
 
     It is added to the sale price to make it more marketing.
 
-.. image:: static/description/product_surcharge_field.png
+.. image:: sale_dynamic_price/static/description/product_surcharge_field.png
 
 Pricelists
 ----------
@@ -85,11 +85,11 @@ However, there are a few things to keep in mind when configuring a pricelist.
 
 The pricelist should be based on the `Public Price` so that the dynamic price is used.
 
-.. image:: static/description/pricelist_public_price.png
+.. image:: sale_dynamic_price/static/description/pricelist_public_price.png
 
 The rounding (1) and surcharge (2) defined on the pricelist are independent from the values defined on the product.
 
-.. image:: static/description/pricelist_rounding_surcharge.png
+.. image:: sale_dynamic_price/static/description/pricelist_rounding_surcharge.png
 
 If you set a discount on the pricelist, the surcharge and rounding defined on the product
 will be applied dynamically after the discount on the sale order.
@@ -100,15 +100,15 @@ As member of the group `Sales / User`, I create a new draft quotation.
 
 I select a pricelist with 10% discount.
 
-.. image:: static/description/sale_order_pricelist_10_percent.png
+.. image:: sale_dynamic_price/static/description/sale_order_pricelist_10_percent.png
 
 I setup a product with a dynamic price.
 
-.. image:: static/description/product_from_sale_order.png
+.. image:: sale_dynamic_price/static/description/product_from_sale_order.png
 
 I add the product to the sale order. I notice that the 10% discount was applied.
 
-.. image:: static/description/sale_order_line_with_10_percent.png
+.. image:: sale_dynamic_price/static/description/sale_order_line_with_10_percent.png
 
 Multi-Currency
 --------------
@@ -125,7 +125,7 @@ Extra Prices On Variants
 The module is incompatible with the `Extra Price` field on variants.
 For this reason, the field is hidden from the web interface.
 
-.. image:: static/description/variant_extra_price.png
+.. image:: sale_dynamic_price/static/description/variant_extra_price.png
 
 Price Update Cron
 -----------------
@@ -136,7 +136,7 @@ Otherwise, the price could change multiple times in a day, which could create co
 
 The cron is set to every week by default. This can be changed manually.
 
-.. image:: static/description/price_update_cron.png
+.. image:: sale_dynamic_price/static/description/price_update_cron.png
 
 Contributors
 ------------

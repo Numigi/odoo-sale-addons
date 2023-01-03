@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
@@ -14,8 +14,8 @@ class Product(models.Model):
 
     _inherit = 'product.product'
 
-    standard_price = fields.Float(track_visibility='onchange')
-    lst_price = fields.Float(track_visibility='onchange')
+    standard_price = fields.Float(tracking=True)
+    lst_price = fields.Float(tracking=True)
 
     price_type = fields.Selection(
         [
@@ -23,19 +23,19 @@ class Product(models.Model):
             ('dynamic', 'Dynamic'),
         ],
         default='fixed',
-        track_visibility='onchange',
+        tracking=True,
     )
 
-    margin = fields.Float(track_visibility='onchange')
+    margin = fields.Float(tracking=True)
     margin_amount = fields.Float(
-        track_visibility='onchange',
+        tracking=True,
         digits=dp.get_precision('Product Price'),
     )
     price_rounding = fields.Selection([
         (a, a) for a in ROUNDING_AMOUNTS
-    ], string="Rounding", track_visibility='onchange')
+    ], string="Rounding", tracking=True)
     price_surcharge = fields.Float(
-        track_visibility='onchange',
+        tracking=True,
         digits=dp.get_precision('Product Price'),
     )
 
@@ -55,6 +55,7 @@ class Product(models.Model):
     def _compute_sale_price_from_cost(self):
         cost = self.standard_price or 0
         margin = self._compute_margin_amount()
+
         price = cost + margin
 
         rounding = self.price_rounding

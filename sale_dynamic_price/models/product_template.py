@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
@@ -9,8 +9,8 @@ class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
 
-    standard_price = fields.Float(track_visibility='onchange')
-    list_price = fields.Float(track_visibility='onchange')
+    standard_price = fields.Float(tracking=True)
+    list_price = fields.Float(tracking=True)
 
     price_type = fields.Selection(
         related='product_variant_ids.price_type',
