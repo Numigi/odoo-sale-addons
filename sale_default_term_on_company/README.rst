@@ -7,13 +7,13 @@ Context
 In vanilla Odoo, the default sale terms and conditions are configurable in the settings
 of the sale application.
 
-.. image:: static/description/settings_form.png
+.. image:: sale_default_term_on_company/static/description/settings_form.png
 
 Usage
 -----
 After installing this module, the default terms and conditions are available on the company.
 
-.. image:: static/description/company_form.png
+.. image:: sale_default_term_on_company/static/description/company_form.png
 
 Contributors
 ------------

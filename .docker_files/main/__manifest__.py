@@ -15,6 +15,7 @@
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "payment_auto_confirm_sale_order",
+        "sale_default_term_on_company",
         "sale_invoice_group_by_order",
         "sale_xmlrpc_compatible",
     ],
