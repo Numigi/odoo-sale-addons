@@ -21,6 +21,7 @@ COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
+COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 

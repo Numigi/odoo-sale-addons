@@ -1,7 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests.common import SavepointCase
@@ -24,7 +21,7 @@ class TestSaleOrder(SavepointCase):
         )
 
         cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer", "customer": True}
+            {"name": "My Customer", "customer_rank": 1}
         )
 
         cls.unit = cls.env.ref("uom.product_uom_unit")
@@ -44,7 +41,6 @@ class TestSaleOrder(SavepointCase):
         cls.line_1 = cls.sale_order.order_line[0]
         cls.line_2 = cls.sale_order.order_line[1]
 
-        cls.sale_order.qty_delivered_method = "manual"
 
     @classmethod
     def _get_so_line_vals(cls, product, unit, qty):

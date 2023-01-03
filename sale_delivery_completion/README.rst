@@ -3,7 +3,7 @@ Sale Delivery Completion
 
 This module adds a smart button on the sale order.
 
-.. image:: static/description/smart_button.png
+.. image:: sale_delivery_completion/static/description/smart_button.png
 
 This button shows the rate of completion of the order.
 
@@ -13,7 +13,7 @@ that were delivered to the customer.
 When clicking on the button, the list of unfinished stock pickings for this
 order is displayed.
 
-.. image:: static/description/stock_picking_list.png
+.. image:: sale_delivery_completion/static/description/stock_picking_list.png
 
 Contributors
 ------------
