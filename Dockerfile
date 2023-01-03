@@ -23,7 +23,11 @@ COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
+COPY sale_invoice_email_warning /mnt/extra-addons/sale_invoice_email_warning
 COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
+COPY sale_kit /mnt/extra-addons/sale_kit
+COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
+COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 
 COPY .docker_files/main /mnt/extra-addons/main
