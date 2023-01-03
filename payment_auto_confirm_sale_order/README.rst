@@ -10,7 +10,7 @@ As ``Administrator``, I go to the form view of a payment method.
 
 I notice a new field ``Automatic Order Confirmation``.
 
-.. image:: static/description/payment_acquirer.png
+.. image:: payment_auto_confirm_sale_order/static/description/payment_acquirer.png
 
 The field has two options:
 
@@ -43,21 +43,21 @@ Messages
 ~~~~~~~~
 After selecting an option, I adjust the messages for this payment method in regard to this new feature.
 
-.. image:: static/description/payment_acquirer_messages.png
+.. image:: payment_auto_confirm_sale_order/static/description/payment_acquirer_messages.png
 
 Usage
 -----
 As a customer, I proceed to checkout.
 
-.. image:: static/description/order_checkout.png
+.. image:: payment_auto_confirm_sale_order/static/description/order_checkout.png
 
 I notice that my order is confirmed.
 
-.. image:: static/description/order_confirmation.png
+.. image:: payment_auto_confirm_sale_order/static/description/order_confirmation.png
 
 When I go to the portal view of my order, I notice that it is processing.
 
-.. image:: static/description/portal_order.png
+.. image:: payment_auto_confirm_sale_order/static/description/portal_order.png
 
 Contributors
 ------------

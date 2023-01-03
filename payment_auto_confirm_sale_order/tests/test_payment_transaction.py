@@ -1,4 +1,4 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import SavepointCase
@@ -11,7 +11,7 @@ class TestPayment(SavepointCase):
         cls.product = cls.env["product.product"].create({"name": "Product A"})
 
         cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer", "customer": True}
+            {"name": "My Customer", "customer_rank": 1}
         )
 
         cls.order = cls.env["sale.order"].create(
