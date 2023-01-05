@@ -29,8 +29,8 @@ class StockMove(models.Model):
         else:
             return super().write(vals)
 
-    def _action_done(self):
-        result = super()._action_done()
+    def _action_done(self, cancel_backorder=False):
+        result = super()._action_done(cancel_backorder=cancel_backorder)
 
         important_rental_moves = self.filtered(
             lambda m: m.is_important_component_move() and m.is_rental_move()
@@ -99,7 +99,7 @@ class StockMove(models.Model):
         return self.location_id.is_rental_customer_location
 
     def set_expected_date(self, date_):
-        self.write({"date_expected": date_})
+        self.write({"date": date_})
 
     def with_all_origin_moves(self):
         origin_moves = self.mapped("move_orig_ids")

@@ -62,26 +62,26 @@ class TestDeliveredQty(KitCase):
         move._set_quantity_done(qty)
         move._action_done()
 
-    # def test_link_between_kit_and_components(self):
-    #     assert self.kit_line.kit_line_ids == (
-    #         self.important_component_1
-    #         | self.important_component_2
-    #         | self.optional_component
-    #     )
-    #
-    # def test_no_component_delivered(self):
-    #     assert self.kit_line.qty_delivered == 0
-    #
-    # def test_fully_delivered(self):
-    #     self._deliver_component(self.important_component_1, 4)
-    #     assert self.kit_line.qty_delivered == 2
-    #
-    # def test_partially_delivered(self):
-    #     self._deliver_component(self.important_component_1, 2)
-    #     assert self.kit_line.qty_delivered == 1
-    #
-    # def test_component_with_zero_ordered_qty(self):
-    #     self.important_component_1.product_uom_qty = 0
-    #     assert self.kit_line.qty_delivered == 0
-    #     self._deliver_component(self.important_component_1, 1)
-    #     assert self.kit_line.qty_delivered == 2
+    def test_link_between_kit_and_components(self):
+        assert self.kit_line.kit_line_ids == (
+            self.important_component_1
+            | self.important_component_2
+            | self.optional_component
+        )
+
+    def test_no_component_delivered(self):
+        assert self.kit_line.qty_delivered == 0
+
+    def test_fully_delivered(self):
+        self._deliver_component(self.important_component_1, 4)
+        assert self.kit_line.qty_delivered == 2
+
+    def test_partially_delivered(self):
+        self._deliver_component(self.important_component_1, 2)
+        assert self.kit_line.qty_delivered == 1
+
+    def test_component_with_zero_ordered_qty(self):
+        self.important_component_1.product_uom_qty = 0
+        assert self.kit_line.qty_delivered == 0
+        self._deliver_component(self.important_component_1, 1)
+        assert self.kit_line.qty_delivered == 2
