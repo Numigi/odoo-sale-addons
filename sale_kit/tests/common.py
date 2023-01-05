@@ -81,8 +81,6 @@ class SaleOrderLineCase(KitCase):
                 "pricelist_id": self.env.ref("product.list0").id,
             }
         )
-        print ('--------------ORDER--------------')
-        print (self.order.id)
 
     def new_so_line(self, vals=None):
         vals = vals or {}

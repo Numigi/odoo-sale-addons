@@ -1,0 +1,15 @@
+.o_sale_order_available_qty_popover {
+    width: 24px;
+    text-align: center;
+}
+
+.o_sale_order_available_qty_popover__details {
+	display: flex;
+	flex-flow: column;
+}
+
+.o_sale_order_available_qty_popover__body {
+	display: flex;
+    justify-content: space-between;
+    margin: 8px 0px 12px 0px;
+}

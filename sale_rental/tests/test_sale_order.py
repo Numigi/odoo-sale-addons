@@ -28,13 +28,8 @@ class SaleOrderCase(RentalCase):
         cls.line_2 = cls._make_sale_order_line(
             cls.product_2, 2, cls.date_start_2, cls.date_end_2
         )
-
         cls.customer_location = cls.env.ref("stock_rental.customer_location")
-        print("-------------customer_location---------------------")
-        print (cls.customer_location)
-        print("-----------rental location-----------------------")
         cls.rental_location = cls.warehouse.rental_location_id
-        print(cls.rental_location)
 
     @classmethod
     def _make_sale_order_line(cls, product, qty, date_start, date_end):
@@ -58,13 +53,9 @@ class SaleOrderCase(RentalCase):
         )
 
     def get_return_move(self, sale_line):
-        s = sale_line.move_ids.mapped('location_dest_id')
-        t = sale_line.move_ids.filtered(
+        return sale_line.move_ids.filtered(
             lambda m: m.location_dest_id == self.rental_location
         )
-        print ("6666666666666gggggggggggggggggggg")
-        print (s)
-        return t
 
 
 class TestSaleOrder(SaleOrderCase):

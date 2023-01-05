@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -43,20 +43,17 @@ class TestMinimumMarginConstrains(SavepointCase):
     def test_on_change__if_margin_lower_than_minimum__raise_error(self):
         self.category.minimum_margin = 0.30
 
-        with self.env.do_in_onchange():
-            self.product.margin = 0.29
-            result = self.product._check_margin_is_not_lower_than_minimum_margin()
-            assert isinstance(result, dict)
-            assert result.get('warning')
+        self.product.margin = 0.29
+        result = self.product._check_margin_is_not_lower_than_minimum_margin()
+        assert isinstance(result, dict)
+        assert result.get('warning')
 
     @data(0.30, 0.31)
     def test_on_change__if_not_lower_than_minimum__error_not_raised(self, margin):
         self.category.minimum_margin = 0.30
-
-        with self.env.do_in_onchange():
-            self.product.margin = margin
-            result = self.product._check_margin_is_not_lower_than_minimum_margin()
-            assert not result
+        self.product.margin = margin
+        result = self.product._check_margin_is_not_lower_than_minimum_margin()
+        assert not result
 
     def test_on_write__if_margin_lower_and_not_sale_manager__raise_error(self):
         self.category.minimum_margin = 0.30

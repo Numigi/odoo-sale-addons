@@ -87,7 +87,7 @@ class SaleOrderLine(models.Model):
             move.product_uom_qty, self.product_uom
         )
 
-    def _action_launch_stock_rule(self):
+    def _action_launch_stock_rule(self, previous_product_uom_qty=False):
         rental_lines = self.filtered(lambda l: l.order_id.is_rental)
         rental_orders = rental_lines.mapped("order_id")
 
@@ -96,10 +96,10 @@ class SaleOrderLine(models.Model):
             lines = rental_lines.filtered(lambda l: l.order_id == order).with_context(
                 force_rental_customer_location=rental_location
             )
-            super(SaleOrderLine, lines)._action_launch_stock_rule()
+            super(SaleOrderLine, lines)._action_launch_stock_rule(previous_product_uom_qty=previous_product_uom_qty)
 
         other_lines = self - rental_lines
-        super(SaleOrderLine, other_lines)._action_launch_stock_rule()
+        super(SaleOrderLine, other_lines)._action_launch_stock_rule(previous_product_uom_qty=previous_product_uom_qty)
         return True
 
     def initialize_kit(self):
@@ -149,8 +149,8 @@ class SaleOrderLine(models.Model):
         new_line.kit_reference_readonly = True
         new_line.is_rental_service = True
         new_line.product_readonly = True
-        new_line.product_uom_qty_readonly = False
         new_line.product_uom_readonly = True
+        new_line.product_uom_qty_readonly = False
         new_line.handle_widget_invisible = False
         new_line.trash_widget_invisible = True
         new_line.rental_date_from_required = True

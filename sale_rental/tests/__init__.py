@@ -4,5 +4,5 @@ from . import common
 from . import test_product_template
 from . import test_sale_order
 from . import test_sale_order_line
-# from . import test_sale_order_line_dates
-# from . import test_sale_order_line_qty_delivered
+from . import test_sale_order_line_dates
+from . import test_sale_order_line_qty_delivered
