@@ -29,7 +29,16 @@ COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
+COPY sale_order_available_qty_popover_rental /mnt/extra-addons/sale_order_available_qty_popover_rental
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
+COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
+COPY sale_order_weight /mnt/extra-addons/sale_order_weight
+COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
+COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
+COPY sale_privilege_level_delivery /mnt/extra-addons/sale_privilege_level_delivery
+COPY sale_privilege_level_payment /mnt/extra-addons/sale_privilege_level_payment
+COPY sale_privilege_level_pricelist /mnt/extra-addons/sale_privilege_level_pricelist
+COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 
