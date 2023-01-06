@@ -1,13 +1,44 @@
-# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime
 from odoo import api, fields, models
-
+from odoo.tools.float_utils import float_compare
 
 class StockMove(models.Model):
 
     _inherit = "stock.move"
+
+    is_rental = fields.Boolean(
+        related="location_dest_id.is_rental_customer_location",
+        store=True,
+    )
+    is_ongoing_rental = fields.Boolean(
+        compute="_compute_is_ongoing_rental",
+        store=True,
+    )
+
+    @api.depends("state", "move_dest_ids.state")
+    def _compute_is_ongoing_rental(self):
+        for move in self:
+            move.is_ongoing_rental = move._get_is_ongoing_rental()
+
+    def _get_is_ongoing_rental(self):
+        if not self.is_rental:
+            return False
+
+        if self.state != "done":
+            return False
+
+        if self._is_completely_returned():
+            return False
+
+        return True
+
+    def _is_completely_returned(self):
+        returned_moves = self.move_dest_ids.filtered(lambda m: m.state == "done")
+        returned_qty = sum(returned_moves.mapped("product_qty"))
+        return not float_compare(returned_qty, self.product_qty, 2)
 
     def write(self, vals):
         """Prevent propagating the expected date from a rental move to the return move.
@@ -18,7 +49,7 @@ class StockMove(models.Model):
         Otherwise, when the delivery is processed, the effective date of delivery
         is propagated as expected date on the return move.
         """
-        if "date_expected" in vals:
+        if "date" in vals:
             rental_moves = self.filtered(lambda m: m.is_rental_move())
             rental_moves_without_propagation = rental_moves.with_context(
                 do_not_propagate=True
@@ -32,14 +63,14 @@ class StockMove(models.Model):
     def _action_done(self, cancel_backorder=False):
         result = super()._action_done(cancel_backorder=cancel_backorder)
 
-        important_rental_moves = self.filtered(
+        important_rental_moves = self.sudo().filtered(
             lambda m: m.is_important_component_move() and m.is_rental_move()
         )
         for move in important_rental_moves:
             move._update_sale_rental_service_line_delivered_qty()
             move._update_sale_rental_service_line_date_from()
 
-        important_return_moves = self.filtered(
+        important_return_moves = self.sudo().filtered(
             lambda m: m.is_important_component_move() and m.is_rental_return_move()
         )
         for move in important_return_moves:

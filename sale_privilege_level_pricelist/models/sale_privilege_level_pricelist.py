@@ -22,3 +22,6 @@ class SalePrivilegeLevelPricelist(models.Model):
         related="pricelist_id.country_group_ids", readonly=True
     )
     company_id = fields.Many2one(related="pricelist_id.company_id", readonly=True)
+
+    def matches_partner(self, partner):
+        return self.pricelist_id._matches_country(partner.country_id)

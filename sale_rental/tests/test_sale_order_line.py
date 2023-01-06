@@ -1,4 +1,4 @@
-# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -24,17 +24,11 @@ class KitRentalCase(SaleOrderLineCase):
         cls.kit.write(
             {"can_be_rented": True, "rental_service_id": cls.rental_service.id}
         )
-        # cls.kit.flush()
-        # cls.env.cache.invalidate()
-
 
     def setUp(self):
         super().setUp()
         self.order.flush()
         self.order.is_rental = True
-
-        #self.env.cache.invalidate()
-
 
     def get_rental_service_lines(self):
         return self.order.order_line.filtered(
@@ -84,11 +78,12 @@ class TestKitRental(KitRentalCase):
     def test_rental_service_readonly_fields(self):
         self.add_kit_on_sale_order()
         service = self.get_rental_service_lines()
-
+        service.invalidate_cache()
+        service.move_ids.flush()
         assert service.kit_reference_readonly
         assert service.product_readonly
         assert not service.product_uom_qty_readonly
-        #assert service.product_uom_readonly
+        assert service.product_uom_readonly
         assert not service.handle_widget_invisible
         assert service.trash_widget_invisible
         assert service.rental_date_from_required
@@ -101,6 +96,7 @@ class TestKitRental(KitRentalCase):
         assert not components[0].price_unit
         assert not components[1].price_unit
         assert not components[2].price_unit
+
     def test_component_unit_price_readonly(self):
         self.add_kit_on_sale_order()
         components = self.get_component_lines()
@@ -113,6 +109,7 @@ class TestKitRental(KitRentalCase):
         components = self.get_component_lines()
         components[0].product_uom_change()
         assert not components[0].price_unit
+
     def test_component_taxes_readonly(self):
         self.add_kit_on_sale_order()
         components = self.get_component_lines()

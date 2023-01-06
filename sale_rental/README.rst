@@ -180,9 +180,17 @@ A rental service line can not be moved.
 However, if the related rented product or kit is moved, then the rental service will follow.
 This is the same behavior as for the components of a kit.
 
-.. image:: sale_rental/static/description/sale_order_line_moved_before.png
+.. image:: sale_rental/sale_rental/static/description/sale_order_line_moved_before.png
 
 .. image:: sale_rental/static/description/sale_order_line_moved_after.png
+
+Filtering Products on Sales Orders
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Since version ``14.0.1.0.0`` of the module, a new configuration parameter is available.
+
+.. image:: sale_rental/static/description/product_filter_config.png
+
+When the box is checked, products with the box ``Can be Rented`` checked are not selectable on non-rental orders.
 
 Contributors
 ------------

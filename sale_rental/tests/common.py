@@ -1,4 +1,4 @@
-# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2020 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.addons.sale_kit.tests.common import KitCase
@@ -8,6 +8,9 @@ class RentalCase(KitCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.stock_user = cls.env.ref("base.user_demo")
+        cls.stock_user.groups_id = cls.env.ref("stock.group_stock_user")
+
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.uom_day = cls.env.ref("uom.product_uom_day")
         cls.rental_service = cls.env["product.product"].create(
@@ -58,34 +61,20 @@ class RentalCase(KitCase):
         )
 
     @classmethod
-    def deliver_important_components(cls):
-        cls.deliver_product(cls.component_1a, 2)
-        cls.deliver_product(cls.component_1b, 4)
+    def deliver_product(cls, sale_line, qty=None):
+        if qty is None:
+            qty = sale_line.product_uom_qty
 
-    @classmethod
-    def deliver_important_components_partially(cls):
-        cls.deliver_product(cls.component_1a, 1)
-        cls.deliver_product(cls.component_1b, 2)
-
-    @classmethod
-    def return_important_components(cls):
-        cls.return_product(cls.component_1a, 2)
-        cls.return_product(cls.component_1b, 4)
-
-    @classmethod
-    def return_important_components_partially(cls):
-        cls.return_product(cls.component_1a, 1)
-        cls.return_product(cls.component_1b, 2)
-
-    @classmethod
-    def deliver_product(cls, sale_line, qty):
         candidat_moves = sale_line.move_ids.filtered(
             lambda m: m.is_rental_move() and not m.is_processed_move()
         )
         cls.process_move(candidat_moves[0], qty)
 
     @classmethod
-    def return_product(cls, sale_line, qty):
+    def return_product(cls, sale_line, qty=None):
+        if qty is None:
+            qty = sale_line.product_uom_qty
+
         candidat_moves = sale_line.move_ids.filtered(
             lambda m: m.is_rental_return_move() and not m.is_processed_move()
         )
@@ -94,7 +83,7 @@ class RentalCase(KitCase):
     @classmethod
     def process_move(cls, move, qty):
         move._set_quantity_done(qty)
-        move._action_done()
+        move.sudo(cls.stock_user)._action_done()
 
 
 class SaleOrderKitCase(RentalCase):
@@ -123,3 +112,23 @@ class SaleOrderKitCase(RentalCase):
         cls.component_2a = cls.make_component_line("K2", cls.component_a, 1, True)
 
         cls.order.action_confirm()
+
+    @classmethod
+    def deliver_important_components(cls):
+        cls.deliver_product(cls.component_1a, 2)
+        cls.deliver_product(cls.component_1b, 4)
+
+    @classmethod
+    def deliver_important_components_partially(cls):
+        cls.deliver_product(cls.component_1a, 1)
+        cls.deliver_product(cls.component_1b, 2)
+
+    @classmethod
+    def return_important_components(cls):
+        cls.return_product(cls.component_1a, 2)
+        cls.return_product(cls.component_1b, 4)
+
+    @classmethod
+    def return_important_components_partially(cls):
+        cls.return_product(cls.component_1a, 1)
+        cls.return_product(cls.component_1b, 2)

@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class SalePrivilegeLevel(models.Model):
-
     _inherit = "sale.privilege.level"
 
     pricelist_ids = fields.One2many(

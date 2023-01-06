@@ -8,7 +8,7 @@ Privilege Levels
 ----------------
 In the form view of a privilege level, I notice a new tab ``Pricelists``.
 
-.. image:: static/description/privilege_level_form.png
+.. image:: sale_privilege_level_pricelist/static/description/privilege_level_form.png
 
 It contains a list of pricelists available for this privilege level.
 

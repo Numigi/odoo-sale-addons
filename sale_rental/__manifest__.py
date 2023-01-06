@@ -1,4 +1,4 @@
-# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -17,6 +17,7 @@
         "views/product_template.xml",
         "views/menu.xml",
         "views/res_config_settings.xml",
+        "report/sale_report_views.xml",
     ],
     "installable": True,
 }

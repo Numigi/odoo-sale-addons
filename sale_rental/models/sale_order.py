@@ -1,4 +1,4 @@
-# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
@@ -86,6 +86,10 @@ def _is_rental_return_picking(picking):
     return any(m for m in origin_moves if m.is_rental_return_move())
 
 
-def _get_move_with_origin_moves(moves):
+def _get_move_with_origin_moves(moves, depth=10):
     origin_moves = moves.mapped("move_orig_ids")
-    return moves | _get_move_with_origin_moves(origin_moves) if origin_moves else moves
+    return (
+        moves | _get_move_with_origin_moves(origin_moves, depth - 1)
+        if origin_moves and depth > 0
+        else moves
+    )

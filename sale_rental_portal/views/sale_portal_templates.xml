@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_sale" inherit_id="sale.portal_my_home_sale">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="rental_count" t-call="portal.portal_docs_entry">
+                <t t-set="title">My Rentals</t>
+                <t t-set="url" t-value="'/my/orders?rental=1'"/>
+                <t t-set="count" t-value="rental_count"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_menu_sale" inherit_id="sale.portal_my_home_menu_sale">
+        <xpath expr="//a[@t-attf-href='/my/quotes?{{ keep_query() }}']/.." position="replace">
+            <li
+                t-if="page_name == 'quote' or (sale_order and sale_order.state in ('sent', 'cancel'))"
+                t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}"
+                >
+                <a t-if="sale_order" t-attf-href="/my/quotes?{{ keep_query() }}">Quotations</a>
+                <t t-else="">Quotations</t>
+            </li>
+        </xpath>
+        <xpath expr="//a[@t-attf-href='/my/orders?{{ keep_query() }}']/.." position="replace">
+            <li
+                t-if="page_name == 'order' or (sale_order and sale_order.state not in ('sent', 'cancel') and not sale_order.is_rental)"
+                t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}"
+                >
+                <a t-if="sale_order" t-attf-href="/my/orders?{{ keep_query() }}">My Orders</a>
+                <t t-else="">My Orders</t>
+            </li>
+            <li
+                t-if="page_name == 'rental' or (sale_order and sale_order.state not in ('sent', 'cancel') and sale_order.is_rental)"
+                t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}"
+                >
+                <a t-if="sale_order" t-attf-href="/my/orders?{{ keep_query() }}">My Rentals</a>
+                <t t-else="">My Rentals</t>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_orders" inherit_id="sale.portal_my_orders">
+        <xpath expr="//th/span[hasclass('d-md-inline')]" position="replace">
+            <span class='d-none d-md-inline'>
+                <t t-if="page_name == 'order'">Sales Order #</t>
+                <t t-if="page_name == 'rental'">Rental #</t>
+            </span>
+        </xpath>
+        <xpath expr="//a[@t-att-href='order.get_portal_url()']" position="replace">
+            <a t-att-href="order.get_portal_url()" t-if="page_name == 'order'">
+                <t t-esc="order.name"/>
+            </a>
+            <a t-att-href="order.get_portal_url(query_string='&amp;rental=1')" t-if="page_name == 'rental'">
+                <t t-esc="order.name"/>
+            </a>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,4 +1,4 @@
-# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
     is_rental_order = fields.Boolean(related="order_id.is_rental")
@@ -149,8 +148,8 @@ class SaleOrderLine(models.Model):
         new_line.kit_reference_readonly = True
         new_line.is_rental_service = True
         new_line.product_readonly = True
-        new_line.product_uom_readonly = True
         new_line.product_uom_qty_readonly = False
+        new_line.product_uom_readonly = True
         new_line.handle_widget_invisible = False
         new_line.trash_widget_invisible = True
         new_line.rental_date_from_required = True
@@ -173,7 +172,6 @@ class SaleOrderLine(models.Model):
 
 
 class SaleOrderLineWithRentalDates(models.Model):
-
     _inherit = "sale.order.line"
 
     expected_rental_date = fields.Datetime()

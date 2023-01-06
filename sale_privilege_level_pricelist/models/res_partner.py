@@ -4,9 +4,7 @@
 import threading
 from odoo import fields, models
 
-
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     property_product_pricelist = fields.Many2one(inverse=None)
@@ -21,9 +19,12 @@ class ResPartner(models.Model):
 
     def _get_available_pricelists(self):
         privilege_level = self.get_privilege_level()
-        pricelist_entries = privilege_level.mapped("pricelist_ids").sorted("sequence")
-        pricelists = pricelist_entries.mapped("pricelist_id")
-        return pricelists.filtered(lambda p: p._matches_country(self.country_id))
+        pricelist_entries = (
+            privilege_level.mapped("pricelist_ids")
+            .sorted("sequence")
+            .filtered(lambda e: e.matches_partner(self))
+        )
+        return pricelist_entries.mapped("pricelist_id")
 
 
 def _is_testing_other_module(context):
