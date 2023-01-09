@@ -1,0 +1,206 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_stock_availability_enhanced
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-11 16:25+0000\n"
+"PO-Revision-Date: 2021-11-11 11:33-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: website_stock_availability_enhanced
+#: model_terms:ir.ui.view,arch_db:website_stock_availability_enhanced.product_template_form_view
+msgid "<span> day(s)</span>"
+msgstr "<span> jour(s)</span>"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model.fields,help:website_stock_availability_enhanced.field_product_product__inventory_availability
+#: model:ir.model.fields,help:website_stock_availability_enhanced.field_product_template__inventory_availability
+msgid "Adds an inventory availability status on the web product page."
+msgstr "Ajoute une information de disponibilité sur la page Web du produit."
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_product__block_website_sales_based_on
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_template__block_website_sales_based_on
+msgid "Block Website Sales Based On"
+msgstr "Bloquer la vente en ligne selon"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_sale_order_line__displayed_delay
+msgid "Displayed Delay"
+msgstr "Délai affiché"
+
+#. module: website_stock_availability_enhanced
+#. openerp-web
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:15
+#, python-format
+msgid "In stock"
+msgstr "En stock"
+
+#. module: website_stock_availability_enhanced
+#: selection:product.template,inventory_availability:0
+msgid ""
+"Indicate if the inventory is below a threshold and allow sales if not enough "
+"stock"
+msgstr ""
+"Indiquer si l’inventaire est inférieur à un certain seuil et autoriser les "
+"ventes en cas de stock insuffisant"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_product__inventory_availability
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_template__inventory_availability
+msgid "Inventory Availability"
+msgstr "Disponibilité"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_product__replenishment_delay
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_template__replenishment_delay
+msgid "Next Replenishment Delay"
+msgstr "Délai prochaine réception"
+
+#. module: website_stock_availability_enhanced
+#: model_terms:ir.ui.view,arch_db:website_stock_availability_enhanced.product_template_form_view
+msgid "Prevent Sales Based On"
+msgstr "Bloquer la vente selon"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model,name:website_stock_availability_enhanced.model_product_product
+msgid "Product"
+msgstr "Article"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model,name:website_stock_availability_enhanced.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_product__sale_availability
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_template__sale_availability
+msgid "Quantity Available For Sales"
+msgstr "Quantité disponible à la vente"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_product__replenishment_availability
+#: model:ir.model.fields,field_description:website_stock_availability_enhanced.field_product_template__replenishment_availability
+msgid "Quantity Available Including Next Replenishment"
+msgstr "Quantité disponible avec prochaine réception"
+
+#. module: website_stock_availability_enhanced
+#: selection:product.template,block_website_sales_based_on:0
+msgid "Quantity available for sales"
+msgstr "Quantité disponible à la vente"
+
+#. module: website_stock_availability_enhanced
+#: selection:product.template,block_website_sales_based_on:0
+msgid "Quantity available including next replenishment"
+msgstr "Quantité disponible avec prochaine réception"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model,name:website_stock_availability_enhanced.model_sale_order
+msgid "Sale Order"
+msgstr "Bon de commande"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model,name:website_stock_availability_enhanced.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: website_stock_availability_enhanced
+#: selection:product.template,inventory_availability:0
+msgid "Sell regardless of inventory"
+msgstr "Vente sans tenir compte du stock"
+
+#. module: website_stock_availability_enhanced
+#: selection:product.template,inventory_availability:0
+msgid "Show inventory below a threshold and prevent sales if not enough stock"
+msgstr ""
+"Indiquer si l'inventaire est inférieur à un certain seuil et bloquer les "
+"ventes en cas de stock insuffisant"
+
+#. module: website_stock_availability_enhanced
+#: selection:product.template,inventory_availability:0
+msgid "Show inventory on website and prevent sales if not enough stock"
+msgstr ""
+"Afficher l'inventaire sur le site Web et bloquer les ventes en cas de stock "
+"insuffisant"
+
+#. module: website_stock_availability_enhanced
+#: selection:product.template,inventory_availability:0
+msgid "Show product-specific notifications"
+msgstr ""
+"Afficher un message de disponibilité personnalisé et spécique au produit"
+
+#. module: website_stock_availability_enhanced
+#: model:ir.model,name:website_stock_availability_enhanced.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: website_stock_availability_enhanced
+#. openerp-web
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:19
+#, python-format
+msgid "Temporarily out of stock"
+msgstr "Temporairement en rupture de stock"
+
+#. module: website_stock_availability_enhanced
+#: code:addons/website_stock_availability_enhanced/models/product_product.py:162
+#, python-format
+msgid ""
+"Unfortunately, the stock level is currently low for this product. We "
+"estimate a better availability of this product in a delay of {} days."
+msgstr ""
+"Malheureusement, le niveau de stock est actuellement bas pour cet article. "
+"Nous estimons une meilleure disponibilité de cet article dans un délai "
+"minimum de {} jours."
+
+#. module: website_stock_availability_enhanced
+#: model:ir.actions.server,name:website_stock_availability_enhanced.compute_availability_cron_ir_actions_server
+#: model:ir.cron,cron_name:website_stock_availability_enhanced.compute_availability_cron
+#: model:ir.cron,name:website_stock_availability_enhanced.compute_availability_cron
+msgid "Update website availability on products"
+msgstr "Mettre à jour les quantités disponibles des articles pour le site web"
+
+#. module: website_stock_availability_enhanced
+#. openerp-web
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:12
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:19
+#, python-format
+msgid "Warning"
+msgstr "Avertissement"
+
+#. module: website_stock_availability_enhanced
+#. openerp-web
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:27
+#, python-format
+msgid "You already added"
+msgstr "Vous avez déjà ajouté"
+
+#. module: website_stock_availability_enhanced
+#. openerp-web
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:9
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:13
+#, python-format
+msgid "available"
+msgstr "disponible"
+
+#. module: website_stock_availability_enhanced
+#. openerp-web
+#: code:addons/website_stock_availability_enhanced/static/src/xml/product_availability.xml:28
+#, python-format
+msgid "in your cart."
+msgstr "à votre panier."
+
+#. module: website_stock_availability_enhanced
+#: code:addons/website_stock_availability_enhanced/models/sale_order_line.py:17
+#, python-format
+msgid "{} days"
+msgstr "{} jours"

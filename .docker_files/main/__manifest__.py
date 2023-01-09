@@ -3,7 +3,7 @@
 
 {
     "name": "Main Module",
-    "version": "1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://www.numigi.com",
@@ -41,6 +41,7 @@
         "sale_rental_pricelist",
         "sale_rental_status",
         "sale_warranty",
+        "sale_warranty_extension",
         "sale_xmlrpc_compatible",
     ],
     "installable": True,

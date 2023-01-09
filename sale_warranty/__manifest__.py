@@ -25,5 +25,5 @@
         'data/ir_sequence.xml',
     ],
     "installable": True,
-    # "application": True,
+    "application": True,
 }

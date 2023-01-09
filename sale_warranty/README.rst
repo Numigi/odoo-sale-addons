@@ -42,7 +42,7 @@ Sale Order
 As member of the group `Sales / User`, when you validate a sales order,
 warranties are created automatically for each product if required.
 
-.. image:: sale_warranty/sale_warranty/static/description/sale_order_validate.png
+.. image:: sale_warranty/static/description/sale_order_validate.png
 
 After validating the order, a smart button `Warranties` appears.
 If you click on that button, the warranties related to the sold products appears.

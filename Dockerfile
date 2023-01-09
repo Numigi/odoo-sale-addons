@@ -46,6 +46,7 @@ COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status
 COPY sale_warranty /mnt/extra-addons/sale_warranty
+COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 
 COPY .docker_files/main /mnt/extra-addons/main

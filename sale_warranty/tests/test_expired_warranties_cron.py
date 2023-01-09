@@ -12,7 +12,6 @@ class ExpiredWarrantiesCronCase(SavepointCase):
         super().setUpClass()
         cls.customer = cls.env['res.partner'].create({
             'name': 'My Customer',
-            'customer': True,
         })
 
         cls.warranty_6_months = cls.env['sale.warranty.type'].create({

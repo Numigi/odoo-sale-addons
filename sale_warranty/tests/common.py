@@ -102,9 +102,11 @@ class SaleWarrantyCase(SavepointCase):
 
     @classmethod
     def generate_serial_number(cls, product, number):
-        serial = cls.env["stock.production.lot"].create(
-            {"number": number, "product_id": product.id}
-        )
+        serial = cls.env["stock.production.lot"].create({
+            "name": number,
+            "product_id": product.id,
+            'company_id': cls.env.company.id
+        })
         cls.add_product_to_stock(product, 1, serial)
         return serial
 
@@ -133,7 +135,7 @@ class SaleWarrantyCase(SavepointCase):
 
 class WarrantyActivationCase(SaleWarrantyCase):
     def validate_picking(cls, picking):
-        picking.sudo(cls.stock_user).action_done()
+        picking.sudo(cls.stock_user)._action_done()
 
     @classmethod
     def select_serial_numbers_on_picking(cls, picking, serial_numbers):
