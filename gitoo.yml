@@ -1,71 +1,72 @@
 - url: https://{{GIT_TOKEN}}@github.com/Numigi/odoo-enterprise
   branch: "14.0"
 
-# - url: https://github.com/gityopie/odoo-addons
-#   branch: "12.0"
-#   includes:
-#     - contacts_maps
-#     - crm_maps
-#     - google_marker_icon_picker
-#     - sale_maps
-#     - web_google_maps
-# 
-# - url: https://github.com/Numigi/odoo-base-addons
-#   branch: "12.0"
-#   includes:
-#     - base_extended_security
-# 
-# - url: https://github.com/Numigi/odoo-product-addons
-#   branch: "12.0"
-#   includes:
-#     - product_kit
-#     - product_dimension
-# 
-# - url: https://github.com/Numigi/odoo-stock-addons
-#   branch: "12.0"
-#   includes:
-#     - stock_rental
-# 
-# - url: https://github.com/Numigi/odoo-web-addons
-#   branch: "12.0"
-#   includes:
-#     - web_handle_condition
-#     - web_trash_condition
-# 
-# - url: https://github.com/oca/crm
-#   branch: "12.0"
-#   includes:
-#     - crm_lead_product
-# 
-# - url: https://github.com/OCA/multi-company
-#   branch: "12.0"
-#   includes:
-#     - account_invoice_inter_company
-#     - purchase_sale_inter_company
-# 
-# - url: https://github.com/oca/product-attribute
-#   branch: "12.0"
-#   includes:
-#     - product_brand
-# 
-# - url: https://github.com/OCA/stock-logistics-workflow.git
-#   branch: "12.0"
-#   includes:
-#     - sale_order_global_stock_route
-# 
-# - url: https://github.com/OCA/server-ux.git
-#   branch: "12.0"
-#   includes:
-#     - date_range
-# 
+- url: https://github.com/gityopie/odoo-addons
+  branch: "14.0"
+  includes:
+    - contacts_maps
+    - crm_maps
+    - google_marker_icon_picker
+    - sale_maps
+    - web_google_maps
+
+- url: https://github.com/Numigi/odoo-base-addons
+  branch: "14.0"
+  includes:
+    - base_extended_security
+
+- url: https://github.com/Numigi/odoo-product-addons
+  branch: "14.0"
+  includes:
+    - product_kit
+    - product_dimension
+    - product_crm
+
+- url: https://github.com/Numigi/odoo-stock-addons
+  branch: "14.0"
+  includes:
+    - stock_rental
+
+- url: https://github.com/Numigi/odoo-web-addons
+  branch: "14.0"
+  includes:
+    - web_handle_condition
+    - web_trash_condition
+
+#- url: https://github.com/oca/crm
+#  branch: "14.0"
+#  includes:
+#    - crm_lead_product
+
+- url: https://github.com/OCA/multi-company
+  branch: "14.0"
+  includes:
+    - account_invoice_inter_company
+    - purchase_sale_inter_company
+
+- url: https://github.com/oca/product-attribute
+  branch: "14.0"
+  includes:
+    - product_brand
+
+- url: https://github.com/OCA/stock-logistics-workflow.git
+  branch: "14.0"
+  includes:
+    - sale_order_global_stock_route
+
+- url: https://github.com/OCA/server-ux.git
+  branch: "14.0"
+  includes:
+    - date_range
+
 # - url: https://github.com/Numigi/odoo-timesheet-addons
-#   branch: "12.0"
+#   branch: "14.0"
 #   includes:
 #     - payroll_period
 #     - payroll_preparation
-# 
-# - url: https://github.com/OCA/sale-workflow
-#   branch: "12.0"
-#   includes:
-#     - sale_order_tag
-# 
+
+- url: https://github.com/OCA/sale-workflow
+  branch: "14.0"
+  includes:
+    - sale_order_tag
+
