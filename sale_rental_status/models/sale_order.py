@@ -33,7 +33,6 @@ class SaleOrder(models.Model):
             return_percent = (
                 rec.return_rate and int(rec.return_rate.replace("%", "")) or 0
             )
-            print("return_percent", return_percent)
             if completion_percent == 0:
                 rec.rental_status = "rented"
             elif 0 < completion_percent < 100:

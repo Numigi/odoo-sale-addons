@@ -149,7 +149,6 @@ class SaleOrderLine(models.Model):
         new_line.is_rental_service = True
         new_line.product_readonly = True
         new_line.product_uom_qty_readonly = False
-        new_line.product_uom_readonly = True
         new_line.handle_widget_invisible = False
         new_line.trash_widget_invisible = True
         new_line.rental_date_from_required = True
@@ -161,6 +160,7 @@ class SaleOrderLine(models.Model):
             qty=1,
             uom=self.env.ref("uom.product_uom_day"),
         )
+        new_line.product_uom_readonly = True
         new_line.rental_date_from = datetime.now()
         return new_line
 
