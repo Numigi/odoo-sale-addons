@@ -77,10 +77,9 @@ class TestKitRental(KitRentalCase):
 
     def test_rental_service_readonly_fields(self):
         self.add_kit_on_sale_order()
-        self.env.cache.invalidate()
-        #self.registry.clear_caches()
         service = self.get_rental_service_lines()
-
+        service.invalidate_cache()
+        service.clear_caches()
         assert service.kit_reference_readonly
         assert service.product_readonly
         assert not service.product_uom_qty_readonly
@@ -90,6 +89,7 @@ class TestKitRental(KitRentalCase):
         assert service.rental_date_from_required
         assert service.rental_date_from_editable
         assert service.rental_date_to_editable
+
 
     def test_component_unit_price_is_zero(self):
         self.add_kit_on_sale_order()
