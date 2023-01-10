@@ -80,6 +80,7 @@ class TestKitRental(KitRentalCase):
         service = self.get_rental_service_lines()
         service.invalidate_cache()
         service.clear_caches()
+        service.flush()
         assert service.kit_reference_readonly
         assert service.product_readonly
         assert not service.product_uom_qty_readonly
