@@ -35,6 +35,7 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
                 "margin": 0.30,
                 "price_rounding": "1",
                 "price_surcharge": 0,
+                "minimum_margin": 0,
                 "standard_price": 70,
             }
         )

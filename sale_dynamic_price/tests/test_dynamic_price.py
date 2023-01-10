@@ -12,13 +12,14 @@ class TestDynamicPrice(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         vals_list = {
-                "name": "Product A",
-                "type": "product",
-                "price_type": "dynamic",
-                "margin": 0,
-                "price_rounding": 0,
-                "price_surcharge": 0,
-            }
+            "name": "Product A",
+            "type": "product",
+            "price_type": "dynamic",
+            "minimum_margin": 0,
+            "margin": 0,
+            "price_rounding": 0,
+            "price_surcharge": 0,
+        }
         cls.product = cls.env["product.product"].create(vals_list)
 
     @data(
@@ -35,6 +36,7 @@ class TestDynamicPrice(SavepointCase):
         self.product._onchange_set_margin_amount()
         self.product.refresh()
         assert float_round(self.product.margin_amount, 2) == expected_margin_amount
+
     #
     @data(
         # cost, margin, rounding, surcharge, expected_price
@@ -71,7 +73,7 @@ class TestDynamicPrice(SavepointCase):
     )
     @unpack
     def test_update_sale_price_from_cost(
-        self, cost, margin, rounding, surcharge, expected_price
+            self, cost, margin, rounding, surcharge, expected_price
     ):
         self.product.write(
             {

@@ -97,7 +97,7 @@ class SaleWarranty(models.Model):
     def _get_active_extension_subscription(self):
         return self.env["sale.subscription"].search(
             [
-                ("in_progress", "=", True),
+                ('stage_category', '=', 'progress'),
                 (
                     "partner_id.commercial_partner_id",
                     "=",

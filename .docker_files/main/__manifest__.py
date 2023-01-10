@@ -42,7 +42,9 @@
         "sale_rental_status",
         "sale_warranty",
         "sale_warranty_extension",
+        "sale_warranty_lead_on_expiry",
         "sale_xmlrpc_compatible",
+        "website_payment_message_enhanced",
     ],
     "installable": True,
 }

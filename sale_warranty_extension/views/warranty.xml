@@ -28,7 +28,7 @@
                                attrs="{'invisible': [('use_warranty_extension', '=', False)],
                                        'required': [('use_warranty_extension', '=', True)]}"
                                domain="[('partner_id.commercial_partner_id', '=', partner_id),
-                                        ('in_progress', '=', True),
+                                        ('stage_category', '=', 'progress'),
                                         ('template_id', '=', extension_template_id)]"
                                options="{'no_create_edit': True}"/>
                     </group>
