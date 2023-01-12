@@ -31,6 +31,7 @@ class SaleOrderLine(models.Model):
             else:
                 line.available_qty_for_popover = line._get_available_qty_for_popover()
 
+
     def _get_available_qty_for_popover_alternative(self):
         self.ensure_one()
         if self.product_id:
@@ -45,7 +46,7 @@ class SaleOrderLine(models.Model):
                     self._context.get("from_date"),
                     self._context.get("to_date"),
             )
-            return res.get(self.product_id.id).get("qty_available")
+            return res.get(self.product_id.id).get("virtual_available")
 
     @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id")
     def _compute_available_qty_popover_color(self):
