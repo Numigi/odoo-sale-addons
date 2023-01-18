@@ -21,8 +21,8 @@
                         data-target="#modal_request_price"
                         t-att-data-product-id="wish.product_id.id"
                         t-att-data-product-display-name="wish.product_id.display_name"
-                        type="button" role="button" class="btn btn-secondary btn-block mb4"
-                >Request Price</button>
+                        type="button" role="button" class="btn btn-secondary btn-block mb4">
+                    Request Price</button>
             </t>
         </xpath>
     </template>

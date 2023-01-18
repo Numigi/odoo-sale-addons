@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-
-    <function model="ir.config_parameter" name="set_param">
-        <value type="char">sale.use_sale_note</value>
-        <value type="char">True</value>
-    </function>
-
-</odoo>

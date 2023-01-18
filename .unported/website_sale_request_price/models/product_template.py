@@ -1,5 +1,5 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
 
@@ -11,7 +11,6 @@ class ProductTemplate(models.Model):
         compute="_compute_is_request_price_required"
     )
 
-    @api.multi
     def _compute_is_request_price_required(self):
         vals = self.get_website_sale_request_price_vals()
         active = vals["active"]

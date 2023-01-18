@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="stock_move_line_rented_form" model="ir.ui.view">
+        <field name="name">Stock Move Line Form: Rented Stock</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="location_dest_id" position="after">
+                <field name="partner_id" string="To"/>
+            </field>
+
+            <field name="reference" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="reference" position="after">
+                <field name="picking_id" position="move"/>
+            </field>
+
+            <field name="picking_id" position="attributes">
+                <attribute name="string">Picking</attribute>
+                <attribute name="invisible">0</attribute>
+            </field>
+
+            <field name="lot_id" position="after">
+                <field name="origin"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_move_line_rented_tree" model="ir.ui.view">
+        <field name="name">Stock Move Line Tree: Rented Stock</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="location_dest_id" position="after">
+                <field name="partner_id" string="To"/>
+            </field>
+            <field name="product_id" position="after">
+                <field name="lot_id" string="Serial Number"/>
+            </field>
+            <field name="state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_move_line_search" model="ir.ui.view">
+        <field name="name">Stock Move Line Tree: Rented Stock</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="location_dest_id" position="after">
+                <field name="partner_id" string="To"/>
+            </field>
+            <filter name="by_state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </filter>
+            <group position="inside">
+                <filter string="Origin Document" name="group_by_origin" context="{'group_by': 'origin'}"/>
+                <filter string="To" name="group_by_partner_id" context="{'group_by': 'partner_id'}"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <div t-name="SaleOrderAvailableQtyPopover" class="o_sale_order_available_qty_popover">
+        <i class="fa fa-info-circle" data-toggle="popover"></i>
+    </div>
+
+    <div t-name="SaleOrderAvailableQtyPopoverDetails">
+        <div class="o_sale_order_available_qty_popover__details">
+            <div class="o_sale_order_available_qty_popover__body">
+                <strong class="text-info">Available</strong>
+                <a href="#" class="o_sale_order_available_qty_popover__qty">
+                    <t t-esc="qty"/>
+                    <t t-esc="uom"/>
+                </a>
+            </div>
+            <div class="text-info">
+                This information includes all reserved quantities in all warehouses.
+            </div>
+        </div>
+    </div>
+
+</templates>

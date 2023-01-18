@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_search" model="ir.ui.view">
+        <field name="name">Sale Order Search: Rental</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <filter name="is_rental" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <record id="sale_quotation_search" model="ir.ui.view">
+        <field name="name">Sale Quotation Search: Rental</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <filter name="my_quotation" position="attributes">
+                <attribute name="string">My Quotations</attribute>
+            </filter>
+            <filter name="draft" position="attributes">
+                <attribute name="string">Quotations</attribute>
+            </filter>
+            <filter name="is_rental" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

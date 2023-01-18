@@ -2,6 +2,8 @@ Website Sale Request Price
 ==========================
 - This module adds an option to hide the price of a product when it reaches a threshold and allows the user to request for price through a form that will send an email to the sales team and create a CRM lead.
 
+.. contents:: Table of Contents
+
 Module flow
 -----------
 
@@ -11,35 +13,35 @@ Module flow
 2. The second option allows me to choose the email template used to send a quote confirmation email to the client. The mail template must be linked to Lead/Opportunity model to keep track.
 3. The third option allows me to select the sales team used to create a pipeline/lead in the backend.
 
-.. image:: static/description/website_sale_request_price_config.png
+.. image:: website_sale_request_price/static/description/website_sale_request_price_config.png
 
 - As a logged in or non logged in user, I see the price of the products and [Add to Cart] button only if the price is less than the threshold, otherwise [Request Price] button will appear
 
   + When going to the website shop, in the kanban of products:
 
-  .. image:: static/description/website_sale_request_price_shop_kanban.png
+  .. image:: website_sale_request_price/static/description/website_sale_request_price_shop_kanban.png
 
   + When going to the website shop, in the list of products:
 
-  .. image:: static/description/website_sale_request_price_shop_list.png
+  .. image:: website_sale_request_price/static/description/website_sale_request_price_shop_list.png
 
   + When going to the website product form, if the product has been configured optional products (note: Request Price button won't appear in this place):
 
-  .. image:: static/description/website_sale_request_price_optional_products.png
+  .. image:: website_sale_request_price/static/description/website_sale_request_price_optional_products.png
 
   + When going to the website cart, in the suggested accessories:
 
-  .. image:: static/description/website_sale_request_price_cart_suggested_accessories.png
+  .. image:: website_sale_request_price/static/description/website_sale_request_price_cart_suggested_accessories.png
 
 - I am going to the product sheet. The price is also hidden if the price is above the threshold.
 - Instead of the [Add to Cart] button, I find a new button [Request Price].
 
-.. image:: static/description/website_sale_request_price_request_price_button.png
+.. image:: website_sale_request_price/static/description/website_sale_request_price_request_price_button.png
 
 As a user not logged in, I click on the button [Request Price].
 A wizard opens to allow me to fill in my details.
 
-.. image:: static/description/website_sale_request_price_request_price_modal_not_login.png
+.. image:: website_sale_request_price/static/description/website_sale_request_price_request_price_modal_not_login.png
 
 - I confirm.
 - An opportunity is created in the backend.
@@ -55,7 +57,7 @@ A wizard opens to allow me to fill in my details.
 
 As a connected user, I click on the button. The wizard only allows me to fill in the field Additional Information, because my details are already known.
 
-.. image:: static/description/website_sale_request_price_request_price_modal.png
+.. image:: website_sale_request_price/static/description/website_sale_request_price_request_price_modal.png
 
 - I confirm.
 - An opportunity is created in the backend.
@@ -77,7 +79,22 @@ Configuration
 -------------
 - Configuration in Website section of General Settings
 
-.. image:: static/description/website_sale_request_price_config.png
+.. image:: website_sale_request_price/static/description/website_sale_request_price_config.png
+
+Warning Message
+---------------
+It is possible to define an optional warning message.
+
+.. image:: website_sale_request_price/static/description/warning_message_setting.png
+
+This message will be displayed inside the price request window.
+
+.. image:: website_sale_request_price/static/description/warning_message_website.png
+
+The message is defined per company and is translatable.
+
+In order to translate the message, you need to reopen the website settings
+in the proper language.
 
 Roadmap
 --------
