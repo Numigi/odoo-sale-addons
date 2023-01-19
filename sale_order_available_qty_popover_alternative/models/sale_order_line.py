@@ -76,7 +76,7 @@ class SaleOrderLine(models.Model):
             if line.available_qty_for_popover >= line.product_uom_qty:
                 line.available_qty_popover_color = GREEN
             elif line.available_qty_for_popover < line.product_uom_qty and \
-                    line.product_id.qty_available >=  line.product_uom_qty:
+                    line.product_id.virtual_available >=  line.product_uom_qty:
                 line.available_qty_popover_color = YELLOW
             else:
                 line.available_qty_popover_color = RED
