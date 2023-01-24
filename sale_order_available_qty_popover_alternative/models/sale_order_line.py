@@ -1,11 +1,8 @@
-# © 2022 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
 
-import logging
-
-_logger = logging.getLogger(__name__)
 
 ALMOST_OUT_OF_STOCK_PARAM = "sale_order_available_qty_popover.almost_out_of_stock_qty"
 SO_POPOVER_ALTER_PARAM = "sale_order_available_qty_popover_alternative.so_popover_alternative"
@@ -20,19 +17,29 @@ class SaleOrderLine(models.Model):
 
     @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id")
     def _compute_available_qty_for_popover(self):
-        for line in self:
-            so_popover_alternative = self.env['ir.config_parameter'].sudo().get_param(
-                SO_POPOVER_ALTER_PARAM, False)
-            _logger.warn('SO_POPOVER_ALTER_PARAM:%s', so_popover_alternative)
+        so_popover_alternative = self.env[
+            'ir.config_parameter'].sudo().get_param(
+            SO_POPOVER_ALTER_PARAM, False)
+        if so_popover_alternative:
+            for line in self:
+                line.available_qty_for_popover = \
+                    line._get_available_qty_for_popover_alt()
+        else:
+            super(SaleOrderLine, self)._compute_available_qty_for_popover()
 
-            if so_popover_alternative:
-                line.available_qty_for_popover = line._get_available_qty_for_popover_alternative()
-                _logger.warn('value is %s', line._get_available_qty_for_popover_alternative())
-            else:
-                line.available_qty_for_popover = line._get_available_qty_for_popover()
+    def _get_reserved_quantity(self, location):
+        try:
+            return self.env['stock.quant']._gather(
+                self.product_id,
+                location,
+                strict=True
+            ).reserved_quantity
+        except Exception:
+            return 0.0
 
 
-    def _get_available_qty_for_popover_alternative(self):
+
+    def _get_available_qty_for_popover_alt(self):
         self.ensure_one()
         if self.product_id:
             res = self.product_id.with_context(
@@ -46,37 +53,36 @@ class SaleOrderLine(models.Model):
                     self._context.get("from_date"),
                     self._context.get("to_date"),
             )
-            return res.get(self.product_id.id).get("virtual_available")
+            warehouse_location = self.order_id.warehouse_id.lot_stock_id
+            return res.get(self.product_id.id).get("qty_available") - \
+                self._get_reserved_quantity(warehouse_location)
+
+    def _get_available_qty_in_all_warehouse(self):
+        all_warehouses = self.env['stock.warehouse'].search([
+            ('company_id', '=', self.company_id.id)
+        ])
+        on_hand_qty = \
+            self.product_id.qty_available
+        reserved_qty = sum(self._get_reserved_quantity(w.lot_stock_id)
+                           for w in all_warehouses)
+        return on_hand_qty - reserved_qty
 
     @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id")
     def _compute_available_qty_popover_color(self):
         so_popover_alternative = self.env['ir.config_parameter'].sudo().get_param(
             SO_POPOVER_ALTER_PARAM, False)
         if so_popover_alternative:
-            self._compute_alternative_color()
+            self._compute_color_alt()
         else:
-            self._compute_color()
+            super(SaleOrderLine, self)._compute_available_qty_popover_color()
 
-    def _compute_color(self):
-        almost_out_of_stock = int(
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param(ALMOST_OUT_OF_STOCK_PARAM, 2)
-        )
+    def _compute_color_alt(self):
         for line in self:
-            if line.available_qty_for_popover > almost_out_of_stock:
-                line.available_qty_popover_color = GREEN
-            elif line.available_qty_for_popover:
-                line.available_qty_popover_color = YELLOW
-            else:
-                line.available_qty_popover_color = RED
-
-    def _compute_alternative_color(self):
-        for line in self:
-            if line.available_qty_for_popover >= line.product_uom_qty:
-                line.available_qty_popover_color = GREEN
-            elif line.available_qty_for_popover < line.product_uom_qty and \
-                    line.product_id.virtual_available >=  line.product_uom_qty:
-                line.available_qty_popover_color = YELLOW
-            else:
-                line.available_qty_popover_color = RED
+            if line.product_id:
+                if line.available_qty_for_popover >= line.product_uom_qty:
+                    line.available_qty_popover_color = GREEN
+                elif line._get_available_qty_in_all_warehouse() >= \
+                        line.product_uom_qty:
+                    line.available_qty_popover_color = YELLOW
+                else:
+                    line.available_qty_popover_color = RED

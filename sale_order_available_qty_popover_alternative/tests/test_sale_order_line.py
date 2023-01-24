@@ -13,7 +13,8 @@ class TestSaleOrderLine(TestSaleOrderLine):
 
     def create_order_and_get_line(self, qty, warehouse_id):
         self.env["ir.config_parameter"].set_param(
-            'sale_order_available_qty_popover_alternative.so_popover_alternative', "True")
+            'sale_order_available_qty_popover_alternative.'
+            'so_popover_alternative', True)
         sale_order = self.env["sale.order"].create(
             {
                 "partner_id": self.env.user.partner_id.id,
@@ -27,7 +28,8 @@ class TestSaleOrderLine(TestSaleOrderLine):
                         {
                             "product_id": self.product.id,
                             "name": self.product.name,
-                            "product_uom": self.env.ref("uom.product_uom_unit").id,
+                            "product_uom": self.env.ref(
+                                "uom.product_uom_unit").id,
                             "product_uom_qty": qty,
                         },
                     )
@@ -61,6 +63,7 @@ class TestSaleOrderLine(TestSaleOrderLine):
         self._add_quant(self.product, self.location_1, 16)
         self._add_quant(self.product, self.location_2, 20)
         line = self.create_order_and_get_line(17, self.warehouse_1)
+        assert line.available_qty_for_popover == 16
         assert line.available_qty_popover_color == YELLOW
 
     def test_color_red(self):
