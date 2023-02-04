@@ -81,3 +81,7 @@
     - partner_industry_secondary
  
 
+- url: https://github.com/oca/queue
+  branch: "14.0"
+  includes:
+    - queue_job
