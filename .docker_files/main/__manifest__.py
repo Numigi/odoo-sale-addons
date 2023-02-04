@@ -12,6 +12,7 @@
     "summary": "Install all addons required for testing.",
     "depends": [
         "crm_brand",
+        "crm_lead_product",
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "payment_auto_confirm_sale_order",
@@ -45,6 +46,9 @@
         "sale_warranty_lead_on_expiry",
         "sale_xmlrpc_compatible",
         "website_payment_message_enhanced",
+        "website_stock_availability_enhanced",
+        "website_sale_request_price",
+        "website_sale_request_price_wishlist",
     ],
     "installable": True,
 }

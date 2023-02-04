@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website Sale Request Price">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/website_sale_request_price/static/src/js/website_sale_request_price.js"></script>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.product_price" id="website_sale_request_price_product_price" name="Product form: handling hiding Price">
+        <xpath expr="//div[hasclass('product_price')]" position="attributes">
+            <attribute name="t-if">not product.is_request_price_required</attribute>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.product" id="website_sale_request_price_product" name="Product form: handling showing Request Price instead of Add to Cart">
+        <xpath expr="//a[@id='add_to_cart']" position="attributes">
+            <attribute name="t-if">not product.is_request_price_required</attribute>
+        </xpath>
+        <xpath expr="//form[@action='/shop/cart/update']" position="before">
+            <t t-call="website_sale_request_price.request_price_details"/>
+        </xpath>
+        <xpath expr="//a[@id='add_to_cart']" position="after">
+            <t t-if="product.is_request_price_required">
+                <a data-toggle="modal"
+                   data-target="#modal_request_price"
+                   t-att-data-product-id="product_variant.id"
+                   t-att-data-product-display-name="product_variant.display_name"
+                   role="button" class="btn btn-primary btn-lg mt8 js_check_product"
+                >Request Price</a>
+            </t>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.products_item" id="website_sale_request_price_products_item" name="Products item: handling hiding Price">
+        <xpath expr="//div[hasclass('product_price')]" position="attributes">
+            <attribute name="t-if">not product.is_request_price_required</attribute>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.products" id="website_sale_request_price_products" name="Products grid: call modal">
+        <xpath expr="//div[@id='products_grid']" position="inside">
+            <t t-call="website_sale_request_price.request_price_details"/>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.products_add_to_cart" id="website_sale_request_price_products_add_to_cart" name="Products item: handling showing Request Price instead of Add to Cart">
+        <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="attributes">
+            <attribute name="t-if">not product.is_request_price_required</attribute>
+        </xpath>
+        <xpath expr="//a[hasclass('btn','btn-secondary','btn-sm','a-submit')]" position="after">
+            <t t-if="product.is_request_price_required">
+                <t t-set="first_possible_combination" t-value="product._get_first_possible_combination()"/>
+                <t t-if="first_possible_combination">
+                    <a t-att-href="product_href"
+                       role="button"
+                       class="btn btn-secondary btn-sm"
+                       style="color: #FFFFFF;"
+                    >Request Price</a>
+                </t>
+                <t t-else="">
+                    <t t-set="product_variant" t-value="product._create_first_product_variant()"/>
+                    <a data-toggle="modal"
+                       data-target="#modal_request_price"
+                       t-att-data-product-id="product_variant.id"
+                       t-att-data-product-display-name="product_variant.display_name"
+                       role="button"
+                       class="btn btn-secondary btn-sm"
+                       style="color: #FFFFFF;"
+                    >Request Price</a>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template inherit_id="website_sale.suggested_products_list" id="website_sale_request_price_suggested_products_list"
+              name="Suggested products list: handling hiding Price and showing Request Price instead of Add to Cart">
+        <xpath expr="//table[@id='suggested_products']//td[hasclass('td-price')]/span" position="attributes">
+            <attribute name="t-if">not product.product_tmpl_id.is_request_price_required</attribute>
+        </xpath>
+        <xpath expr="//table[@id='suggested_products']//td[hasclass('td-price')]/del" position="attributes">
+            <attribute name="t-if">not product.product_tmpl_id.is_request_price_required</attribute>
+        </xpath>
+        <xpath expr="//table[@id='suggested_products']" position="before">
+            <t t-call="website_sale_request_price.request_price_details"/>
+        </xpath>
+        <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="attributes">
+            <attribute name="t-if">not product.product_tmpl_id.is_request_price_required</attribute>
+        </xpath>
+        <xpath expr="//table[@id='suggested_products']//a[hasclass('js_add_suggested_products')]" position="after">
+            <t t-if="product.product_tmpl_id.is_request_price_required">
+                <a data-toggle="modal"
+                   data-target="#modal_request_price"
+                   t-att-data-product-id="product.id"
+                   t-att-data-product-display-name="product.display_name"
+                   role="button" class="btn btn-link">
+                    <strong>Request Price</strong>
+                </a>
+            </t>
+        </xpath>
+    </template>
+
+    <template inherit_id="sale_product_configurator.optional_product_items" id="website_sale_request_price_optional_product_items" name="Optional product items: handling hiding Price and Add to Cart">
+        <xpath expr="//td[hasclass('td-price')]" position="attributes">
+            <attribute name="t-if">not website or not product.is_request_price_required</attribute>
+        </xpath>
+        <xpath expr="//td[hasclass('td-price')]" position="after">
+            <td t-if="website and product.is_request_price_required"/>
+        </xpath>
+    </template>
+
+    <template id="request_price_details" name="Request Price Details">
+        <div role="dialog" id="modal_request_price" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <form id="modal_request_price_form" t-attf-action="/shop/product/request_price/confirm" method="post" class="js_website_submit_form">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="modal-content">
+                        <header class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">
+                                <strong>Request Price</strong>
+                            </h4>
+                        </header>
+                        <main class="modal-body">
+                            <div class="container">
+                                <h4 class="o_page_header mt16">
+                                    <strong id="product_display_name"/>
+                                    <input type="hidden" class="product_product_id" name="product_product_id"/>
+                                    <input type="hidden" name="product_qty"/>
+                                </h4>
+                                <t t-set="user" t-value="request.env.user"/>
+                                <t t-if="user._is_public()">
+                                    <div class="row mb4">
+                                        <div class="col-lg-4">
+                                            <div><span>Name*</span></div>
+                                            <div><input class="form-control" type="text" name="name" required="This field is required"/></div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div><span>Email*</span></div>
+                                            <div><input class="form-control" type="email" name="email" required="This field is required"/></div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div><span>Phone*</span></div>
+                                            <div><input class="form-control" type="tel" name="phone" required="This field is required"/></div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <div class="row">
+                                    <div class="col-lg-12"><span>Additional information</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <textarea class="form-control" type="tel" name="additional_information"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <t t-set="warning_message" t-value="request.env.user.company_id.website_sale_request_price_message"/>
+                                        <div
+                                            t-if="warning_message"
+                                            t-raw="warning_message"
+                                            style="white-space: pre-wrap; margin-top: 16px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                        <footer class="modal-footer">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-secondary js_goto_event" data-dismiss="modal">Cancel</button>
+                                <button id="confirm_request_price" type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </footer>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+</odoo>
