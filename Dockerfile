@@ -50,6 +50,12 @@ COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 COPY website_payment_message_enhanced /mnt/extra-addons/website_payment_message_enhanced
+COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
+COPY website_sale_request_price_wishlist /mnt/extra-addons/website_sale_request_price_wishlist
+COPY website_stock_availability_enhanced /mnt/extra-addons/website_stock_availability_enhanced
+
+COPY  crm_lead_product /mnt/extra-addons/crm_lead_product
+
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo

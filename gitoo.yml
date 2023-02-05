@@ -14,13 +14,18 @@
   branch: "14.0"
   includes:
     - base_extended_security
-
+    - test_http_request
 - url: https://github.com/Numigi/odoo-product-addons
   branch: "14.0"
   includes:
     - product_kit
     - product_dimension
     - product_crm
+    -
+- url: https://github.com/Numigi/odoo-purchase-addons
+  branch: "14.0"
+  includes:
+    - product_supplier_info_helpers
 
 - url: https://github.com/Numigi/odoo-stock-addons
   branch: "14.0"
@@ -76,3 +81,7 @@
     - partner_industry_secondary
  
 
+- url: https://github.com/oca/queue
+  branch: "14.0"
+  includes:
+    - queue_job
