@@ -24,6 +24,7 @@
             <t t-if="product.is_request_price_required">
                 <a data-toggle="modal"
                    data-target="#modal_request_price"
+                   style="color:#ffffff"
                    t-att-data-product-id="product_variant.id"
                    t-att-data-product-display-name="product_variant.display_name"
                    role="button" class="btn btn-primary btn-lg mt8 js_check_product"
