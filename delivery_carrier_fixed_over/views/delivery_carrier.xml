@@ -6,9 +6,8 @@
         <field name="model">delivery.carrier</field>
         <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
         <field name="arch" type="xml">
-            <group name="delivery_details" position="after">
-                <group>
-                    <field name="enable_fixed_over" string="Fixed Rate"/>
+            <group name="delivery_details" position="inside">
+                <field name="enable_fixed_over" string="Fixed Rate"/>
                 <field
                     name="fixed_over_amount"
                     attrs="{'required': [('enable_fixed_over', '!=', False)],
@@ -18,7 +17,6 @@
                     string="if the order amount is above"
                     attrs="{'required': [('enable_fixed_over', '!=', False)],
                             'invisible': [('enable_fixed_over', '=', False)]}"/>
-                </group>
 
             </group>
         </field>
