@@ -166,7 +166,6 @@
         <field name="name">Targets</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">commission.target</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,pivot,graph</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">

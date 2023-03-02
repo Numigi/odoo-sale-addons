@@ -1,17 +1,17 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
 
 
-class AccountInvoiceLine(models.Model):
+class AccountMoveLine(models.Model):
 
-    _inherit = "account.invoice.line"
+    _inherit = "account.move.line"
 
     commission_target_ids = fields.Many2many(
         "commission.target",
-        "commission_target_invoice_line_rel",
-        "invoice_line_id",
+        "commission_target_move_line_rel",
+        "move_line_id",
         "target_id",
     )
 

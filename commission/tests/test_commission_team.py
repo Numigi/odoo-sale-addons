@@ -1,4 +1,4 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import pytest
@@ -100,7 +100,7 @@ class TestCommissionTeam(TestCommissionCase):
         assert not self.manager_target.child_target_ids
 
     def test_child_targets_wrong_company(self):
-        self.employee_target.company_id = self._create_company(name="Other Company")
+        self.employee_target.company_id = self.setup_company_data('Other Company')['company']
         self._compute_manager_target()
         assert not self.manager_target.child_target_ids
 

@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "commission",
         "crm_brand",
         "crm_lead_product",
         "delivery_carrier_fixed_over",

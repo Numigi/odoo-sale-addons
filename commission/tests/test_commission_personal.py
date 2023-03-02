@@ -1,4 +1,4 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import pytest
@@ -68,7 +68,7 @@ class TestCommissionPersonal(TestCommissionCase):
         self.target.invoice_line_ids = self.invoice.invoice_line_ids
         action = self.target.view_invoice_lines()
         domain = action["domain"]
-        lines = self.env["account.invoice.line"].search(domain)
+        lines = self.env["account.move.line"].search(domain)
         assert lines == self.invoice.invoice_line_ids
 
     def test_find_invoice_single_user(self):
@@ -82,7 +82,7 @@ class TestCommissionPersonal(TestCommissionCase):
 
     @data("in_invoice", "in_refund")
     def test_supplier_invoice(self, type_):
-        self.invoice.type = type_
+        self.invoice.move_type = type_
         invoices = self.target._get_invoices()
         assert not invoices
 
@@ -94,13 +94,13 @@ class TestCommissionPersonal(TestCommissionCase):
 
     @data(date(2020, 5, 17), date(2020, 7, 17))
     def test_find_invoice_correct_date_range(self, correct_date):
-        self.invoice.date_invoice = correct_date
+        self.invoice.invoice_date = correct_date
         invoices = self.target._get_invoices()
         assert self.invoice == invoices
 
     @data(date(2020, 5, 16), date(2020, 7, 18))
     def test_find_invoice_wrong_date_range(self, wrong_date):
-        self.invoice.date_invoice = wrong_date
+        self.invoice.invoice_date = wrong_date
         invoices = self.target._get_invoices()
         assert not invoices
 
@@ -176,7 +176,7 @@ class TestCommissionPersonal(TestCommissionCase):
         assert "CO" in self.target.name
 
     def test_name_sequence_new_company(self):
-        new_company = self._create_company(name="New")
+        new_company = self.setup_company_data('New')['company']
         new_sequence = self.env["ir.sequence"].search(
             [("code", "=", "commission.target.reference")]
         )
@@ -212,7 +212,7 @@ class TestCommissionPersonal(TestCommissionCase):
         assert targets == self.target
 
     def test_target_access_domain__wrong_company(self):
-        self.target.company_id = self._create_company(name="Wrong")
+        self.target.company_id = self.setup_company_data('Wrong')['company']
         targets = self._search_employee_targets()
         assert not targets
 
