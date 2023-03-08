@@ -173,13 +173,15 @@ class CommissionTarget(models.Model):
                 ("invoice_date", ">=", self.date_start),
             ]
         )
+
         invoices = invoices.filtered(
             lambda inv: inv.company_id == self.company_id
-            and inv.user_id == self.employee_id.user_id
-            and inv.date_invoice <= self.date_end
-            and inv.type not in ("in_invoice", "in_refund")
+            and inv.invoice_user_id == self.employee_id.user_id
+            and inv.invoice_date <= self.date_end
+            and inv.move_type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
+
         return invoices
 
     def _compute_invoiced_amount(self):
@@ -192,6 +194,7 @@ class CommissionTarget(models.Model):
 
     def _is_included_invoice_line(self, line):
         included = self.category_id.included_tag_ids
+
         tags = line.sale_line_ids.order_id.so_tag_ids
         return not included or bool(included & tags)
 
@@ -256,7 +259,7 @@ class CommissionTarget(models.Model):
     def _get_next_sequence_number(self):
         return (
             self.env["ir.sequence"]
-            .with_context(force_company=self.company_id.id)
+            .with_company(self.company_id)
             .next_by_code("commission.target.reference")
         )
 

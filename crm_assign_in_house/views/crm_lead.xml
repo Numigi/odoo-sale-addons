@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+    <record id="crm_lead_view_form_oppor" model="ir.ui.view">
         <field name="name">crm.lead.form.opportunity</field>
         <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
+            <xpath expr="//group[@name='opportunity_partner']" position="before">
                 <field name="in_house" invisible="1"/>
-                <label for=""/>
                 <div class="o_field_widget oe_grey" attrs="{'invisible': [('in_house', '=', False)]}">
-                    In-house
+                    <b>In-house</b>
                 </div>
-            </field>
+            </xpath>
         </field>
     </record>
 

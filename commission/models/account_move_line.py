@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class AccountMoveLine(models.Model):
-
     _inherit = "account.move.line"
 
     commission_target_ids = fields.Many2many(
@@ -20,7 +19,7 @@ class AccountMoveLine(models.Model):
         store=True,
     )
 
-    @api.depends('commission_target_ids.state')
+    @api.depends("commission_target_ids.state")
     def _compute_commission_target_count(self):
         for line in self:
             targets = line.commission_target_ids.filtered(

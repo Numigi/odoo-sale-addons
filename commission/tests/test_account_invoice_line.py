@@ -9,9 +9,12 @@ class TestAccountInvoiceLine(TestCommissionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.invoice = cls._create_invoice(amount=1)
+
         cls.target = cls._create_target(target_amount=1)
+
         cls.target.set_confirmed_state()
         cls.target.compute()
+        cls.target.flush()
 
     def test_commission_target_count(self):
         invoice_line = self.invoice.invoice_line_ids

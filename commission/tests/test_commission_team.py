@@ -100,7 +100,15 @@ class TestCommissionTeam(TestCommissionCase):
         assert not self.manager_target.child_target_ids
 
     def test_child_targets_wrong_company(self):
-        self.employee_target.company_id = self.setup_company_data('Other Company')['company']
+        self.employee_target.company_id = (
+            self.env["res.company"]
+            .sudo()
+            .create(
+                {
+                    "name": "Other Company",
+                }
+            )
+        )
         self._compute_manager_target()
         assert not self.manager_target.child_target_ids
 
@@ -206,7 +214,9 @@ class TestCommissionTeam(TestCommissionCase):
     def test_access__not_own_target(self):
         self.manager_target.employee_id = self._create_employee()
         with pytest.raises(AccessError):
-            self.manager_target.sudo(self.team_manager_user).check_extended_security_all()
+            self.manager_target.sudo(
+                self.team_manager_user
+            ).check_extended_security_all()
 
     def test_access__target_of_employee_in_own_team(self):
         self.employee_target.sudo(self.team_manager_user).check_extended_security_all()
@@ -217,7 +227,9 @@ class TestCommissionTeam(TestCommissionCase):
     def test_access__target_of_employee_not_in_own_team(self):
         self.team.user_id = self._create_employee().user_id
         with pytest.raises(AccessError):
-            self.employee_target.sudo(self.team_manager_user).check_extended_security_all()
+            self.employee_target.sudo(
+                self.team_manager_user
+            ).check_extended_security_all()
 
     def _compute_manager_target(self):
         self.manager_target.sudo(self.manager_user).compute()
