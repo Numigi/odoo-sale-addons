@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests.common import SavepointCase
@@ -22,7 +22,7 @@ class TestOneStepRoute(SavepointCase):
         )
 
         cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer", "customer": True}
+            {"name": "My Customer"}
         )
 
         cls.sale_order = cls.env["sale.order"].create(
