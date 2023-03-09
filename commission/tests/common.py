@@ -10,7 +10,8 @@ class TestCommissionCase(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.chart_template = cls.env.ref(
-            "l10n_generic_coa.configurable_chart_template", raise_if_not_found=False
+            "l10n_ca.ca_en_chart_template_en",
+            raise_if_not_found=False
         )
         cls.company_data = cls.setup_company_data("Company_name_1")
 
@@ -112,7 +113,7 @@ class TestCommissionCase(SavepointCase):
         )
 
     @classmethod
-    def setup_company_data(cls, company_name, chart_template=None, **kwargs):
+    def setup_company_data(cls, company_name, **kwargs):
         def search_account(company, chart_template, field_name, domain):
             template_code = chart_template[field_name].code
             domain = [("company_id", "=", company.id)] + domain

@@ -29,6 +29,7 @@ COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_delivery_completion_rental /mnt/extra-addons/sale_delivery_completion_rental
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
+COPY sale_intercompany_service /mnt/extra-addons/sale_intercompany_service
 COPY sale_invoice_email_warning /mnt/extra-addons/sale_invoice_email_warning
 COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
 COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
@@ -37,8 +38,10 @@ COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
 COPY sale_order_available_qty_popover_rental /mnt/extra-addons/sale_order_available_qty_popover_rental
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
+COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
+COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
 COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
 COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
@@ -56,6 +59,7 @@ COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
+COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 COPY website_payment_message_enhanced /mnt/extra-addons/website_payment_message_enhanced
 COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
