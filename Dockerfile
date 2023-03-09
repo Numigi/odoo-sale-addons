@@ -30,6 +30,7 @@ COPY sale_delivery_completion_rental /mnt/extra-addons/sale_delivery_completion_
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
 COPY sale_invoice_email_warning /mnt/extra-addons/sale_invoice_email_warning
 COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
+COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover

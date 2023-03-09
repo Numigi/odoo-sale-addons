@@ -1,4 +1,4 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests.common import SavepointCase
@@ -10,13 +10,11 @@ class TestInvoice(SavepointCase):
         super().setUpClass()
         cls.partner = cls.env["res.partner"].create({"name": "My Customer"})
         cls.salesman = cls.env.ref("base.user_demo")
-        cls.account = cls.env["account.account"].search([], limit=1)
-        cls.invoice = cls.env["account.invoice"].create(
+        cls.invoice = cls.env["account.move"].create(
             {
-                "account_id": cls.account.id,
                 "partner_id": cls.partner.id,
-                "user_id": cls.salesman.id,
-                "type": "out_invoice",
+                "invoice_user_id": cls.salesman.id,
+                "move_type": "out_invoice",
             }
         )
 
