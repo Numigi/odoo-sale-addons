@@ -13,17 +13,17 @@ I go to the form view of a product.
 
 I notice a new field ``Analytic Tags`` in the ``Sales`` tab.
 
-.. image:: static/description/product_form.png
+.. image:: sale_default_analytic_tag/static/description/product_form.png
 
 Usage
 -----
 I create a new sale order and select my product.
 
-.. image:: static/description/sale_order_form.png
+.. image:: sale_default_analytic_tag/static/description/sale_order_form.png
 
 I notice that the default tags for this product were applied.
 
-.. image:: static/description/sale_order_form_with_tags.png
+.. image:: sale_default_analytic_tag/static/description/sale_order_form_with_tags.png
 
 Contributors
 ------------
