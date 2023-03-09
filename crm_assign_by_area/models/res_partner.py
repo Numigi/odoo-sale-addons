@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, models
@@ -7,7 +7,6 @@ from odoo import _, api, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    @api.multi
     def action_assign_salesperson(self):
         self.ensure_one()
         return {

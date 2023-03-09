@@ -4,7 +4,7 @@ This module adds ability to assign salesperson to crm pipeline and contact
 
 New field Salesperson on territory
 
-.. image:: static/description/territory_salesperson_id.png
+.. image:: crm_assign_by_area/static/description/territory_salesperson_id.png
 
 Usage
 =====
@@ -13,27 +13,27 @@ Usage
 
 - On pipeline form after select a customer, or on contact form, I see the button "Assign Salesperson" appear
 
-.. image:: static/description/button_assign_salesperson_crm.png
+.. image:: crm_assign_by_area/static/description/button_assign_salesperson_crm.png
 
-.. image:: static/description/button_assign_salesperson_contact.png
+.. image:: crm_assign_by_area/static/description/button_assign_salesperson_contact.png
 
 - I press the button
 
 - If the customer (or contact) has no territory, this popup will appear:
 
-.. image:: static/description/no_territory.png
+.. image:: crm_assign_by_area/static/description/no_territory.png
 
 - If there is no salesperson to assign, this popup will appear:
 
-.. image:: static/description/no_salesperson_to_assign.png
+.. image:: crm_assign_by_area/static/description/no_salesperson_to_assign.png
 
 - If there is only one salesperson to assign, this popup will appear:
 
-.. image:: static/description/one_salesperson_to_assign.png
+.. image:: crm_assign_by_area/static/description/one_salesperson_to_assign.png
 
 - If there are several salespersons to assign, this popup will appear:
 
-.. image:: static/description/several_salespersons_to_assign.png
+.. image:: crm_assign_by_area/static/description/several_salespersons_to_assign.png
 
 - After I press confirm, I see the Salesperson value is set
 

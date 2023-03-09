@@ -15,6 +15,12 @@
   includes:
     - base_extended_security
     - test_http_request
+
+- url: https://github.com/Numigi/odoo-partner-addons
+  branch: "14.0"
+  includes:
+    - forward_sorting_area
+
 - url: https://github.com/Numigi/odoo-product-addons
   branch: "14.0"
   includes:
@@ -36,12 +42,9 @@
   branch: "14.0"
   includes:
     - web_handle_condition
+    - web_list_column_width
     - web_trash_condition
 
-#- url: https://github.com/oca/crm
-#  branch: "14.0"
-#  includes:
-#    - crm_lead_product
 
 - url: https://github.com/OCA/multi-company
   branch: "14.0"

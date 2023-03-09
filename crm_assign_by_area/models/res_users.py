@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, models
@@ -7,13 +7,11 @@ from odoo import api, models
 class ResUsers(models.Model):
     _inherit = "res.users"
 
-    @api.multi
     def name_get(self):
         territories = self._get_territories_from_context()
         if territories:
             return [
-                (user.id, user._get_name_with_territories(territories))
-                for user in self
+                (user.id, user._get_name_with_territories(territories)) for user in self
             ]
         else:
             return super().name_get()
@@ -30,6 +28,5 @@ class ResUsers(models.Model):
     def _get_name_with_territories(self, territories):
         user_territories = territories.filtered(lambda r: r.salesperson_id == self)
         return "{} ({})".format(
-            self.name,
-            ", ".join(user_territories.mapped("display_name"))
+            self.name, ", ".join(user_territories.mapped("display_name"))
         )

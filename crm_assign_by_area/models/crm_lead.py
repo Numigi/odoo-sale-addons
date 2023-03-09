@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, models
@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 class CrmLead(models.Model):
     _inherit = "crm.lead"
 
-    @api.multi
     def action_assign_salesperson(self):
         self.ensure_one()
         if not self.partner_id:

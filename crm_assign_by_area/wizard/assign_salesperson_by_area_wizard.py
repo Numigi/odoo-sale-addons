@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
@@ -42,7 +42,6 @@ class AssignSalespersonByAreaWizard(models.Model):
             }
         }
 
-    @api.multi
     def action_confirm(self):
         self.ensure_one()
         if not self.salesperson_id:
@@ -51,7 +50,6 @@ class AssignSalespersonByAreaWizard(models.Model):
         active_record = self.get_active_record()
         active_record["user_id"] = self.salesperson_id
 
-    @api.multi
     def get_active_record(self):
         context = self._context
         active_model = context.get("active_model")
@@ -64,8 +62,8 @@ class AssignSalespersonByAreaWizard(models.Model):
         )
         if not active_record.exists():
             raise AssertionError(
-                "Cannot find any record with model '%s' and id '%s'." %
-                (active_model, active_id)
+                "Cannot find any record with model '%s' and id '%s'."
+                % (active_model, active_id)
             )
         return active_record
 
