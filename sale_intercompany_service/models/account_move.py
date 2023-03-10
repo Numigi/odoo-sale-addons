@@ -16,8 +16,10 @@ class AccountMove(models.Model):
 
     def open_interco_service_summary(self):
         order = self.sudo().interco_service_order_id
-        wizard = self.env["sale.interco.service.invoice"].sudo().create(
-            {"order_id": order.id, "mode": "summary"}
+        wizard = (
+            self.env["sale.interco.service.invoice"]
+            .sudo()
+            .create({"order_id": order.id, "mode": "summary"})
         )
         action = wizard.get_formview_action()
         action["name"] = _("Interco Service")

@@ -1,9 +1,6 @@
 # © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-import logging
 from odoo import api, fields, models
-
-_logger = logging.getLogger(__name__)
 
 
 class SaleIntercoServiceInvoice(models.TransientModel):
@@ -11,8 +8,7 @@ class SaleIntercoServiceInvoice(models.TransientModel):
     _description = "Sale Interco Service Invoice"
 
     mode = fields.Selection(
-        [("invoice", "Invoice"), ("summary", "Summary")], required=True,
-        readonly=True
+        [("invoice", "Invoice"), ("summary", "Summary")], required=True, readonly=True
     )
 
     order_id = fields.Many2one("sale.order", readonly=True)
@@ -148,33 +144,33 @@ class SaleIntercoServiceInvoice(models.TransientModel):
 
     def _compute_related_invoices(self):
         for wizard in self:
-            self.interco_invoice_ids = self._get_interco_invoices()
-            self.interco_invoice_names = self._format_invoice_names(
-                self.interco_invoice_ids
+            wizard.interco_invoice_ids = wizard._get_interco_invoices()
+            wizard.interco_invoice_names = wizard._format_invoice_names(
+                wizard.interco_invoice_ids
             )
-            self.customer_invoice_ids = self.interco_invoice_ids.sudo().mapped(
+            wizard.customer_invoice_ids = wizard.interco_invoice_ids.sudo().mapped(
                 "interco_customer_invoice_id"
             )
-            self.customer_invoice_names = self._format_invoice_names(
-                self.customer_invoice_ids
+            wizard.customer_invoice_names = wizard._format_invoice_names(
+                wizard.customer_invoice_ids
             )
-            self.supplier_invoice_ids = self.interco_invoice_ids.sudo().mapped(
+            wizard.supplier_invoice_ids = wizard.interco_invoice_ids.sudo().mapped(
                 "interco_supplier_invoice_id"
             )
-            self.supplier_invoice_names = self._format_invoice_names(
-                self.supplier_invoice_ids
+            wizard.supplier_invoice_names = wizard._format_invoice_names(
+                wizard.supplier_invoice_ids
             )
 
     def _get_interco_invoices(self):
-        return self.order_id.sudo().mapped("order_line.invoice_lines.move_id")
+        return [
+            (6, 0, self.order_id.sudo().mapped("order_line.invoice_lines.move_id.id"))
+        ]
 
     def _format_invoice_names(self, invoices):
         return "\n".join(invoices.sudo().mapped("display_name"))
 
     def validate(self):
         invoices = self._create_interco_invoice()
-        _logger.info('=======================invoices:%s', invoices)
-
         for invoice in invoices:
             self._update_interco_invoice(invoice)
             self._make_supplier_invoice(invoice)
@@ -197,25 +193,32 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             }
         )
         self._update_invoice_line_discount(invoice)
+
         invoice.with_context(
-            check_move_validity=False).invoice_line_ids._compute_tax_line_id()
+            check_move_validity=False
+        ).invoice_line_ids._onchange_mark_recompute_taxes()
+        invoice.with_context(check_move_validity=False)._onchange_invoice_line_ids()
 
     def _update_invoice_line_discount(self, invoice):
         for line in invoice.invoice_line_ids:
             line.with_context(check_move_validity=False).discount = 100 * (
-                    1 - (1 - line.discount / 100) * (1 - self.discount / 100)
+                1 - (1 - line.discount / 100) * (1 - self.discount / 100)
             )
 
     def _make_supplier_invoice(self, invoice):
-        self = self.with_company(
-            self.interco_company_id
-        ).with_context(default_currency_id=invoice.currency_id.id).sudo()
+        self = (
+            self.with_company(self.interco_company_id)
+            .with_context(default_currency_id=invoice.currency_id.id)
+            .sudo()
+        )
         partner = self.company_id.partner_id
         supplier_invoice = self.env["account.move"].create(
             {
                 "company_id": self.interco_company_id.id,
                 "partner_id": partner.id,
-                "move_type": "in_invoice" if invoice.move_type == "out_invoice" else "in_refund",
+                "move_type": "in_invoice"
+                if invoice.move_type == "out_invoice"
+                else "in_refund",
                 "date": invoice.date,
                 "invoice_date": invoice.invoice_date,
                 "invoice_line_ids": [
@@ -223,25 +226,18 @@ class SaleIntercoServiceInvoice(models.TransientModel):
                     for vals in self._get_supplier_invoice_line_vals(invoice)
                 ],
                 "name": invoice.name,
-                #"origin": invoice.origin,
+                "invoice_origin": invoice.invoice_origin,
                 "narration": invoice.narration,
-                #"account_id": partner.property_account_payable_id.id,
                 "fiscal_position_id": self.supplier_position_id.id,
                 "interco_service_order_id": self.order_id.id,
                 "is_interco_service": True,
                 "invoice_user_id": None,
             }
         )
-        for line in supplier_invoice.invoice_line_ids:
-            line._get_computed_account()
-
-
-        for line in supplier_invoice.invoice_line_ids:
-            self.with_context(
-            check_move_validity=False)._set_supplier_taxes(line)
 
         supplier_invoice.with_context(
-            check_move_validity=False).invoice_line_ids._compute_tax_line_id()
+            check_move_validity=False
+        ).invoice_line_ids._onchange_mark_recompute_taxes()
 
         invoice.interco_supplier_invoice_id = supplier_invoice
 
@@ -252,16 +248,25 @@ class SaleIntercoServiceInvoice(models.TransientModel):
         ]
 
     def _get_single_supplier_invoice_line_vals(self, invoice_line):
-        product = invoice_line.product_id.with_company(
-            self.interco_company_id
-        ).sudo()
+        product = invoice_line.product_id.with_company(self.interco_company_id).sudo()
 
         self = self.with_company(self.interco_company_id).sudo()
 
         fiscal_position = self.supplier_position_id
         accounts = product.product_tmpl_id.get_product_accounts(
-            fiscal_pos=fiscal_position)
-        account_id = accounts['expense']
+            fiscal_pos=fiscal_position
+        )
+        account_id = accounts["expense"]
+        taxes = (
+            product.supplier_taxes_id.filtered(
+                lambda r: r.company_id == self.interco_company_id
+            )
+            or account_id.tax_ids
+            or self.interco_company_id.account_purchase_tax_id
+        )
+        tax_ids = fiscal_position.map_tax(
+            taxes, product=product, partner=invoice_line.move_id.partner_id
+        )
 
         return {
             "product_id": product.id,
@@ -269,13 +274,17 @@ class SaleIntercoServiceInvoice(models.TransientModel):
             "quantity": invoice_line.quantity,
             "name": invoice_line.name,
             "price_unit": invoice_line.price_unit,
+            "tax_ids": [(6, 0, tax_ids.ids)],
             "discount": invoice_line.discount,
             "account_id": account_id.id,
         }
 
     def _make_customer_invoice(self, invoice):
-        self = self.with_company(self.interco_company_id
-        ).with_context(default_currency_id=invoice.currency_id.id).sudo()
+        self = (
+            self.with_company(self.interco_company_id)
+            .with_context(default_currency_id=invoice.currency_id.id)
+            .sudo()
+        )
         partner = self.customer_id
         customer_invoice = self.env["account.move"].create(
             {
@@ -290,53 +299,20 @@ class SaleIntercoServiceInvoice(models.TransientModel):
                     for vals in self._get_customer_invoice_line_vals(invoice)
                 ],
                 "name": invoice.name,
-                #"origin": invoice.origin,
+                "invoice_origin": invoice.invoice_origin,
                 "narration": invoice.narration,
-                #"account_id": partner.property_account_receivable_id.id,
                 "fiscal_position_id": self.customer_position_id.id,
                 "interco_service_order_id": self.order_id.id,
                 "is_interco_service": True,
                 "invoice_user_id": None,
             }
         )
-        for line in customer_invoice.invoice_line_ids:
-            line._get_computed_account()
-
-        for line in customer_invoice.invoice_line_ids:
-            self.with_context(
-            check_move_validity=False)._set_customer_taxes(line)
 
         customer_invoice.with_context(
-            check_move_validity=False).invoice_line_ids._compute_tax_line_id()
+            check_move_validity=False
+        ).invoice_line_ids._onchange_mark_recompute_taxes()
 
         invoice.interco_customer_invoice_id = customer_invoice
-
-    def _set_customer_taxes(self, invoice_line):
-        invoice = invoice_line.move_id
-        product = invoice_line.product_id
-        taxes = (
-                product.taxes_id.filtered(
-                    lambda r: r.company_id == invoice.company_id)
-                or invoice_line.account_id.tax_ids
-                or invoice.company_id.account_sale_tax_id
-        )
-        invoice_line.tax_ids = invoice.fiscal_position_id.map_tax(
-            taxes, product=product, partner=invoice.partner_id
-        )
-
-    def _set_supplier_taxes(self, invoice_line):
-        invoice = invoice_line.move_id
-        product = invoice_line.product_id
-        taxes = (
-                product.supplier_taxes_id.filtered(
-                    lambda r: r.company_id == invoice.company_id
-                )
-                or invoice_line.account_id.tax_ids
-                or invoice.company_id.account_purchase_tax_id
-        )
-        invoice_line.tax_ids = invoice.fiscal_position_id.map_tax(
-            taxes, product=product, partner=invoice.partner_id
-        )
 
     def _get_customer_invoice_line_vals(self, invoice):
         return [
@@ -345,22 +321,30 @@ class SaleIntercoServiceInvoice(models.TransientModel):
         ]
 
     def _get_single_customer_invoice_line_vals(self, invoice_line):
-        product = invoice_line.product_id.with_company(
-            self.interco_company_id
-        ).sudo()
+        product = invoice_line.product_id.with_company(self.interco_company_id).sudo()
         self = self.with_company(self.interco_company_id).sudo()
 
         fiscal_position = self.customer_position_id
         accounts = product.product_tmpl_id.get_product_accounts(
-            fiscal_pos=fiscal_position)
-        account_id = accounts['income']
-        _logger.info('------------------------account_id:%s', account_id)
+            fiscal_pos=fiscal_position
+        )
+        account_id = accounts["income"]
+        taxes = (
+            product.taxes_id.filtered(lambda r: r.company_id == self.interco_company_id)
+            or account_id.tax_ids
+            or self.interco_company_id.account_sale_tax_id
+        )
+        tax_ids = fiscal_position.map_tax(
+            taxes, product=product, partner=invoice_line.move_id.partner_id
+        )
+
         return {
             "product_id": product.id,
             "product_uom_id": invoice_line.product_uom_id.id,
             "quantity": invoice_line.quantity,
             "name": invoice_line.name,
             "price_unit": invoice_line.price_unit,
+            "tax_ids": [(6, 0, tax_ids.ids)],
             "discount": invoice_line.sale_line_ids[:1].discount,
             "account_id": account_id.id,
         }

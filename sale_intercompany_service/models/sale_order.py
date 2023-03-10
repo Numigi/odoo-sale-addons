@@ -23,13 +23,16 @@ class SaleOrder(models.Model):
         return action
 
     def _get_interco_service_wizard_action(self, mode):
-        wizard = self.env["sale.interco.service.invoice"].sudo().create(
-            {"order_id": self.id, "mode": mode}
+        wizard = (
+            self.env["sale.interco.service.invoice"]
+            .sudo()
+            .create({"order_id": self.id, "mode": mode})
         )
         action = wizard.get_formview_action()
         action["views"] = [
             (self.env.ref(f"sale_intercompany_service.seller_wizard").id, "form")
         ]
+        action["res_id"] = wizard.id
         action["target"] = "new"
         return action
 
@@ -93,7 +96,3 @@ class SaleOrder(models.Model):
                         partners=", ".join(partners_not_shared.mapped("display_name"))
                     )
                 )
-
-
-
-

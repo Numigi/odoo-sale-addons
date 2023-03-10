@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, AccessError
 from odoo.tests.common import SavepointCase
 
 
@@ -141,9 +141,7 @@ class IntercoServiceCase(SavepointCase):
 
     @staticmethod
     def _set_fiscal_position(partner, company, position):
-        partner.with_company(
-            company
-        ).property_account_position_id = position
+        partner.with_company(company).property_account_position_id = position
 
     @classmethod
     def _create_company(cls, name):
@@ -152,8 +150,7 @@ class IntercoServiceCase(SavepointCase):
         cls.env.user.company_ids |= company
         cls.env.user.company_id = company
         chart_template = cls.env.ref(
-            "l10n_ca.ca_en_chart_template_en",
-            raise_if_not_found=False
+            "l10n_ca.ca_en_chart_template_en", raise_if_not_found=False
         )
         chart_template.try_loading(company=company)
         return company
@@ -161,7 +158,7 @@ class IntercoServiceCase(SavepointCase):
     @classmethod
     def _set_user_company(cls, company):
         cls.user.sudo().write(
-            {"company_id": company.id, "company_ids": [(6, 0, [company.id])]}
+            {"company_id": company.id, "company_ids": [(4, company.id)]}
         )
 
 
@@ -253,6 +250,7 @@ class TestIntercoInvoices(IntercoServiceCase):
         super().setUpClass()
         cls.order.action_confirm()
         cls.wizard.validate()
+        cls.wizard._compute_related_invoices
 
         cls.invoice_line = cls.order_line.invoice_lines
         cls.invoice = cls.invoice_line.move_id
@@ -264,25 +262,29 @@ class TestIntercoInvoices(IntercoServiceCase):
         cls.customer_invoice_line = cls.customer_invoice.invoice_line_ids
 
     def test_interco_invoice_price_not_matching(self):
-        self.invoice.invoice_line_ids[0].sudo().with_context(check_move_validity=False).price_unit += 0.01
+        self.invoice.invoice_line_ids[0].sudo().with_context(
+            check_move_validity=False
+        ).price_unit += 0.01
         with pytest.raises(ValidationError):
             self._validate_invoice(self.invoice)
 
     def test_supplier_invoice_price_not_matching(self):
-        self.supplier_invoice.invoice_line_ids[0].with_context(check_move_validity=False).price_unit += 0.01
+        self.supplier_invoice.invoice_line_ids[0].with_context(
+            check_move_validity=False
+        ).price_unit += 0.01
         with pytest.raises(ValidationError):
             self._validate_invoice(self.supplier_invoice)
 
-    # def test_interco_invoice_tax_amount_matching(self):
-    #     self._validate_invoice(self.invoice)
-    #
-    # def test_customer_invoice_does_not_need_to_match_amounts(self):
-    #     self._validate_invoice(self.customer_invoice)
+    def test_interco_invoice_tax_amount_matching(self):
+        self._validate_invoice(self.invoice)
+
+    def test_customer_invoice_does_not_need_to_match_amounts(self):
+        self._validate_invoice(self.customer_invoice)
 
     def _validate_invoice(self, invoice):
         self._set_user_company(invoice.company_id)
         self.user.groups_id |= self.env.ref("account.group_account_invoice")
-        invoice.sudo(self.user).action_post()
+        invoice.with_company(invoice.company_id).sudo(self.user).action_post()
 
     def test_interco_invoice(self):
         assert self.invoice.is_interco_service
@@ -356,31 +358,34 @@ class TestIntercoInvoices(IntercoServiceCase):
     def test_summary_from_customer_invoice(self):
         self._set_user_company(self.subsidiary)
         wizard = self._open_summary_from_invoice(self.customer_invoice)
+        wizard._compute_related_invoices()
         assert wizard.mode == "summary"
         self._check_summary_fields(wizard)
 
     def test_summary_from_supplier_invoice(self):
         self._set_user_company(self.subsidiary)
         wizard = self._open_summary_from_invoice(self.supplier_invoice)
+        wizard._compute_related_invoices()
         assert wizard.mode == "summary"
         self._check_summary_fields(wizard)
 
     def test_summary_from_mother_invoice(self):
         self._set_user_company(self.mother_company)
         wizard = self._open_summary_from_invoice(self.invoice)
+        wizard._compute_related_invoices()
         assert wizard.mode == "summary"
         self._check_summary_fields(wizard)
 
     def test_summary_from_sale_order(self):
         self._set_user_company(self.mother_company)
         wizard = self._open_summary_from_invoice(self.invoice)
+        wizard._compute_related_invoices()
         assert wizard.mode == "summary"
         self._check_summary_fields(wizard)
 
     def _check_summary_fields(self, wizard):
         assert wizard.order_id == self.order
         assert wizard.order_name == self.order.sudo().display_name
-        wizard.interco_invoice_ids.flush()
         assert wizard.interco_invoice_ids == self.invoice
         assert wizard.interco_invoice_names == self.invoice.sudo().display_name
         assert wizard.supplier_invoice_ids == self.supplier_invoice
