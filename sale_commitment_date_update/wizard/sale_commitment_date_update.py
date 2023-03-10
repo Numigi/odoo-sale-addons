@@ -1,4 +1,4 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models, _
@@ -27,7 +27,7 @@ class SaleCommitmentDateUpdate(models.TransientModel):
 
     def _process_stock_move(self, move):
         new_date = self._compute_stock_move_date(move)
-        move.with_context(do_not_propagate=True).write({"date_expected": new_date})
+        move.with_context(do_not_propagate=True).write({"date": new_date})
 
     def _compute_stock_move_date(self, move):
         stock_move_delay = self._get_stock_move_delay(move)

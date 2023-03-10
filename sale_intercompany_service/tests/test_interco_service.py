@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
-from odoo.exceptions import ValidationError, AccessError
+from odoo.exceptions import ValidationError
 from odoo.tests.common import SavepointCase
 
 
