@@ -19,6 +19,12 @@ class SaleCommitmentDateCase(SavepointCase):
                 "type": "product",
             }
         )
+        cls.product2 = cls.env["product.product"].create(
+            {
+                "name": "Product 2",
+                "type": "product",
+            }
+        )
 
         cls.partner = cls.env["res.partner"].create(
             {

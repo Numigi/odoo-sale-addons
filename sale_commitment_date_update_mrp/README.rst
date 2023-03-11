@@ -12,15 +12,15 @@ Usage
 -----
 First, `update the commitment date <../sale_commitment_date_update/README.rst>`_.
 
-.. image:: static/description/menu.png
+.. image:: sale_commitment_date_update_mrp/static/description/menu.png
 
-.. image:: static/description/change.png
+.. image:: sale_commitment_date_update_mrp/static/description/change.png
 
-.. image:: static/description/commit.png
+.. image:: sale_commitment_date_update_mrp/static/description/commit.png
 
 The manufacturing order created by the sale order will also have its deadline updated.
 
-.. image:: static/description/manuf.png
+.. image:: sale_commitment_date_update_mrp/static/description/manuf.png
 
 Configuration
 -------------

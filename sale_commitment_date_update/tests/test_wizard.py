@@ -36,8 +36,13 @@ class TestWizard(SaleCommitmentDateCase):
 
     def test_two_sale_order_lines(self):
         new_line = self.sale_order_line.copy(
-            {"product_id": self.product.copy().id, "order_id": self.sale_order.id}
+            {
+                "product_id":  self.product2.id,
+                "order_id": self.sale_order.id,
+                "name": "line 2",
+            }
         )
+
         self.sale_order.action_confirm()
         self.wizard.confirm()
         assert self.sale_order_line.move_ids.date == self.new_date
