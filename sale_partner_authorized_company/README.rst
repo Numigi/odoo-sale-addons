@@ -19,7 +19,7 @@ I go to the form view of a partner.
 
 I notice a new field ``Authorized Companies For Sales``.
 
-.. image:: static/description/partner_form.png
+.. image:: sale_partner_authorized_company/static/description/partner_form.png
 
 I select the company ``Company 1``.
 Only this company will therefore be able to sell to this partner.
@@ -31,15 +31,15 @@ Only this company will therefore be able to sell to this partner.
 
 Connected with ``Company 2``, I create a sale order.
 
-.. image:: static/description/sale_order.png
+.. image:: sale_partner_authorized_company/static/description/sale_order.png
 
 When selecting my customer, a warning message is displayed.
 
-.. image:: static/description/sale_order_warning.png
+.. image:: sale_partner_authorized_company/static/description/sale_order_warning.png
 
 Automatically, the partner is unselected from the sale order.
 
-.. image:: static/description/sale_order_partner_empty.png
+.. image:: sale_partner_authorized_company/static/description/sale_order_partner_empty.png
 
 I must select another customer in order to proceed.
 

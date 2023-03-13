@@ -41,6 +41,7 @@
         "sale_order_margin_percent",
         "sale_order_url_tracking",
         "sale_order_weight",
+        "sale_partner_authorized_company",
         "sale_persistent_product_warning",
         "sale_privilege_level",
         "sale_privilege_level_delivery",

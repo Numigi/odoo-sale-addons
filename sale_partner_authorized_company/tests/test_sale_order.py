@@ -1,4 +1,4 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests.common import SavepointCase
@@ -12,7 +12,7 @@ class TestSaleOrder(SavepointCase):
         cls.company_1 = cls.env["res.company"].create({"name": "Company 1"})
         cls.company_2 = cls.env["res.company"].create({"name": "Company 2"})
         cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer", "is_company": True, "customer": True}
+            {"name": "My Customer", "is_company": True}
         )
         cls.contact = cls.env["res.partner"].create(
             {"name": "My Contact", "parent_id": cls.customer.id}
@@ -56,6 +56,6 @@ class TestSaleOrder(SavepointCase):
     def _trigger_partner_onchange(self):
         company = self.order.company_id
         self.user.write(
-            {"company_ids": [(6, 0, [company.id])], "company_id": company.id}
+            {"company_ids": [(4, company.id)], "company_id": company.id}
         )
         return self.order._check_partner_authorized_companies()
