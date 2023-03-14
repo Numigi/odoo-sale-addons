@@ -29,7 +29,7 @@ There is no specific configuration required before using this module.
 
 When installing the module, a new route ``Inter Company`` is added.
 
-.. image:: static/description/stock_route.png
+.. image:: purchase_sale_inter_company_route/static/description/stock_route.png
 
 This route is automatically selected on intercompany sale orders.
 
@@ -43,49 +43,49 @@ Usage
 -----
 With the purchasing company, I create a purchase order and select the selling company as vendor.
 
-.. image:: static/description/purchase_order_form.png
+.. image:: purchase_sale_inter_company_route/static/description/purchase_order_form.png
 
 I confirm the purchase order.
 
-.. image:: static/description/purchase_order_confirmed.png
+.. image:: purchase_sale_inter_company_route/static/description/purchase_order_confirmed.png
 
 With the selling company, I go to the generated sale order.
 
 I notice that the intercompany route was selected on the order.
 
-.. image:: static/description/sale_order_form.png
+.. image:: purchase_sale_inter_company_route/static/description/sale_order_form.png
 
 I go to the delivery order.
 
-.. image:: static/description/delivery_order_form.png
+.. image:: purchase_sale_inter_company_route/static/description/delivery_order_form.png
 
 I select a serial number.
 
-.. image:: static/description/delivery_order_serial_number.png
+.. image:: purchase_sale_inter_company_route/static/description/delivery_order_serial_number.png
 
 I process the delivery order.
 
-.. image:: static/description/delivery_order_done.png
+.. image:: purchase_sale_inter_company_route/static/description/delivery_order_done.png
 
 I notice that the destination is the supplier location.
 
-.. image:: static/description/delivery_order_destination.png
+.. image:: purchase_sale_inter_company_route/static/description/delivery_order_destination.png
 
 With the purchasing company, I go to the receipt picking.
 
-.. image:: static/description/receipt_picking_form.png
+.. image:: purchase_sale_inter_company_route/static/description/receipt_picking_form.png
 
 I select the same serial number.
 
-.. image:: static/description/receipt_picking_serial_number.png
+.. image:: purchase_sale_inter_company_route/static/description/receipt_picking_serial_number.png
 
 I process the receipt.
 
-.. image:: static/description/receipt_picking_done.png
+.. image:: purchase_sale_inter_company_route/static/description/receipt_picking_done.png
 
 In the list view of quants, I notice that there is only one positive quant related to my serial number.
 
-.. image:: static/description/stock_quant_list.png
+.. image:: purchase_sale_inter_company_route/static/description/stock_quant_list.png
 
 Recommendations
 ---------------

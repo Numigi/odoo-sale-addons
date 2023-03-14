@@ -1,14 +1,12 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
-    @api.multi
     def _compute_qty_delivered(self):
         lines_to_compute = self.filtered(
             lambda l: l.qty_delivered_method == "stock_move"

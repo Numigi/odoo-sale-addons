@@ -13,10 +13,8 @@ class TestCommissionCase(SavepointCase):
             "l10n_ca.ca_en_chart_template_en",
             raise_if_not_found=False
         )
-        cls.company_data = cls.setup_company_data("Company_name_1")
 
-        cls.company = cls.company_data["company"]
-
+        cls.company = cls._create_company("company")
         cls.user = cls._create_user()
         cls.user.groups_id = cls.env.ref("commission.group_user")
         cls.employee = cls._create_employee(user=cls.user)
@@ -30,12 +28,12 @@ class TestCommissionCase(SavepointCase):
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "lst_price": 1000.0,
                 "standard_price": 800.0,
-                "property_account_income_id": cls.company_data[
-                    "default_account_revenue"
-                ].id,
-                "property_account_expense_id": cls.company_data[
-                    "default_account_expense"
-                ].id,
+                # "property_account_income_id": cls.company_data[
+                #     "default_account_revenue"
+                # ].id,
+                # "property_account_expense_id": cls.company_data[
+                #     "default_account_expense"
+                # ].id,
             }
         )
         cls.manager_user.groups_id = cls.env.ref("commission.group_manager")
@@ -112,111 +110,19 @@ class TestCommissionCase(SavepointCase):
             }
         )
 
+
     @classmethod
-    def setup_company_data(cls, company_name, **kwargs):
-        def search_account(company, chart_template, field_name, domain):
-            template_code = chart_template[field_name].code
-            domain = [("company_id", "=", company.id)] + domain
-
-            account = None
-            if template_code:
-                account = cls.env["account.account"].search(
-                    domain + [("code", "=like", template_code + "%")], limit=1
-                )
-
-            if not account:
-                account = cls.env["account.account"].search(domain, limit=1)
-            return account
-
-        chart_template = cls.chart_template or cls.env.company.chart_template_id
-        company = cls.env["res.company"].create(
-            {
-                "name": company_name,
-                **kwargs,
-            }
-        )
-        cls.env.user.company_ids |= company
+    def _create_company(cls, name):
+        company = cls.env["res.company"].sudo().create({"name": name})
+        #company.partner_id.company_id = False
+        cls.env.user.company_ids += company
         cls.env.user.company_id = company
-
+        chart_template = cls.env.ref(
+            "l10n_ca.ca_en_chart_template_en", raise_if_not_found=False
+        )
+        chart_template = chart_template or cls.env.company.chart_template_id
         chart_template.try_loading(company=company)
-
-        # The currency could be different after the installation of the chart template.
-        if kwargs.get("currency_id"):
-            company.write({"currency_id": kwargs["currency_id"]})
-
-        return {
-            "company": company,
-            "currency": company.currency_id,
-            "default_account_revenue": cls.env["account.account"].search(
-                [
-                    ("company_id", "=", company.id),
-                    (
-                        "user_type_id",
-                        "=",
-                        cls.env.ref("account.data_account_type_revenue").id,
-                    ),
-                ],
-                limit=1,
-            ),
-            "default_account_expense": cls.env["account.account"].search(
-                [
-                    ("company_id", "=", company.id),
-                    (
-                        "user_type_id",
-                        "=",
-                        cls.env.ref("account.data_account_type_expenses").id,
-                    ),
-                ],
-                limit=1,
-            ),
-            "default_account_receivable": search_account(
-                company,
-                chart_template,
-                "property_account_receivable_id",
-                [("user_type_id.type", "=", "receivable")],
-            ),
-            "default_account_payable": cls.env["account.account"].search(
-                [
-                    ("company_id", "=", company.id),
-                    ("user_type_id.type", "=", "payable"),
-                ],
-                limit=1,
-            ),
-            "default_account_assets": cls.env["account.account"].search(
-                [
-                    ("company_id", "=", company.id),
-                    (
-                        "user_type_id",
-                        "=",
-                        cls.env.ref("account.data_account_type_current_assets").id,
-                    ),
-                ],
-                limit=1,
-            ),
-            "default_account_tax_sale": company.account_sale_tax_id.mapped(
-                "invoice_repartition_line_ids.account_id"
-            ),
-            "default_account_tax_purchase": company.account_purchase_tax_id.mapped(
-                "invoice_repartition_line_ids.account_id"
-            ),
-            "default_journal_misc": cls.env["account.journal"].search(
-                [("company_id", "=", company.id), ("type", "=", "general")], limit=1
-            ),
-            "default_journal_sale": cls.env["account.journal"].search(
-                [("company_id", "=", company.id), ("type", "=", "sale")], limit=1
-            ),
-            "default_journal_purchase": cls.env["account.journal"].search(
-                [("company_id", "=", company.id), ("type", "=", "purchase")], limit=1
-            ),
-            "default_journal_bank": cls.env["account.journal"].search(
-                [("company_id", "=", company.id), ("type", "=", "bank")], limit=1
-            ),
-            "default_journal_cash": cls.env["account.journal"].search(
-                [("company_id", "=", company.id), ("type", "=", "cash")], limit=1
-            ),
-            "default_tax_sale": company.account_sale_tax_id,
-            "default_tax_purchase": company.account_purchase_tax_id,
-        }
+        return company
 
     @classmethod
     def _create_user(cls, name="Testing", email="testing@testmail.com"):
@@ -228,6 +134,12 @@ class TestCommissionCase(SavepointCase):
                 "company_ids": [(4, cls.company.id)],
                 "company_id": cls.company.id,
             }
+        )
+
+    @classmethod
+    def _set_user_company(cls, company):
+        cls.user.sudo().write(
+            {"company_id": company.id, "company_ids": [(4, company.id)]}
         )
 
     @classmethod
@@ -325,7 +237,7 @@ class TestCommissionCase(SavepointCase):
             ]
         )
 
-        invoice.post()
+        invoice.action_post()
         return invoice
 
     @classmethod

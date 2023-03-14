@@ -20,6 +20,7 @@
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "payment_auto_confirm_sale_order",
+        # "purchase_sale_inter_company_route",
         "sale_commitment_date_update",
         "sale_commitment_date_update_mrp",
         "sale_default_analytic_tag",

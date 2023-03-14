@@ -1,4 +1,4 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime
@@ -14,25 +14,31 @@ class IntercoCase(SavepointCase):
 
         cls.purchasing_company = cls._create_company("Purchasing Company")
 
-        cls.route = cls.env.ref("purchase_sale_inter_company_route.inter_company_route")
+        cls.route = cls.env.ref(
+            "purchase_sale_inter_company_route.inter_company_route")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
         cls._set_user_company(cls.selling_company)
+        cls.category = cls.env.ref('product.product_category_all')
+        cls.category = cls.category.copy(
+            {'name': 'New category', 'property_valuation': 'real_time'})
         cls.product = cls.env["product.product"].create(
             {
                 "name": "My Product",
                 "type": "product",
                 "standard_price": 50,
-                "property_valuation": "real_time",
+                "categ_id": cls.category.id,
                 "company_id": False,
                 "tracking": "serial",
             }
         )
 
-        cls.serial = cls.env["stock.production.lot"].create(
-            {"name": "123", "product_id": cls.product.id}
-        )
+        cls.serial = cls.env["stock.production.lot"].create({
+            "name": "123",
+            "product_id": cls.product.id,
+            "company_id": cls.selling_company.id
+        })
         cls.env["stock.quant"].create(
             {
                 "product_id": cls.product.id,
@@ -56,7 +62,7 @@ class IntercoCase(SavepointCase):
         company = cls.env["res.company"].create({"name": name})
         cls._set_user_company(company)
         account_chart = cls.env.ref("l10n_ca.ca_en_chart_template_en")
-        account_chart.try_loading_for_current_company()
+        account_chart.try_loading(company=company)
 
         interco_user_name = f"{company.id}-interco@example.com"
         interco_user = cls.env["res.users"].create(
@@ -117,13 +123,15 @@ class IntercoCase(SavepointCase):
         for line in picking.move_line_ids:
             line.qty_done = 1
             line.lot_id = cls.serial
+            line.company_id = False
 
         picking.action_assign()
-        picking.action_done()
+        picking.button_validate()
 
     @classmethod
     def create_return_picking(cls, picking, to_refund=False):
-        wizard_obj = cls.env["stock.return.picking"].with_context(active_id=picking.id)
+        wizard_obj = cls.env["stock.return.picking"].with_context(
+            active_id=picking.id)
         values = wizard_obj.default_get(list(wizard_obj._fields))
         wizard = wizard_obj.create(values)
         wizard.product_return_moves.quantity = 1
@@ -186,12 +194,14 @@ class TestIntercoSaleOrder(IntercoCase):
         assert self.sale_order_line.qty_delivered == 1
 
     def test_returned_quantity_not_refunded(self):
-        return_picking = self.create_return_picking(self.picking, to_refund=False)
+        return_picking = self.create_return_picking(self.picking,
+                                                    to_refund=False)
         self._process_picking(return_picking)
         assert self.sale_order_line.qty_delivered == 1
 
     def test_refunded_quantity(self):
-        return_picking = self.create_return_picking(self.picking, to_refund=True)
+        return_picking = self.create_return_picking(self.picking,
+                                                    to_refund=True)
         self._process_picking(return_picking)
         assert self.sale_order_line.qty_delivered == 0
 

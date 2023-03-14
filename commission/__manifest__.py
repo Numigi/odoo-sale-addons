@@ -15,6 +15,7 @@
         "hr",
         "date_range",
         "base_extended_security",
+        "l10n_ca",
         "sale_order_tag",
         "sale_stock",
         "sales_team",
