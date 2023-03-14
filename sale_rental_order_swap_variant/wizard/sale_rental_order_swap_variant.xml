@@ -25,7 +25,6 @@
         <field name="name">Change Variant</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">sale.rental.order.swap.variant</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="view_id" ref="sale_rental_order_swap_variant_form"/>

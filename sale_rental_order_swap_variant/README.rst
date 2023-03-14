@@ -28,7 +28,7 @@ Configuration
 - This option is only available for products which are important.
 - I check this option.
 
-.. image:: static/description/new_field.png
+.. image:: sale_rental_order_swap_variant/static/description/new_field.png
 
 Use
 ---
@@ -40,17 +40,17 @@ Use
 - The wizard only allows me to choose another product variant of the same
    product template.
 
-.. image:: static/description/new_button_wizard.png
+.. image:: sale_rental_order_swap_variant/static/description/new_button_wizard.png
 
 - I confirm the change of Variant in the wizard.
 - The article has been changed on my SO line.
 
-.. image:: static/description/sol_product_change.png
+.. image:: sale_rental_order_swap_variant/static/description/sol_product_change.png
 
 - If I go to the related pickings (delivery, reception), the article has also been
    changed.
 
-.. image:: static/description/delivery_product_change.png
+.. image:: sale_rental_order_swap_variant/static/description/delivery_product_change.png
 
 Constraints:
 
@@ -59,16 +59,16 @@ Constraints:
 - If, for example, my Variant Change product has been delivered and I try to change
    the variant, I get the following blocking error message:
 
-.. image:: static/description/blocking_error_msg.png
+.. image:: sale_rental_order_swap_variant/static/description/blocking_error_msg.png
 
 Allow Changing Product
 ----------------------
-Since version ``1.2.0`` of the module, it is possible to allow swapping an important component
+It is possible to allow swapping an important component
 with a different product (instead of only swapping to a different variant).
 
-.. image:: static/description/kit_component_allow_change_product.png
+.. image:: sale_rental_order_swap_variant/static/description/kit_component_allow_change_product.png
 
-.. image:: static/description/kit_component_allow_change_product_2.png
+.. image:: sale_rental_order_swap_variant/static/description/kit_component_allow_change_product_2.png
 
 Contributors
 ------------
