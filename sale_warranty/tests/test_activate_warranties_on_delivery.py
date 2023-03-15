@@ -8,17 +8,16 @@ from .common import WarrantyActivationCase
 
 
 class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
-
     def test_on_delivery_serial_number_is_propagated_to_warranty(self):
         self.confirm_sale_order()
-        serial_1 = self.generate_serial_number(self.product_a, '000001')
+        serial_1 = self.generate_serial_number(self.product_a, "000001")
 
         picking = self.sale_order.picking_ids
         self.select_serial_numbers_on_picking(picking, serial_1)
         self.validate_picking(picking)
 
         warranty = self.sale_order.warranty_ids
-        assert warranty.state == 'active'
+        assert warranty.state == "active"
         assert warranty.lot_id == serial_1
 
     def test_on_back_order_serial_number_is_propagated_to_warranty(self):
@@ -26,23 +25,27 @@ class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
         self.confirm_sale_order()
 
         first_picking = self.sale_order.picking_ids
-        serial_1 = self.generate_serial_number(self.product_a, '000001')
-        serial_2 = self.generate_serial_number(self.product_a, '000002')
+        serial_1 = self.generate_serial_number(self.product_a, "000001")
+        serial_2 = self.generate_serial_number(self.product_a, "000002")
         self.select_serial_numbers_on_picking(first_picking, serial_1 | serial_2)
         self.validate_picking(first_picking)
 
-        active_warranties = self.sale_order.warranty_ids.filtered(lambda w: w.state == 'active')
+        active_warranties = self.sale_order.warranty_ids.filtered(
+            lambda w: w.state == "active"
+        )
         assert len(active_warranties) == 2
-        assert active_warranties.mapped('lot_id') == serial_1 | serial_2
+        assert active_warranties.mapped("lot_id") == serial_1 | serial_2
 
         back_order = self.sale_order.picking_ids - first_picking
-        serial_3 = self.generate_serial_number(self.product_a, '000003')
+        serial_3 = self.generate_serial_number(self.product_a, "000003")
         self.select_serial_numbers_on_picking(back_order, serial_3)
         self.validate_picking(back_order)
 
-        active_warranties = self.sale_order.warranty_ids.filtered(lambda w: w.state == 'active')
+        active_warranties = self.sale_order.warranty_ids.filtered(
+            lambda w: w.state == "active"
+        )
         assert len(active_warranties) == 3
-        assert active_warranties.mapped('lot_id') == serial_1 | serial_2 | serial_3
+        assert active_warranties.mapped("lot_id") == serial_1 | serial_2 | serial_3
 
     def test_on_delivery_activation_date_set_to_delivery_date(self):
         self.confirm_sale_order()
@@ -52,7 +55,7 @@ class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
 
         with freeze_time(delivery_date):
             picking = self.sale_order.picking_ids
-            serial_1 = self.generate_serial_number(self.product_a, '000001')
+            serial_1 = self.generate_serial_number(self.product_a, "000001")
             self.select_serial_numbers_on_picking(picking, serial_1)
             self.validate_picking(picking)
 
@@ -62,7 +65,7 @@ class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
 
     def test_warranty_activation_without_serial_number(self):
         self.warranty_6_months.allow_non_serialized_products = True
-        self.product_a.tracking = 'none'
+        self.product_a.tracking = "none"
         self.add_product_to_stock(self.product_a, 1)
 
         self.confirm_sale_order()
@@ -72,5 +75,5 @@ class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
         self.validate_picking(picking)
 
         warranty = self.sale_order.warranty_ids
-        assert warranty.state == 'active'
+        assert warranty.state == "active"
         assert not warranty.lot_id

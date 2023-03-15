@@ -5,13 +5,12 @@ from odoo import api, fields, models
 
 
 class SaleOrderLine(models.Model):
-
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
     warranty_ids = fields.One2many(
-        'sale.warranty',
-        'sale_order_line_id',
-        'Warranties',
+        "sale.warranty",
+        "sale_order_line_id",
+        "Warranties",
     )
 
     def _action_launch_stock_rule(self, previous_product_uom_qty=False):
@@ -23,7 +22,9 @@ class SaleOrderLine(models.Model):
         Warranties are generated with sudo because salesmen should not have
         access to modify warranties manually.
         """
-        result = super()._action_launch_stock_rule(previous_product_uom_qty=previous_product_uom_qty)
+        result = super()._action_launch_stock_rule(
+            previous_product_uom_qty=previous_product_uom_qty
+        )
         self.sudo().generate_missing_warranties()
         return result
 
@@ -44,11 +45,14 @@ class SaleOrderLine(models.Model):
         required_warranty_count = max(int(self.product_uom_qty), 0)
         warranty_count = len(
             self.warranty_ids.filtered(
-                lambda w: w.type_id == warranty_type and w.state != 'cancelled')
+                lambda w: w.type_id == warranty_type and w.state != "cancelled"
+            )
         )
         missing_warranty_count = required_warranty_count - warranty_count
         for _ in range(missing_warranty_count):
-            self.env['sale.warranty'].create(self._prepare_warranty_values(warranty_type))
+            self.env["sale.warranty"].create(
+                self._prepare_warranty_values(warranty_type)
+            )
 
     def _prepare_warranty_values(self, warranty_type):
         """Prepare values for generating a warranty of a given type.
@@ -58,18 +62,18 @@ class SaleOrderLine(models.Model):
         :rtype: dict
         """
         return {
-            'type_id': warranty_type.id,
-            'description': warranty_type.description,
-            'sale_order_id': self.order_id.id,
-            'sale_order_line_id': self.id,
-            'product_id': self.product_id.id,
-            'company_id': self.company_id.id,
-            'partner_id': self.order_id.partner_id.commercial_partner_id.id,
-            'state': 'pending',
+            "type_id": warranty_type.id,
+            "description": warranty_type.description,
+            "sale_order_id": self.order_id.id,
+            "sale_order_line_id": self.id,
+            "product_id": self.product_id.id,
+            "company_id": self.company_id.id,
+            "partner_id": self.order_id.partner_id.commercial_partner_id.id,
+            "state": "pending",
         }
 
     def activate_warranties_for_delivered_products(self):
-        if self.product_id.tracking == 'serial':
+        if self.product_id.tracking == "serial":
             self._activate_warranties_for_serialized_products()
         else:
             self._activate_warranties_for_unserialized_products()
@@ -99,18 +103,22 @@ class SaleOrderLine(models.Model):
             Warranty 2 --> Serial 2
                            Serial 3 is not attached to a warranty.
         """
-        pending_warranties = self.warranty_ids.filtered(lambda w: w.state == 'pending')
+        pending_warranties = self.warranty_ids.filtered(lambda w: w.state == "pending")
 
-        activated_serial_numbers = self.mapped('warranty_ids.lot_id')
-        delivery_lines = self.move_ids.filtered(lambda m: m.picking_type_id.code == 'outgoing')
-        delivered_serial_numbers = delivery_lines.mapped('move_line_ids.lot_id')
+        activated_serial_numbers = self.mapped("warranty_ids.lot_id")
+        delivery_lines = self.move_ids.filtered(
+            lambda m: m.picking_type_id.code == "outgoing"
+        )
+        delivered_serial_numbers = delivery_lines.mapped("move_line_ids.lot_id")
         serial_numbers_to_activate = delivered_serial_numbers - activated_serial_numbers
 
-        for warranty, serial_number in zip(pending_warranties, serial_numbers_to_activate):
+        for warranty, serial_number in zip(
+            pending_warranties, serial_numbers_to_activate
+        ):
             warranty.action_activate(serial_number)
 
     def _activate_warranties_for_unserialized_products(self):
-        pending_warranties = self.warranty_ids.filtered(lambda w: w.state == 'pending')
+        pending_warranties = self.warranty_ids.filtered(lambda w: w.state == "pending")
 
         activated_qty = len(self.warranty_ids.filtered(lambda w: w.activation_date))
         qty_to_activate = max(int(self.qty_delivered - activated_qty), 0)

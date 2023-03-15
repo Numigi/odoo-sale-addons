@@ -5,7 +5,6 @@ from odoo import fields, models, _
 
 
 class EventRegistration(models.Model):
-
     _inherit = "event.registration"
 
     sale_order_state = fields.Selection(

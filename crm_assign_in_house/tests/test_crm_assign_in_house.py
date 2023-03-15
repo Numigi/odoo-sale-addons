@@ -6,7 +6,7 @@ from odoo.tests.common import SavepointCase
 from odoo.tests import tagged
 
 
-@tagged('post_install')
+@tagged("post_install")
 class TestCRMAssignByArea(SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -40,8 +40,7 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_crm_onchange_not_in_house_customer_not_set_salesperson(self):
         not_in_house_customer = self.env["res.partner"].create(
-            {"name": "Customer", "in_house": False,
-             "user_id": self.salesperson.id}
+            {"name": "Customer", "in_house": False, "user_id": self.salesperson.id}
         )
         with Form(self.env["crm.lead"]) as crm_form:
             crm_form.name = "Pipeline"
@@ -51,8 +50,7 @@ class TestCRMAssignByArea(SavepointCase):
 
     def test_crm_onchange_in_house_customer_set_salesperson(self):
         in_house_customer = self.env["res.partner"].create(
-            {"name": "Customer", "in_house": True,
-             "user_id": self.salesperson.id}
+            {"name": "Customer", "in_house": True, "user_id": self.salesperson.id}
         )
         with Form(self.env["crm.lead"]) as crm_form:
             crm_form.name = "Pipeline"

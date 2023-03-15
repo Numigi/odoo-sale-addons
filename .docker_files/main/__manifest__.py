@@ -11,10 +11,12 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "commission",
+        # "commission_payroll_preparation",
+        # "commission_prorata",
         "crm_assign_by_area",
         "crm_assign_in_house",
         "crm_team_by_industry",
-        "commission",
         "crm_brand",
         "crm_lead_product",
         "delivery_carrier_fixed_over",

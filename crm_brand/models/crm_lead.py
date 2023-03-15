@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class Lead(models.Model):
-
     _inherit = "crm.lead"
 
     brand_ids = fields.Many2many(

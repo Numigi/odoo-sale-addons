@@ -67,9 +67,9 @@
   includes:
     - date_range
 
-# - url: https://github.com/Numigi/odoo-timesheet-addons
-#   branch: "14.0"
-#   includes:
+#- url: https://github.com/Numigi/odoo-timesheet-addons
+#  branch: "14.0"
+#  includes:
 #     - payroll_period
 #     - payroll_preparation
 
@@ -79,7 +79,7 @@
     - sale_order_tag
     
 - url: https://github.com/oca/partner-contact
-  branch: "12.0"
+  branch: "14.0"
   includes:
     - partner_industry_secondary
  

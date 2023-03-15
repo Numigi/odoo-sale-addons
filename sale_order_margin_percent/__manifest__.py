@@ -3,18 +3,18 @@
 
 {
     "name": "Sale Order Margin Percent",
-    'version': '14.0.1.0.0',
-    'author': 'Numigi',
-    'maintainer': 'Numigi',
-    'website': 'https://bit.ly/numigi-com',
-    'license': 'LGPL-3',
+    "version": "14.0.1.0.0",
+    "author": "Numigi",
+    "maintainer": "Numigi",
+    "website": "https://bit.ly/numigi-com",
+    "license": "LGPL-3",
     "category": "Sales",
     "summary": "Add a margin in percent on the sale order.",
     "depends": [
-        'sale_margin',
+        "sale_margin",
     ],
     "data": [
-        'views/sale_order.xml',
+        "views/sale_order.xml",
     ],
     "installable": True,
 }

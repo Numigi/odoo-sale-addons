@@ -10,8 +10,7 @@ class TestCommissionCase(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.chart_template = cls.env.ref(
-            "l10n_ca.ca_en_chart_template_en",
-            raise_if_not_found=False
+            "l10n_ca.ca_en_chart_template_en", raise_if_not_found=False
         )
 
         cls.company = cls._create_company("company")
@@ -110,11 +109,10 @@ class TestCommissionCase(SavepointCase):
             }
         )
 
-
     @classmethod
     def _create_company(cls, name):
         company = cls.env["res.company"].sudo().create({"name": name})
-        #company.partner_id.company_id = False
+        # company.partner_id.company_id = False
         cls.env.user.company_ids += company
         cls.env.user.company_id = company
         chart_template = cls.env.ref(

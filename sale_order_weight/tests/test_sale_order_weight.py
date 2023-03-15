@@ -16,9 +16,7 @@ class TestSaleOrderWeight(SavepointCase):
         cls.lb_uom = cls.env.ref("uom.product_uom_lb")
         cls.day_uom = cls.env.ref("uom.product_uom_day")
 
-        cls.customer = cls.env["res.partner"].create(
-            {"name": "Customer A"}
-        )
+        cls.customer = cls.env["res.partner"].create({"name": "Customer A"})
         cls.product_weight_pound = cls.env["product.product"].create(
             {
                 "name": "Product Pound",

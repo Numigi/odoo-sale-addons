@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class Pricelist(models.Model):
-
     _inherit = "product.pricelist"
 
     rental = fields.Boolean()

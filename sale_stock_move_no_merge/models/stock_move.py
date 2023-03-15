@@ -5,13 +5,12 @@ from odoo import api, fields, models
 
 
 class StockMove(models.Model):
-
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     destination_sale_line_id = fields.Many2one(
-        'sale.order.line',
-        'Destination Sale Order Line',
-        compute='_compute_destination_sale_line_id',
+        "sale.order.line",
+        "Destination Sale Order Line",
+        compute="_compute_destination_sale_line_id",
     )
 
     def _compute_destination_sale_line_id(self):
@@ -31,5 +30,5 @@ class StockMove(models.Model):
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
         result = super()._prepare_merge_moves_distinct_fields()
-        result.append('destination_sale_line_id')
+        result.append("destination_sale_line_id")
         return result

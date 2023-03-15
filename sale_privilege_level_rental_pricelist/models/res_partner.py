@@ -6,7 +6,6 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     @api.depends("privilege_level_id", "country_id")

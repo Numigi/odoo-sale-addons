@@ -3,14 +3,14 @@
 
 {
     "name": "Sale Whole Order Invoiced",
-    'version': '14.0.1.0.0',
-    'author': 'Numigi',
-    'maintainer': 'Numigi',
-    'website': 'https://bit.ly/numigi-com',
-    'license': 'LGPL-3',
+    "version": "14.0.1.0.0",
+    "author": "Numigi",
+    "maintainer": "Numigi",
+    "website": "https://bit.ly/numigi-com",
+    "license": "LGPL-3",
     "category": "Sales",
     "summary": "Add an option to invoice a sale order entirely",
-    "depends": ['sale'],
-    "data": [ ],
+    "depends": ["sale"],
+    "data": [],
     "installable": True,
 }

@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class Pricelist(models.Model):
-
     _inherit = "product.pricelist"
 
     privilege_level_ids = fields.Many2many(

@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 
 
 class SaleWarranty(models.Model):
-
     _inherit = "sale.warranty"
 
     use_warranty_extension = fields.Boolean(tracking=True)
@@ -97,7 +96,7 @@ class SaleWarranty(models.Model):
     def _get_active_extension_subscription(self):
         return self.env["sale.subscription"].search(
             [
-                ('stage_category', '=', 'progress'),
+                ("stage_category", "=", "progress"),
                 (
                     "partner_id.commercial_partner_id",
                     "=",

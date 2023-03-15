@@ -55,7 +55,5 @@ class TestSaleOrder(SavepointCase):
 
     def _trigger_partner_onchange(self):
         company = self.order.company_id
-        self.user.write(
-            {"company_ids": [(4, company.id)], "company_id": company.id}
-        )
+        self.user.write({"company_ids": [(4, company.id)], "company_id": company.id})
         return self.order._check_partner_authorized_companies()

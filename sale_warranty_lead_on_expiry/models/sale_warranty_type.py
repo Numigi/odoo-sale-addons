@@ -5,20 +5,21 @@ from odoo import fields, models
 
 
 class WarrantyType(models.Model):
-
-    _inherit = 'sale.warranty.type'
+    _inherit = "sale.warranty.type"
 
     automated_action = fields.Boolean(
-        'Automated Warranty End Action',
+        "Automated Warranty End Action",
         help="If active, an opportunity is created for each "
-        "expired warranty or warranty extension, if applicable."
+        "expired warranty or warranty extension, if applicable.",
     )
 
     sales_team_id = fields.Many2one(
-        'crm.team', 'Sales Team', ondelete='restrict',
+        "crm.team",
+        "Sales Team",
+        ondelete="restrict",
     )
 
     automated_action_delay = fields.Integer(
-        'Days To Trigger Action',
-        help="Number of days before triggering a follow up action."
+        "Days To Trigger Action",
+        help="Number of days before triggering a follow up action.",
     )

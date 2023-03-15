@@ -5,7 +5,6 @@ from odoo import models
 
 
 class SalePrivilegeLevelRentalPricelist(models.Model):
-
     _name = "sale.privilege.level.rental.pricelist"
     _inherit = "sale.privilege.level.pricelist"
     _description = "Sale Privilege Level Rental Pricelist"

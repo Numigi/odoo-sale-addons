@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class DeliveryCarrier(models.Model):
-
     _inherit = "delivery.carrier"
 
     privilege_level_ids = fields.Many2many(

@@ -1,4 +1,4 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from .common import ProrataCase
@@ -12,4 +12,7 @@ class TestWizard(ProrataCase):
 
         self.target.compute()
 
-        assert self.target.eligible_amount == self.target.total_amount * self.target.prorata_days_worked
+        assert (
+            self.target.eligible_amount
+            == self.target.total_amount * self.target.prorata_days_worked
+        )

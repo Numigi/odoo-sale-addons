@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     sale_authorized_company_ids = fields.Many2many(

@@ -3,22 +3,22 @@
 
 {
     "name": "Sale Dynamic Price",
-    'version': '14.0.1.0.0',
-    'author': 'Numigi',
-    'maintainer': 'Numigi',
-    'website': 'https://bit.ly/numigi-com',
-    'license': 'LGPL-3',
+    "version": "14.0.1.0.0",
+    "author": "Numigi",
+    "maintainer": "Numigi",
+    "website": "https://bit.ly/numigi-com",
+    "license": "LGPL-3",
     "category": "Sales",
     "summary": "Compute sale prices based on product cost",
     "depends": [
-        'base_view_inheritance_extension',
-        'product',
+        "base_view_inheritance_extension",
+        "product",
     ],
     "data": [
-        'views/product_template.xml',
-        'views/product_product.xml',
-        'views/product_template_attribute_value.xml',
-        'data/ir_cron.xml',
+        "views/product_template.xml",
+        "views/product_product.xml",
+        "views/product_template_attribute_value.xml",
+        "data/ir_cron.xml",
     ],
     "installable": True,
 }

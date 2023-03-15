@@ -17,15 +17,13 @@ class TestCommissionTeam(TestCommissionCase):
         cls.team_manager_user = cls._create_user(
             name="TeamManager", email="team-manager@testmail.com"
         )
-        cls.team_manager_user.groups_id = cls.env.ref(
-            "commission.group_team_manager")
+        cls.team_manager_user.groups_id = cls.env.ref("commission.group_team_manager")
         cls.team_manager = cls._create_employee(user=cls.team_manager_user)
 
         cls.president_user = cls._create_user(
             name="President", email="president@testmail.com"
         )
-        cls.president_user.groups_id = cls.env.ref(
-            "commission.group_team_manager")
+        cls.president_user.groups_id = cls.env.ref("commission.group_team_manager")
         cls.president = cls._create_employee(user=cls.president_user)
 
         cls.team_category = cls._create_category(
@@ -42,13 +40,11 @@ class TestCommissionTeam(TestCommissionCase):
 
         cls.team = cls._create_team("Sales U.S.", cls.team_manager_user)
         cls.team.member_ids = cls.user
-        cls.parent_team = cls._create_team("Sales North America",
-                                           cls.president_user)
+        cls.parent_team = cls._create_team("Sales North America", cls.president_user)
         cls.parent_team.member_ids = cls.team_manager_user | cls.president_user
 
         cls.manager_target.included_teams_ids |= cls.team
-        cls.employee_target = cls._create_target(target_amount=100000,
-                                                 fixed_rate=0.05)
+        cls.employee_target = cls._create_target(target_amount=100000, fixed_rate=0.05)
 
         cls.interval_rate = 0.05
 
@@ -122,8 +118,8 @@ class TestCommissionTeam(TestCommissionCase):
         self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
         assert (
-                self.manager_target.total_amount
-                == 400000 * self.employee_target.fixed_rate * self.manager_target.fixed_rate
+            self.manager_target.total_amount
+            == 400000 * self.employee_target.fixed_rate * self.manager_target.fixed_rate
         )
 
     @data(
@@ -133,10 +129,8 @@ class TestCommissionTeam(TestCommissionCase):
         (1, 1, 0),
     )
     @unpack
-    def test_manager_completion_interval(self, slice_from, slice_to,
-                                         completion):
-        rate = self._create_target_rate(self.manager_target, slice_from,
-                                        slice_to)
+    def test_manager_completion_interval(self, slice_from, slice_to, completion):
+        rate = self._create_target_rate(self.manager_target, slice_from, slice_to)
         self.team_category.rate_type = "interval"
         self.employee_target.total_amount = 400000 * 0.05
         self._compute_manager_target()
@@ -164,7 +158,7 @@ class TestCommissionTeam(TestCommissionCase):
 
     def test_sorted_by_dependency(self):
         rset = (
-                self.manager_target | self.employee_target
+            self.manager_target | self.employee_target
         )._sorted_by_category_dependency()
         assert rset[0] == self.employee_target
         assert rset[1] == self.manager_target
@@ -183,8 +177,7 @@ class TestCommissionTeam(TestCommissionCase):
                 "basis": "my_sales",
             }
         )
-        first_rate = self._create_category_rate(new_category, 0, 50,
-                                                self.interval_rate)
+        first_rate = self._create_category_rate(new_category, 0, 50, self.interval_rate)
         second_rate = self._create_category_rate(
             new_category, 50, 100, self.interval_rate * 2
         )
@@ -193,8 +186,7 @@ class TestCommissionTeam(TestCommissionCase):
         self.employee_target.category_id = new_category
         self.employee_target.onchange_category_id()
 
-        assert rates.mapped(
-            "slice_from") == self.employee_target.rate_ids.mapped(
+        assert rates.mapped("slice_from") == self.employee_target.rate_ids.mapped(
             "slice_from"
         )
         assert rates.mapped("slice_to") == self.employee_target.rate_ids.mapped(
@@ -209,8 +201,7 @@ class TestCommissionTeam(TestCommissionCase):
         assert targets == self.employee_target | self.manager_target
 
     def test_access__own_target(self):
-        self.manager_target.sudo(
-            self.team_manager_user).check_extended_security_all()
+        self.manager_target.sudo(self.team_manager_user).check_extended_security_all()
 
     def test_access__not_own_target(self):
         self.manager_target.employee_id = self._create_employee()
@@ -220,12 +211,10 @@ class TestCommissionTeam(TestCommissionCase):
             ).check_extended_security_all()
 
     def test_access__target_of_employee_in_own_team(self):
-        self.employee_target.sudo(
-            self.team_manager_user).check_extended_security_all()
+        self.employee_target.sudo(self.team_manager_user).check_extended_security_all()
 
     def test_access__target_of_employee_in_child_team(self):
-        self.employee_target.sudo(
-            self.president_user).check_extended_security_all()
+        self.employee_target.sudo(self.president_user).check_extended_security_all()
 
     def test_access__target_of_employee_not_in_own_team(self):
         self.team.user_id = self._create_employee().user_id

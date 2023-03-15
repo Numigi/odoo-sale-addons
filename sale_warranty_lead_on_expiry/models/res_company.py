@@ -6,8 +6,8 @@ from .common import DEFAULT_DELAY_BETWEEN_LEADS
 
 
 class Company(models.Model):
-
-    _inherit = 'res.company'
+    _inherit = "res.company"
 
     warranty_delay_between_leads = fields.Integer(
-        string="Warranty Delay Between Leads", default=DEFAULT_DELAY_BETWEEN_LEADS)
+        string="Warranty Delay Between Leads", default=DEFAULT_DELAY_BETWEEN_LEADS
+    )

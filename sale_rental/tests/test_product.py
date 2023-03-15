@@ -51,7 +51,8 @@ class TestProductSearch(common.SavepointCase):
     )
     def test_filter_on_sales_orders_activated(self, args):
         self.env["ir.config_parameter"].set_param(
-            FILTER_PRODUCTS_ON_ORDERS, "True",
+            FILTER_PRODUCTS_ON_ORDERS,
+            "True",
         )
         self.product.can_be_rented = args[0]
         context = {"is_rental_sale_order": args[1]}
@@ -66,7 +67,8 @@ class TestProductSearch(common.SavepointCase):
     )
     def test_filter_on_sales_orders_deactivated(self, args):
         self.env["ir.config_parameter"].set_param(
-            FILTER_PRODUCTS_ON_ORDERS, "False",
+            FILTER_PRODUCTS_ON_ORDERS,
+            "False",
         )
         self.product.can_be_rented = args[0]
         context = {"is_rental_sale_order": args[1]}

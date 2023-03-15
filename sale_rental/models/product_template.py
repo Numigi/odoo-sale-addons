@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
-
     _inherit = "product.template"
 
     can_be_rented = fields.Boolean()

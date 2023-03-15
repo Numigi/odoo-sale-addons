@@ -9,11 +9,13 @@ class TestMessage(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.event = cls.env["event.event"].create({
-        	"name": "My Event",
-            "date_begin": datetime.now(),
-            "date_end": datetime.now(),
-        })
+        cls.event = cls.env["event.event"].create(
+            {
+                "name": "My Event",
+                "date_begin": datetime.now(),
+                "date_end": datetime.now(),
+            }
+        )
 
     def test_message_post(self):
         message = self.event.message_post(body="Hello")

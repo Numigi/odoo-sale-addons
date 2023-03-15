@@ -10,7 +10,9 @@
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Allow to distinguish pricelists used for rental",
-    "depends": ["sale_rental",],
+    "depends": [
+        "sale_rental",
+    ],
     "data": [
         "views/product_pricelist.xml",
         "views/res_partner.xml",

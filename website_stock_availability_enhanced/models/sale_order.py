@@ -6,8 +6,7 @@ from odoo.tools.translate import _
 
 
 class SaleOrder(models.Model):
-
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
     def _cart_update(self, *args, **kwargs):
         res = super()._cart_update(*args, **kwargs)

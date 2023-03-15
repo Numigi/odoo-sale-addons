@@ -25,10 +25,9 @@ class KitRentalCase(SaleOrderLineCase):
             {"can_be_rented": True, "rental_service_id": cls.rental_service.id}
         )
 
-
     def setUp(self):
         super().setUp()
-        #self.order.flush()
+        # self.order.flush()
         self.order.is_rental = True
 
     def get_rental_service_lines(self):
@@ -88,7 +87,6 @@ class TestKitRental(KitRentalCase):
         assert service.rental_date_from_required
         assert service.rental_date_from_editable
         assert service.rental_date_to_editable
-
 
     def test_component_unit_price_is_zero(self):
         self.add_kit_on_sale_order()

@@ -5,7 +5,6 @@ from odoo import fields, models, _
 
 
 class Event(models.Model):
-
     _inherit = "event.event"
 
     confirmed_attendees_count = fields.Integer(

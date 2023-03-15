@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class SalePrivilegeLevelPricelist(models.Model):
-
     _name = "sale.privilege.level.pricelist"
     _description = "Sale Privilege Level Pricelist"
     _order = "sequence"

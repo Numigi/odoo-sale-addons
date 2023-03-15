@@ -5,11 +5,12 @@ from odoo import api, fields, models
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
-    _inherit = 'sale.advance.payment.inv'
+    _inherit = "sale.advance.payment.inv"
 
-    advance_payment_method = fields.Selection(selection_add=[
-        ('whole_order', 'Invoice whole order (deduct down payments)')
-    ], ondelete={'whole_order': 'cascade'})
+    advance_payment_method = fields.Selection(
+        selection_add=[("whole_order", "Invoice whole order (deduct down payments)")],
+        ondelete={"whole_order": "cascade"},
+    )
 
     def create_invoices(self):
         """Handle the whole_order invoicing option.
@@ -20,15 +21,16 @@ class SaleAdvancePaymentInv(models.TransientModel):
         The only difference is that after creating the invoice,
         the sale order is automatically set to invoiced.
         """
-        invoice_whole_order = self.advance_payment_method == 'whole_order'
+        invoice_whole_order = self.advance_payment_method == "whole_order"
         if invoice_whole_order:
-            self.advance_payment_method = 'delivered'
+            self.advance_payment_method = "delivered"
 
         res = super().create_invoices()
 
         if invoice_whole_order:
-            sale_orders = self.env['sale.order'].browse(
-                self._context.get('active_ids', []))
-            sale_orders.write({'whole_order_invoiced': True})
+            sale_orders = self.env["sale.order"].browse(
+                self._context.get("active_ids", [])
+            )
+            sale_orders.write({"whole_order_invoiced": True})
 
         return res

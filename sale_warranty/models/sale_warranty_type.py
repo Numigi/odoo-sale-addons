@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class WarrantyType(models.Model):
-
     _name = "sale.warranty.type"
     _description = "Sale Warranty Type"
 

@@ -140,8 +140,7 @@ class TestCommissionPersonal(TestCommissionCase):
         self.category.excluded_tag_ids = self.excluded_tag
 
         excluded_sale_order = self._create_sale_order()
-        excluded_sale_order_line = self._create_sale_order_line(
-            excluded_sale_order)
+        excluded_sale_order_line = self._create_sale_order_line(excluded_sale_order)
         excluded_invoice = self._create_invoice(amount=5000)
         excluded_sale_order_line.invoice_lines = excluded_invoice.invoice_line_ids
 
@@ -214,8 +213,8 @@ class TestCommissionPersonal(TestCommissionCase):
         assert targets == self.target
 
     def test_target_access_domain__wrong_company(self):
-        print('===========================company_2=========')
-        #company_2 = self._create_company("Wrong")
+        print("===========================company_2=========")
+        # company_2 = self._create_company("Wrong")
         company_2 = self.env["res.company"].sudo().create({"name": "Wrong"})
         assert company_2
         # company_2.partner_id.company_id = False
@@ -238,8 +237,7 @@ class TestCommissionPersonal(TestCommissionCase):
 
     def _search_employee_targets(self):
         domain = (
-            self.env["commission.target"].sudo(
-                self.user).get_extended_security_domain()
+            self.env["commission.target"].sudo(self.user).get_extended_security_domain()
         )
         return self.env["commission.target"].search(domain)
 
@@ -252,8 +250,8 @@ class TestCommissionPersonal(TestCommissionCase):
         )
 
     def _create_sale_order_line(
-            self,
-            sale_order,
+        self,
+        sale_order,
     ):
         return self.env["sale.order.line"].create(
             {

@@ -5,7 +5,6 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     # def _compute_available_carrier(self):

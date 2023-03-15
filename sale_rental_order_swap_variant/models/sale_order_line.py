@@ -20,10 +20,10 @@ class SaleOrderLine(models.Model):
     )
     def _compute_change_variant_button_visible(self):
         for line in self:
-            line.change_variant_button_visible = (
-                line.order_id.state not in ("done", "cancel")
-                and (line.allow_change_variant or line.allow_change_product)
-            )
+            line.change_variant_button_visible = line.order_id.state not in (
+                "done",
+                "cancel",
+            ) and (line.allow_change_variant or line.allow_change_product)
 
     def prepare_kit_component(self, kit_line):
         new_line = super().prepare_kit_component(kit_line)

@@ -13,11 +13,7 @@
         "crm_lead_product",
         "sale_product_configurator",
         "website_sale",
-
     ],
-    "data": [
-        "views/res_config_settings.xml",
-        "views/templates.xml"
-    ],
+    "data": ["views/res_config_settings.xml", "views/templates.xml"],
     "installable": True,
 }

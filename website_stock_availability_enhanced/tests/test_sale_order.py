@@ -15,9 +15,7 @@ class TestSaleOrder(SavepointCase):
             {"name": "My Product 1", "type": "product"}
         )
 
-        cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer"}
-        )
+        cls.customer = cls.env["res.partner"].create({"name": "My Customer"})
 
         cls.unit = cls.env.ref("uom.product_uom_unit")
 
@@ -55,9 +53,11 @@ class TestSaleOrder(SavepointCase):
 
     def _update_cart(self):
         with mock_odoo_request(self.env):
-            request.session.update({
-                'sale_order_id': self.sale_order.id,
-            })
+            request.session.update(
+                {
+                    "sale_order_id": self.sale_order.id,
+                }
+            )
             self.sale_order._cart_update(
                 self.product.id, self.line_1.id, add_qty=0, set_qty=0
             )

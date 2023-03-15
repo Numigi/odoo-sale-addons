@@ -10,7 +10,8 @@ from odoo.tests.common import HttpCase, tagged
 from odoo.tools import mute_logger, logging
 from unittest.mock import patch
 
-@tagged('-at_install', 'post_install')
+
+@tagged("-at_install", "post_install")
 class TestCrmLeadLine(common.TransactionCase):
     def setUp(self):
         super(TestCrmLeadLine, self).setUp()

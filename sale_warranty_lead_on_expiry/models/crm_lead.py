@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class CrmLead(models.Model):
-
-    _inherit = 'crm.lead'
+    _inherit = "crm.lead"
 
     generated_from_warranty = fields.Boolean(copy=False)

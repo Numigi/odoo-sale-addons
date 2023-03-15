@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     is_rental = fields.Boolean("Rental")
@@ -32,7 +31,6 @@ class SaleOrder(models.Model):
 
 
 class SaleOrderWithReturnedQty(models.Model):
-
     _inherit = "sale.order"
 
     rental_returned_qty_invisible = fields.Boolean(
@@ -47,7 +45,6 @@ class SaleOrderWithReturnedQty(models.Model):
 
 
 class SaleOrderWithExtraSmartButton(models.Model):
-
     _inherit = "sale.order"
 
     rental_return_count = fields.Integer(compute="_compute_picking_ids")

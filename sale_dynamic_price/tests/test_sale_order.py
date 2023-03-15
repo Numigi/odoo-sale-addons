@@ -106,13 +106,13 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
         self.line.product_uom_change()
         self.line.refresh()
         assert (
-                self.line.price_unit == expected_price
+            self.line.price_unit == expected_price
         )  # (70 / (1 - 0.30)) * currency_rate
 
     @data((0, 150.00), (False, 150.00), (-0.01, 149.99), (-0.03, 149.97))
     @unpack
     def test_price_surcharge_applied_to_sale_order_line(
-            self, surcharge, expected_price
+        self, surcharge, expected_price
     ):
         self.product.price_surcharge = surcharge
         self.product.update_sale_price_from_cost()

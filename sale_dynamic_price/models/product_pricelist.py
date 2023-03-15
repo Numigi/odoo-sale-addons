@@ -6,7 +6,6 @@ from ..rounding import round_price
 
 
 class PricelistWithDynamicPrice(models.Model):
-
     _inherit = "product.pricelist"
 
     def _compute_price_rule(self, products_qty_partner, date=False, uom_id=False):

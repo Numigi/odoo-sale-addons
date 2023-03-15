@@ -10,7 +10,7 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def _message_auto_subscribe_followers(self, updated_values, subtype_ids):
-        updated_values = {k: v for k, v in updated_values.items() if
-                          k != "user_id"}
+        updated_values = {k: v for k, v in updated_values.items() if k != "user_id"}
         return super(AccountMove, self)._message_auto_subscribe_followers(
-            updated_values, subtype_ids)
+            updated_values, subtype_ids
+        )

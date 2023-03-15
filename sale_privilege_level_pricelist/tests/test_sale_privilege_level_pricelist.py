@@ -5,7 +5,6 @@ from .common import SalePrivilegeLevelPricelistCase
 
 
 class TestSalePrivilegeLevelPricelist(SalePrivilegeLevelPricelistCase):
-
     def test_country_with_specific_pricelist(self):
         self.partner.country_id = self.canada
         assert self.partner.property_product_pricelist == self.pricelist_canada

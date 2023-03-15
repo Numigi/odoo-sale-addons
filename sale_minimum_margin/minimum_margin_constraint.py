@@ -17,10 +17,10 @@ def _get_minimum_margin_error_message(product: models.Model, context: dict) -> s
     :return: the message content
     """
     return _(
-        'The margin rate ({margin:.2f}%) of '
-        'the product ({product}) must be greater or equal '
-        'to the minimum margin rate defined on the product category '
-        '({minimum_margin:.2f}%).'
+        "The margin rate ({margin:.2f}%) of "
+        "the product ({product}) must be greater or equal "
+        "to the minimum margin rate defined on the product category "
+        "({minimum_margin:.2f}%)."
     ).format(
         margin=product.margin * 100,
         product=product.name,
@@ -39,9 +39,9 @@ def _get_minimum_margin_bypass_message(product: models.Model, context: dict) -> 
     :return: the message content
     """
     return _(
-        'The margin rate ({margin:.2f}%) was saved even though '
-        'it is lower than the minimum margin ({minimum_margin:.2f}%) of the product category '
-        '({category}).'
+        "The margin rate ({margin:.2f}%) was saved even though "
+        "it is lower than the minimum margin ({minimum_margin:.2f}%) of the product category "
+        "({category})."
     ).format(
         margin=product.margin * 100,
         minimum_margin=product.minimum_margin * 100,
@@ -65,10 +65,9 @@ def _is_product_margin_lower_than_minimum_margin(product: models.Model) -> bool:
 
 
 class Product(models.Model):
+    _inherit = "product.product"
 
-    _inherit = 'product.product'
-
-    @api.onchange('margin', 'categ_id')
+    @api.onchange("margin", "categ_id")
     def _check_margin_is_not_lower_than_minimum_margin(self):
         """Check whether the margin is not lower than the minimum margin.
 
@@ -79,13 +78,13 @@ class Product(models.Model):
         if self.margin and _is_product_margin_lower_than_minimum_margin(self):
             message = _get_minimum_margin_error_message(self, self._context)
             return {
-                'warning': {
-                    'title': _('Minimum Margin Rate'),
-                    'message': message,
+                "warning": {
+                    "title": _("Minimum Margin Rate"),
+                    "message": message,
                 }
             }
 
-    @api.constrains('margin', 'categ_id', 'price_type')
+    @api.constrains("margin", "categ_id", "price_type")
     def _constraint_margin_not_lower_than_minimum_margin(self):
         """Apply the constraint when saving the margin.
 
@@ -97,9 +96,10 @@ class Product(models.Model):
         the user is member of `Sales / Manager`, a non-blocking message
         will be displayed in the mail thread of the record.
         """
-        is_sale_manager = self.env.user.has_group('sales_team.group_sale_manager')
+        is_sale_manager = self.env.user.has_group("sales_team.group_sale_manager")
         products_with_lower_margin = self.filtered(
-            lambda p: p.price_type == "dynamic" and _is_product_margin_lower_than_minimum_margin(p)
+            lambda p: p.price_type == "dynamic"
+            and _is_product_margin_lower_than_minimum_margin(p)
         )
         for product in products_with_lower_margin:
             if is_sale_manager:
@@ -111,15 +111,16 @@ class Product(models.Model):
 
 
 class ProductTemplate(models.Model):
-
-    _inherit = 'product.template'
+    _inherit = "product.template"
 
     _check_margin_is_not_lower_than_minimum_margin = (
         Product._check_margin_is_not_lower_than_minimum_margin
     )
 
-    @api.constrains('margin', 'categ_id')
+    @api.constrains("margin", "categ_id")
     def _constraint_margin_not_lower_than_minimum_margin(self):
-        templates_with_one_variant = self.filtered(lambda p: len(p.product_variant_ids) == 1)
+        templates_with_one_variant = self.filtered(
+            lambda p: len(p.product_variant_ids) == 1
+        )
         for template in templates_with_one_variant:
             Product._constraint_margin_not_lower_than_minimum_margin(template)

@@ -18,10 +18,12 @@ def _update_warehouses(env):
             warehouse.write(new_vals)
         warehouse._create_or_update_global_routes_rules()
 
-    env['ir.model.data']._update_xmlids([
-        {
-            'xml_id': 'purchase_sale_inter_company_route.interco_picking_type',
-            'record': env.ref('stock.warehouse0').interco_type_id,
-            'noupdate': True,
-        }
-    ])
+    env["ir.model.data"]._update_xmlids(
+        [
+            {
+                "xml_id": "purchase_sale_inter_company_route.interco_picking_type",
+                "record": env.ref("stock.warehouse0").interco_type_id,
+                "noupdate": True,
+            }
+        ]
+    )

@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     property_product_pricelist = fields.Many2one(
@@ -25,7 +24,7 @@ class ResPartner(models.Model):
     )
 
     def _commercial_fields(self):
-        return super()._commercial_fields() + ['property_rental_pricelist_id']
+        return super()._commercial_fields() + ["property_rental_pricelist_id"]
 
     @api.depends("property_rental_pricelist_id")
     def _compute_rental_pricelist(self):

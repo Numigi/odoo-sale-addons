@@ -5,7 +5,6 @@ from odoo import api, fields, models, _
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
     displayed_delay = fields.Char(readonly=True)

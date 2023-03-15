@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class PaymentAcquirer(models.Model):
-
     _inherit = "payment.acquirer"
 
     privilege_level_ids = fields.Many2many(

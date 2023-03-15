@@ -216,7 +216,6 @@ class TestSaleOrderLine(SaleOrderLineCase):
 
 
 class TestSectionsAndNotes(SaleOrderLineCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -238,14 +237,16 @@ class TestSectionsAndNotes(SaleOrderLineCase):
             "display_type": "line_note",
         }
 
-        cls.kit.write({
-            "kit_line_ids": [
-                (5, 0),
-                (0, 0, section_vals),
-                (0, 0, component_a_vals),
-                (0, 0, note_vals),
-            ],
-        })
+        cls.kit.write(
+            {
+                "kit_line_ids": [
+                    (5, 0),
+                    (0, 0, section_vals),
+                    (0, 0, component_a_vals),
+                    (0, 0, note_vals),
+                ],
+            }
+        )
 
     def test_sale_order_line_display_types(self):
         self.add_kit_on_sale_order()

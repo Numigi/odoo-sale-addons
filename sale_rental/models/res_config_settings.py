@@ -7,7 +7,6 @@ from .product_product import FILTER_PRODUCTS_ON_ORDERS
 
 
 class ResConfigSettings(models.TransientModel):
-
     _inherit = "res.config.settings"
 
     rental_buffer = fields.Integer(related="company_id.rental_buffer", readonly=False)

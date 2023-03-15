@@ -5,7 +5,6 @@ from odoo import api, fields, models, _
 
 
 class PaymentAcquirer(models.Model):
-
     _inherit = "payment.acquirer"
 
     auto_confirm_sale_order = fields.Selection(

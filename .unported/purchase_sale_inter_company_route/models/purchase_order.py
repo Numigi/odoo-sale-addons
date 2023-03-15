@@ -7,10 +7,10 @@ from odoo import api, fields, models
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    def _prepare_sale_order_data(self, name, partner, company,
-                                 direct_delivery_address):
-        vals = super()._prepare_sale_order_data(name, partner, company,
-                                                direct_delivery_address)
+    def _prepare_sale_order_data(self, name, partner, company, direct_delivery_address):
+        vals = super()._prepare_sale_order_data(
+            name, partner, company, direct_delivery_address
+        )
         vals["route_id"] = self.env.ref(
             "purchase_sale_inter_company_route.inter_company_route"
         ).id

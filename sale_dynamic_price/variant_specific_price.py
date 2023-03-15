@@ -12,20 +12,16 @@ class Product(models.Model):
     to have different sale prices.
     """
 
-    _inherit = 'product.product'
+    _inherit = "product.product"
 
-    list_price = fields.Float(
-        'Product Price',
-        digits=dp.get_precision('Product Price')
-    )
+    list_price = fields.Float("Product Price", digits=dp.get_precision("Product Price"))
 
 
 class ProductTemplate(models.Model):
-
-    _inherit = 'product.template'
+    _inherit = "product.template"
 
     list_price = fields.Float(
-        related='product_variant_ids.list_price',
+        related="product_variant_ids.list_price",
         readonly=False,
         store=True,
     )

@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 
 
 class Warranty(models.Model):
-
     _name = "sale.warranty"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Sale Warranty"

@@ -5,8 +5,7 @@ from odoo import api, fields, models
 
 
 class ConfigSettings(models.TransientModel):
-
-    _inherit = 'res.config.settings'
+    _inherit = "res.config.settings"
 
     warranty_delay_between_leads = fields.Integer(string="Delay Between Leads")
 
@@ -16,11 +15,13 @@ class ConfigSettings(models.TransientModel):
         company = self.env.user.company_id
 
         if company.warranty_delay_between_leads != self.warranty_delay_between_leads:
-            company.sudo().warranty_delay_between_leads = self.warranty_delay_between_leads
+            company.sudo().warranty_delay_between_leads = (
+                self.warranty_delay_between_leads
+            )
 
     @api.model
     def get_values(self):
         res = super().get_values()
         company = self.env.user.company_id
-        res['warranty_delay_between_leads'] = company.warranty_delay_between_leads
+        res["warranty_delay_between_leads"] = company.warranty_delay_between_leads
         return res

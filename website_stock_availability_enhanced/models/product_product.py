@@ -11,8 +11,9 @@ from odoo.addons.product_supplier_info_helpers.helpers import (
 import logging
 
 _logger = logging.getLogger(__name__)
-class ProductProduct__enhanced_availability(models.Model):
 
+
+class ProductProduct__enhanced_availability(models.Model):
     _inherit = "product.product"
 
     replenishment_delay = fields.Integer(

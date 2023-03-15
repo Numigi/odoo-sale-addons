@@ -12,9 +12,7 @@ class TestSaleOrder(SavepointCase):
         super().setUpClass()
         cls.product = cls.env["product.product"].create({"name": "Product A"})
 
-        cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer"}
-        )
+        cls.customer = cls.env["res.partner"].create({"name": "My Customer"})
 
         cls.order = cls.env["sale.order"].create(
             {

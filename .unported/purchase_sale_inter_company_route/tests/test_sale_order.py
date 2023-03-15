@@ -14,15 +14,15 @@ class IntercoCase(SavepointCase):
 
         cls.purchasing_company = cls._create_company("Purchasing Company")
 
-        cls.route = cls.env.ref(
-            "purchase_sale_inter_company_route.inter_company_route")
+        cls.route = cls.env.ref("purchase_sale_inter_company_route.inter_company_route")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
         cls._set_user_company(cls.selling_company)
-        cls.category = cls.env.ref('product.product_category_all')
+        cls.category = cls.env.ref("product.product_category_all")
         cls.category = cls.category.copy(
-            {'name': 'New category', 'property_valuation': 'real_time'})
+            {"name": "New category", "property_valuation": "real_time"}
+        )
         cls.product = cls.env["product.product"].create(
             {
                 "name": "My Product",
@@ -34,11 +34,13 @@ class IntercoCase(SavepointCase):
             }
         )
 
-        cls.serial = cls.env["stock.production.lot"].create({
-            "name": "123",
-            "product_id": cls.product.id,
-            "company_id": cls.selling_company.id
-        })
+        cls.serial = cls.env["stock.production.lot"].create(
+            {
+                "name": "123",
+                "product_id": cls.product.id,
+                "company_id": cls.selling_company.id,
+            }
+        )
         cls.env["stock.quant"].create(
             {
                 "product_id": cls.product.id,
@@ -130,8 +132,7 @@ class IntercoCase(SavepointCase):
 
     @classmethod
     def create_return_picking(cls, picking, to_refund=False):
-        wizard_obj = cls.env["stock.return.picking"].with_context(
-            active_id=picking.id)
+        wizard_obj = cls.env["stock.return.picking"].with_context(active_id=picking.id)
         values = wizard_obj.default_get(list(wizard_obj._fields))
         wizard = wizard_obj.create(values)
         wizard.product_return_moves.quantity = 1
@@ -194,14 +195,12 @@ class TestIntercoSaleOrder(IntercoCase):
         assert self.sale_order_line.qty_delivered == 1
 
     def test_returned_quantity_not_refunded(self):
-        return_picking = self.create_return_picking(self.picking,
-                                                    to_refund=False)
+        return_picking = self.create_return_picking(self.picking, to_refund=False)
         self._process_picking(return_picking)
         assert self.sale_order_line.qty_delivered == 1
 
     def test_refunded_quantity(self):
-        return_picking = self.create_return_picking(self.picking,
-                                                    to_refund=True)
+        return_picking = self.create_return_picking(self.picking, to_refund=True)
         self._process_picking(return_picking)
         assert self.sale_order_line.qty_delivered == 0
 

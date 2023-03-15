@@ -10,7 +10,6 @@ RED = "#ee1010"
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
     product_type = fields.Selection(related="product_id.type")

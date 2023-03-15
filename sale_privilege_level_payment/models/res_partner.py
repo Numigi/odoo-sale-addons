@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     def get_available_payment_acquirers(self):

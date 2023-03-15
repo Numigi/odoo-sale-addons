@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
-
     _inherit = "product.template"
 
     warranty_type_ids = fields.Many2many(

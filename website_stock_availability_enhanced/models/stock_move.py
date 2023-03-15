@@ -6,7 +6,6 @@ from odoo.addons import decimal_precision as dp
 
 
 class StockMove(models.Model):
-
     _inherit = "stock.move"
 
     def write(self, vals):

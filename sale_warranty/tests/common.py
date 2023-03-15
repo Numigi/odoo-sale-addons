@@ -102,11 +102,9 @@ class SaleWarrantyCase(SavepointCase):
 
     @classmethod
     def generate_serial_number(cls, product, number):
-        serial = cls.env["stock.production.lot"].create({
-            "name": number,
-            "product_id": product.id,
-            'company_id': cls.env.company.id
-        })
+        serial = cls.env["stock.production.lot"].create(
+            {"name": number, "product_id": product.id, "company_id": cls.env.company.id}
+        )
         cls.add_product_to_stock(product, 1, serial)
         return serial
 

@@ -29,23 +29,33 @@ class TestResPartner(SavepointCase):
             {"name": "Contact", "parent_id": cls.partner.id}
         )
 
-        cls.product_cable_management_box = cls.env['product.product'].create({
-            'name': 'Another product to deliver',
-            'weight': 1.0,
-            'invoice_policy': 'order',
-        })
-        cls.product_uom_unit = cls.env.ref('uom.product_uom_unit')
-        cls.order = cls.env["sale.order"].create({
-            'partner_id': cls.partner.id,
-            'partner_shipping_id': cls.partner.id,
-            'order_line': [(0, 0, {
-                'name': 'Cable Management Box',
-                'product_id': cls.product_cable_management_box.id,
-                'product_uom_qty': 2,
-                'product_uom': cls.product_uom_unit.id,
-                'price_unit': 750.00,
-            })],
-        })
+        cls.product_cable_management_box = cls.env["product.product"].create(
+            {
+                "name": "Another product to deliver",
+                "weight": 1.0,
+                "invoice_policy": "order",
+            }
+        )
+        cls.product_uom_unit = cls.env.ref("uom.product_uom_unit")
+        cls.order = cls.env["sale.order"].create(
+            {
+                "partner_id": cls.partner.id,
+                "partner_shipping_id": cls.partner.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Cable Management Box",
+                            "product_id": cls.product_cable_management_box.id,
+                            "product_uom_qty": 2,
+                            "product_uom": cls.product_uom_unit.id,
+                            "price_unit": 750.00,
+                        },
+                    )
+                ],
+            }
+        )
 
     def test_get_available_delivery_carriers(self):
         result = self.partner.get_available_delivery_carriers()
@@ -76,11 +86,16 @@ class TestResPartner(SavepointCase):
         assert self.carrier_b not in available_carriers
 
     def test_sale_order_filter(self):
-        delivery_wizard = self.env['choose.delivery.carrier'].new({
-            'order_id': self.order.id,
-
-        })
+        delivery_wizard = self.env["choose.delivery.carrier"].new(
+            {
+                "order_id": self.order.id,
+            }
+        )
         assert self.carrier_a.id in (
-                delivery_wizard.available_carrier_ids.ids or delivery_wizard.available_carrier_ids._origin.ids)
+            delivery_wizard.available_carrier_ids.ids
+            or delivery_wizard.available_carrier_ids._origin.ids
+        )
         assert self.carrier_b.id not in (
-                delivery_wizard.available_carrier_ids.ids and delivery_wizard.available_carrier_ids._origin.ids)
+            delivery_wizard.available_carrier_ids.ids
+            and delivery_wizard.available_carrier_ids._origin.ids
+        )

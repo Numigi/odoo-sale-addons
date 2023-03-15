@@ -47,13 +47,11 @@ class SaleOrderCase(RentalCase):
         )
 
     def get_rental_move(self, sale_line):
-
         return sale_line.move_ids.filtered(
             lambda m: m.location_dest_id == self.customer_location
         )
 
     def get_return_move(self, sale_line):
-
         return sale_line.move_ids.filtered(
             lambda m: m.location_dest_id == self.rental_location
         )

@@ -3,17 +3,17 @@
 
 {
     "name": "Sales Warranty Extension",
-    'version': '14.0.1.0.0',
-    'author': 'Numigi',
-    'maintainer': 'Numigi',
-    'website': 'https://bit.ly/numigi-com',
-    'license': 'LGPL-3',
+    "version": "14.0.1.0.0",
+    "author": "Numigi",
+    "maintainer": "Numigi",
+    "website": "https://bit.ly/numigi-com",
+    "license": "LGPL-3",
     "category": "Sales",
     "summary": "Add extensions on sale warranties",
-    "depends": ['sale_warranty', 'sale_subscription'],
+    "depends": ["sale_warranty", "sale_subscription"],
     "data": [
-        'views/warranty.xml',
-        'views/warranty_type.xml',
+        "views/warranty.xml",
+        "views/warranty_type.xml",
     ],
     "installable": True,
 }

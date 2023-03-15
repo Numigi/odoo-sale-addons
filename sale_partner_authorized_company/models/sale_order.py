@@ -5,7 +5,6 @@ from odoo import api, models, _
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     @api.onchange("company_id", "partner_id")

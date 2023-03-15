@@ -8,7 +8,6 @@ FILTER_PRODUCTS_ON_ORDERS = "sale_rental.filter_products_on_orders"
 
 
 class Product(models.Model):
-
     _inherit = "product.product"
 
     rented_product_ids = fields.One2many(

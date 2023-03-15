@@ -133,7 +133,9 @@ class TestProductAvailability(SavepointCase):
         "threshold_warning",
         "custom",
     )
-    def test_disable_add_to_cart__no_blocking_availability(self, inventory_availability):
+    def test_disable_add_to_cart__no_blocking_availability(
+        self, inventory_availability
+    ):
         self.product_tmpl.inventory_availability = inventory_availability
         self.product.sale_availability = 0
         self.product.replenishment_availability = 0

@@ -73,7 +73,7 @@ class TestDynamicPrice(SavepointCase):
     )
     @unpack
     def test_update_sale_price_from_cost(
-            self, cost, margin, rounding, surcharge, expected_price
+        self, cost, margin, rounding, surcharge, expected_price
     ):
         self.product.write(
             {

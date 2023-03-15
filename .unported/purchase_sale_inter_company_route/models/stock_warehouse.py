@@ -70,7 +70,7 @@ class StockWarehouse(models.Model):
         customer_loc, supplier_loc = self._get_partner_locations()
         route = self.env.ref("purchase_sale_inter_company_route.inter_company_route")
         picking_type_id = self.interco_type_id
-        _logger.info('====================picking_type_id: %s', picking_type_id)
+        _logger.info("====================picking_type_id: %s", picking_type_id)
 
         vals.update(
             {

@@ -2,7 +2,6 @@ from odoo import api, models
 
 
 class SaleOrderLine(models.Model):
-
     _inherit = "sale.order.line"
 
     def get_weight_in_kg(self):

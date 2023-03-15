@@ -5,7 +5,6 @@ from odoo import fields, models, _
 
 
 class DeliveryCarrier(models.Model):
-
     _inherit = "delivery.carrier"
 
     enable_fixed_over = fields.Boolean()

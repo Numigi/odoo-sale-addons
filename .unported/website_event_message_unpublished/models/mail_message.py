@@ -5,7 +5,6 @@ from odoo import api, models
 
 
 class MailMessage(models.Model):
-
     _inherit = "mail.message"
 
     @api.model

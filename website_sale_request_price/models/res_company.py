@@ -5,9 +5,9 @@ from odoo import fields, models
 
 
 class Company(models.Model):
-
     _inherit = "res.company"
 
     website_sale_request_price_message = fields.Text(
-        translate=True, prefetch=False,
+        translate=True,
+        prefetch=False,
     )

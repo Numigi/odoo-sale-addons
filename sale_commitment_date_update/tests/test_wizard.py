@@ -21,9 +21,7 @@ class TestWizard(SaleCommitmentDateCase):
         self.sale_order.company_id.security_lead = 2
         self.sale_order.action_confirm()
         self.wizard.confirm()
-        assert self.sale_order_line.move_ids.date == self.new_date - timedelta(
-            2
-        )
+        assert self.sale_order_line.move_ids.date == self.new_date - timedelta(2)
 
     def test_two_steps(self):
         self.sale_order.warehouse_id.delivery_steps = "pick_ship"
@@ -37,7 +35,7 @@ class TestWizard(SaleCommitmentDateCase):
     def test_two_sale_order_lines(self):
         new_line = self.sale_order_line.copy(
             {
-                "product_id":  self.product2.id,
+                "product_id": self.product2.id,
                 "order_id": self.sale_order.id,
                 "name": "line 2",
             }
@@ -73,9 +71,7 @@ class TestWizard(SaleCommitmentDateCase):
         )
         self.sale_order.action_confirm()
         self.wizard.confirm()
-        assert (
-            self.sale_order_line.move_ids.move_orig_ids.date == self.new_date
-        )
+        assert self.sale_order_line.move_ids.move_orig_ids.date == self.new_date
 
     def test_stock_move_completed(self):
         self.sale_order.action_confirm()

@@ -21,9 +21,7 @@ class TestOneStepRoute(SavepointCase):
             {"name": "My Product", "type": "product"}
         )
 
-        cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer"}
-        )
+        cls.customer = cls.env["res.partner"].create({"name": "My Customer"})
 
         cls.sale_order = cls.env["sale.order"].create(
             {

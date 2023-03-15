@@ -17,9 +17,8 @@
         "sale_stock",
     ],
     "data": [
-
         "views/stock_warehouse_views.xml",
-        #"data/stock_picking_type.xml",
+        # "data/stock_picking_type.xml",
         "data/stock_route.xml",
     ],
     "installable": True,
