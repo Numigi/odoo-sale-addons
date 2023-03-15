@@ -171,6 +171,8 @@ class SaleIntercoServiceInvoice(models.TransientModel):
 
     def validate(self):
         invoices = self._create_interco_invoice()
+        if not invoices:
+            return False
         for invoice in invoices:
             self._update_interco_invoice(invoice)
             self._make_supplier_invoice(invoice)
