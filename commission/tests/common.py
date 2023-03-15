@@ -15,7 +15,7 @@ class TestCommissionCase(SavepointCase):
 
         cls.company = cls._create_company("company")
         cls.user = cls._create_user()
-        cls.user.groups_id = cls.env.ref("commission.group_user")
+        cls.user.groups_id = cls.env.ref("commission.group_user", raise_if_not_found=False)
         cls.employee = cls._create_employee(user=cls.user)
 
         cls.manager_user = cls._create_user(

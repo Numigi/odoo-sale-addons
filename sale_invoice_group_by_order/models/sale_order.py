@@ -15,6 +15,5 @@ class SaleOrder(models.Model):
         )
 
         if grouped_by_so_number == "on":
-            super()._create_invoices(grouped=True, final=final, date=date)
-        else:
-            super()._create_invoices(grouped=grouped, final=final, date=date)
+            return super()._create_invoices(grouped=True, final=final, date=date)
+        return super()._create_invoices(grouped=grouped, final=final, date=date)

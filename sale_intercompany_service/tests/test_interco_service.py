@@ -245,13 +245,12 @@ class TestSaleOrderConstraints(IntercoServiceCase):
 
 
 class TestIntercoInvoices(IntercoServiceCase):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.order.action_confirm()
-        cls.wizard.validate()
-        cls.wizard._compute_related_invoices
-
+        cls.wizard.sudo().validate()
         cls.invoice_line = cls.order_line.invoice_lines
         cls.invoice = cls.invoice_line.move_id
 
