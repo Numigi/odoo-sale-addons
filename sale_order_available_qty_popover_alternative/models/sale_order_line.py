@@ -4,6 +4,9 @@
 from odoo import api, fields, models
 
 
+import logging
+
+_logger = logging.getLogger(__name__)
 ALMOST_OUT_OF_STOCK_PARAM = "sale_order_available_qty_popover.almost_out_of_stock_qty"
 SO_POPOVER_ALTER_PARAM = "sale_order_available_qty_popover_alternative.so_popover_alternative"
 GREEN = "#246b03"
@@ -15,7 +18,7 @@ class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
 
-    @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id")
+    @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id", "order_id.is_rental")
     def _compute_available_qty_for_popover(self):
         so_popover_alternative = self.env[
             'ir.config_parameter'].sudo().get_param(
@@ -26,17 +29,6 @@ class SaleOrderLine(models.Model):
                     line._get_available_qty_for_popover_alt()
         else:
             super(SaleOrderLine, self)._compute_available_qty_for_popover()
-
-    def _get_reserved_quantity(self, location):
-        try:
-            return self.env['stock.quant']._gather(
-                self.product_id,
-                location,
-                strict=True
-            ).reserved_quantity
-        except Exception:
-            return 0.0
-
 
 
     def _get_available_qty_for_popover_alt(self):
@@ -53,21 +45,24 @@ class SaleOrderLine(models.Model):
                     self._context.get("from_date"),
                     self._context.get("to_date"),
             )
-            warehouse_location = self.order_id.warehouse_id.lot_stock_id
-            return res.get(self.product_id.id).get("qty_available") - \
-                self._get_reserved_quantity(warehouse_location)
+            rental_location = self.env['stock.location'].search([('is_rental_stock_location', '=', True),
+                                                                 ('company_id', '=', self.company_id.id)
+                                                                 ]).filtered(
+                lambda l: l.get_warehouse().id == self.order_id.warehouse_id.id)
+            location_ids = rental_location if self.order_id.is_rental else self.order_id.warehouse_id.lot_stock_id
+            available_qty = sum(self.env['stock.quant']._get_available_quantity(
+                self.product_id, loc) for loc in location_ids)
+            return available_qty
 
     def _get_available_qty_in_all_warehouse(self):
         all_warehouses = self.env['stock.warehouse'].search([
             ('company_id', '=', self.company_id.id)
         ])
-        on_hand_qty = \
-            self.product_id.qty_available
-        reserved_qty = sum(self._get_reserved_quantity(w.lot_stock_id)
-                           for w in all_warehouses)
-        return on_hand_qty - reserved_qty
+        available_qty_all = sum(self.env['stock.quant']._get_available_quantity(
+            self.product_id,  w.lot_stock_id)for w in all_warehouses)
+        return available_qty_all
 
-    @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id")
+    @api.depends("product_id", "product_uom_qty", "order_id.warehouse_id" ,"order_id.is_rental")
     def _compute_available_qty_popover_color(self):
         so_popover_alternative = self.env['ir.config_parameter'].sudo().get_param(
             SO_POPOVER_ALTER_PARAM, False)
