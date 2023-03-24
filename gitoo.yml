@@ -46,11 +46,11 @@
     - web_trash_condition
 
 
-#- url: https://github.com/OCA/multi-company
-  #branch: "14.0"
-  #includes:
-    #- account_invoice_inter_company
-    #- purchase_sale_inter_company
+- url: https://github.com/OCA/multi-company
+  branch: "14.0"
+  includes:
+    - account_invoice_inter_company
+    - purchase_sale_inter_company
 
 - url: https://github.com/OCA/brand
   branch: "14.0"
