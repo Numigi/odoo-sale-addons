@@ -1,8 +1,10 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.addons.sale_commitment_date_update.tests.common import SaleCommitmentDateCase
 from datetime import timedelta
+
+from dateutil.relativedelta import relativedelta
+from odoo.addons.sale_commitment_date_update.tests.common import SaleCommitmentDateCase
 
 
 class TestSaleCommitmentDateMrp(SaleCommitmentDateCase):
@@ -11,6 +13,7 @@ class TestSaleCommitmentDateMrp(SaleCommitmentDateCase):
         super().setUpClass()
 
         cls.route_mrp = cls.env.ref("mrp.route_warehouse0_manufacture")
+        cls.env.ref("stock.route_warehouse0_mto").active = True
         cls.route_mto = cls.env.ref("stock.route_warehouse0_mto")
         cls.product.route_ids = cls.route_mto | cls.route_mrp
         cls.env["mrp.bom"].create(
@@ -24,7 +27,9 @@ class TestSaleCommitmentDateMrp(SaleCommitmentDateCase):
 
     def test_propagates_date_to_mrp(self):
         self.wizard.confirm()
-        assert self.mrp_order.date_planned_finished == self.new_date
+        assert self.mrp_order.date_planned_finished == self.new_date + relativedelta(
+            hours=1
+        )
         assert self.mrp_order.date_planned_start == self.new_date
 
     def test_company_manufacturing_lead(self):

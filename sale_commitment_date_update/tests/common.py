@@ -1,4 +1,4 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests.common import SavepointCase
@@ -16,6 +16,12 @@ class SaleCommitmentDateCase(SavepointCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product",
+                "type": "product",
+            }
+        )
+        cls.product2 = cls.env["product.product"].create(
+            {
+                "name": "Product 2",
                 "type": "product",
             }
         )

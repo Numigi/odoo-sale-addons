@@ -19,6 +19,8 @@
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "payment_auto_confirm_sale_order",
+        "sale_commitment_date_update",
+        "sale_commitment_date_update_mrp",
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_delivery_completion_rental",
