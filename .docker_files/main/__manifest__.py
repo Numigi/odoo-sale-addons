@@ -29,6 +29,7 @@
         "sale_intercompany_service",
         "sale_invoice_email_warning",
         "sale_invoice_group_by_order",
+        "sale_invoice_no_follow",
         "sale_kit",
         "sale_minimum_margin",
         "sale_order_available_qty_popover",
