@@ -21,7 +21,7 @@
         "payment_auto_confirm_sale_order",
         "sale_commitment_date_update",
         "sale_commitment_date_update_mrp",
-        "sale_default_analytic_tag",
+        #"sale_default_analytic_tag",
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_delivery_completion_rental",
