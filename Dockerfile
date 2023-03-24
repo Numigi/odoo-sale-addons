@@ -16,6 +16,8 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
+COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
+COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
