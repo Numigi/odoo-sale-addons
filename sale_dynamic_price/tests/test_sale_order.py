@@ -82,8 +82,8 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
         )
 
         cls.line = cls.sale_order.order_line
-        cls.line.flush()
-        cls.env.cache.invalidate()
+        # cls.line.flush()
+        # cls.env.cache.invalidate()
 
     def test_currency_rate_applied_to_product_price(self):
         self.product.update_sale_price_from_cost()
