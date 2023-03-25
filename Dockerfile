@@ -38,10 +38,10 @@ COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
 COPY sale_order_available_qty_popover_rental /mnt/extra-addons/sale_order_available_qty_popover_rental
-#COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
+COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
-#COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
+COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
 COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
 COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
