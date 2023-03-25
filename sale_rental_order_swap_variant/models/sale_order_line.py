@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
@@ -20,10 +20,10 @@ class SaleOrderLine(models.Model):
     )
     def _compute_change_variant_button_visible(self):
         for line in self:
-            line.change_variant_button_visible = (
-                line.order_id.state not in ("done", "cancel")
-                and (line.allow_change_variant or line.allow_change_product)
-            )
+            line.change_variant_button_visible = line.order_id.state not in (
+                "done",
+                "cancel",
+            ) and (line.allow_change_variant or line.allow_change_product)
 
     def prepare_kit_component(self, kit_line):
         new_line = super().prepare_kit_component(kit_line)
@@ -31,7 +31,6 @@ class SaleOrderLine(models.Model):
         new_line.allow_change_product = kit_line.allow_change_product
         return new_line
 
-    @api.multi
     def change_variant(self, product, quantity):
         self._post_change_variant_message(product, quantity)
 
