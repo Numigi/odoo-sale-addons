@@ -34,6 +34,7 @@
         "sale_minimum_margin",
         "sale_order_available_qty_popover",
         "sale_order_available_qty_popover_rental",
+        "sale_order_default_taxes",
         "sale_order_line_margin_amount",
         "sale_order_line_readonly_conditions",
         "sale_order_margin_percent",

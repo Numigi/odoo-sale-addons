@@ -8,11 +8,11 @@ Usage
 -----
 To config default sale order tax, I go to the Company Settings, on Invoicing section, I select a tax for Default Taxes: Sales Tax
 
-.. image:: static/description/config_default_sales_tax.png
+.. image:: sale_order_default_taxes/static/description/config_default_sales_tax.png
 
 I create a Sale Order, after select a product, I see that the tax is set automatically with the value I had configured
 
-.. image:: static/description/default_tax_for_company.png
+.. image:: sale_order_default_taxes/static/description/default_tax_for_company.png
 
 Contributors
 ------------
