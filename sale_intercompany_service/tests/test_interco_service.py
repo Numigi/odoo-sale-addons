@@ -31,19 +31,19 @@ class IntercoServiceCase(SavepointCase):
 
         cls.customer_position = cls._get_fiscal_position(cls.subsidiary, "Manitoba")
         cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer", "company_id": None}
+            {"name": "My Customer", "company_id": False}
         )
         cls._set_fiscal_position(cls.customer, cls.subsidiary, cls.customer_position)
 
         cls.delivery_address = cls.env["res.partner"].create(
-            {"name": "Delivery Address", "type": "delivery", "company_id": None}
+            {"name": "Delivery Address", "type": "delivery", "company_id": False}
         )
 
         cls.product = cls.env["product.product"].create(
             {
                 "name": "My Product",
                 "type": "service",
-                "company_id": None,
+                "company_id": False,
                 "invoice_policy": "order",
             }
         )
