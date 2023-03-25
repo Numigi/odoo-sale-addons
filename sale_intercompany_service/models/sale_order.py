@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     is_interco_service = fields.Boolean(
-        readonly=True, states={"draft": [("readonly", False)]}
+        readonly=True, states={"draft": [("readonly", False)]}, default=False
     )
 
     def open_interco_service_invoice_wizard(self):
