@@ -64,6 +64,7 @@
         "website_sale_request_price",
         "website_sale_request_price_wishlist",
         "sale_intercompany_service",
+        "l10n_ca",
     ],
     "installable": True,
 }
