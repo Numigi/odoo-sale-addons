@@ -44,6 +44,7 @@ COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_reado
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
+COPY sale_partner_authorized_company /mnt/extra-addons/sale_partner_authorized_company
 COPY sale_persistent_product_warning /mnt/extra-addons/sale_persistent_product_warning
 COPY sale_privilege_level /mnt/extra-addons/sale_privilege_level
 COPY sale_privilege_level_delivery /mnt/extra-addons/sale_privilege_level_delivery
@@ -56,9 +57,11 @@ COPY sale_rental_app /mnt/extra-addons/sale_rental_app
 COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status
+COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
+COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 COPY website_payment_message_enhanced /mnt/extra-addons/website_payment_message_enhanced
 COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
