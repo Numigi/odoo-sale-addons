@@ -26,7 +26,6 @@
         "sale_delivery_completion",
         "sale_delivery_completion_rental",
         "sale_dynamic_price",
-        "sale_intercompany_service",
         "sale_invoice_email_warning",
         "sale_invoice_group_by_order",
         "sale_invoice_no_follow",
@@ -64,6 +63,7 @@
         "website_stock_availability_enhanced",
         "website_sale_request_price",
         "website_sale_request_price_wishlist",
+        "sale_intercompany_service",
     ],
     "installable": True,
 }
