@@ -12,6 +12,7 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
         super().setUpClass()
         cls.usd = cls.env.ref("base.USD")
         cls.cad = cls.env.ref("base.CAD")
+        cls.env.user.company_id.currency_id = cls.usd.id
 
         # Remove any existing currency rate
         cls.env["res.currency.rate"].search([]).unlink()
