@@ -1,4 +1,4 @@
-FROM quay.io/numigi/odoo-public:14.8
+FROM quay.io/numigi/odoo-public:14.latest
 LABEL maintainer="contact@numigi.com"
 
 USER root
@@ -30,6 +30,7 @@ COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_delivery_completion_rental /mnt/extra-addons/sale_delivery_completion_rental
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
+COPY sale_intercompany_service /mnt/extra-addons/sale_intercompany_service
 COPY sale_invoice_email_warning /mnt/extra-addons/sale_invoice_email_warning
 COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
 COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
@@ -68,7 +69,6 @@ COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
 COPY website_sale_request_price_wishlist /mnt/extra-addons/website_sale_request_price_wishlist
 COPY website_stock_availability_enhanced /mnt/extra-addons/website_stock_availability_enhanced
 
-COPY sale_intercompany_service /mnt/extra-addons/sale_intercompany_service
 
 COPY  crm_lead_product /mnt/extra-addons/crm_lead_product
 

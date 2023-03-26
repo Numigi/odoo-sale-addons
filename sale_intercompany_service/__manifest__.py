@@ -10,7 +10,11 @@
     "license": "LGPL-3",
     "category": "Sales",
     "summary": "Sell to a customer on behalf of another company",
-    "depends": ["base_view_inheritance_extension", "sale_management"],
+    "depends": [
+        "base_view_inheritance_extension",
+        "l10n_ca",
+        "sale_management"
+    ],
     "data": [
         "security/ir.model.access.csv",
         "views/account_invoice.xml",
