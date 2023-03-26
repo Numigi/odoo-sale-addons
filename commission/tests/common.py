@@ -12,6 +12,9 @@ class TestCommissionCase(SavepointCase):
         cls.chart_template = cls.env.ref(
             "l10n_ca.ca_en_chart_template_en", raise_if_not_found=False
         )
+        cls.wrong_company = cls.env["res.company"].create(
+            {"name": 'Wrong'})
+
 
         cls.company = cls._create_company("company")
         cls.user = cls._create_user()

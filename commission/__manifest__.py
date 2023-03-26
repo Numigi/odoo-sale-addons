@@ -15,7 +15,7 @@
         "hr",
         "date_range",
         "base_extended_security",
-        #"l10n_ca",
+        "l10n_generic_coa",
         "sale_order_tag",
         "sale_stock",
         "sales_team",

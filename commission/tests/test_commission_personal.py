@@ -52,6 +52,7 @@ class TestCommissionPersonal(TestCommissionCase):
 
         cls.excluded_tag = cls.env["sale.order.tag"].create({"name": "Tables"})
 
+
     def test_compute_show_invoices(self):
         self.target.set_confirmed_state()
         assert self.target.show_invoices
@@ -213,24 +214,11 @@ class TestCommissionPersonal(TestCommissionCase):
         assert targets == self.target
 
     def test_target_access_domain__wrong_company(self):
-        print("===========================company_2=========")
-        # company_2 = self._create_company("Wrong")
-        company_2 = self._create_company()
-        assert company_2
-        # company_2.partner_id.company_id = False
-        # self.env.user.company_ids |= company_2
-        # #self.env.user.company_id = company_2
-        # chart_template = self.env.ref(
-        #     "l10n_ca.ca_en_chart_template_en", raise_if_not_found=False
-        # )
-        # self.user.write({'company_ids': [(4, company_2.id)]})
-        #
-        # chart_template.try_loading(company=company_2)
-        # print('===========================company_2', company_2)
-        #
-        # self.target.company_id = company_2.id
-        # targets = self._search_employee_targets()
-        # assert not targets
+        self.env.user.company_ids |= self.wrong_company
+        self.env.user.company_id = self.wrong_company
+        self.target.company_id = self.wrong_company.id
+        targets = self._search_employee_targets()
+        assert not targets
 
     def _compute_target(self):
         self.target.sudo(self.manager_user).compute()
