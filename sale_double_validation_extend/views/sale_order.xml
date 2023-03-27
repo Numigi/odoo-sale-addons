@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_order_form_hide_button_confirm_in_the_creation" model="ir.ui.view">
+    <field name="name">Sale Order Form: Hide button confirm in the creation</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+        <field name="currency_id" position="after">
+            <field name="create_date" invisible="1"/>
+        </field>
+      <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+          <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft']), ('create_date', '=', False)]}</attribute>
+      </xpath>
+    </field>
+  </record>
+</odoo>
