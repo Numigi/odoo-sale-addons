@@ -25,11 +25,11 @@ Module
 ------
 This module adds a "Commissions" app to the Odoo apps selection menu.
 
-.. image:: static/description/app.png
+.. image:: commission/static/description/app.png
 
 This app contains 2 main menus: Targets and Categories.
 
-.. image:: static/description/menu.png
+.. image:: commission/static/description/menu.png
 
 Categories
 ----------
@@ -37,7 +37,7 @@ The "Categories" menu allows category creation.
 
 Categories are templates for the commissions targets.
 
-.. image:: static/description/category_menu.png
+.. image:: commission/static/description/category_menu.png
 
 Clicking on "Create" brings up the Category creation menu, allowing you to select different options that will function as a template for targets.
 
@@ -68,13 +68,13 @@ You cannot put a tag both as included and excluded.
 
 You can create these tags in the "Configuration" menu of the "Sales" module.
 
-.. image:: static/description/tags.png
+.. image:: commission/static/description/tags.png
 
 These tags are then applied on sale orders. The filtering will occur through the lines of the sale order, which are linked to the invoices themselves.
 
-.. image:: static/description/sale_order.png
+.. image:: commission/static/description/sale_order.png
 
-.. image:: static/description/sale_tag.png
+.. image:: commission/static/description/sale_tag.png
 
 **Child categories**
 
@@ -82,7 +82,7 @@ For categories based on team sales, you have the option to select other categori
 
 You cannot add a category as its own child category.
 
-.. image:: static/description/child_category.png
+.. image:: commission/static/description/child_category.png
 
 Targets
 -------
@@ -90,7 +90,7 @@ The "Targets" menu allows target creation.
 
 Targets are the commissions goals than can be created for the employees.
 
-.. image:: static/description/target_menu.png
+.. image:: commission/static/description/target_menu.png
 
 Clicking on "Create" brings up the Target creation menu, allowing you to select different options that will change the target's behavior.
 
@@ -103,15 +103,15 @@ Clicking on "Create" brings up the Target creation menu, allowing you to select 
 
 Once the correct details are entered, you can "Confirm" the target.
 
-.. image:: static/description/target.png
+.. image:: commission/static/description/target.png
 
 This then unlocks the "Compute" action button, which will update the total commissions based on the selected settings.
 
-.. image:: static/description/computed.png
+.. image:: commission/static/description/computed.png
 
 When finished, you can "Mark as Done" the target, which disables the "Compute" button. You can then put the target back as draft if you need to reverse the termination.
 
-.. image:: static/description/done.png
+.. image:: commission/static/description/done.png
 
 Read/Write Permissions
 ----------------------

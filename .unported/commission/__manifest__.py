@@ -1,4 +1,4 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -15,6 +15,7 @@
         "hr",
         "date_range",
         "base_extended_security",
+        "l10n_generic_coa",
         "sale_order_tag",
         "sale_stock",
         "sales_team",

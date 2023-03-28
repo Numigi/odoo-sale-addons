@@ -1,4 +1,4 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models, api
@@ -11,7 +11,7 @@ class CommissionCategory(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "name"
 
-    name = fields.Char(translate=True, required=True, track_visibility="onchange")
+    name = fields.Char(translate=True, required=True, tracking=True)
     rate_type = fields.Selection(
         [
             ("fixed", "Fixed"),
@@ -19,7 +19,7 @@ class CommissionCategory(models.Model):
         ],
         default="fixed",
         required=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     basis = fields.Selection(
         [
@@ -29,10 +29,10 @@ class CommissionCategory(models.Model):
         "Based On",
         default="my_sales",
         required=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     rate_ids = fields.One2many("commission.category.rate", "category_id")
-    fixed_rate = fields.Float(track_visibility="onchange")
+    fixed_rate = fields.Float(tracking=True)
     child_category_ids = fields.Many2many(
         "commission.category", "commission_category_child_rel", "parent_id", "child_id"
     )
@@ -41,14 +41,14 @@ class CommissionCategory(models.Model):
         "commission_category_included_tags_rel",
         "category_id",
         "tag_id",
-        track_visibility="onchange",
+        tracking=True,
     )
     excluded_tag_ids = fields.Many2many(
         "sale.order.tag",
         "commission_category_excluded_tags_rel",
         "category_id",
         "tag_id",
-        track_visibility="onchange",
+        tracking=True,
     )
 
     def _sorted_by_dependencies(self):

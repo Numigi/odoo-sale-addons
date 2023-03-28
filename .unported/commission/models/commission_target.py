@@ -1,4 +1,4 @@
-# © 2021 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime
@@ -25,14 +25,14 @@ class CommissionTarget(models.Model):
         readonly=True,
         required=True,
         copy=False,
-        track_visibility="onchange",
+        tracking=True,
     )
     employee_id = fields.Many2one(
         "hr.employee",
         string="Agent",
         readonly=True,
         required=True,
-        track_visibility="onchange",
+        tracking=True,
         states={"draft": [("readonly", False)]},
     )
     employee_user_id = fields.Many2one(
@@ -47,7 +47,7 @@ class CommissionTarget(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
         required=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     basis = fields.Selection(
         related="category_id.basis",
@@ -68,16 +68,16 @@ class CommissionTarget(models.Model):
         readonly=True,
         required=True,
         states={"draft": [("readonly", False)]},
-        track_visibility="onchange",
+        tracking=True,
     )
     date_start = fields.Date(related="date_range_id.date_start", store=True)
     date_end = fields.Date(related="date_range_id.date_end", store=True)
     last_compute_date = fields.Datetime(readonly=True)
     invoice_line_ids = fields.Many2many(
-        "account.invoice.line",
-        "commission_target_invoice_line_rel",
+        "account.move.line",
+        "commission_target_move_line_rel",
         "target_id",
-        "invoice_line_id",
+        "move_line_id",
     )
     child_target_ids = fields.Many2many(
         "commission.target",
@@ -91,7 +91,7 @@ class CommissionTarget(models.Model):
         required=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
-        track_visibility="onchange",
+        tracking=True,
     )
     included_teams_ids = fields.Many2many(
         "crm.team",
@@ -102,7 +102,7 @@ class CommissionTarget(models.Model):
     fixed_rate = fields.Float(
         readonly=True,
         states={"draft": [("readonly", False)]},
-        track_visibility="onchange",
+        tracking=True,
     )
     invoiced_amount = fields.Monetary(
         "Total Amount On Admissible Invoice Lines", readonly=True, copy=False
@@ -116,7 +116,6 @@ class CommissionTarget(models.Model):
     show_invoices = fields.Boolean(compute="_compute_show_invoices")
     show_child_targets = fields.Boolean(compute="_compute_show_child_targets")
 
-    @api.multi
     def copy(self, default=None):
         target = super().copy(default)
 
@@ -169,22 +168,24 @@ class CommissionTarget(models.Model):
         )
 
     def _get_invoices(self):
-        invoices = self.env["account.invoice"].search(
+        invoices = self.env["account.move"].search(
             [
-                ("date_invoice", ">=", self.date_start),
+                ("invoice_date", ">=", self.date_start),
             ]
         )
+
         invoices = invoices.filtered(
             lambda inv: inv.company_id == self.company_id
-            and inv.user_id == self.employee_id.user_id
-            and inv.date_invoice <= self.date_end
-            and inv.type not in ("in_invoice", "in_refund")
+            and inv.invoice_user_id == self.employee_id.user_id
+            and inv.invoice_date <= self.date_end
+            and inv.move_type not in ("in_invoice", "in_refund")
             and inv.state not in ("draft", "cancel")
         )
+
         return invoices
 
     def _compute_invoiced_amount(self):
-        return sum(line.price_subtotal_signed for line in self.invoice_line_ids)
+        return sum(line.price_subtotal for line in self.invoice_line_ids)
 
     def _should_use_invoice_line(self, line):
         is_included_line = self._is_included_invoice_line(line)
@@ -193,6 +194,7 @@ class CommissionTarget(models.Model):
 
     def _is_included_invoice_line(self, line):
         included = self.category_id.included_tag_ids
+
         tags = line.sale_line_ids.order_id.so_tag_ids
         return not included or bool(included & tags)
 
@@ -257,7 +259,7 @@ class CommissionTarget(models.Model):
     def _get_next_sequence_number(self):
         return (
             self.env["ir.sequence"]
-            .with_context(force_company=self.company_id.id)
+            .with_company(self.company_id)
             .next_by_code("commission.target.reference")
         )
 
