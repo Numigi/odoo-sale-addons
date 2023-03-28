@@ -16,7 +16,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
-COPY commission /mnt/extra-addons/commission
+# COPY commission /mnt/extra-addons/commission
 COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
 COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
@@ -65,6 +65,7 @@ COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
+COPY web_view_google_map_itinerary /mnt/extra-addons/web_view_google_map_itinerary
 COPY website_payment_message_enhanced /mnt/extra-addons/website_payment_message_enhanced
 COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
 COPY website_sale_request_price_wishlist /mnt/extra-addons/website_sale_request_price_wishlist

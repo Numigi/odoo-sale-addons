@@ -11,7 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "commission",
+        # "commission",
         "crm_assign_by_area",
         "crm_assign_in_house",
         "crm_brand",
@@ -60,6 +60,7 @@
         "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
         "sale_xmlrpc_compatible",
+        "web_view_google_map_itinerary",
         "website_payment_message_enhanced",
         "website_stock_availability_enhanced",
         "website_sale_request_price",
