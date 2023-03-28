@@ -29,6 +29,8 @@
         "sale_default_term_on_company",
         "sale_delivery_completion",
         "sale_delivery_completion_rental",
+        "sale_double_validation",
+        "sale_double_validation_extend",
         "sale_dynamic_price",
         "sale_intercompany_service",
         "sale_invoice_email_warning",

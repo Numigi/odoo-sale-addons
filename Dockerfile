@@ -33,6 +33,8 @@ COPY sale_default_analytic_tag /mnt/extra-addons/sale_default_analytic_tag
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_delivery_completion_rental /mnt/extra-addons/sale_delivery_completion_rental
+COPY sale_double_validation /mnt/extra-addons/sale_double_validation
+COPY sale_double_validation_extend /mnt/extra-addons/sale_double_validation_extend
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
 COPY sale_intercompany_service /mnt/extra-addons/sale_intercompany_service
 COPY sale_invoice_email_warning /mnt/extra-addons/sale_invoice_email_warning
