@@ -35,7 +35,7 @@ class TestExtensionOnWarrantyActivation(WarrantyActivationCase):
             datetime.now().date() + relativedelta(months=6)
         )
         cls.extension_expiry_date = (
-            datetime.now().date() + relativedelta(months=9) - timedelta(1)
+            cls.warranty.activation_date + relativedelta(months=9) - timedelta(1)
         )
 
     def _trigger_warranty_activation(self):
