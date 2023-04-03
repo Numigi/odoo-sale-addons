@@ -16,23 +16,23 @@ Configuration
 -------------
 As ``Partner Manager``, I notice a new menu entry ``Contacts / Configuration / Privilege Levels``.
 
-.. image:: sale_privilege_level/static/description/privilege_level_menu.png
+.. image:: static/description/privilege_level_menu.png
 
 When I click on this menu entry, I find the list of privilege levels.
 
-.. image:: sale_privilege_level/static/description/privilege_level_list.png
+.. image:: static/description/privilege_level_list.png
 
 Partners
 --------
 On the form view of a partner, I can select a single privilege level.
 
-.. image:: sale_privilege_level/static/description/partner_form.png
+.. image:: static/description/partner_form.png
 
 Default Privilege Level
 -----------------------
 It is possible to define a default privilege level for new partners.
 
-.. image:: sale_privilege_level/static/description/default_privilege_level.png
+.. image:: static/description/default_privilege_level.png
 
 When a partner is created on user signup, this privilege level is automatically assigned.
 

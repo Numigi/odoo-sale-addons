@@ -10,7 +10,7 @@ A product of type ``Kit`` is defined in the module `product_kit <https://github.
 
 This module defines the behavior on a sale order when a user selects a kit.
 
-.. image:: sale_kit/static/description/overview__sale_order.png
+.. image:: static/description/overview__sale_order.png
 
 When a kit is selected, a new line is added for each component.
 
@@ -21,33 +21,33 @@ I create a new kit with 3 components:
 * Two important components
 * Two optional components
 
-.. image:: sale_kit/static/description/product_form.png
+.. image:: static/description/product_form.png
 
 I create a new sale order.
 
-.. image:: sale_kit/static/description/sale_order_form.png
+.. image:: static/description/sale_order_form.png
 
 In a new sale order line, I select my kit.
 
-.. image:: sale_kit/static/description/sale_order_form__kit_product.png
+.. image:: static/description/sale_order_form__kit_product.png
 
 Automatically, 4 new lines are added below the kit.
 
-.. image:: sale_kit/static/description/sale_order_form__kit_components.png
+.. image:: static/description/sale_order_form__kit_components.png
 
 Changing the Kit
 ----------------
 Once a kit is selected on a sale order line, the product can not be changed.
 
-.. image:: sale_kit/static/description/sale_line__kit_readonly.png
+.. image:: static/description/sale_line__kit_readonly.png
 
 However, you may delete the line and recreate it.
 
-.. image:: sale_kit/static/description/sale_line__kit_trash.png
+.. image:: static/description/sale_line__kit_trash.png
 
 Once deleted, all components for this kit are deleted as well.
 
-.. image:: sale_kit/static/description/sale_line__kit_deleted.png
+.. image:: static/description/sale_line__kit_deleted.png
 
 Components
 ----------
@@ -56,11 +56,11 @@ Important Components
 ~~~~~~~~~~~~~~~~~~~~
 You may not delete an important component:
 
-.. image:: sale_kit/static/description/important_component_trash.png
+.. image:: static/description/important_component_trash.png
 
 You may neither change the product, nor the quantity:
 
-.. image:: sale_kit/static/description/important_component_fields.png
+.. image:: static/description/important_component_fields.png
 
 You may move the line, but you may not move it to another kit.
 
@@ -68,11 +68,11 @@ Non-Important Components
 ~~~~~~~~~~~~~~~~~~~~~~~~
 You may delete a non-important component:
 
-.. image:: sale_kit/static/description/non_important_component_trash.png
+.. image:: static/description/non_important_component_trash.png
 
 You may change its product and quantity:
 
-.. image:: sale_kit/static/description/non_important_component_fields.png
+.. image:: static/description/non_important_component_fields.png
 
 You may move it:
 

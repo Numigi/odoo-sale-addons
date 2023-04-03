@@ -7,13 +7,13 @@ Description
 -----------
 This module adds a new Rentals application.
 
-.. image:: sale_rental_app/static/description/rental_menu.png
+.. image:: static/description/rental_menu.png
 
 Rented Stocks
 -------------
 To see a list view of currently rented products, go to ``Rentals / Products / Rented Stocks``, 
 
-.. image:: sale_rental_app/static/description/rented_stock_list.png
+.. image:: static/description/rented_stock_list.png
 
 The column ``To`` contains the customer instead of the destination location.
 

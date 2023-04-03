@@ -14,15 +14,15 @@ order:
 
 Form view:
 
-.. image:: sale_rental_status/static/description/form_view.png
+.. image:: static/description/form_view.png
 
 List view:
 
-.. image:: sale_rental_status/static/description/list_view.png
+.. image:: static/description/list_view.png
 
 Kanban view:
 
-.. image:: sale_rental_status/static/description/kanban_view.png
+.. image:: static/description/kanban_view.png
 
 Contributors
 ------------
