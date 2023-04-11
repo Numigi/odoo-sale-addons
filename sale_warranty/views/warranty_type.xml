@@ -43,6 +43,7 @@
         <field name="model">sale.warranty.type</field>
         <field name="arch" type="xml">
             <search string="Search Warranty Types">
+                <field name="name"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
            </search>
         </field>
