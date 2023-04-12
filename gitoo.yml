@@ -26,8 +26,7 @@
   includes:
     - product_kit
     - product_dimension
-    - product_crm
-    -
+    
 - url: https://github.com/Numigi/odoo-purchase-addons
   branch: "14.0"
   includes:
