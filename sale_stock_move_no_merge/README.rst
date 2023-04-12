@@ -17,12 +17,12 @@ As member of the group ``Sale / User``, I create a sale order with 2 lines.
 
 Each line contains the same product.
 
-.. image:: sale_stock_move_no_merge/static/description/sale_order_form.png
+.. image:: static/description/sale_order_form.png
 
 After confirming the sale order, in the form view of the pack operation,
 I notice two stock moves instead of one.
 
-.. image:: sale_stock_move_no_merge/static/description/stock_picking_form.png
+.. image:: static/description/stock_picking_form.png
 
 Contributors
 ------------

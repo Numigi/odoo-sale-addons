@@ -13,7 +13,7 @@ I go to the form view of a pricelist.
 
 I notice a new checkbox ``Rental``.
 
-.. image:: sale_rental_pricelist/static/description/pricelist_form.png
+.. image:: static/description/pricelist_form.png
 
 Partners
 ~~~~~~~~
@@ -21,7 +21,7 @@ I go to the form view of a commercial partner.
 
 I notice a new field ``Rental Pricelist``.
 
-.. image:: sale_rental_pricelist/static/description/partner_form.png
+.. image:: static/description/partner_form.png
 
 This field allows to select a pricelist of type ``Rental``.
 
@@ -29,7 +29,7 @@ Usage
 -----
 I create a new rental order.
 
-.. image:: sale_rental_pricelist/static/description/rental_order_form.png
+.. image:: static/description/rental_order_form.png
 
 After selecting my partner, I notice that the rental pricelist was propagated.
 

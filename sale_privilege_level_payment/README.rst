@@ -8,11 +8,11 @@ Configuration
 -------------
 As ``Website Manager``, I go to the list of payment acquirers.
 
-.. image:: sale_privilege_level_payment/static/description/acquirers_list.png
+.. image:: static/description/acquirers_list.png
 
 In the form view of a payment acquirer, I notice a new tab ``Privilege Availability``.
 
-.. image:: sale_privilege_level_payment/static/description/acquirer_form.png
+.. image:: static/description/acquirer_form.png
 
 The field ``Privilege Levels`` allows to filter the payment acquirers based on the privilege level.
 
@@ -27,7 +27,7 @@ As a customer, I checkout my order.
 
 In the payment step, I see only payment acquirers enabled for my privilege level.
 
-.. image:: sale_privilege_level_payment/static/description/website_shop_payment.png
+.. image:: static/description/website_shop_payment.png
 
 Contributors
 ------------

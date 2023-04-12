@@ -2,7 +2,7 @@ Website Sale Request Price Wishlist
 ===================================
 - This module applies the feature of Website Sale Request Price to Website Sale Wishlist
 
-.. image:: website_sale_request_price_wishlist/static/description/website_sale_request_price_wishlist.png
+.. image:: static/description/website_sale_request_price_wishlist.png
 
 Contributors
 ------------

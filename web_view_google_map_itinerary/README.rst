@@ -8,11 +8,11 @@ Usage
 - I go to a map view.
 - I see a new button SEE IN GOOGLE MAPS
 
-.. image:: web_view_google_map_itinerary/static/description/web_view_google_map_itinerary_button.png
+.. image:: static/description/web_view_google_map_itinerary_button.png
 
 - This button opens Google Maps in route mode with different locations.
 
-.. image:: web_view_google_map_itinerary/static/description/web_view_google_map_itinerary_google_maps.png
+.. image:: static/description/web_view_google_map_itinerary_google_maps.png
 
 Partners without location:
 

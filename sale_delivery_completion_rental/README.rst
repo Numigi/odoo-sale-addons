@@ -3,7 +3,7 @@ Sale Delivery Completion Rental
 
 This module adds a smart button on the sale order.
 
-.. image:: sale_delivery_completion_rental/static/description/smart_button.png
+.. image:: static/description/smart_button.png
 
 This button shows the rate of return completion of the order.
 
@@ -13,7 +13,7 @@ that were returned from the customer.
 When clicking on the button, the list of unreturned stock pickings for this
 order is displayed.
 
-.. image:: sale_delivery_completion_rental/static/description/stock_picking_list.png
+.. image:: static/description/stock_picking_list.png
 
 Contributors
 ------------
