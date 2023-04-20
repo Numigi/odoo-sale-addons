@@ -30,8 +30,7 @@ class ActivityReport(models.Model):
     probability = fields.Float("Probability", group_operator="avg", readonly=True)
     stage_id = fields.Many2one("crm.stage", "Stage", readonly=True)
     team_id = fields.Many2one("crm.team", "Sales Team", readonly=True)
-    type = fields.Char(
-        string="Type",
+    type = fields.Selection(
         selection=[("lead", "Lead"), ("opportunity", "Opportunity")],
         help="Type is used to separate Leads and Opportunities",
     )
