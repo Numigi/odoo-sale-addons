@@ -29,18 +29,5 @@
             </filter>
         </field>
     </record>
-    
-    <record id="sale_quotation_rental_search" model="ir.ui.view">
-        <field name="name">Sale Quotation Search: Rental 2</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_rental.sale_order_search"/>
-        <field name="mode">primary</field>
-        <field name="priority" eval="20"/>
-        <field name="arch" type="xml">
-            <filter name="is_rental" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </filter>
-        </field>
-    </record>
 
 </odoo>
