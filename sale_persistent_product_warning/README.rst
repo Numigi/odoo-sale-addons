@@ -8,22 +8,22 @@ Context
 -------
 In vanilla Odoo, you may define a warning message for sales on a product.
 
-.. image:: sale_persistent_product_warning/static/description/product_form.png
+.. image:: static/description/product_form.png
 
 When selecting the product on a sale order, the warning message appears.
 
-.. image:: sale_persistent_product_warning/static/description/sale_order_line_warning.png
+.. image:: static/description/sale_order_line_warning.png
 
 Usage
 -----
 With this module installed, an exclamation point is added on the sale order line
 if the product has a warning message defined.
 
-.. image:: sale_persistent_product_warning/static/description/sale_order_line_exclamation_point.png
+.. image:: static/description/sale_order_line_exclamation_point.png
 
 When clicking on the widget, the warning message is shown to the user.
 
-.. image:: sale_persistent_product_warning/static/description/warning_dialog.png
+.. image:: static/description/warning_dialog.png
 
 Contributors
 ------------

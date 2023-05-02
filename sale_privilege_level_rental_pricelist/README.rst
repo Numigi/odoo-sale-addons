@@ -18,7 +18,7 @@ Privilege Levels
 ----------------
 In the form view of a privilege level, I notice a new table in the tab ``Pricelists``.
 
-.. image:: sale_privilege_level_rental_pricelist/static/description/privilege_level_form.png
+.. image:: static/description/privilege_level_form.png
 
 This table contains a list of pricelists to use for rental orders.
 
@@ -31,13 +31,13 @@ In the form view of a partner, I notice that the ``Rental Pricelist`` is readonl
 
 It is computed based on the partner's privilege level (2).
 
-.. image:: sale_privilege_level_rental_pricelist/static/description/partner_form.png
+.. image:: static/description/partner_form.png
 
 Default Pricelist
 ~~~~~~~~~~~~~~~~~
 By default, if a partner has no privilege level defined, the public pricelist is used for rental.
 
-.. image:: sale_privilege_level_rental_pricelist/static/description/partner_default_rental_pricelist.png
+.. image:: static/description/partner_default_rental_pricelist.png
 
 Known Issues
 ------------

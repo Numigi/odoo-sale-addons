@@ -40,7 +40,7 @@ As ``Administrator``, I go to the general settings.
 
 I notice a new field ``Intercompany Service Discount``.
 
-.. image:: sale_intercompany_service/static/description/settings.png
+.. image:: static/description/settings.png
 
 This field defines the percentage to use for this company when selling on behalf of another company.
 
@@ -53,7 +53,7 @@ I create a sale order from the company ``Mother Company``.
 
 I check ``Interco Service`` and select ``Sister Company`` as invoiced partner.
 
-.. image:: sale_intercompany_service/static/description/sale_order_interco_service.png
+.. image:: static/description/sale_order_interco_service.png
 
 The remaining fields are the same as for a regular sale order.
 
@@ -61,11 +61,11 @@ Confirm Sale Order
 ******************
 After confirming the sale order, I notice that a delivery order was created.
 
-.. image:: sale_intercompany_service/static/description/sale_order_picking.png
+.. image:: static/description/sale_order_picking.png
 
 The picking is created as usual, shipping from the warehouse of ``Mother Company``.
 
-.. image:: sale_intercompany_service/static/description/picking_form.png
+.. image:: static/description/picking_form.png
 
 When using this module, it is therefore important to adapt your PDF documents (``Sale Order``, ``Quotation``, and ``Delivery Order``),
 so that the company displayed on the header is the ``Sister`` company.
@@ -74,11 +74,11 @@ Create Invoices
 ***************
 Back to the sale order, I click to create an invoice.
 
-.. image:: sale_intercompany_service/static/description/sale_order_create_invoice.png
+.. image:: static/description/sale_order_create_invoice.png
 
 A wizard is opened.
 
-.. image:: sale_intercompany_service/static/description/invoice_wizard.png
+.. image:: static/description/invoice_wizard.png
 
 This wizard is different from the original one.
 It is dedicated to the case of invoicing an ``Interco Service``.
@@ -87,15 +87,15 @@ When validating, 3 invoices are created.
 
 1. One customer invoice on the ``Mother`` company (for invoicing the ``Sister`` company)
 
-	.. image:: sale_intercompany_service/static/description/customer_invoice_mother_company.png
+	.. image:: static/description/customer_invoice_mother_company.png
 
 2. One supplier invoice on the ``Sister`` company
 
-	.. image:: sale_intercompany_service/static/description/supplier_invoice_sister_company.png
+	.. image:: static/description/supplier_invoice_sister_company.png
 
 3. One customer invoice on the ``Sister`` company (for invoicing the actual customer)
 
-	.. image:: sale_intercompany_service/static/description/customer_invoice_sister_company.png
+	.. image:: static/description/customer_invoice_sister_company.png
 
 The invoices (1) and (2) are symetrical in both company and allow to register the intercompany invoicing.
 
@@ -106,17 +106,17 @@ Interco Service Summary
 -----------------------
 On the sale order, I notice a new smart button ``Interco Service``.
 
-.. image:: sale_intercompany_service/static/description/sale_order_smart_button.png
+.. image:: static/description/sale_order_smart_button.png
 
 When I click on the button, the summary of the ``Interco Service`` is displayed.
 
-.. image:: sale_intercompany_service/static/description/interco_service_summary.png
+.. image:: static/description/interco_service_summary.png
 
 It shows the invoices on both companies that are linked to the sale order.
 
 The smart button is available on each invoice (on both companies).
 
-.. image:: sale_intercompany_service/static/description/invoice_summary_smart_button.png
+.. image:: static/description/invoice_summary_smart_button.png
 
 Multiple Invoices
 -----------------
@@ -126,14 +126,14 @@ When doing so, each new invoice only contains the remaining quantities to invoic
 
 On the summary, all invoices are displayed.
 
-.. image:: sale_intercompany_service/static/description/interco_service_summary_with_multiple_invoice.png
+.. image:: static/description/interco_service_summary_with_multiple_invoice.png
 
 Invoiceable Lines Versus Downpayment
 ------------------------------------
 In the standard invoicing wizard of a sale order, there is a choice between
 either invoicing invoiceable lines or registering a down payment.
 
-.. image:: sale_intercompany_service/static/description/sale_order_standard_wizard.png
+.. image:: static/description/sale_order_standard_wizard.png
 
 This option did not make sense in the context of interco services.
 

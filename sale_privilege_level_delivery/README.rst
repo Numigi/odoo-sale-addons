@@ -8,11 +8,11 @@ Configuration
 -------------
 As ``Website Manager``, I go to the list of delivery methods.
 
-.. image:: sale_privilege_level_delivery/static/description/carriers_list.png
+.. image:: static/description/carriers_list.png
 
 In the form view of a delivery method, I notice a new tab ``Privilege Availability``.
 
-.. image:: sale_privilege_level_delivery/static/description/carrier_form.png
+.. image:: static/description/carrier_form.png
 
 The field ``Privilege Levels`` allows to filter the delivery methods based on the privilege level.
 
@@ -28,7 +28,7 @@ As a member of the group ``Sale / User``, I create a new sale order.
 After selecting a customer, I notice that the available delivery methods are
 filtered based on the privilege level of this customer.
 
-.. image:: sale_privilege_level_delivery/static/description/sale_order.png
+.. image:: static/description/sale_order.png
 
 E-commerce
 ----------
@@ -36,7 +36,7 @@ As a customer, I checkout my order.
 
 In the payment step, I see only delivery methods enabled for my privilege level.
 
-.. image:: sale_privilege_level_delivery/static/description/website_shop_payment.png
+.. image:: static/description/website_shop_payment.png
 
 Contributors
 ------------
