@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2015-2020 Akretion (http://www.akretion.com/)
+  @author Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+    <!-- It also updates product.product search view -->
+    <record id="product_template_search_view" model="ir.ui.view">
+        <field name="name">usability.product.template.search</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view" />
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="seller_ids" string="Supplier" filter_domain="[('seller_ids.name', 'ilike', self)]"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- product template ONLY form view -->
+    <record id="product_template_only_form_view" model="ir.ui.view">
+        <field name="name">usability.product.template.ONLY.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <!-- barcode is False when the template has several variants anyway -->
+                <field name="barcode_type" attrs="{'invisible': [('barcode', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

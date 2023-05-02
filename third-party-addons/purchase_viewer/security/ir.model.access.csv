@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_order_viewer,Read-only access to purchase.order,purchase.model_purchase_order,group_purchase_viewer,1,0,0,0
+access_purchase_order_line_viewer,Read-only access to purchase.order.line,purchase.model_purchase_order_line,group_purchase_viewer,1,0,0,0
+access_account_move_line_viewer,Read-only access to account.move.line,account.model_account_move_line,group_purchase_viewer,1,0,0,0

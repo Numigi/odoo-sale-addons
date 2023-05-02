@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2020 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+
+<record id="stock_valuation_xlsx_form" model="ir.ui.view">
+    <field name="name">stock.valuation.xlsx.form</field>
+    <field name="model">stock.valuation.xlsx</field>
+    <field name="arch"  type="xml">
+        <form string="Stock valuation XLSX">
+            <div name="help">
+                <p>The generated XLSX report has the valuation of stockable products located on the selected stock locations (and their childrens).</p>
+            </div>
+            <group name="setup">
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="categ_ids" widget="many2many_tags"/>
+                <field name="warehouse_id"/>
+                <field name="location_id"/>
+                <field name="source" widget="radio"/>
+                <field name="inventory_id" attrs="{'invisible': [('source', '!=', 'inventory')], 'required': [('source', '=', 'inventory')]}"/>
+                <field name="stock_date_type" attrs="{'invisible': [('source', '!=', 'stock')], 'required': [('source', '=', 'stock')]}" widget="radio"/>
+                <field name="past_date" attrs="{'invisible': ['|', ('source', '!=', 'stock'), ('stock_date_type', '!=', 'past')], 'required': [('source', '=', 'stock'), ('stock_date_type', '=', 'past')]}"/>
+                <field name="standard_price_date" attrs="{'invisible': [('source', '=', 'stock'), ('stock_date_type', '=', 'present')]}" widget="radio"/>
+                <field name="categ_subtotal" />
+                <field name="has_expiry_date" invisible="1"/>
+                <field name="split_by_lot" attrs="{'invisible': [('source', '=', 'stock'), ('stock_date_type', '=', 'past')]}" groups="stock.group_production_lot"/>
+                <field name="split_by_location" attrs="{'invisible': [('source', '=', 'stock'), ('stock_date_type', '=', 'past')]}"/>
+                <field name="apply_depreciation" groups="stock.group_production_lot" attrs="{'invisible': ['|', '|', ('split_by_lot', '=', False), ('has_expiry_date', '=', False), '&amp;', ('source', '=', 'stock'), ('stock_date_type', '=', 'past')]}"/>
+            </group>
+            <footer>
+                <button name="generate" type="object" class="btn-primary" string="Generate"/>
+                <button special="cancel" string="Close" class="btn-default"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="stock_valuation_xlsx_action" model="ir.actions.act_window">
+    <field name="name">Inventory Valuation XLSX</field>
+    <field name="res_model">stock.valuation.xlsx</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+<!-- in v14, I don't replace the native menu any more, because the native menu shows valuation layers,
+which can be useful -->
+<menuitem id="stock_valuation_xlsx_menu" action="stock_valuation_xlsx_action" sequence="115" parent="stock.menu_warehouse_report"/>
+
+</odoo>

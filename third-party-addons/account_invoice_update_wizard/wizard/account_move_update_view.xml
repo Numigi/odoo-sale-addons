@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2017 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+    <record id="account_invoice_update_form" model="ir.ui.view">
+        <field name="model">account.move.update</field>
+        <field name="arch" type="xml">
+            <form string="Update Invoice Wizard">
+                <group name="main">
+                    <field name="invoice_id" invisible="1"/>
+                    <field name="move_type" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="partner_id" invisible="1"/>
+                    <field string="Bill Reference" attrs="{'invisible': [('move_type', 'not in', ('in_invoice', 'in_refund'))]}" name="ref"/>
+                    <field string="Customer Reference" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}" name="ref"/>
+                    <field name="invoice_origin"/>
+                    <!-- update of payment term is broken -->
+                    <!-- <field name="invoice_payment_term_id" widget="selection"/>-->
+                    <field name="partner_bank_id"/>
+                    <field name="user_id" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                </group>
+                <group name="lines">
+                    <field name="line_ids" nolabel="1" widget="section_and_note_one2many">
+                        <tree editable="bottom" create="false" delete="false" edit="true">
+                            <field name="invoice_line_id" invisible="1"/>
+                            <field name="display_type" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="name"/>
+                            <field name="quantity" attrs="{'invisible': [('display_type', '!=', False)]}"/>
+                            <field name="price_subtotal" attrs="{'invisible': [('display_type', '!=', False)]}"/>
+                            <field name="analytic_account_id" attrs="{'invisible': [('display_type', '!=', False)]}" groups="analytic.group_analytic_accounting"/>
+                            <field name="analytic_tag_ids" attrs="{'invisible': [('display_type', '!=', False)]}" groups="analytic.group_analytic_tags" widget="many2many_tags"/>
+                    </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="run" type="object" class="oe_highlight" string="Update"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="account_invoice_update_action" model="ir.actions.act_window">
+        <field name="name">Invoice Update Wizard</field>
+        <field name="res_model">account.move.update</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2016-2022 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+<record id="sale_add_phantom_bom_form" model="ir.ui.view">
+    <field name="name">sale.add.phantom.bom.form</field>
+    <field name="model">sale.add.phantom.bom</field>
+    <field name="arch"  type="xml">
+        <form>
+            <group name="main">
+                <field name="sale_id" invisible="1"/>
+                <field name="picking_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="bom_id" default_focus="1"/>
+                <field name="qty"/>
+            </group>
+            <footer>
+                <button name="add" type="object"
+                    class="btn-primary" string="Add"/>
+                <button special="cancel" string="Cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="sale_add_phantom_bom_action" model="ir.actions.act_window">
+    <field name="name">Add Kit</field>
+    <field name="res_model">sale.add.phantom.bom</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</odoo>
