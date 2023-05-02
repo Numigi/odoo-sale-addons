@@ -1,13 +1,11 @@
 odoo.define('website_payment_message_enhanced.payment_processing', function (require) {
 
-'use strict';
+    'use strict';
 
-const PaymentProcessing = require("payment.processing");
+    var publicWidget = require('web.public.widget');
 
-PaymentProcessing.include({
-    xmlDependencies: PaymentProcessing.prototype.xmlDependencies.concat([
+    publicWidget.registry.PaymentProcessing.prototype.xmlDependencies = publicWidget.registry.PaymentProcessing.prototype.xmlDependencies.concat([
         '/website_payment_message_enhanced/static/src/xml/templates.xml'
-    ]),
-});
+    ]);
 
 });
