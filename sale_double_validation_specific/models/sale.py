@@ -9,19 +9,28 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     to_approve = fields.Boolean(compute='compute_to_approve')
-    is_approved = fields.Boolean("Is approved")
-
+   # is_approved = fields.Boolean("Is approved", copy=False)
+    to_confirm = fields.Boolean(compute='compute_to_confirm')
 
     def compute_to_approve(self):
         self.ensure_one()
         currency = self.company_id.currency_id
         limit_amount = self.company_id.so_double_validation_amount
         limit_amount = currency.compute(limit_amount, self.currency_id)
-
-        if self.state in ['draft'] and self.is_to_approve() and not self.is_approved:
+        if self.state in ['draft'] and self.is_to_approve() and self.state != "to_approve":
             self.to_approve = True
         else:
             self.to_approve = False
+
+    def compute_to_confirm(self):
+        self.ensure_one()
+        if self.user_has_groups("sales_team.group_sale_manager") and self.state in ["draft", "to_approve"]:
+            self.to_confirm = True
+        elif not self.user_has_groups("sales_team.group_sale_manager")\
+                and not self.is_to_approve() and self.state == "draft":
+            self.to_confirm = True
+        else:
+            self.to_confirm = False
 
     @api.model
     def create(self, vals):
@@ -35,7 +44,8 @@ class SaleOrder(models.Model):
         return res
 
     def action_approve(self):
-        self.is_approved = True
+        self.write({"state": "to_approve"})
+        #self.is_approved = True
 
 
 

@@ -6,13 +6,13 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <field name="currency_id" position="after">
-                <field name="create_date" invisible="0"/>
-                <field name="to_approve" invisible="0"/>
+                <field name="create_date" invisible="1"/>
+                <field name="to_approve" invisible="1"/>
+                 <field name="to_confirm" invisible="1"/>
+
             </field>
           <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
-             <attribute name="attrs">{'invisible': ['|','|', ('state', 'not in', ['draft']),
-                                                            ('create_date', '=', False),
-                                                            ('to_approve', '=', True) ]}
+             <attribute name="attrs">{'invisible': [ ('to_confirm', '=', False) ]}
              </attribute>
             </xpath>
         </field>
