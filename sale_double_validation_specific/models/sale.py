@@ -9,7 +9,6 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     to_approve = fields.Boolean(compute='compute_to_approve')
-   # is_approved = fields.Boolean("Is approved", copy=False)
     to_confirm = fields.Boolean(compute='compute_to_confirm')
 
     def compute_to_approve(self):
