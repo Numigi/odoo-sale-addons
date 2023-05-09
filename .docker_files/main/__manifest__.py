@@ -51,6 +51,7 @@
         "sale_privilege_level_pricelist",
         "sale_privilege_level_rental_pricelist",
         "sale_privilege_level_website",
+        "sale_project_milestone",
         "sale_rental",
         "sale_rental_app",
         "sale_rental_order_swap_variant",
@@ -58,6 +59,7 @@
         "sale_rental_pricelist",
         "sale_rental_status",
         "sale_stock_move_no_merge",
+        "sale_timesheet_invoicing_period",
         "sale_warranty",
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
@@ -68,7 +70,7 @@
         "website_stock_availability_enhanced",
         "website_sale_request_price",
         "website_sale_request_price_wishlist",
-      
+
     ],
     "installable": True,
 }
