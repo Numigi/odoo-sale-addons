@@ -8,8 +8,8 @@ If a salesperson creates a sale order which is a certain amount,
 the sale order will be set to "To approve" state and will require a Sales manager
 to approve it.
 
-This module is based on the purchase option for two levels validation in module `purchase`.
-This module is migrated from the OCA module available on `v12.0 <https://github.com/OCA/sale-workflow/tree/12.0/sale_double_validation>`_.
+This module is based on the sale double validation v12.0 <https://github.com/OCA/sale-workflow/tree/12.0/sale_double_validation>`_.
+
 
 **Table of contents**
 
