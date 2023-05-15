@@ -18,6 +18,7 @@
         "views/product_template.xml",
         "views/project_milestone.xml",
         "views/sale_order.xml",
+        "security/ir.model.access.csv",
     ],
     "installable": True,
 }
