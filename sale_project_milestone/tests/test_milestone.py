@@ -11,19 +11,38 @@ class TestMilestone(SavepointCase):
         cls.project = cls.env["project.project"].create(
             {
                 "name": "My Project",
+                "use_milestones": True,
+                "allow_timesheets": True,
+                "allow_timesheet_timer": True,
+                "allow_subtasks": True,
             }
         )
         cls.project_template = cls.env["project.project"].create(
             {
-                "name": "My Template Project",
+                "name": "My Template Project 1",
+                "allow_timesheets": True,
+                "allow_timesheet_timer": True,
+                "allow_subtasks": True,
+                "allow_billable": True,
+                "bill_type": "customer_project",
             }
         )
-        cls.project_template_2 = cls.project_template.copy()
+        cls.project_template_2 = cls.env["project.project"].create(
+            {
+                "name": "My Template Project 2",
+                "allow_timesheets": True,
+                "allow_timesheet_timer": True,
+                "allow_subtasks": True,
+                "allow_billable": True,
+                "bill_type": "customer_project",
+            }
+        )
+
         cls.uom_hour = cls.env.ref("uom.product_uom_hour")
 
         cls.milestone_template = cls.env["project.milestone"].create(
             {
-                "name": "My Milestone",
+                "name": "My Milestone 1",
                 "project_id": cls.project.id,
             }
         )
@@ -45,13 +64,20 @@ class TestMilestone(SavepointCase):
         cls.product_uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.product = cls.env["product.product"].create(
             {
-                "name": "My Product",
+                "name": "My Product 1",
                 "type": "service",
                 "uom_id": cls.uom_hour.id,
                 "uom_po_id": cls.uom_hour.id,
             }
         )
-        cls.product_2 = cls.product.copy()
+        cls.product_2 = cls.env["product.product"].create(
+            {
+                "name": "My Product 2",
+                "type": "service",
+                "uom_id": cls.uom_hour.id,
+                "uom_po_id": cls.uom_hour.id,
+            }
+        )
 
         cls.customer = cls.env.ref("base.res_partner_1")
 
@@ -146,24 +172,41 @@ class TestMilestone(SavepointCase):
             {
                 "service_tracking": "milestone_new_project",
                 "project_template_id": self.project_template.id,
+                "service_policy": "delivered_manual",
             }
         )
         self.product_2.write(
             {
                 "service_tracking": "milestone_new_project",
                 "project_template_id": self.project_template_2.id,
+                "service_policy": "delivered_manual",
             }
         )
-        line_1 = self.order_line
-        line_2 = self.order_line.copy(
+
+        order_2 = self.order.copy()
+        line_1 = self.env["sale.order.line"].create(
             {
-                'name': 'Section',
-                'display_type': 'line_section',
-                "order_id": self.order.id,
-                "product_id": self.product_2.id,
+                "order_id": order_2.id,
+                "product_id": self.product.id,
+                "name": self.product.name,
+                "product_uom_qty": self.number_of_hours,
+                "product_uom": self.uom_hour.id,
+                "price_unit": 10,
             }
         )
-        self.order.action_confirm()
+        # do not use 'display_type': 'line_section' on line_2 and 'name': 'other_name'
+        # it makes assertion failed on line_2.milestone_id
+        line_2 = self.env["sale.order.line"].create(
+            {
+                "name": self.product_2.name,
+                "order_id": order_2.id,
+                "product_id": self.product_2.id,
+                "product_uom_qty": self.number_of_hours,
+                "product_uom": self.uom_hour.id,
+                "price_unit": 10,
+            }
+        )
+        order_2.action_confirm()
 
         assert line_1.milestone_id
         assert line_2.milestone_id
@@ -187,10 +230,11 @@ class TestMilestone(SavepointCase):
             }
         )
         line_1 = self.order_line
+        # do not use 'display_type': 'line_section' on line_2 and 'name': 'other_name'
+        # it makes assertion failed on line_2.milestone_id
         line_2 = self.order_line.copy(
             {
-                'name': 'Section',
-                'display_type': 'line_section',
+                'name': self.product_2.name,
                 "order_id": self.order.id,
                 "product_id": self.product_2.id,
             }
@@ -226,13 +270,15 @@ class TestMilestone(SavepointCase):
         self.product_2.write(
             {
                 "service_tracking": "milestone_new_project",
+                "service_policy": "delivered_manual",
             }
         )
         line_1 = self.order_line
+        # do not use 'display_type': 'line_section' on line_2 and 'name': 'other_name'
+        # it makes assertion failed on line_2.milestone_id
         line_2 = self.order_line.copy(
             {
-                'name': 'Section',
-                'display_type': 'line_section',
+                'name': self.product_2.name,
                 "order_id": self.order.id,
                 "product_id": self.product_2.id,
             }
