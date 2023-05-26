@@ -10,6 +10,7 @@ from odoo.tests.common import SavepointCase
 
 @ddt
 class TestSaleTimesheet(SavepointCase):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -17,6 +18,26 @@ class TestSaleTimesheet(SavepointCase):
         cls.project = cls.env["project.project"].create(
             {
                 "name": "My Project",
+                "allow_timesheets": True,
+                "allow_timesheet_timer": True,
+            }
+        )
+
+        cls.property_account_income_id = cls.env["account.account"].create(
+            {
+                "code": "PAI",
+                "name": "Property account income",
+                "user_type_id": cls.env.ref('account.data_account_type_receivable').id,
+                "reconcile": True,
+            }
+        )
+
+        cls.property_account_expense_id = cls.env["account.account"].create(
+            {
+                "code": "PEI",
+                "name": "Property account expense",
+                "user_type_id": cls.env.ref('account.data_account_type_payable').id,
+                "reconcile": True,
             }
         )
 
@@ -28,6 +49,8 @@ class TestSaleTimesheet(SavepointCase):
                 "service_tracking": "task_global_project",
                 "invoice_policy": "delivery",
                 "project_id": cls.project.id,
+                'property_account_income_id': cls.property_account_expense_id.id,
+                'property_account_expense_id': cls.property_account_expense_id.id,
             }
         )
 
@@ -41,6 +64,7 @@ class TestSaleTimesheet(SavepointCase):
             "product_id": cls.product.id,
             "product_uom_qty": 1,
             "product_uom": cls.product.uom_id.id,
+            "name": cls.product.name,
         }
 
         cls.order = cls.env["sale.order"].create(
@@ -52,6 +76,7 @@ class TestSaleTimesheet(SavepointCase):
         )
 
         cls.order.action_confirm()
+        cls.order.order_line[0].qty_delivered = 1
         cls.order_line = cls.order.order_line
         cls.task = cls.order.tasks_ids
 
@@ -62,6 +87,7 @@ class TestSaleTimesheet(SavepointCase):
         (False, date(2021, 1, 3)),
         (False, False),
     )
+    # TODO : crash on unit testing
     @unpack
     def test_invoice__line_not_filtered(self, date_from, date_to):
         line = self._make_timesheet(date=date(2021, 1, 2))

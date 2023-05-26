@@ -59,7 +59,7 @@
         "sale_rental_pricelist",
         "sale_rental_status",
         "sale_stock_move_no_merge",
-        # "sale_timesheet_invoicing_period",
+        "sale_timesheet_invoicing_period",
         "sale_warranty",
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
