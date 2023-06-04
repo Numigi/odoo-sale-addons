@@ -1,4 +1,4 @@
-# © 2019 Numigi
+# © 2023 Numigi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -68,7 +68,6 @@
         "website_stock_availability_enhanced",
         "website_sale_request_price",
         "website_sale_request_price_wishlist",
-      
     ],
     "installable": True,
 }
