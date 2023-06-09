@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
 
     to_approve = fields.Boolean(compute='compute_to_approve')
     to_confirm = fields.Boolean(compute='compute_to_confirm')
-    state = fields.Selection(selection_add=[("to_approve", "Approved Quotation")])
+    state = fields.Selection(selection_add=[("to_approve", "Waiting for approval")])
 
     def is_amount_to_approve(self):
         self.ensure_one()
@@ -69,6 +69,7 @@ class SaleOrder(models.Model):
         for order in self:
             if order.is_to_approve() and order.state == "draft":
                 raise UserError(_("Cannot confirm this quotation without sale manager's approbation"))
+        _logger.info("Confirm Quotation")
         return super(SaleOrder, self).action_confirm()
 
     def action_approve(self):

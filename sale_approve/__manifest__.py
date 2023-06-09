@@ -2,8 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Sale Approve",
-    "summary": "Switch steps of the module Sale approve",
-    "version": "1.0.0",
+    "summary": "Add a setp request for approval in sale workflow",
+    "version": "1.0.1",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",

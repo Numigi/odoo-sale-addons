@@ -17,13 +17,13 @@ msgstr ""
 
 #. module: sale_approve
 #: model_terms:ir.ui.view,arch_db:sale_approve.view_order_form_double_validation_specific
-msgid "Approve Quotation"
-msgstr "Confirmer la soumission"
+msgid "Approve request"
+msgstr "Demander la confirmation"
 
 #. module: sale_approve
 #: model:ir.model.fields.selection,name:sale_approve.selection__sale_order__state__to_approve
-msgid "Approved Quotation"
-msgstr "Soumission confirmée"
+msgid "Waiting for approval"
+msgstr "En attente d'approbation"
 
 #. module: sale_approve
 #: model:ir.model,name:sale_approve.model_res_company

@@ -15,7 +15,7 @@
 
                  <button name="action_approve"
                         type="object"
-                        string="Approve Quotation"
+                        string="Approve request"
                         class="oe_highlight"
                         attrs="{'invisible': [('to_approve', '=', False)]}"
                         groups="sales_team.group_sale_salesman"
