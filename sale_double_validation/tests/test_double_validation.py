@@ -225,7 +225,7 @@ class TestSaleDoubleValidation(SavepointCase):
         )
         # confirm quotation
         state = 'draft'
-        if not self.sale_approve_installed:
+        if self.sale_approve_installed:
             state = 'to_approve'
         self.assertEquals(so.state, state)
 
