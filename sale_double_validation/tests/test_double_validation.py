@@ -14,7 +14,7 @@ class TestSaleDoubleValidation(SavepointCase):
         group_salesman = cls.env.ref("sales_team.group_sale_salesman")
         group_employee = cls.env.ref("base.group_user")
         cls.sale_approve_installed = cls.env['ir.module.module'].search(
-            [('name', '=', 'salle_approve')]).state == 'installed'
+            [('name', '=', 'sale_approve')]).state == 'installed'
         cls.user_manager = cls.env['res.users'].create({
             'name': 'User Officer',
             'login': 'user_manager',
