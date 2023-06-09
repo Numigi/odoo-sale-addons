@@ -101,3 +101,9 @@ msgstr "A approuver"
 #: model:ir.model.fields,field_description:sale_approve.field_sale_order__to_confirm
 msgid "To Confirm"
 msgstr "A confirmer"
+
+#. module: sale_approve
+#: code:addons/sale_approve/models/sale.py:0
+#, python-format
+msgid "Cannot confirm this quotation without sale manager's approbation"
+msgstr "Vous ne pouvez pas confirmer ce devis sans l'approbation d'un gestionnaire des ventes"

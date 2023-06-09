@@ -37,8 +37,6 @@ If a review is required the SO will be set into the state "To Approve" when appr
 
 A sale order in "To approve" state will have a button "Approve"  visible to salesman.
 
-
-
 Credits
 =======
 
