@@ -224,8 +224,8 @@ class TestSaleDoubleValidation(SavepointCase):
             )
         )
         # confirm quotation
-        state = 'draft' if self.sale_approve_installed else state='to_approve'
-        self.assertEquals(so.state, state
+        state = 'draft' if self.sale_approve_installed else state = 'to_approve'
+        self.assertEquals(so.state, state)
 
     def test_two_steps_above_limit(self):
         self.user_employee.company_id.sudo().so_double_validation = "two_step"
