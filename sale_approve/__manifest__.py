@@ -3,7 +3,7 @@
 {
     "name": "Sale Approve",
     "summary": "Switch steps of the module Sale approve",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
