@@ -113,6 +113,7 @@ msgstr "Partenaires"
 #: model:ir.model.fields,field_description:sale_privilege_level.field_res_users__privilege_level_id
 #: model_terms:ir.ui.view,arch_db:sale_privilege_level.res_config_settings_form
 #: model_terms:ir.ui.view,arch_db:sale_privilege_level.sale_privilege_level_form
+#: model_terms:ir.ui.view,arch_db:sale_privilege_level.res_partner_view_search_inherit_privilege_level
 msgid "Privilege Level"
 msgstr "Niveau de privilèges"
 
