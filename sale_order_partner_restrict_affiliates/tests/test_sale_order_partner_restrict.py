@@ -1,3 +1,6 @@
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
 from odoo.exceptions import ValidationError
 from odoo.tests import tagged
 from odoo.tests.common import SavepointCase
@@ -37,7 +40,7 @@ class TestSaleOrderPartnerRestrict(SavepointCase):
         return so
 
     def test_sale_order_partner_restrict_option_only_children(self):
-        """Test for a restriction with the "Only chlidren" option"""
+        """Test for a restriction with the "Only children" option"""
         self.main_company.sale_order_partner_restrict = "affiliate_contact"
 
         self.assertTrue(

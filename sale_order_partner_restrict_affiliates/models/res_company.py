@@ -9,4 +9,8 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     sale_order_partner_restrict = fields.Selection(
-        selection_add=[('affiliate_contact', 'Only Children (including affiliates companies and contacts')])
+        selection_add=[
+            ('affiliate_contact',
+             'Only Children (including affiliates companies and contacts')
+        ]
+    )
