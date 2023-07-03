@@ -28,6 +28,18 @@ On the form view of a partner, I can select a single privilege level.
 
 .. image:: static/description/partner_form.png
 
+In the list view of partner, I see the column `Privilege Level`
+
+.. image:: static/description/privilege_level_on_list_view.png
+
+I can see that the `Privilege Level` field is avalaible on search panel.
+
+.. image:: static/description/search_by_privilege_level.png
+
+The group by on `Privilege Level` field is also available on list view.
+
+.. image:: static/description/group_by_privilege_level.png
+
 Default Privilege Level
 -----------------------
 It is possible to define a default privilege level for new partners.

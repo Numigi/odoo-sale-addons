@@ -17,13 +17,13 @@ msgstr ""
 
 #. module: sale_approve
 #: model_terms:ir.ui.view,arch_db:sale_approve.view_order_form_double_validation_specific
-msgid "Approve Quotation"
-msgstr "Confirmer la soumission"
+msgid "Approve request"
+msgstr "Demander la confirmation"
 
 #. module: sale_approve
 #: model:ir.model.fields.selection,name:sale_approve.selection__sale_order__state__to_approve
-msgid "Approved Quotation"
-msgstr "Soumission confirmée"
+msgid "Waiting for approval"
+msgstr "En attente d'approbation"
 
 #. module: sale_approve
 #: model:ir.model,name:sale_approve.model_res_company
@@ -101,3 +101,9 @@ msgstr "A approuver"
 #: model:ir.model.fields,field_description:sale_approve.field_sale_order__to_confirm
 msgid "To Confirm"
 msgstr "A confirmer"
+
+#. module: sale_approve
+#: code:addons/sale_approve/models/sale.py:0
+#, python-format
+msgid "Cannot confirm this quotation without sale manager's approbation"
+msgstr "Vous ne pouvez pas confirmer ce devis sans l'approbation d'un gestionnaire des ventes"
