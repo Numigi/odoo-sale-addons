@@ -1,8 +1,12 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
 from odoo import _, api, models,fields
 from odoo.tools import float_compare
+from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -10,7 +14,7 @@ class SaleOrder(models.Model):
 
     to_approve = fields.Boolean(compute='compute_to_approve')
     to_confirm = fields.Boolean(compute='compute_to_confirm')
-    state = fields.Selection(selection_add=[("to_approve", "Approved Quotation")])
+    state = fields.Selection(selection_add=[("to_approve", "Waiting for approval")])
 
     def is_amount_to_approve(self):
         self.ensure_one()
@@ -61,11 +65,16 @@ class SaleOrder(models.Model):
             obj.state = "draft"
         return obj
 
-
+    def action_confirm(self):
+        for order in self:
+            if order.is_to_approve() and order.state == "draft":
+                raise UserError(_("Cannot confirm this quotation without sale manager's approbation"))
+        _logger.info("Confirm Quotation")
+        return super(SaleOrder, self).action_confirm()
 
     def action_approve(self):
+        _logger.info("Approve Quotation")
         self.write({"state": "to_approve"})
-        #self.is_approved = True
 
 
 

@@ -13,6 +13,8 @@ class TestSaleDoubleValidation(SavepointCase):
         group_salemanager = cls.env.ref("sales_team.group_sale_manager")
         group_salesman = cls.env.ref("sales_team.group_sale_salesman")
         group_employee = cls.env.ref("base.group_user")
+        cls.sale_approve_installed = cls.env['ir.module.module'].search(
+            [('name', '=', 'sale_approve')]).state == 'installed'
         cls.user_manager = cls.env['res.users'].create({
             'name': 'User Officer',
             'login': 'user_manager',
@@ -222,7 +224,10 @@ class TestSaleDoubleValidation(SavepointCase):
             )
         )
         # confirm quotation
-        self.assertEquals(so.state, "to_approve")
+        state = 'draft'
+        if self.sale_approve_installed:
+            state = 'to_approve'
+        self.assertEquals(so.state, state)
 
     def test_two_steps_above_limit(self):
         self.user_employee.company_id.sudo().so_double_validation = "two_step"

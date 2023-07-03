@@ -13,4 +13,30 @@
         </field>
     </record>
 
+    <record id="res_partner_list" model="ir.ui.view">
+        <field name="name">Partner Lists: add privilege levels</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="display_name" position="after">
+                <field name="privilege_level_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="res_partner_view_search_inherit_privilege_level" model="ir.ui.view">
+        <field name="name">res.partner.view.search.inherit.privilege.level</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                    <field name="privilege_level_id"/>
+            </field>
+            <filter name="salesperson" position="after">
+                <filter name="privilege_level_id" string="Privilege Level" context="{'group_by' : 'privilege_level_id'}" />
+            </filter>
+        </field>
+    </record>
+
+
 </odoo>
