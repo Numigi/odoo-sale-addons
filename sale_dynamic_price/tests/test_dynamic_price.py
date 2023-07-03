@@ -15,7 +15,6 @@ class TestDynamicPrice(SavepointCase):
             "name": "Product A",
             "type": "product",
             "price_type": "dynamic",
-            "minimum_margin": 0,
             "margin": 0,
             "price_rounding": 0,
             "price_surcharge": 0,
