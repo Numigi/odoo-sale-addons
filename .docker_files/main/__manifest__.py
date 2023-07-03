@@ -51,7 +51,6 @@
         "sale_privilege_level_pricelist",
         "sale_privilege_level_rental_pricelist",
         "sale_privilege_level_website",
-        "sale_project_milestone",
         "sale_rental",
         "sale_rental_app",
         "sale_rental_order_swap_variant",

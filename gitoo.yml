@@ -27,12 +27,6 @@
     - product_kit
     - product_dimension
 
-- url: https://github.com/Numigi/odoo-project-addons
-  branch: "14.0"
-  includes:
-    - project_milestone_enhanced
-    - project_milestone_estimated_hours
-    
 - url: https://github.com/Numigi/odoo-purchase-addons
   branch: "14.0"
   includes:
@@ -61,11 +55,6 @@
   branch: "14.0"
   includes:
     - product_brand
-
-- url: https://github.com/OCA/project
-  branch: "14.0"
-  includes:
-    - project_milestone
 
 - url: https://github.com/OCA/stock-logistics-workflow.git
   branch: "14.0"
