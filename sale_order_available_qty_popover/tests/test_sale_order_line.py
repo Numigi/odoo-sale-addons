@@ -22,6 +22,8 @@ class TestSaleOrderLine(SavepointCase):
         cls.user.company_ids |= cls.company_1
         cls.user.company_id = cls.company_1
 
+        cls.partner = cls.env.ref("base.res_partner_1")
+
         cls.warehouse_1 = cls.env["stock.warehouse"].create(
             {"name": "W1", "code": "W1", "company_id": cls.company_1.id}
         )
@@ -35,7 +37,7 @@ class TestSaleOrderLine(SavepointCase):
 
         cls.sale_order = cls.env["sale.order"].create(
             {
-                "partner_id": cls.env.user.partner_id.id,
+                "partner_id": cls.partner.id,
                 "pricelist_id": cls.env.ref("product.list0").id,
                 "warehouse_id": cls.warehouse_1.id,
                 "company_id": cls.company_1.id,

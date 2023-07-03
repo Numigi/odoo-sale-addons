@@ -12,9 +12,10 @@ class TestSaleKit(KitCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.partner = cls.env.ref("base.res_partner_1")
         cls.order = cls.env["sale.order"].create(
             {
-                "partner_id": cls.env.user.partner_id.id,
+                "partner_id": cls.partner.id,
                 "pricelist_id": cls.env.ref("product.list0").id,
             }
         )
