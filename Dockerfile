@@ -20,11 +20,11 @@ USER odoo
 COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
 COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
+COPY crm_lead_product /mnt/extra-addons/crm_lead_product
 COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
-COPY sale_approve /mnt/extra-addons/sale_approve
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
 COPY sale_default_analytic_tag /mnt/extra-addons/sale_default_analytic_tag
@@ -76,8 +76,6 @@ COPY website_sale_request_price /mnt/extra-addons/website_sale_request_price
 COPY website_sale_request_price_wishlist /mnt/extra-addons/website_sale_request_price_wishlist
 COPY website_stock_availability_enhanced /mnt/extra-addons/website_stock_availability_enhanced
 
-
-COPY  crm_lead_product /mnt/extra-addons/crm_lead_product
 
 
 COPY .docker_files/main /mnt/extra-addons/main
