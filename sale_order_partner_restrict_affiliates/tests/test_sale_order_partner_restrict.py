@@ -34,9 +34,11 @@ class TestSaleOrderPartnerRestrict(SavepointCase):
         )
 
     def _create_sale_order(self, partner):
-        so = self.env["sale.order"].create(
-            {"partner_id": partner.id, "name": "/", "company_id": self.main_company.id}
-        )
+        so = self.env["sale.order"].create({
+            "partner_id": partner.id,
+            "name": "/",
+            "company_id": self.main_company.id
+            })
         return so
 
     def test_sale_order_partner_restrict_option_only_children(self):

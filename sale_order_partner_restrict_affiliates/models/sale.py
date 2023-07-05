@@ -1,7 +1,7 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
@@ -9,7 +9,8 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     def _get_partner_restrict_domain(self):
-        partner_restrict_domain = super(SaleOrder, self)._get_partner_restrict_domain()
+        partner_restrict_domain = super(SaleOrder, self
+                                        )._get_partner_restrict_domain()
         if self.sale_order_partner_restrict == "affiliate_contact":
             partner_restrict_domain = [
                 ("parent_id", "!=", False),
