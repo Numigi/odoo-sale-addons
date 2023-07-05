@@ -15,15 +15,14 @@ class TestSaleOrder(SavepointCase):
             {"name": "My Product 1", "type": "product"}
         )
 
-        cls.customer = cls.env["res.partner"].create(
-            {"name": "My Customer"}
-        )
+        cls.partner = cls.env.ref("base.res_partner_1")
+        cls.user = cls.env.ref("base.user_demo")
 
         cls.unit = cls.env.ref("uom.product_uom_unit")
 
         cls.sale_order = cls.env["sale.order"].create(
             {
-                "partner_id": cls.customer.id,
+                "partner_id": cls.partner.id,
                 "pricelist_id": cls.env.ref("product.list0").id,
                 "order_line": [
                     (0, 0, cls._get_so_line_vals(cls.product, cls.unit, 10)),
@@ -54,8 +53,9 @@ class TestSaleOrder(SavepointCase):
         assert self.line_1.displayed_delay == "2 days"
 
     def _update_cart(self):
-        with mock_odoo_request(self.env):
+        with mock_odoo_request(self.env(user=self.user)):
             request.session.update({
+                'partner_id': self.partner.id,
                 'sale_order_id': self.sale_order.id,
             })
             self.sale_order._cart_update(
