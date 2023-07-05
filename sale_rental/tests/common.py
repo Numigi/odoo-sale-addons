@@ -11,6 +11,8 @@ class RentalCase(KitCase):
         cls.stock_user = cls.env.ref("base.user_demo")
         cls.stock_user.groups_id = cls.env.ref("stock.group_stock_user")
 
+        cls.partner = cls.env.ref("base.res_partner_1")
+
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.uom_day = cls.env.ref("uom.product_uom_day")
         cls.rental_service = cls.env["product.product"].create(
@@ -23,7 +25,7 @@ class RentalCase(KitCase):
         )
         cls.order = cls.env["sale.order"].create(
             {
-                "partner_id": cls.env.user.partner_id.id,
+                "partner_id": cls.partner.id,
                 "pricelist_id": cls.env.ref("product.list0").id,
                 "is_rental": True,
             }
