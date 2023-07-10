@@ -462,6 +462,7 @@ msgstr "Utilisateur"
 #: model:ir.ui.menu,name:sale_warranty.menu_warranty_warranty
 #: model_terms:ir.ui.view,arch_db:sale_warranty.sale_order_with_warranty_smart_button
 #: model_terms:ir.ui.view,arch_db:sale_warranty.sale_warranty_settings_form
+#: model_terms:ir.ui.view,arch_db:sale_warranty.view_stock_production_lot_warranty_form
 #: model_terms:ir.ui.view,arch_db:sale_warranty.warranty_list
 msgid "Warranties"
 msgstr "Garanties"
