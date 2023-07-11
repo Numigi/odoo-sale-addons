@@ -3,7 +3,7 @@
 
 {
     "name": "Sales Warranty",
-    'version': '14.0.1.0.0',
+    'version': '14.0.1.1.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
@@ -21,6 +21,7 @@
         'views/warranty.xml',
         'views/product.xml',
         'views/sale_order.xml',
+        "views/stock_production_lot.xml",
         'data/ir_cron.xml',
         'data/ir_sequence.xml',
     ],

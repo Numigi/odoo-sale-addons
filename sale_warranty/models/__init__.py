@@ -8,4 +8,5 @@ from . import (
     sale_warranty,
     sale_warranty_type,
     stock_move,
+    stock_production_lot,
 )
