@@ -2,13 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime, timedelta
-
-from odoo.addons.sale_stock.tests.test_sale_stock import (
-    TestSaleStock,
-)
+from odoo.addons.sale.tests.common import TestSaleCommon
+from odoo.tests import tagged
 
 
-class Test2ndQtyAvailabilityWidget(TestSaleStock):
+@tagged('post_install', '-at_install')
+class Test2ndQtyAvailabilityWidget(TestSaleCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
