@@ -42,6 +42,7 @@
         "sale_order_line_margin_amount",
         "sale_order_line_readonly_conditions",
         "sale_order_margin_percent",
+        "sale_order_partner_restrict_affiliates",
         "sale_order_url_tracking",
         "sale_order_weight",
         "sale_partner_authorized_company",
