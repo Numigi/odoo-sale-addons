@@ -2,13 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime, timedelta
-from odoo.addons.sale.tests.common import TestSaleCommon
+from odoo.addons.sale_stock.tests.test_sale_stock import TestSaleStock
+from odoo.tests import tagged
 
 
-class Test2ndQtyAvailabilityWidget(TestSaleCommon):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+@tagged('post_install')
+class Test2ndQtyAvailabilityWidget(TestSaleStock):
 
     def test_virtual_2nd_unit_available_at_date(self):
         # sell two products
@@ -26,15 +25,15 @@ class Test2ndQtyAvailabilityWidget(TestSaleCommon):
                         0,
                         {
                             "code": "A",
-                            "name": "unit-700",
+                            "name": "unit-500",
                             "uom_id": product_uom_unit.id,
-                            "factor": 0.7,
+                            "factor": 0.5,
                         },
                     )
                 ],
             }
         )
-        item1_product = item1.product_template_id.product_variant_ids[0]
+        item1_product = item1.product_tmpl_id.product_variant_ids[0]
         item1.product_tmpl_id.stock_secondary_uom_id = item1_product.secondary_uom_ids[
             0
         ].id
@@ -80,14 +79,14 @@ class Test2ndQtyAvailabilityWidget(TestSaleCommon):
             line.scheduled_date, datetime.now(), delta=timedelta(seconds=10)
         )
         self.assertEqual(line.virtual_available_at_date, 10)
-        self.assertEqual(line.virtual_2nd_unit_available_at_date, 70)
+        self.assertEqual(line.virtual_2nd_unit_available_at_date, 20)
         self.assertEqual(line.free_qty_today, 7)
-        self.assertEqual(line.free_2nd_unit_qty_today, 49)
+        self.assertEqual(line.free_2nd_unit_qty_today, 14)
         so.warehouse_id = warehouse2
         # invalidate product cache to ensure qty_available is recomputed
         # bc warehouse isn't in the depends_context of qty_available
         line.product_id.invalidate_cache()
         self.assertEqual(line.virtual_available_at_date, 5)
-        self.assertEqual(line.virtual_2nd_unit_available_at_date, 35)
+        self.assertEqual(line.virtual_2nd_unit_available_at_date, 10)
         self.assertEqual(line.free_qty_today, 5)
-        self.assertEqual(line.free_2nd_unit_qty_today, 35)
+        self.assertEqual(line.free_2nd_unit_qty_today, 10)
