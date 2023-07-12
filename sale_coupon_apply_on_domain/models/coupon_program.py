@@ -1,10 +1,7 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import logging
-from odoo import fields, models, _
-from odoo.exceptions import ValidationError
-
-_logger = logging.getLogger(__name__)
+from odoo import fields, models
 
 
 class CouponReward(models.Model):

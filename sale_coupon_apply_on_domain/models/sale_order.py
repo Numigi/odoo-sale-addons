@@ -1,12 +1,9 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import logging
-from odoo import fields, models, _
+from odoo import models, _
 from odoo.tools.misc import formatLang
-from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
-
-_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -44,10 +41,9 @@ class SaleOrder(models.Model):
             if program.discount_apply_on == 'all_products':
                 domain = safe_eval(program.rule_products_domain)
                 program_product_ids = self.env["product.product"].search(domain)
-                _logger.info(program_product_ids)
                 lines = lines.filtered(
                     lambda x: x.product_id in program_product_ids)
-            if program.discount_apply_on == 'specific_products':
+            elif program.discount_apply_on == 'specific_products':
                 # We should not exclude reward line that offer this product since we need to offer only the discount on the real paid product (regular product - free product)
                 free_product_lines = self.env['coupon.program'].search([('reward_type', '=', 'product'), (
                 'reward_product_id', 'in', program.discount_specific_product_ids.ids)]).mapped(

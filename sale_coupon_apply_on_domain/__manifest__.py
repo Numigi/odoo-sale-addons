@@ -9,12 +9,10 @@
     'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Sales',
-    'summary': 'Select all products tageted by a promotion',
+    'summary': 'Select all products targeted by a promotion',
     'depends': [
         'sale_coupon',
     ],
-    'data': [
-       # 'views/res_config_settings.xml',
-    ],
+    'data': [],
     'installable': True,
 }
