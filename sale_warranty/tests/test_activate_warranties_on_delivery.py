@@ -20,7 +20,25 @@ class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
         warranty = self.sale_order.warranty_ids
         assert warranty.state == 'active'
         assert warranty.lot_id == serial_1
+        warranty_ids = serial_1.get_warranties()
+        assert warranty_ids in serial_1.sale_order_ids.mapped(
+            "warranty_ids")
         assert serial_1.warranty_count == 1
+
+        # And if adding new warranty to the SN
+        today = datetime.now().date()
+        warranty_2 = self.env['sale.warranty'].create({
+            'partner_id': self.customer.id,
+            'product_id': self.product_a.id,
+            'type_id': self.warranty_6_months.id,
+            'activation_date': today,
+            'lot_id': serial_1.id,
+            'expiry_date': today + timedelta(30),
+        })
+        assert warranty_2.id != warranty.id
+        assert warranty_2.lot_id == warranty.lot_id
+        serial_1.refresh()
+        assert serial_1.warranty_count == 2
 
     def test_on_back_order_serial_number_is_propagated_to_warranty(self):
         self.sale_order.order_line.product_uom_qty = 3
