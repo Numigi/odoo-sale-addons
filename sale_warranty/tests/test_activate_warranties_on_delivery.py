@@ -20,9 +20,9 @@ class TestWarrantyActivatedOnDelivery(WarrantyActivationCase):
         warranty = self.sale_order.warranty_ids
         assert warranty.state == 'active'
         assert warranty.lot_id == serial_1
-        warranty_ids = serial_1.get_from_warranties()
-        assert serial_1.sale_order_ids.mapped(
-            "warranty_ids")[0].id == warranty_ids[0].id
+        warranty_ids = serial_1.get_warranties()
+        assert warranty_ids in serial_1.sale_order_ids.mapped(
+            "warranty_ids")
         assert serial_1.warranty_count == 1
 
         # And if adding new warranty to the SN

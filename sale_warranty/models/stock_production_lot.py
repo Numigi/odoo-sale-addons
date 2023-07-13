@@ -14,12 +14,9 @@ class StockProductionLot(models.Model):
 
     def _compute_warranty_count(self):
         for rec in self:
-            rec.warranty_count = len(
-                rec.sale_order_ids.mapped(
-                    "warranty_ids") | rec.get_from_warranties()
-            )
+            rec.warranty_count = len(rec.get_warranties())
 
-    def get_from_warranties(self):
+    def get_warranties(self):
         return self.env["sale.warranty"].search(
             [
                 ("lot_id", "=", self.id),
@@ -31,10 +28,7 @@ class StockProductionLot(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id(
             "sale_warranty.action_warranty_list_from_sale_order"
         )
-        warranty = (
-            self.sale_order_ids.mapped(
-                "warranty_ids") | self.get_from_warranties()
-        )
+        warranty = self.get_warranties()
         if len(warranty) == 1:
             action.update(
                 res_id=warranty.id,
