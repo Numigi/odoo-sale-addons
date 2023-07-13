@@ -6,7 +6,7 @@ from odoo.addons.sale_stock.tests.test_sale_stock import TestSaleStock
 from odoo.tests import tagged
 
 
-@tagged('post_install')
+@tagged('post_install', '-at_install')
 class Test2ndQtyAvailabilityWidget(TestSaleStock):
 
     def test_virtual_2nd_unit_available_at_date(self):
