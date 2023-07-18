@@ -27,6 +27,7 @@ COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
+COPY sale_coupon_apply_on_domain /mnt/extra-addons/sale_coupon_apply_on_domain
 COPY sale_default_analytic_tag /mnt/extra-addons/sale_default_analytic_tag
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
