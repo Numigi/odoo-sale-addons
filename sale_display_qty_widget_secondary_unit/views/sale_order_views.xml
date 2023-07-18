@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_order_form_inherit_sale_stock_qty" model="ir.ui.view">
+            <field name="name">sale.order.line.tree.sale.stock.qty</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//page/field[@name='order_line']/form/group/group/div[@name='ordered_qty']/field[@name='product_uom']" position="after">
+                    <!-- below fields are used in the widget qty_at_date_widget -->
+                    <field name="virtual_2nd_unit_available_at_date" invisible="1"/>
+                    <field name="free_2nd_unit_qty_today" invisible="1"/>
+                    <field name="product_stock_secondary_uom" invisible="1"/>                    
+                </xpath>
+                <xpath expr="//page/field[@name='order_line']/tree/field[@name='qty_delivered']" position="after">
+                    <!-- below fields are used in the widget qty_at_date_widget -->
+                    <field name="virtual_2nd_unit_available_at_date" invisible="1"/>
+                    <field name="free_2nd_unit_qty_today" invisible="1"/>
+                    <field name="product_stock_secondary_uom" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
