@@ -21,7 +21,7 @@ class ResPartner(models.Model):
     )
 
     @api.onchange('parent_id')
-    def _onchange_parent_to_level(self):
+    def _onchange_parent_to_privilege_level(self):
         for partner in self:
             if partner.parent_id:
                 partner.privilege_level_id = (

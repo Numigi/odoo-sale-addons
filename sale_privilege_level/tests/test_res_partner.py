@@ -18,7 +18,7 @@ class TestResPartner(SavepointCase):
         partner = self.env["res.partner"].create({"name": "Partner A"})
         assert partner.get_privilege_level() == self.level_a
 
-    def test_partner_onchange_parent_to_level(self):
+    def test_partner_onchange_parent_to_privilege_level(self):
         self.env.user.company_id.default_privilege_level_id = self.level_a
         partner = self.env["res.partner"].create({"name": "Partner A"})
         assert partner.privilege_level_id == self.level_a
@@ -30,7 +30,7 @@ class TestResPartner(SavepointCase):
             }
         )
         partner.parent_id = company.id
-        partner._onchange_parent_to_level()
+        partner._onchange_parent_to_privilege_level()
         assert partner.privilege_level_id == self.level_b
 
     def test_user_default_privilege_level(self):
