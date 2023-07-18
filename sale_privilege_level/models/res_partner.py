@@ -20,6 +20,14 @@ class ResPartner(models.Model):
         compute="_compute_privilege_level_invisible"
     )
 
+    @api.onchange('parent_id')
+    def _onchange_parent_to_privilege_level(self):
+        for partner in self:
+            if partner.parent_id:
+                partner.privilege_level_id = (
+                    partner.parent_id.privilege_level_id.id or False
+                )
+
     @api.depends("parent_id")
     def _compute_privilege_level_invisible(self):
         for partner in self:
