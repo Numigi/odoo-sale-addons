@@ -48,7 +48,81 @@ It is possible to define a default privilege level for new partners.
 
 When a partner is created on user signup, this privilege level is automatically assigned.
 
-This setting is customizable per company.
+This setting is customizable per company.$
+
+Related Company
+---------------
+* Behavior when default level set
+
+`Configuration`
+As Super User, I go to `Sales > Configuration > Settings` and set the privilege level as the default level for all new contacts.
+
+.. image:: static/description/configuration_with_default_privilege_level.png
+
+`Creation of a Contact + Modification / addition of the related company after saving`
+As a user with access to contacts, I create a Contact.
+
+I see that a default privilege level is assigned to my new contact (standard behavior of the module).
+
+.. image:: static/description/contact_1_privilege_level.png
+
+I save. I edit the contact and assign it a related company (which has a “Bronze” privilege level) then I save.
+
+.. image:: static/description/contact_1_related_company.png
+
+.. image:: static/description/company_1_privilege_level_on_contact_1.png
+
+
+When I export the Privilege Level field for my new contact, I see that the privilege level has changed to the right value.
+
+.. image:: static/description/contact_1_export.png
+
+`Creation of a Contact with related company assignment`
+As a user with access to contacts, I create a Contact, assign it to a related company (which has an initial privilege level) and save.
+
+.. image:: static/description/contact_2_related_company.png
+
+When I export the Privilege Level field for my new contact, I see that the privilege level has with the right value.
+
+.. image:: static/description/contact_2_export.png
+
+
+
+
+* Behavior when default level not set
+
+`Configuration`
+As Super User, I go to `Sales > Configuration > Settings` and make sure the Privilege Level field is empty.
+
+.. image:: static/description/configuration_without_default_privilege_level.png
+
+`Creation of a Contact + Modification / addition of the linked company after saving`
+As a user with access to contacts, I create a Contact.
+
+I see that the privilege level is empty.
+
+.. image:: static/description/contact_3_no_privilege_level.png
+
+I assign a new privilege level and save.
+
+.. image:: static/description/contact_3_updated_with_privilege_level.png
+
+I edit the contact and assign it a related company (which has a different privilege level) then I save.
+
+.. image:: static/description/contact_3_updated_related_company.png
+
+When I export the Privilege Level field for my new contact, I see that the privilege level has changed.
+
+.. image:: static/description/contact_3_updated_export.png
+
+`Creation of a Contact with related company assignment`
+As a user with access to contacts, I create a Contact, assign it to a related company (which has a different privilege level) and save.
+
+.. image:: static/description/contact_4_related_company.png
+
+When I export the Privilege Level field for my new contact, I see that the privilege level is Bronze.
+
+.. image:: static/description/contact_4_export.png
 
 Contributors
 ------------
