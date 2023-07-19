@@ -35,8 +35,3 @@ class ResPartner(models.Model):
 
     def get_privilege_level(self):
         return self.commercial_partner_id.privilege_level_id
-
-    @api.onchange("parent_id")
-    def _onchange_parent_empty_privilege_level(self):
-        if self.commercial_partner_id != self:
-            self.privilege_level_id = False
