@@ -45,6 +45,7 @@ COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
 COPY sale_order_available_qty_popover_rental /mnt/extra-addons/sale_order_available_qty_popover_rental
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
+COPY sale_order_line_checkbox /mnt/extra-addons/sale_order_line_checkbox
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
