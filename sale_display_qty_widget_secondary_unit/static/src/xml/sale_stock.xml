@@ -3,24 +3,20 @@
 
     <t t-name="QtyDetailPopOver" t-inherit="sale_stock.QtyDetailPopOver" t-inherit-mode="extension" owl="1">
 
-        <xpath expr="//table/tbody/t/tr[1]" position="after">
+        <xpath expr="//table/tbody/t/tr[1]/td[2]" position="inside">
             <t t-if="data.virtual_2nd_unit_available_at_date != 0">
-                <tr>
-                    <td></td>
-                    <td style="color:#5da9a9;"><b t-esc='data.virtual_2nd_unit_available_at_date'/>
+                <div style="color:#5da9a9; padding-top:11px; width:99px">
+                    <b t-esc='data.virtual_2nd_unit_available_at_date'/>
                     <t t-esc='data.product_stock_secondary_uom'/>
-                    </td>
-                </tr>
+                </div>
             </t>
         </xpath>
-        <xpath expr="//table/tbody/t/tr[2]" position="after">
+        <xpath expr="//table/tbody/t/tr[2]/td[2]" position="inside">
             <t t-if="data.virtual_2nd_unit_available_at_date != 0">
-                <tr>
-                    <td></td>
-                    <td style="color:#5da9a9;"><b t-esc='data.free_2nd_unit_qty_today'/>
+                <div style="color:#5da9a9; padding-top:11px">
+                    <b t-esc='data.free_2nd_unit_qty_today'/>
                     <t t-esc='data.product_stock_secondary_uom'/>
-                    </td>
-                </tr>
+                </div>
             </t>
         </xpath>
     </t>
