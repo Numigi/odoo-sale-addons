@@ -9,7 +9,7 @@
     "website": "https://bit.ly/numigi-com",
     "license": "AGPL-3",
     "category": "Sale",
-    "depends": ["sale"],
+    "depends": ["sale_management"],
     "summary": "Add checkboxes to the sale order lines",
     "data": [
         "views/sale_order.xml",
