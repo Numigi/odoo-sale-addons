@@ -9,6 +9,9 @@
             <xpath expr="//tree/field[@name='sequence']" position="after">
                 <field name="select_line" string="Select"/>
             </xpath>
+            <xpath expr="//group[@name='order_details']/field[@name='payment_term_id']" position="after">
+                <field name="select_lines" string="Select all SO lines"/>
+            </xpath>
         </field>
     </record>
 

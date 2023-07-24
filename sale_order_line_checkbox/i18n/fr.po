@@ -16,6 +16,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_order_line_checkbox
+#: model:ir.model.fields,help:sale_order_line_checkbox.field_sale_order__select_lines
+msgid "Check this box to select all sale order lines."
+msgstr "Activer la case à cocher pour sélectionner toutes les lignes de produit."
+
+#. module: sale_order_line_checkbox
 #: model:ir.model.fields,help:sale_order_line_checkbox.field_sale_order_line__select_line
 msgid "Check this box to show the sale order line in Aeroo Reports."
 msgstr "Activer la case à cocher afin de sélectionner les lignes à afficher sur les rapports Aeroo."
@@ -49,3 +54,13 @@ msgstr "Choisir"
 #: model:ir.model.fields,field_description:sale_order_line_checkbox.field_sale_order_line__select_line
 msgid "Select line"
 msgstr "Choisir la ligne"
+
+#. module: sale_order_line_checkbox
+#: model:ir.model.fields,field_description:sale_order_line_checkbox.field_sale_order__select_lines
+msgid "Select lines"
+msgstr "Sélectionner les lignes"
+
+#. module: sale_order_line_checkbox
+#: model_terms:ir.ui.view,arch_db:sale_order_line_checkbox.sale_order_form
+msgid "Select all SO lines"
+msgstr "Sélectionner toutes les lignes de vente"
