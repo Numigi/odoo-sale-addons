@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     @api.model
@@ -20,7 +19,7 @@ class ResPartner(models.Model):
         compute="_compute_privilege_level_invisible"
     )
 
-    @api.onchange('parent_id')
+    @api.onchange("parent_id")
     def _onchange_parent_to_privilege_level(self):
         for partner in self:
             if partner.parent_id:
@@ -35,3 +34,9 @@ class ResPartner(models.Model):
 
     def get_privilege_level(self):
         return self.commercial_partner_id.privilege_level_id
+
+    def write(self, vals):
+        if "parent_id" in vals and vals["parent_id"]:
+            parent_privilege = self.browse(vals["parent_id"]).privilege_level_id
+            vals["privilege_level_id"] = parent_privilege.id if parent_privilege else False
+        return super().write(vals)
