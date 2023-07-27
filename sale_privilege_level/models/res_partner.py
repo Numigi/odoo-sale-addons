@@ -35,3 +35,9 @@ class ResPartner(models.Model):
 
     def get_privilege_level(self):
         return self.commercial_partner_id.privilege_level_id
+
+    def write(self, vals):
+        if "parent_id" in vals and vals["parent_id"]:
+            parent_privilege = self.browse(vals["parent_id"]).privilege_level_id
+            vals["privilege_level_id"] = parent_privilege.id if parent_privilege else False
+        return super().write(vals)
