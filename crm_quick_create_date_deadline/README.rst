@@ -1,7 +1,6 @@
 CRM Quick Create Date Deadline
 ==============================
-This module blocks the creation of an opportunity from the kanban view (quick creation) 
-of opportunities if no planned closing date is entered.
+This module adds `Date Deadline` field to the CRM Kanban View Quick Create.
 
 .. image:: static/description/expected_closing_required_kanban.png
 
