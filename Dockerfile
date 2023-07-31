@@ -27,6 +27,7 @@ COPY crm_brand /mnt/extra-addons/crm_brand
 COPY crm_filter_no_activity /mnt/extra-addons/crm_filter_no_activity
 COPY crm_forward_sorting_area /mnt/extra-addons/crm_forward_sorting_area
 COPY crm_industry_parent_filter /mnt/extra-addons/crm_industry_parent_filter
+COPY crm_quick_create_date_deadline /mnt/extra-addons/crm_quick_create_date_deadline
 COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
