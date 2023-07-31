@@ -11,8 +11,7 @@
     "category": "CRM",
     "depends": ["crm"],
     "summary": """
-        Blocks the creation of an opportunity from the kanban view (quick creation) 
-        of opportunities if no planned closing date is entered.
+        Add Date Deadline field to the CRM Kanban View Quick Create.
         """,
     "data": [
         "views/crm_lead.xml",
