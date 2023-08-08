@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="QtyDetailPopOver" t-inherit="sale_stock.QtyDetailPopOver" t-inherit-mode="extension" owl="1">
+
+        <xpath expr="//table/tbody/t/tr[1]/td[2]" position="inside">
+            <t t-if="data.virtual_2nd_unit_available_at_date != 0">
+                <div style="color:#5da9a9; padding-top:11px;">
+                    <b t-esc='data.virtual_2nd_unit_available_at_date'/>
+                    <t t-esc='data.product_stock_secondary_uom'/>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//table/tbody/t/tr[2]/td[2]" position="inside">
+            <t t-if="data.virtual_2nd_unit_available_at_date != 0">
+                <div style="color:#5da9a9; padding-top:26px">
+                    <b t-esc='data.free_2nd_unit_qty_today'/>
+                    <t t-esc='data.product_stock_secondary_uom'/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

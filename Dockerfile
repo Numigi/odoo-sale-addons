@@ -27,10 +27,12 @@ COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
+COPY sale_coupon_apply_on_domain /mnt/extra-addons/sale_coupon_apply_on_domain
 COPY sale_default_analytic_tag /mnt/extra-addons/sale_default_analytic_tag
 COPY sale_default_term_on_company /mnt/extra-addons/sale_default_term_on_company
 COPY sale_delivery_completion /mnt/extra-addons/sale_delivery_completion
 COPY sale_delivery_completion_rental /mnt/extra-addons/sale_delivery_completion_rental
+COPY sale_display_qty_widget_secondary_unit /mnt/extra-addons/sale_display_qty_widget_secondary_unit
 COPY sale_double_validation /mnt/extra-addons/sale_double_validation
 COPY sale_double_validation_extend /mnt/extra-addons/sale_double_validation_extend
 COPY sale_dynamic_price /mnt/extra-addons/sale_dynamic_price
@@ -43,6 +45,7 @@ COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_available_qty_popover /mnt/extra-addons/sale_order_available_qty_popover
 COPY sale_order_available_qty_popover_rental /mnt/extra-addons/sale_order_available_qty_popover_rental
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
+COPY sale_order_line_checkbox /mnt/extra-addons/sale_order_line_checkbox
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent

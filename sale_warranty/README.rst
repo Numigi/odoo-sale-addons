@@ -62,6 +62,18 @@ Note that some information are not filled on the warranty.
 
 These 3 fields are only filled on the delivery of the product.
 
+Lot/Serial Number
+-----------------
+As a user with access to the Inventory app, I go to `Inventory > Items > Lot/Serial Numbers`.
+
+I open a lot/serial number in form view and see that a new smart button called `Warranties` is available.
+
+.. image:: static/description/lot_serial_number_warranties.png
+
+When I click on the `Warranties` smart button, I get a list view of warranties related to that lot/serial number.
+
+.. image:: static/description/lot_warranties_list.png
+
 Delivery Order
 --------------
 As member of the group `Inventory / User`, when validating a delivery order,

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form.checkbox.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='sequence']" position="after">
+                <field name="select_line" string="Select"/>
+            </xpath>
+            <xpath expr="//group[@name='order_details']/field[@name='payment_term_id']" position="after">
+                <field name="select_lines" string="Select all SO lines"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
