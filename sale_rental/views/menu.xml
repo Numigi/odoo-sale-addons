@@ -5,7 +5,7 @@
         id="rental_menu"
         name="Rental"
         parent="sale.sale_menu_root"
-        sequence="1"
+        sequence="2"
         />
 
     <!-- Move the menu item `Orders` before `Rental` -->
