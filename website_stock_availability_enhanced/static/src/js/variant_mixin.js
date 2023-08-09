@@ -1,8 +1,7 @@
-odoo.define('website_stock_availability_enhanced.ProductConfiguratorMixin', function (require) {
+odoo.define('website_stock_availability_enhanced.VariantMixin', function (require) {
 'use strict';
 
-var ProductConfiguratorMixin = require('sale.ProductConfiguratorMixin');
-var sAnimations = require('website.content.snippets.animation');
+var VariantMixin = require('sale.VariantMixin');
 var ajax = require('web.ajax');
 var core = require('web.core');
 var QWeb = core.qweb;
@@ -11,7 +10,7 @@ var xml_load = ajax.loadXML(
     QWeb
 );
 
-ProductConfiguratorMixin._onChangeCombinationStock = function (ev, $parent, combination) {
+VariantMixin._onChangeCombinationStock = function (ev, $parent, combination) {
     if (this.isWebsite && isMainProduct($parent, combination)){
         if (combination.disable_add_to_cart) {
             disableAddToCart($parent)
@@ -59,6 +58,6 @@ function isMainProduct($parent, combination) {
     );
 }
 
-return ProductConfiguratorMixin;
+return VariantMixin;
 
 });
