@@ -55,7 +55,7 @@ This metric indicates the expected number of days until the next replenishment a
 If at least one replenishment shipment is scheduled for this product,
 the expected date of this shipment is used.
 
-.. image:: static/description/stock_picking_scheduled_date.png
+.. image:: static/description/stock_picking_scheduled_date.png 
 
 Otherwise, the delay computed based on:
 
