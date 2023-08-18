@@ -40,12 +40,5 @@ class SaleOrder(models.Model):
             obj.state = "to_approve"
         return obj
 
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        for order in self:
-            if order.is_to_approve():
-                order.state = "to_approve"
-        return res
-
     def action_approve(self):
         self.write({"state": "draft"})

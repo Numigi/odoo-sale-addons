@@ -9,7 +9,8 @@ class TestSaleDoubleValidation(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
+        context_no_mail = {'no_reset_password': True,
+                           'mail_create_nosubscribe': True, 'mail_create_nolog': True}
         group_salemanager = cls.env.ref("sales_team.group_sale_manager")
         group_salesman = cls.env.ref("sales_team.group_sale_salesman")
         group_employee = cls.env.ref("base.group_user")
@@ -98,63 +99,14 @@ class TestSaleDoubleValidation(SavepointCase):
 
     def test_one_step(self):
         self.user_employee.company_id.sudo().so_double_validation = "one_step"
-        so = (
-            self.env["sale.order"]
-            .sudo(self.user_employee)
-            .create(
-                {
-                    "partner_id": self.partner_customer_usd.id,
-                    "partner_invoice_id": self.partner_customer_usd.id,
-                    "partner_shipping_id": self.partner_customer_usd.id,
-                    "order_line": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": p.name,
-                                "product_id": p.id,
-                                "product_uom_qty": 2,
-                                "product_uom": p.uom_id.id,
-                                "price_unit": p.list_price,
-                            },
-                        )
-                        for (_, p) in self.product_map.items()
-                    ],
-                    "pricelist_id": self.env.ref("product.list0").id,
-                }
-            )
-        )
+        so = self.create_so_by_user_employee()
         # confirm quotation
         self.assertEquals(so.state, "draft")
 
     def test_two_steps_under_limit(self):
         self.user_employee.company_id.sudo().so_double_validation = "two_step"
-        so = (
-            self.env["sale.order"]
-            .sudo(self.user_employee)
-            .create(
-                {
-                    "partner_id": self.partner_customer_usd.id,
-                    "partner_invoice_id": self.partner_customer_usd.id,
-                    "partner_shipping_id": self.partner_customer_usd.id,
-                    "order_line": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": p.name,
-                                "product_id": p.id,
-                                "product_uom_qty": 2,
-                                "product_uom": p.uom_id.id,
-                                "price_unit": p.list_price,
-                            },
-                        )
-                        for (_, p) in self.product_map.items()
-                    ],
-                    "pricelist_id": self.env.ref("product.list0").id,
-                }
-            )
-        )
+        self.user_employee.company_id.sudo().so_double_validation_amount = 100000
+        so = self.create_so_by_user_employee()
         # confirm quotation
         self.assertEquals(so.state, "draft")
 
@@ -195,40 +147,35 @@ class TestSaleDoubleValidation(SavepointCase):
         self.user_employee.company_id.sudo().so_double_validation_amount = sum(
             [2 * p.list_price for (k, p) in self.product_map.items()]
         )
-        so = (
-            self.env["sale.order"]
-            .sudo(self.user_employee)
-            .create(
-                {
-                    "partner_id": self.partner_customer_usd.id,
-                    "partner_invoice_id": self.partner_customer_usd.id,
-                    "partner_shipping_id": self.partner_customer_usd.id,
-                    "order_line": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": p.name,
-                                "product_id": p.id,
-                                "product_uom_qty": 2,
-                                "product_uom": p.uom_id.id,
-                                "price_unit": p.list_price,
-                            },
-                        )
-                        for (_, p) in self.product_map.items()
-                    ],
-                    "pricelist_id": self.env.ref("product.list0").id,
-                }
-            )
-        )
+        so = self.create_so_by_user_employee()
         # confirm quotation
-        state = 'draft'
+        # function is_amount_to_approve using '<= 0'
+        # if using '< 0', state will be 'draft'
+        state = 'to_approve'
         self.assertEquals(so.state, state)
 
     def test_two_steps_above_limit(self):
         self.user_employee.company_id.sudo().so_double_validation = "two_step"
         self.user_employee.company_id.sudo().so_double_validation_amount = 10
         # confirm quotation
+        so = self.create_so_by_user_employee()
+        # confirm quotation
+        self.assertEquals(so.state, "to_approve")
+        so.sudo(self.user_manager).action_approve()
+        self.assertEquals(so.state, "draft")
+
+    def test_confirm_so_above_limit_with_user_employee(self):
+        self.user_employee.company_id.sudo().so_double_validation = "two_step"
+        self.user_employee.company_id.sudo().so_double_validation_amount = 10
+        # confirm quotation
+        so = self.create_so_by_user_employee()
+        # confirm quotation
+        self.assertEquals(so.state, "to_approve")
+        so.sudo(self.user_manager).action_approve()
+        so.sudo(self.user_employee).action_confirm()
+        self.assertEquals(so.state, "sale")
+
+    def create_so_by_user_employee(self):
         so = (
             self.env["sale.order"]
             .sudo(self.user_employee)
@@ -255,9 +202,4 @@ class TestSaleDoubleValidation(SavepointCase):
                 }
             )
         )
-        # confirm quotation
-        self.assertEquals(so.state, "to_approve")
-        so.sudo(self.user_manager).action_approve()
-        self.assertEquals(so.state, "draft")
-
-
+        return so
