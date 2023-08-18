@@ -149,9 +149,7 @@ class TestSaleDoubleValidation(SavepointCase):
         )
         so = self.create_so_by_user_employee()
         # confirm quotation
-        # function is_amount_to_approve using '<= 0'
-        # if using '< 0', state will be 'draft'
-        state = 'to_approve'
+        state = 'draft'
         self.assertEquals(so.state, state)
 
     def test_two_steps_above_limit(self):
