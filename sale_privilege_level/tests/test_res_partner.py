@@ -40,7 +40,6 @@ class TestResPartner(SavepointCase):
         # If privilege_level_id is changed from parent
         # then childs must be with the same value
         company_b.privilege_level_id = self.level_b.id
-        company_b._onchange_privilege_level_id_to_childs()
         assert partner.privilege_level_id == self.level_b
 
     def test_user_default_privilege_level(self):
