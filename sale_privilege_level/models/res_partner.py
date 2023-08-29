@@ -28,6 +28,13 @@ class ResPartner(models.Model):
                     partner.parent_id.privilege_level_id.id or False
                 )
 
+    @api.onchange('privilege_level_id')
+    def _onchange_privilege_level_id_to_childs(self):
+        for partner in self:
+            if partner.child_ids:
+                partner.child_ids.write(
+                    {'privilege_level_id': partner.privilege_level_id.id})
+
     @api.depends("parent_id")
     def _compute_privilege_level_invisible(self):
         for partner in self:
@@ -38,6 +45,7 @@ class ResPartner(models.Model):
 
     def write(self, vals):
         if "parent_id" in vals and vals["parent_id"]:
-            parent_privilege = self.browse(vals["parent_id"]).privilege_level_id
+            parent_privilege = self.browse(
+                vals["parent_id"]).privilege_level_id
             vals["privilege_level_id"] = parent_privilege.id if parent_privilege else False
         return super().write(vals)

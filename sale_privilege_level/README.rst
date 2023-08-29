@@ -124,6 +124,10 @@ When I export the Privilege Level field for my new contact, I see that the privi
 
 .. image:: static/description/contact_4_export.png
 
+
+NOTICE : If I update the privilege level of the parent, all privilege level of child contact linked to it
+will be changed too.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
