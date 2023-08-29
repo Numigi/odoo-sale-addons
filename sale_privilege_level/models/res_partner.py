@@ -37,6 +37,13 @@ class ResPartner(models.Model):
 
     def write(self, vals):
         if "parent_id" in vals and vals["parent_id"]:
-            parent_privilege = self.browse(vals["parent_id"]).privilege_level_id
-            vals["privilege_level_id"] = parent_privilege.id if parent_privilege else False
+            parent_privilege = self.browse(
+                vals["parent_id"]).privilege_level_id
+            vals["privilege_level_id"] = (
+                parent_privilege.id if parent_privilege else False
+            )
+        if "privilege_level_id" in vals:
+            if self.child_ids:
+                for child in self.child_ids:
+                    child.privilege_level_id = vals["privilege_level_id"]
         return super().write(vals)
