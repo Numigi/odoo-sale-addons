@@ -21,10 +21,14 @@ class SaleOrderLine(models.Model):
                 else:
                     rec.qty_popup_color = "text-danger"
 
-            if rec.state == 'sale':
+            elif rec.state == 'sale':
                 qty = rec.free_qty_today - rec.qty_available_today
                 if qty <= 0:
                     rec.qty_popup_color = "text-danger"
                 else:
                     rec.qty_popup_color = "text-primary"
+            else:
+                # The else statement is not used in the widget
+                # Used to prevent bugs related to a miss computing of all states ( depends on odoo version)
+                rec.qty_popup_color = "text-danger"
 
