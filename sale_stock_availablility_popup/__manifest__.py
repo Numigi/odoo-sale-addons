@@ -2,8 +2,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Sale Stock available Popup Specific',
-    'version': '14.0.1.0.0',
+    'name': 'Sale Stock Availablity Popup',
+    'version': '1.0.0',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
