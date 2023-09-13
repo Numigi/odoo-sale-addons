@@ -1,16 +1,15 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from odoo import api, fields, models
 
-from odoo import api, fields, models, _
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     qty_popup_color = fields.Char(compute='_compute_qty_popup_color')
 
-
-    @api.depends('qty_available_today', 'product_uom_qty', 'state', 'product_id.qty_available')
+    @api.depends('qty_available_today', 'free_qty_today', 'product_uom_qty', 'state', 'virtual_available_at_date')
     def _compute_qty_popup_color(self):
         for rec in self:
             if rec.state in ('draft', 'sent'):
@@ -23,7 +22,7 @@ class SaleOrderLine(models.Model):
                     rec.qty_popup_color = "text-danger"
 
             if rec.state == 'sale':
-                qty = rec.free_qty_today - rec.product_id.outgoing_qty
+                qty = rec.free_qty_today - rec.qty_available_today
                 if qty <= 0:
                     rec.qty_popup_color = "text-danger"
                 else:

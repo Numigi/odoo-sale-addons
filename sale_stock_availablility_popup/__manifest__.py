@@ -14,7 +14,6 @@
         'sale_stock',
     ],
     'data': [
-        "views/sale_order.xml"
     ],
     "qweb": [
         "static/src/xml/sale_stock.xml",

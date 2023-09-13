@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
-
+        ###TO DELETE###
             <record id="view_order_form_inherit_sale_stock_qty" model="ir.ui.view">
             <field name="name">sale.order.line.tree.sale.stock.qty</field>
             <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock_qty"/>
