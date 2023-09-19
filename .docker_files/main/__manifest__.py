@@ -61,7 +61,7 @@
         "sale_rental_portal",
         "sale_rental_pricelist",
         "sale_rental_status",
-        "sale_stock_available_popup_specific",
+        "sale_stock_availability_popup",
         "sale_stock_move_no_merge",
         "sale_warranty",
         "sale_warranty_extension",
