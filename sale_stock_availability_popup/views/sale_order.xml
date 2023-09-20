@@ -9,12 +9,11 @@
             <field name="arch" type="xml">
              
                 <xpath expr="//page/field[@name='order_line']/tree/widget[@name='qty_at_date_widget']" position="after">
-                    <field name="virtual_available_at_date" invisible="0"/>
-                    <field name="qty_available_today" invisible="0"/>
-                    <field name="free_qty_today" invisible="0"/>
-                    <field name="qty_to_deliver" invisible="0"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                    <field name="free_qty"/>
+                       <field name="outgoing_qty"/>
                     <field name="qty_popup_color"/>
-
                 </xpath>
             </field>
         </record>

@@ -1,6 +1,6 @@
-============================
+=============================
 Sale Stock Availability Popup
-============================
+=============================
 
 This module extends the functionality of 'Sale Stock Info Popup' module
 to add the a new availability level : available partially ( yellow color)
