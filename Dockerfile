@@ -67,6 +67,7 @@ COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_var
 COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status
+COPY sale_stock_availability_popup /mnt/extra-addons/sale_stock_availability_popup
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
