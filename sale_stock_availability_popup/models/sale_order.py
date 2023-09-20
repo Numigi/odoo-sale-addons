@@ -2,8 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
-import logging
-_logger = logging.getLogger(__name__)
 
 
 class SaleOrderLine(models.Model):
@@ -29,7 +27,7 @@ class SaleOrderLine(models.Model):
                     rec.qty_popup_color = "text-danger"
 
             elif rec.state == 'sale':
-                qty = rec.product_id.free_qty
+                qty = rec.free_qty
 
                 if qty <= 0:
                     rec.qty_popup_color = "text-danger"
