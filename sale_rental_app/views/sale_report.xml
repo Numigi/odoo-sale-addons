@@ -5,7 +5,6 @@
         <field name="name">Sale Rental Analysis Search</field>
         <field name="model">sale.report</field>
         <field name="inherit_id" ref="sale.view_order_product_search"/>
-        <field name="mode">primary</field>
         <field name="priority" eval="20"/>
         <field name="arch" type="xml">
             <filter name="Quotations" position="attributes">
