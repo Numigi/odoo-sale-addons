@@ -75,7 +75,7 @@ class ProductProduct__enhanced_availability(models.Model):
         for product in self:
             companies = product.company_id or all_companies
             for company in companies:
-                yield product.with_company(company.id)
+                yield product.with_company(company)
 
     def __get_sale_availability(self):
         current_qty = self.__get_current_qty()
