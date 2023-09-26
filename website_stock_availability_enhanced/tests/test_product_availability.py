@@ -17,7 +17,7 @@ class TestProductAvailability(SavepointCase):
                 "type": "product",
             }
         )
-        cls.product = cls.product.with_context(force_company=cls.company.id)
+        cls.product = cls.product.with_company(cls.company.id)
         cls.product_tmpl = cls.product.product_tmpl_id
 
     @data(
