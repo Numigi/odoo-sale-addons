@@ -47,3 +47,12 @@ class ResPartner(models.Model):
                 for child in self.child_ids:
                     child.privilege_level_id = vals["privilege_level_id"]
         return super().write(vals)
+
+    @api.model
+    def create(self, vals):
+        if vals.get('parent_id'):
+            privilege_id = self.search(
+                [('id', '=', vals.get('parent_id'))]).privilege_level_id.id
+            vals["privilege_level_id"] = privilege_id
+        res = super(ResPartner, self).create(vals)
+        return res

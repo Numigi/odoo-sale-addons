@@ -3,7 +3,7 @@
 
 {
     "name": "Sale Privilege Level",
-    "version": "14.0.2.1.2",
+    "version": "14.0.2.1.3",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
