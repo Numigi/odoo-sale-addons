@@ -2,6 +2,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class SaleOrderLine(models.Model):
@@ -12,29 +16,28 @@ class SaleOrderLine(models.Model):
     qty_available = fields.Float(related='product_id.qty_available')
     virtual_available = fields.Float(related='product_id.virtual_available')
     outgoing_qty = fields.Float(related='product_id.outgoing_qty')
+    reserved_qty = fields.Float(compute="_get_reserved_qty", store=False)
+    available_qty = fields.Float(compute="_get_reserved_qty", store=False)
 
-    @api.depends('qty_available_today', 'free_qty_today', 'product_uom_qty', 'order_id.state', 'virtual_available_at_date')
+    @api.depends("order_id", "product_id")
+    def _get_reserved_qty(self):
+        for rec in self:
+            domain = [("product_id", "=", rec.product_id.id),
+                      ("state", "in", ["partially_available", "assigned"])]
+            stock_move_out_ids = self.env['stock.move'].search(domain)
+            reserved_qty = 0
+            for move in stock_move_out_ids:
+                reserved_qty = reserved_qty + move.reserved_availability
+            rec.reserved_qty = reserved_qty
+            rec.available_qty = rec.qty_available - reserved_qty
+
+    @api.depends('reserved_qty', 'qty_available', 'product_uom_qty', 'product_id')
     def _compute_qty_popup_color(self):
         for rec in self:
-
-            if rec.state in ('draft', 'sent'):
-                if rec.virtual_available_at_date >= rec.product_uom_qty:
-                    rec.qty_popup_color = "text-primary"
-
-                elif 0 < rec.virtual_available_at_date < rec.product_uom_qty:
-                    rec.qty_popup_color = "text-warning"
-                else:
-                    rec.qty_popup_color = "text-danger"
-
-            elif rec.state == 'sale':
-                qty = rec.free_qty
-
-                if qty <= 0:
-                    rec.qty_popup_color = "text-danger"
-                else:
-                    rec.qty_popup_color = "text-primary"
+            if rec.qty_available - rec.reserved_qty >= rec.product_uom_qty:
+                rec.qty_popup_color = 'text-success'
+            elif 0 < rec.free_qty_today < rec.product_uom_qty:
+                rec.qty_popup_color = 'text-warning'
             else:
-                # The else statement is not used in the widget
-                # Used to prevent bugs related to a miss computing of all states ( depends on odoo version)
-                rec.qty_popup_color = "text-danger"
+                rec.qty_popup_color = 'text-danger'
 
