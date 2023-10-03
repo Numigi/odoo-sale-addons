@@ -54,11 +54,11 @@ class TestProductFields(SavepointCase):
         self.product.compute_availability()
         assert self.product.sale_availability == 0
 
-    # def test_sale_availability__quants(self):
-    #     self._add_stock_quant(1, self.stock_location)
-    #     self.product.compute_availability()
-    #     assert self.product.sale_availability == 1
-    #     assert self.product_company_2.sale_availability == 0
+    def test_sale_availability__quants(self):
+        self._add_stock_quant(1, self.stock_location)
+        self.product.compute_availability()
+        assert self.product.sale_availability == 1
+        assert self.product_company_2.sale_availability == 0
 
     def test_sale_availability__quants_in_wrong_location(self):
         self._add_stock_quant(1, self.customer_location)
