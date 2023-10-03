@@ -150,14 +150,14 @@ class TestProductFields(SavepointCase):
         assert self.product.replenishment_delay == 100
         assert self.product_company_2.replenishment_delay == 0
 
-    # def test_replenishment_delay__no_incoming_move(self):
-    #     company = self.env.user.company_id
-    #     company.security_lead = 5
-    #     company.po_lead = 10
-    #     self.supplier_info.delay = 20
-    #     self.product.compute_availability()
-    #     assert self.product.replenishment_delay == 35
-    #     assert self.product_company_2.replenishment_delay == 0
+    def test_replenishment_delay__no_incoming_move(self):
+        company = self.env.user.company_id
+        company.security_lead = 5
+        company.po_lead = 10
+        self.supplier_info.delay = 20
+        self.product.compute_availability()
+        assert self.product.replenishment_delay == 35
+        assert self.product_company_2.replenishment_delay == 0
 
     def _add_stock_quant(self, quantity, location):
         return self.env["stock.quant"].create(
