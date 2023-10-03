@@ -77,20 +77,20 @@ class TestProductFields(SavepointCase):
         assert self.product.sale_availability == 1
         assert self.product_company_2.sale_availability == 0
 
-    # def test_sale_availability__delivery_done(self):
-    #     self._add_stock_quant(2, self.stock_location)
-    #     move = self._add_stock_move(
-    #         1, self.stock_location, self.customer_location)
-    #     move.state = "done"
-    #     self.product.compute_availability()
-    #     assert self.product.sale_availability == 2
+    def test_sale_availability__delivery_done(self):
+        self._add_stock_quant(2, self.stock_location)
+        move = self._add_stock_move(
+            1, self.stock_location, self.customer_location)
+        move.state = "done"
+        self.product.compute_availability()
+        assert self.product.sale_availability == 2
 
-    # def test_sale_availability__dropship(self):
-    #     self._add_stock_quant(2, self.stock_location)
-    #     move = self._add_stock_move(
-    #         1, self.supplier_location, self.customer_location)
-    #     self.product.compute_availability()
-    #     assert self.product.sale_availability == 2
+    def test_sale_availability__dropship(self):
+        self._add_stock_quant(2, self.stock_location)
+        move = self._add_stock_move(
+            1, self.supplier_location, self.customer_location)
+        self.product.compute_availability()
+        assert self.product.sale_availability == 2
 
     def test_sale_availability__negative_quantity(self):
         self._add_stock_quant(-1, self.stock_location)
