@@ -70,7 +70,7 @@ class TestProductFields(SavepointCase):
     def test_sale_availability__delivery(self):
         self._add_stock_quant(2, self.stock_location)
         self._add_stock_move(1, self.stock_location, self.customer_location)
-        assert self.product.__get_sale_availability > 0
+        assert self.product.__get_sale_availability() > 0
         self.product.compute_availability()
         assert self.product.sale_availability == 1
         assert self.product_company_2.sale_availability == 0
