@@ -101,54 +101,54 @@ class TestProductFields(SavepointCase):
         self.product.compute_availability()
         assert self.product.replenishment_availability == 0
 
-    # def test_replenishment_availability__include_sale_availability(self):
-    #     self._add_stock_quant(1, self.stock_location)
-    #     self.product_company_2.invalidate_cache()
-    #     self.product_company_2.flush()
-    #     self.product.compute_availability()
-    #     self.product.flush()
-    #     assert self.product.replenishment_availability == 1.0
-    #     assert self.product_company_2.replenishment_availability == 0.0
+    def test_replenishment_availability__include_sale_availability(self):
+        self._add_stock_quant(1, self.stock_location)
+        self.product_company_2.invalidate_cache()
+        self.product_company_2.flush()
+        self.product.compute_availability()
+        self.product.flush()
+        assert self.product.replenishment_availability == 1.0
+        assert self.product_company_2.replenishment_availability == 0.0
 
-    # def test_replenishment_availability__receipt(self):
-    #     self._add_stock_move(
-    #         1,
-    #         self.supplier_location,
-    #         self.stock_location,
-    #         picking_type=self.receipt_type,
-    #     )
-    #     self.product.compute_availability()
-    #     assert self.product.replenishment_availability == 1
-    #     assert self.product_company_2.replenishment_availability == 0
+    def test_replenishment_availability__receipt(self):
+        self._add_stock_move(
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
+        )
+        self.product.compute_availability()
+        assert self.product.replenishment_availability == 1
+        assert self.product_company_2.replenishment_availability == 0
 
-    # def test_replenishment_availability__receipt_with_two_moves(self):
-    #     self._add_stock_move(
-    #         1,
-    #         self.supplier_location,
-    #         self.stock_location,
-    #         picking_type=self.receipt_type,
-    #     )
-    #     self._add_stock_move(
-    #         1,
-    #         self.supplier_location,
-    #         self.stock_location,
-    #         picking_type=self.receipt_type,
-    #     )
-    #     self.product.compute_availability()
-    #     assert self.product.replenishment_availability == 2
-    #     assert self.product_company_2.replenishment_availability == 0
+    def test_replenishment_availability__receipt_with_two_moves(self):
+        self._add_stock_move(
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
+        )
+        self._add_stock_move(
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
+        )
+        self.product.compute_availability()
+        assert self.product.replenishment_availability == 2
+        assert self.product_company_2.replenishment_availability == 0
 
-    # def test_replenishment_delay(self):
-    #     move = self._add_stock_move(
-    #         1,
-    #         self.supplier_location,
-    #         self.stock_location,
-    #         picking_type=self.receipt_type,
-    #     )
-    #     move.picking_id.scheduled_date = datetime.now() + timedelta(days=100, seconds=1)
-    #     self.product.compute_availability()
-    #     assert self.product.replenishment_delay == 100
-    #     assert self.product_company_2.replenishment_delay == 0
+    def test_replenishment_delay(self):
+        move = self._add_stock_move(
+            1,
+            self.supplier_location,
+            self.stock_location,
+            picking_type=self.receipt_type,
+        )
+        move.picking_id.scheduled_date = datetime.now() + timedelta(days=100, seconds=1)
+        self.product.compute_availability()
+        assert self.product.replenishment_delay == 100
+        assert self.product_company_2.replenishment_delay == 0
 
     # def test_replenishment_delay__no_incoming_move(self):
     #     company = self.env.user.company_id
