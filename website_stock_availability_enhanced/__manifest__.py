@@ -3,7 +3,7 @@
 {
     "name": "Website Stock Availability Enhanced",
     "summary": "Enhance the display of product availability on the website",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
