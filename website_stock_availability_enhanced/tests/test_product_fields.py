@@ -65,14 +65,9 @@ class TestProductFields(SavepointCase):
         self.product.compute_availability()
         assert self.product.sale_availability == 0
 
-    # TO DEBUG FOR OTHERS !!!!!!!!!!!!!!!!!!!!!
-
     def test_sale_availability__delivery(self):
         self._add_stock_quant(2, self.stock_location)
         self._add_stock_move(1, self.stock_location, self.customer_location)
-        # WHYYY sale_availability = product.__get_sale_availability() is zero ????
-        # assert self.product.__get_current_qty() == -2
-        # assert self.product.__get_outgoing_qty() == -2
         self.product.compute_availability()
         assert self.product.sale_availability == 1
         assert self.product_company_2.sale_availability == 0
