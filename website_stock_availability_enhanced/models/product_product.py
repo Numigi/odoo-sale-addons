@@ -225,4 +225,4 @@ class ProductProduct__enhanced_availability(models.Model):
         return self.env["res.company"].browse(self.__get_company_id())
 
     def __get_company_id(self):
-        return self.company_id.id or self.env.company.id
+        return self.env.company.id
