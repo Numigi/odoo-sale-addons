@@ -11,6 +11,8 @@ from odoo.addons.product_supplier_info_helpers.helpers import (
 import logging
 
 _logger = logging.getLogger(__name__)
+
+
 class ProductProduct__enhanced_availability(models.Model):
 
     _inherit = "product.product"
@@ -106,7 +108,8 @@ class ProductProduct__enhanced_availability(models.Model):
 
     def __get_next_replenishment_quantity(self):
         picking = self.__get_next_receipt()
-        moves = picking.mapped("move_lines").filtered(lambda m: m.product_id == self)
+        moves = picking.mapped("move_lines").filtered(
+            lambda m: m.product_id == self)
         return sum(m.product_qty for m in moves)
 
     def __set_availability(self, info, add_qty):
@@ -138,7 +141,8 @@ class ProductProduct__enhanced_availability(models.Model):
         return self.inventory_availability == "always"
 
     def __show_available_qty_warning(self, add_qty):
-        is_threshold = self.inventory_availability in ("threshold", "threshold_warning")
+        is_threshold = self.inventory_availability in (
+            "threshold", "threshold_warning")
         return (
             is_threshold
             and self.__is_qty_below_threshold(add_qty)
@@ -149,7 +153,8 @@ class ProductProduct__enhanced_availability(models.Model):
         return self.__has_enough_in_stock(add_qty)
 
     def __show_replenishment_delay(self, add_qty):
-        is_threshold = self.inventory_availability in ("threshold", "threshold_warning")
+        is_threshold = self.inventory_availability in (
+            "threshold", "threshold_warning")
         return is_threshold and self.__is_qty_below_threshold(add_qty)
 
     def __has_enough_in_stock(self, add_qty):
@@ -220,4 +225,4 @@ class ProductProduct__enhanced_availability(models.Model):
         return self.env["res.company"].browse(self.__get_company_id())
 
     def __get_company_id(self):
-        return self.company_id.id
+        return self.company_id.id or self.env.company.id
