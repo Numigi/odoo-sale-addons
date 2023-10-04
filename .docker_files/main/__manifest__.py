@@ -54,6 +54,7 @@
         "sale_privilege_level_pricelist",
         "sale_privilege_level_rental_pricelist",
         "sale_privilege_level_website",
+        "sale_product_pack_configurator_binding",
         "sale_project_milestone",
         "sale_rental",
         "sale_rental_app",
