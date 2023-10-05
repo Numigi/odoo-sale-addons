@@ -58,7 +58,7 @@
         "sale_project_milestone",
         "sale_rental",
         "sale_rental_app",
-        "sale_rental_order_swap_variant",
+        # "sale_rental_order_swap_variant",
         "sale_rental_portal",
         "sale_rental_pricelist",
         "sale_rental_status",
