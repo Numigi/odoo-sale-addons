@@ -4,11 +4,11 @@
 odoo.define('sale_stock.QtyAtDateWidget', function (require) {
     "use strict";
 
-    var SaleStockQtyAtDateWidget = require('sale_stock.QtyAtDateWidget');
     var core = require('web.core');
 
+    var SaleStockQtyAtDateWidget = require('sale_stock.QtyAtDateWidget');
     var widget_registry = require('web.widget_registry');
-    //
+
     var _t = core._t;
 
     var QtyAtDateWidget = SaleStockQtyAtDateWidget.extend({
