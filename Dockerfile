@@ -65,7 +65,7 @@ COPY sale_product_pack_configurator_binding /mnt/extra-addons/sale_product_pack_
 COPY sale_project_milestone /mnt/extra-addons/sale_project_milestone
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_app /mnt/extra-addons/sale_rental_app
-COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
+# COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
 COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status
