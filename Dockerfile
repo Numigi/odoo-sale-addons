@@ -25,6 +25,7 @@ COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
+COPY product_pack_ext /mnt/extra-addons/product_pack_ext
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
 COPY sale_coupon_apply_on_domain /mnt/extra-addons/sale_coupon_apply_on_domain
@@ -60,10 +61,11 @@ COPY sale_privilege_level_payment /mnt/extra-addons/sale_privilege_level_payment
 COPY sale_privilege_level_pricelist /mnt/extra-addons/sale_privilege_level_pricelist
 COPY sale_privilege_level_rental_pricelist /mnt/extra-addons/sale_privilege_level_rental_pricelist
 COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
+COPY sale_product_pack_configurator_binding /mnt/extra-addons/sale_product_pack_configurator_binding
 COPY sale_project_milestone /mnt/extra-addons/sale_project_milestone
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_app /mnt/extra-addons/sale_rental_app
-COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
+# COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
 COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status
