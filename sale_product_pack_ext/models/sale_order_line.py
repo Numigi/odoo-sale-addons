@@ -1,5 +1,5 @@
-# Copyright 2019 Tecnativa - Ernesto Tejeda
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
 from odoo import api
