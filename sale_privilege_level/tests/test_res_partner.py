@@ -74,3 +74,15 @@ class TestResPartner(SavepointCase):
         assert contact.privilege_level_invisible
         assert not partner.privilege_level_invisible
         assert contact.get_privilege_level() == self.level_a
+
+    def test_privilege_level_from_parent_to_child(self):
+        company = self.env["res.partner"].create(
+            {
+                "name": "Company A",
+                "company_type": "company",
+                "privilege_level_id": self.level_b.id,
+            }
+        )
+        partner = self.env["res.partner"].create(
+            {"name": "Partner A", "parent_id": company.id})
+        assert partner.privilege_level_id == company.privilege_level_id

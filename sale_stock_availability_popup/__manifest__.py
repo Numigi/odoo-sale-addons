@@ -3,17 +3,19 @@
 
 {
     'name': 'Sale Stock Availability Popup',
-    'version': '1.0.0',
+    'version': '1.1.1',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
-    'category': 'Hr',
+    'category': 'Sale',
     'summary': 'Modify the available quantity popover widget in sale order lines',
     'depends': [
         'sale_stock',
     ],
     'data': [
+        "views/sale_order.xml",
+        "views/assets.xml",
     ],
     "qweb": [
         "static/src/xml/sale_stock.xml",

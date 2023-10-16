@@ -114,3 +114,16 @@
   branch: "14.0"
   includes:
     - stock_secondary_unit
+
+- url: https://github.com/OCA/product-pack
+  branch: "14.0"
+  includes:
+    - product_pack
+    - sale_product_pack
+
+
+- url: https://github.com/OCA/product-configurator
+  branch: "14.0"
+  includes:
+    - product_configurator
+    - product_configurator_sale
