@@ -19,9 +19,9 @@ class TestProductFields(SavepointCase):
                 "company_id": False,
             }
         )
-        cls.product_company_2 = cls.product.with_company(cls.company_2.id)
+        cls.product_company_2 = cls.product.with_company(cls.company_2)
 
-        cls.product = cls.product.with_company(cls.company.id)
+        cls.product = cls.product.with_company(cls.company)
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.stock_location = cls.warehouse.lot_stock_id
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
