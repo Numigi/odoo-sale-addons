@@ -34,10 +34,18 @@ class SaleOrderLine(models.Model):
     @api.depends('reserved_qty', 'qty_available', 'product_uom_qty', 'product_id')
     def _compute_qty_popup_color(self):
         for rec in self:
-            if rec.qty_available - rec.reserved_qty >= rec.product_uom_qty:
-                rec.qty_popup_color = 'text-success'
-            elif 0 < rec.free_qty_today < rec.product_uom_qty:
-                rec.qty_popup_color = 'text-warning'
+            if rec.order_id.state == 'sale':
+                if rec.available_qty > 0:
+                    rec.qty_popup_color = 'text-success'
+                elif 0 < rec.free_qty_today < rec.product_uom_qty:
+                    rec.qty_popup_color = 'text-warning'
+                else:
+                    rec.qty_popup_color = 'text-danger'
             else:
-                rec.qty_popup_color = 'text-danger'
+                if rec.qty_available - rec.reserved_qty >= rec.product_uom_qty:
+                    rec.qty_popup_color = 'text-success'
+                elif 0 < rec.free_qty_today < rec.product_uom_qty:
+                    rec.qty_popup_color = 'text-warning'
+                else:
+                    rec.qty_popup_color = 'text-danger'
 
