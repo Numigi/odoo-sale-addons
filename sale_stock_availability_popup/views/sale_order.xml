@@ -9,12 +9,12 @@
             <field name="arch" type="xml">
              
                 <xpath expr="//page/field[@name='order_line']/tree/widget[@name='qty_at_date_widget']" position="after">
-                    <field name="qty_available" invisible="1"/>
-                    <field name="virtual_available" invisible="1" />
-                    <field name="free_qty_today" invisible="1"/>
-                       <field name="available_qty" invisible="1"/>
-                    <field name="reserved_qty" invisible="1"/>
-                    <field name="qty_popup_color" invisible="1"/>
+                    <field name="qty_available"  invisible="1"/>
+                    <field name="virtual_available"  invisible="1" />
+                    <field name="free_qty_today"  invisible="1"/>
+                       <field name="available_qty"  invisible="1"/>
+                    <field name="reserved_qty"  invisible="1"/>
+                    <field name="qty_popup_color"  invisible="1"/>
                 </xpath>
             </field>
         </record>
