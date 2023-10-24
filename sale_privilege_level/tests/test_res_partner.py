@@ -37,6 +37,10 @@ class TestResPartner(SavepointCase):
         company_b.privilege_level_id = self.level_a.id
         partner.parent_id = company_b.id
         assert partner.privilege_level_id == self.level_a
+        # If privilege_level_id is changed from parent
+        # then childs must be with the same value
+        company_b.privilege_level_id = self.level_b.id
+        assert partner.privilege_level_id == self.level_b
 
     def test_user_default_privilege_level(self):
         self.env.user.company_id.default_privilege_level_id = self.level_a
@@ -70,3 +74,15 @@ class TestResPartner(SavepointCase):
         assert contact.privilege_level_invisible
         assert not partner.privilege_level_invisible
         assert contact.get_privilege_level() == self.level_a
+
+    def test_privilege_level_from_parent_to_child(self):
+        company = self.env["res.partner"].create(
+            {
+                "name": "Company A",
+                "company_type": "company",
+                "privilege_level_id": self.level_b.id,
+            }
+        )
+        partner = self.env["res.partner"].create(
+            {"name": "Partner A", "parent_id": company.id})
+        assert partner.privilege_level_id == company.privilege_level_id

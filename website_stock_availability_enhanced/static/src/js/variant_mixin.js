@@ -1,17 +1,17 @@
-odoo.define('website_stock_availability_enhanced.ProductConfiguratorMixin', function (require) {
+odoo.define('website_stock_availability_enhanced.VariantMixin', function (require) {
 'use strict';
 
-var ProductConfiguratorMixin = require('sale.ProductConfiguratorMixin');
-var sAnimations = require('website.content.snippets.animation');
+var VariantMixin = require('website_sale_stock.VariantMixin');
 var ajax = require('web.ajax');
 var core = require('web.core');
+var publicWidget = require('web.public.widget');
 var QWeb = core.qweb;
 var xml_load = ajax.loadXML(
     '/website_stock_availability_enhanced/static/src/xml/product_availability.xml',
     QWeb
 );
 
-ProductConfiguratorMixin._onChangeCombinationStock = function (ev, $parent, combination) {
+VariantMixin._onChangeCombinationStock = function (ev, $parent, combination) {
     if (this.isWebsite && isMainProduct($parent, combination)){
         if (combination.disable_add_to_cart) {
             disableAddToCart($parent)
@@ -59,6 +59,18 @@ function isMainProduct($parent, combination) {
     );
 }
 
-return ProductConfiguratorMixin;
+publicWidget.registry.WebsiteSale.include({
+    /**
+     * Adds the stock checking to the regular _onChangeCombination method
+     * @override
+     */
+    _onChangeCombination: function (){
+        this._super.apply(this, arguments);
+        VariantMixin._onChangeCombinationStock.apply(this, arguments);
+    }
+});
+
+
+return VariantMixin;
 
 });

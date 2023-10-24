@@ -68,7 +68,8 @@ class SaleOrderWithExtraSmartButton(models.Model):
         return super().action_view_delivery()
 
     def _action_view_rental_delivery(self):
-        pickings = self.mapped("picking_ids") - self._get_rental_return_pickings()
+        pickings = self.mapped("picking_ids") - \
+            self._get_rental_return_pickings()
         return self._get_picking_list_action(pickings)
 
     def action_view_rental_return_pickings(self):
@@ -76,7 +77,9 @@ class SaleOrderWithExtraSmartButton(models.Model):
         return self._get_picking_list_action(pickings)
 
     def _get_picking_list_action(self, pickings):
-        action = self.env.ref("stock.action_picking_tree_all").read()[0]
+        # using self.env['ir.actions.act_window'] could be the same
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock.action_picking_tree_all")
         action["domain"] = [("id", "in", pickings.ids)]
         return action
 

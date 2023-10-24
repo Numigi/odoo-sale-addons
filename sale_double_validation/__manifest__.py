@@ -5,7 +5,7 @@
 {
     "name": "Double validation for Sales",
     "summary": "",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
@@ -18,5 +18,5 @@
     "website": "https://bit.ly/numigi-com",
     "data": ["views/company.xml",
              "views/sale.xml",
-    ],
+             ],
 }

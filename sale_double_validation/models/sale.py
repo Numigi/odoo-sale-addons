@@ -1,14 +1,15 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, models,fields
+from odoo import _, api, models, fields
 from odoo.tools import float_compare
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    state = fields.Selection(selection_add=[("to_approve", "To Approve")])
+    state = fields.Selection(
+        selection_add=[("to_approve", "To Approve"), ("draft",)])
 
     def is_amount_to_approve(self):
         self.ensure_one()
@@ -38,13 +39,6 @@ class SaleOrder(models.Model):
         if obj.is_to_approve():
             obj.state = "to_approve"
         return obj
-
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        for order in self:
-            if order.is_to_approve():
-                order.state = "to_approve"
-        return res
 
     def action_approve(self):
         self.write({"state": "draft"})

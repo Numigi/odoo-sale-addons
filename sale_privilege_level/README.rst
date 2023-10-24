@@ -133,6 +133,10 @@ From the list view of the contacts or if I export the ``Privilege Level`` field,
 
 .. image:: static/description/contact_4_export.png
 
+
+NOTICE : If I update the privilege level of the parent, all privilege level of child contact linked to it
+will be changed too.
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
