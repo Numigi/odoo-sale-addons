@@ -1,5 +1,5 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import SavepointCase
 
@@ -8,8 +8,10 @@ class TestResPartner(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.level_a = cls.env["sale.privilege.level"].create({"name": "Level A"})
-        cls.level_b = cls.env["sale.privilege.level"].create({"name": "Level B"})
+        cls.level_a = cls.env["sale.privilege.level"].create(
+            {"name": "Level A"})
+        cls.level_b = cls.env["sale.privilege.level"].create(
+            {"name": "Level B"})
 
         cls.carrier_a = cls.env.ref("delivery.free_delivery_carrier")
         cls.carrier_b = cls.carrier_a.copy()
@@ -63,7 +65,8 @@ class TestResPartner(SavepointCase):
         assert self.carrier_b not in result
 
     def test_search_without_filter(self):
-        carrier = self.env["delivery.carrier"].search([("id", "=", self.carrier_b.id)])
+        carrier = self.env["delivery.carrier"].search(
+            [("id", "=", self.carrier_b.id)])
         assert carrier == self.carrier_b
 
     def test_search_with_filter(self):
@@ -81,6 +84,8 @@ class TestResPartner(SavepointCase):
 
         })
         assert self.carrier_a.id in (
-                delivery_wizard.available_carrier_ids.ids or delivery_wizard.available_carrier_ids._origin.ids)
+                delivery_wizard.available_carrier_ids.ids or
+                delivery_wizard.available_carrier_ids._origin.ids)
         assert self.carrier_b.id not in (
-                delivery_wizard.available_carrier_ids.ids and delivery_wizard.available_carrier_ids._origin.ids)
+                delivery_wizard.available_carrier_ids.ids and
+                delivery_wizard.available_carrier_ids._origin.ids)
