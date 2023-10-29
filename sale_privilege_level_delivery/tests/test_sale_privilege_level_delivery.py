@@ -31,6 +31,24 @@ class TestResPartner(SavepointCase):
             {"name": "Contact", "parent_id": cls.partner.id}
         )
 
+        cls.product_cable_management_box = cls.env['product.product'].create({
+            'name': 'Another product to deliver',
+            'weight': 1.0,
+            'invoice_policy': 'order',
+        })
+        cls.product_uom_unit = cls.env.ref('uom.product_uom_unit')
+        cls.order = cls.env["sale.order"].create({
+            'partner_id': cls.partner.id,
+            'partner_shipping_id': cls.partner.id,
+            'order_line': [(0, 0, {
+                'name': 'Cable Management Box',
+                'product_id': cls.product_cable_management_box.id,
+                'product_uom_qty': 2,
+                'product_uom': cls.product_uom_unit.id,
+                'price_unit': 750.00,
+            })],
+        })
+
     def test_get_available_delivery_carriers(self):
         result = self.partner.get_available_delivery_carriers()
         assert self.carrier_a in result
