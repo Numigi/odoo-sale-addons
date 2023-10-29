@@ -61,7 +61,13 @@ class TestResPartner(SavepointCase):
         assert self.carrier_b not in available_carriers
 
     def test_sale_order_filter(self):
-        order = self.env["sale.order"].new(
-            {"partner_shipping_id": self.partner.id})
-        assert self.carrier_a in order.available_carrier_ids
-        assert self.carrier_b not in order.available_carrier_ids
+        delivery_wizard = self.env['choose.delivery.carrier'].new({
+            'order_id': self.order.id,
+
+        })
+        assert self.carrier_a.id in (
+                delivery_wizard.available_carrier_ids.ids or
+                delivery_wizard.available_carrier_ids._origin.ids)
+        assert self.carrier_b.id not in (
+                delivery_wizard.available_carrier_ids.ids and
+                delivery_wizard.available_carrier_ids._origin.ids)
