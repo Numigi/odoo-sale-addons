@@ -13,6 +13,12 @@ This configuration is available in Sales / Configuration / Settings, and the opt
 
 * Only Children (including Affiliates Companies and Contacts)
 
+Release
+-------
+
+Since version 1.1.0, the module changes the type of affiliate to contact upon creation.
+
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
