@@ -4,12 +4,13 @@
 {
     "name": "Sale Order Partner Restrict Affiliates",
     "summary": "Apply restrictions when selecting from the list of customers on SO.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Sales",
     "depends": ["sale_order_partner_restrict", "partner_affiliate"],
+    "data": ["views/res_partner_view.xml"],
     "installable": True,
 }
