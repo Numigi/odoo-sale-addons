@@ -16,7 +16,7 @@ class SaleTarget(models.Model):
     date_end = fields.Date('End date', required=True)
     company_currency_id = fields.Many2one(
         'res.currency',
-        string='Company Currency', 
+        string='Company Currency',
         readonly=True,
         default=lambda self: self.env.company.currency_id.id
         )
