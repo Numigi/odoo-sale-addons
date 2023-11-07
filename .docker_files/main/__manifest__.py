@@ -20,6 +20,7 @@
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "payment_auto_confirm_sale_order",
+        "product_configurator_sale_ext",
         "product_pack_ext",
         "sale_commitment_date_update",
         "sale_commitment_date_update_mrp",
