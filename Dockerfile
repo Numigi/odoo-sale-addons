@@ -26,6 +26,7 @@ COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY partner_sale_target /mnt/extra-addons/partner_sale_target
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
+COPY product_configurator_sale_ext /mnt/extra-addons/product_configurator_sale_ext
 COPY product_pack_ext /mnt/extra-addons/product_pack_ext
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp

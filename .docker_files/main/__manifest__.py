@@ -21,6 +21,7 @@
         "event_sale_order_status",
         "partner_sale_target",
         "payment_auto_confirm_sale_order",
+        "product_configurator_sale_ext",
         "product_pack_ext",
         "sale_commitment_date_update",
         "sale_commitment_date_update_mrp",
