@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="res_partner_form" model="ir.ui.view">
+        <field name="name">Partner Form: add sale target</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+                <page name="sale_target" string="Sales target" groups="partner_sale_target.group_sale_target_manager" 
+                    attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}">
+                    <field name="sale_target_ids" mode="tree"/>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='sales_purchases']//group[@name='sale']" position="inside">
+                <field name="is_sale_target_allowed_contact" invisible="1"/>
+                <field name="current_sale_target" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>
+                <field name="current_realized_target" widget="percentage" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>         
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_list" model="ir.ui.view">
+        <field name="name">Partner List: add sale target</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="is_sale_target_allowed_contact" invisible="1"/>
+                <field name="current_sale_target" optional="hide" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>
+                <field name="current_realized_target" optional="hide" widget="percentage" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>
+            </tree>
+        </field>
+    </record>
+
+
+</odoo>

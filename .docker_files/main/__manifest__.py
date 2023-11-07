@@ -19,6 +19,7 @@
         "crm_team_by_industry",
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
+        "partner_sale_target",
         "payment_auto_confirm_sale_order",
         "product_configurator_sale_ext",
         "product_pack_ext",
