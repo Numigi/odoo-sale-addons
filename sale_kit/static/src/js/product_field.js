@@ -6,7 +6,6 @@ var ProductConfiguratorWidget = require('sale.product_configurator');
 const ProductMany2one = ProductConfiguratorWidget.extend({
     _render(ev) {
         this._super.apply(this, arguments);
-        console.log(this);
         if (this._isKitComponentLine() && this._isReadonlyMode()) {
             this._addKitComponentCaret();
         }
