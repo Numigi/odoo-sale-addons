@@ -1,0 +1,164 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_sale_target
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-10 17:38+0000\n"
+"PO-Revision-Date: 2023-11-10 17:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__company_currency_id
+msgid "Company Currency"
+msgstr "Entreprise courante"
+
+#. module: partner_sale_target
+#: model:ir.model,name:partner_sale_target.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__create_uid
+msgid "Created by"
+msgstr "Crée par"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__create_date
+msgid "Created on"
+msgstr "Crée le"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_partner__current_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_users__current_sale_target
+msgid "Current Sale target"
+msgstr "Cible de vente en cours"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_partner__display_name
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__date_end
+msgid "End date"
+msgstr "Date fin"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_partner__id
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__id
+msgid "ID"
+msgstr ""
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__is_old_sale_target
+msgid "Is old sale target"
+msgstr "Est un objectif de vente ancien"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_partner__is_sale_target_allowed_contact
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_users__is_sale_target_allowed_contact
+msgid "Is sale target allowed contact"
+msgstr "Est un contact avec un objectif de vente"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_partner____last_update
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__write_uid
+msgid "Last Updated by"
+msgstr "Dernière modification par"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__write_date
+msgid "Last Updated on"
+msgstr "Dernière modification le"
+
+#. module: partner_sale_target
+#: model:res.groups,name:partner_sale_target.group_sale_target_manager
+msgid "Management of sales targets"
+msgstr "Gestion des cibles de vente"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__partner_id
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: partner_sale_target
+#: code:addons/partner_sale_target/models/res_partner.py:0
+#, python-format
+msgid ""
+"Please note that the Sales Targets will be deleted, Sales Targets will be "
+"managed on the commercial entity."
+msgstr "Attention les objectifs de vente seront écrasés, au profit d'une "
+"gestion sur l'entité commerciale rattachée."
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__realized
+msgid "Realized %"
+msgstr "Réalisé %"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_partner__current_realized_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_users__current_realized_target
+msgid "% Realized current period"
+msgstr "% Réalisé période en cours"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__realized_target
+msgid "Realized target"
+msgstr "Objectif réalisé"
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_partner__sale_target_ids
+#: model:ir.model.fields,field_description:partner_sale_target.field_res_users__sale_target_ids
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__sale_target
+#: model_terms:ir.ui.view,arch_db:partner_sale_target.sale_target_form
+#: model_terms:ir.ui.view,arch_db:partner_sale_target.sale_target_tree
+msgid "Sale target"
+msgstr "Objectif de vente"
+
+#. module: partner_sale_target
+#: model_terms:ir.ui.view,arch_db:partner_sale_target.res_partner_form
+msgid "Sales target"
+msgstr "Objectif des ventes"
+
+#. module: partner_sale_target
+#: model:ir.model,name:partner_sale_target.model_sale_target
+msgid "Sale Target"
+msgstr ""
+
+#. module: partner_sale_target
+#: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__date_start
+msgid "Start date"
+msgstr "Date début"
+
+#. module: partner_sale_target
+#: code:addons/partner_sale_target/models/sale_target.py:0
+#: model:ir.model.constraint,message:partner_sale_target.constraint_sale_target_check_date_overlap
+#, python-format
+msgid "The start date must be before the end date."
+msgstr "La date de début doit être avant la date de fin."
+
+#. module: partner_sale_target
+#: code:addons/partner_sale_target/models/res_partner.py:0
+#, python-format
+msgid "Warning"
+msgstr "Attention"
+
+#. module: partner_sale_target
+#: code:addons/partner_sale_target/models/sale_target.py:0
+#, python-format
+msgid "You cannot create 2 Sales Target overlaping."
+msgstr "Vous ne pouvez pas créer deux objectifs de vente pour la même période."
