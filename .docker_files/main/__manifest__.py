@@ -68,6 +68,7 @@
         "sale_rental_status",
         "sale_stock_availability_popup",
         "sale_stock_move_no_merge",
+        "sale_subscription_extended",
         "sale_warranty",
         "sale_warranty_extension",
         "sale_warranty_lead_on_expiry",
