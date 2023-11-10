@@ -9,7 +9,7 @@
     "website": "https://bit.ly/numigi-com",
     "license": "AGPL-3",
     "category": "Sale",
-    "summary": "Adds subscription field on sale order line.",
+    "summary": "Shows subscription field on sale order line.",
     "depends": ["sale_subscription"],
     "data": [
         "views/sale_order_line.xml",
