@@ -8,7 +8,7 @@ from odoo.exceptions import ValidationError
 class SaleTarget(models.Model):
 
     _name = "sale.target"
-    _description = "Sate Target"
+    _description = "Sale Target"
     _rec_name = 'date_start'
     _order = 'date_start desc'
 

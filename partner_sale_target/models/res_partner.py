@@ -1,7 +1,9 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import models, fields
+from odoo import models, fields, _, api
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
@@ -13,12 +15,12 @@ class ResPartner(models.Model):
         string='Sale target',
     )
     current_sale_target = fields.Monetary(
-        sting='Current Sale target',
+        string='Current Sale target',
         currency_field='currency_id',
         compute='_compute_current_sale_target'
     )
-    current_realized_target = fields.Monetary(
-        string='Realized current period',
+    current_realized_target = fields.Float(
+        string='% Realized current period',
         currency_field='currency_id',
         compute='_compute_current_sale_target'
     )
@@ -50,4 +52,24 @@ class ResPartner(models.Model):
         for rec in self:
             target_ids = rec.get_current_sale_targets()
             rec.current_sale_target = sum(target_ids.mapped('sale_target'))
+            _logger.info(target_ids.mapped('realized'))
             rec.current_realized_target = sum(target_ids.mapped('realized'))
+
+    @api.onchange('parent_id')
+    def _onchange_parent_id(self):
+        if self.parent_id and self.sale_target_ids and\
+                self.company_type == 'person':
+            return {'warning': {
+                'title': _("Warning"),
+                'message': _('Please note that the Sales Targets will be '
+                             'deleted, Sales Targets will be managed on '
+                             'the commercial entity.'
+                             ),
+            }}
+
+    def write(self, vals):
+        if "parent_id" in vals and vals["parent_id"]:
+            if not self.parent_id and self.sale_target_ids and\
+                            self.company_type == 'person':
+                self.sale_target_ids.unlink()
+        return super().write(vals)
