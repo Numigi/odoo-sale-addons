@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="group_sale_target_manager" model="res.groups">
-        <field name="name">Management of sales targets</field>
+        <field name="name">Manage Sales Targets</field>
         <field name="category_id" ref="base.module_category_hidden"/>
     </record>
 
