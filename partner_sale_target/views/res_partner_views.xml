@@ -27,8 +27,8 @@
         <field name="arch" type="xml">
             <tree position="inside">
                 <field name="is_sale_target_allowed_contact" invisible="1"/>
-                <field name="current_sale_target" optional="hide" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>
-                <field name="current_realized_target" optional="hide" widget="percentage" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>
+                <field name="current_sale_target" optional="show" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>
+                <field name="current_realized_target" optional="show" widget="percentage" groups="partner_sale_target.group_sale_target_manager" attrs="{'invisible': [('is_sale_target_allowed_contact', '=', False)]}"/>
             </tree>
         </field>
     </record>

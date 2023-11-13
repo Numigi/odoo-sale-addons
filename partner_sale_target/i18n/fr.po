@@ -87,8 +87,8 @@ msgstr "Dernière modification le"
 
 #. module: partner_sale_target
 #: model:res.groups,name:partner_sale_target.group_sale_target_manager
-msgid "Management of sales targets"
-msgstr "Gestion des cibles de vente"
+msgid "Manage Sales Targets"
+msgstr "Gérer les cibles de vente"
 
 #. module: partner_sale_target
 #: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__partner_id
@@ -160,5 +160,5 @@ msgstr "Attention"
 #. module: partner_sale_target
 #: code:addons/partner_sale_target/models/sale_target.py:0
 #, python-format
-msgid "You cannot create 2 Sales Target overlaping."
+msgid "You cannot create 2 Sales Target overlapping."
 msgstr "Vous ne pouvez pas créer deux objectifs de vente pour la même période."

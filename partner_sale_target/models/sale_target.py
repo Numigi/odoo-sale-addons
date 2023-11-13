@@ -68,7 +68,7 @@ class SaleTarget(models.Model):
             overlapping_periods = self.search(domain)
             if overlapping_periods:
                 raise ValidationError(
-                    _('You cannot create 2 Sales Target overlaping.')
+                    _('You cannot create 2 Sales Target overlapping.')
                 )
 
     def _compute_realized_target(self):
