@@ -1,13 +1,11 @@
 odoo.define("sale_kit.product_field", function(require){
 
 const registry = require("web.field_registry")
-const relationalFields = require('web.relational_fields')
-const FieldMany2one = relationalFields.ListFieldMany2One;
+var ProductConfiguratorWidget = require('sale.product_configurator');
 
-const ProductMany2one = FieldMany2one.extend({
-    _render() {
+const ProductMany2one = ProductConfiguratorWidget.extend({
+    _render(ev) {
         this._super.apply(this, arguments);
-
         if (this._isKitComponentLine() && this._isReadonlyMode()) {
             this._addKitComponentCaret();
         }
@@ -30,6 +28,11 @@ const ProductMany2one = FieldMany2one.extend({
     },
 });
 
-registry.add("sale_kit_product_many2one", ProductMany2one);
+registry
+    .add("sale_kit_product_many2one", ProductMany2one);
+
+return {
+    ProductMany2one,
+};
 
 });

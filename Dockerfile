@@ -24,7 +24,9 @@ COPY crm_lead_product /mnt/extra-addons/crm_lead_product
 COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
+COPY partner_sale_target /mnt/extra-addons/partner_sale_target
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
+COPY product_configurator_sale_ext /mnt/extra-addons/product_configurator_sale_ext
 COPY product_pack_ext /mnt/extra-addons/product_pack_ext
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
@@ -72,6 +74,7 @@ COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status
 COPY sale_stock_availability_popup /mnt/extra-addons/sale_stock_availability_popup
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
+COPY sale_subscription_extended /mnt/extra-addons/sale_subscription_extended
 COPY sale_timesheet_invoicing_period /mnt/extra-addons/sale_timesheet_invoicing_period
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
