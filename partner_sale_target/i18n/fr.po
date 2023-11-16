@@ -132,12 +132,12 @@ msgstr "Objectif de vente"
 #. module: partner_sale_target
 #: model_terms:ir.ui.view,arch_db:partner_sale_target.res_partner_form
 msgid "Sales target"
-msgstr "Objectif des ventes"
+msgstr "Cible de ventes"
 
 #. module: partner_sale_target
 #: model:ir.model,name:partner_sale_target.model_sale_target
 msgid "Sale Target"
-msgstr ""
+msgstr "Cible de vente"
 
 #. module: partner_sale_target
 #: model:ir.model.fields,field_description:partner_sale_target.field_sale_target__date_start
