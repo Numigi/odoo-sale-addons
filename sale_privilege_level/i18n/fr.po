@@ -4,18 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 11:22+0000\n"
-"PO-Revision-Date: 2020-12-08 06:24-0500\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-11-20 17:50+0000\n"
+"PO-Revision-Date: 2023-11-20 17:50+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
 
 #. module: sale_privilege_level
 #: model:ir.model.fields,field_description:sale_privilege_level.field_sale_privilege_level__active
@@ -30,12 +28,12 @@ msgstr "Archivé"
 #. module: sale_privilege_level
 #: model:ir.model,name:sale_privilege_level.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: sale_privilege_level
 #: model:ir.model,name:sale_privilege_level.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Paramètres de config"
 
 #. module: sale_privilege_level
 #: model:ir.model,name:sale_privilege_level.model_res_partner
@@ -69,17 +67,32 @@ msgid "Description"
 msgstr "Description"
 
 #. module: sale_privilege_level
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_partner__display_name
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_users__display_name
 #: model:ir.model.fields,field_description:sale_privilege_level.field_sale_privilege_level__display_name
+#: model:ir.model.fields,field_description:sale_privilege_level.field_sale_report__display_name
 msgid "Display Name"
-msgstr "Nom"
+msgstr "Nom d'affichage"
 
 #. module: sale_privilege_level
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_company__id
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_partner__id
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_users__id
 #: model:ir.model.fields,field_description:sale_privilege_level.field_sale_privilege_level__id
+#: model:ir.model.fields,field_description:sale_privilege_level.field_sale_report__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: sale_privilege_level
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_company____last_update
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_config_settings____last_update
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_partner____last_update
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_users____last_update
 #: model:ir.model.fields,field_description:sale_privilege_level.field_sale_privilege_level____last_update
+#: model:ir.model.fields,field_description:sale_privilege_level.field_sale_report____last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
@@ -111,11 +124,18 @@ msgstr "Partenaires"
 #. module: sale_privilege_level
 #: model:ir.model.fields,field_description:sale_privilege_level.field_res_partner__privilege_level_id
 #: model:ir.model.fields,field_description:sale_privilege_level.field_res_users__privilege_level_id
+#: model:ir.model.fields,field_description:sale_privilege_level.field_sale_report__privilege_level_id
 #: model_terms:ir.ui.view,arch_db:sale_privilege_level.res_config_settings_form
-#: model_terms:ir.ui.view,arch_db:sale_privilege_level.sale_privilege_level_form
 #: model_terms:ir.ui.view,arch_db:sale_privilege_level.res_partner_view_search_inherit_privilege_level
+#: model_terms:ir.ui.view,arch_db:sale_privilege_level.sale_privilege_level_form
 msgid "Privilege Level"
 msgstr "Niveau de privilèges"
+
+#. module: sale_privilege_level
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_partner__privilege_level_invisible
+#: model:ir.model.fields,field_description:sale_privilege_level.field_res_users__privilege_level_invisible
+msgid "Privilege Level Invisible"
+msgstr "Niveau de privilèges Invisible"
 
 #. module: sale_privilege_level
 #: model:ir.actions.act_window,name:sale_privilege_level.action_sale_privilege_level
@@ -130,6 +150,11 @@ msgid "Sale Privilege Level"
 msgstr "Niveau de privilèges (ventes)"
 
 #. module: sale_privilege_level
+#: model:ir.model,name:sale_privilege_level.model_sale_report
+msgid "Sales Analysis Report"
+msgstr "Rapport d'analyse des ventes"
+
+#. module: sale_privilege_level
 #: model_terms:ir.ui.view,arch_db:sale_privilege_level.sale_privilege_level_search
 msgid "Search Privilege Levels"
 msgstr "Rechercher des niveau de privilèges"
@@ -138,3 +163,8 @@ msgstr "Rechercher des niveau de privilèges"
 #: model:ir.model.fields,field_description:sale_privilege_level.field_sale_privilege_level__sequence
 msgid "Sequence"
 msgstr "Séquence"
+
+#. module: sale_privilege_level
+#: model:ir.model,name:sale_privilege_level.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
