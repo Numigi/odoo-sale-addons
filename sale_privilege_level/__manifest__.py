@@ -3,7 +3,7 @@
 
 {
     "name": "Sale Privilege Level",
-    "version": "14.0.2.1.3",
+    "version": "2.2.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -12,6 +12,7 @@
     "summary": "Add privilege levels on partners",
     "depends": ["contacts", "sale"],
     "data": [
+        "report/sale_report_views.xml",
         "views/res_partner.xml",
         "views/sale_privilege_level.xml",
         "views/res_config_settings.xml",
