@@ -9,7 +9,7 @@ class SaleReport(models.Model):
 
     partner_user_id = fields.Many2one(
         "res.users",
-        "Responsible",
+        "Adviser",
         readonly=True
     )
 

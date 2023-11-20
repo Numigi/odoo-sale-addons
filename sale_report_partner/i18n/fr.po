@@ -32,8 +32,8 @@ msgstr "Dernière modification le"
 
 #. module: sale_report_partner
 #: model:ir.model.fields,field_description:sale_report_partner.field_sale_report__partner_user_id
-msgid "Responsible"
-msgstr "Responsable"
+msgid "Adviser"
+msgstr "Conseiller"
 
 #. module: sale_report_partner
 #: model:ir.model,name:sale_report_partner.model_sale_report
