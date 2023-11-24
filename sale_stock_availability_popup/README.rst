@@ -28,6 +28,12 @@ To use this module, you need to:
 Note: The available quantity is displayed in the popup even if the sale order is confirmed.
 
 
+Since the version 1.1.3 :
+
+As a Sales user, I go to the form view of a sale and add a storable item.
+I point/click on the stock forecast widget and see that it appears on the right side.
+
+.. image:: static/description/forecast_widget_right_side.png
 
 Contributors
 ------------
