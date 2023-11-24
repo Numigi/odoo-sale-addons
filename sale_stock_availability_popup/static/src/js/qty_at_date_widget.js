@@ -22,7 +22,7 @@ odoo.define('sale_stock.QtyAtDateWidget', function (require) {
             const options = {
                 content: $content,
                 html: true,
-                placement: 'left',
+                placement: 'right',
                 title: _t('Availability'),
                 trigger: 'manual', // can take multiple values but "hover click" did click issue on "View Forecast" so manual is better
                 delay: {'show': 0, 'hide': 100 },

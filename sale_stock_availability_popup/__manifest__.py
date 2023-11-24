@@ -3,7 +3,7 @@
 
 {
     'name': 'Sale Stock Availability Popup',
-    'version': '1.1.2',
+    'version': '1.1.3',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
