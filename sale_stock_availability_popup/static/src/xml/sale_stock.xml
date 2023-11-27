@@ -2,14 +2,14 @@
 <templates>
 
     <div t-extend="sale_stock.qtyAtDate">
-          <t t-jquery="a" t-operation="replace">
-                 <a tabindex="0" t-attf-class="fa fa-area-chart {{widget.data.qty_popup_color}}"/>
+        <t t-jquery="a" t-operation="replace">
+                <a tabindex="0" t-attf-class="fa fa-area-chart {{widget.data.qty_popup_color}}"/>
 
-          </t>
+        </t>
     </div>
     <div t-extend="sale_stock.QtyDetailPopOver">
         <t t-jquery="tbody" t-operation="replace">
-           <tbody>
+            <tbody>
                 <t t-if="!data.is_mto and ['draft', 'sent'].includes(data.state)">
                     <tr>
                         <td><strong>Forecasted Stock</strong><br /><small>On <span t-esc="data.delivery_date"/></small></td>
@@ -42,7 +42,7 @@
                         </td>
                     </tr>
 
-                     <tr>
+                    <tr>
                         <td><strong>Available</strong><br /><small>All planned operations included</small></td>
                         <td><b t-esc='data.available_qty'/>
                         <t t-esc='data.product_uom.data.display_name'/></td>
