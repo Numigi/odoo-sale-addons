@@ -55,18 +55,6 @@ class ResPartner(models.Model):
             _logger.info(target_ids.mapped('realized'))
             rec.current_realized_target = sum(target_ids.mapped('realized'))
 
-    @api.onchange('parent_id')
-    def _onchange_parent_id(self):
-        if self.parent_id and self.sale_target_ids and\
-                self.company_type == 'person':
-            return {'warning': {
-                'title': _("Warning"),
-                'message': _('Please note that the Sales Targets will be '
-                             'deleted, Sales Targets will be managed on '
-                             'the commercial entity.'
-                             ),
-            }}
-
     def write(self, vals):
         if "parent_id" in vals and vals["parent_id"]:
             if not self.parent_id and self.sale_target_ids and\
