@@ -20,6 +20,7 @@
   branch: "14.0"
   includes:
     - forward_sorting_area
+    - partner_change_parent
 
 - url: https://github.com/Numigi/odoo-product-addons
   branch: "14.0"

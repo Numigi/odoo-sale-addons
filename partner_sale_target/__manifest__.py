@@ -16,6 +16,7 @@
         "security/ir.model.access.csv",
         "views/sale_target_views.xml",
         "views/res_partner_views.xml",
+        "wizard/change_parent_warning_wizard.xml",
     ],
     "installable": True,
 }

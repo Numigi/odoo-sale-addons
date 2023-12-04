@@ -20,6 +20,7 @@
         "delivery_carrier_fixed_over",
         "event_sale_order_status",
         "partner_sale_target",
+        "partner_sale_target_change_parent_binding",
         "payment_auto_confirm_sale_order",
         "product_configurator_sale_ext",
         "product_pack_ext",
