@@ -59,6 +59,7 @@
         "sale_privilege_level_website",
         "sale_product_pack_configurator_binding",
         "sale_product_pack_ext",
+        "sale_product_pack_modifiable",
         "sale_project_milestone",
         "sale_rental",
         "sale_rental_app",
