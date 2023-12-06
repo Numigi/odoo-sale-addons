@@ -11,8 +11,6 @@
     "category": "Sale",
     "depends": ["sale_product_pack"],
     "summary": "Recompute the total price of a quotation when removing pack line.",
-    "data": [
-        # "views/product_template_views.xml",
-    ],
+    "data": [],
     "installable": True,
 }
