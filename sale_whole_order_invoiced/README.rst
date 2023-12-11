@@ -11,7 +11,9 @@ In vanilla Odoo, you have 4 options when invoicing a sale order:
 * Down payment (percentage)
 * Down payment (fixed amount)
 
-.. image:: sale_whole_order_invoiced/static/description/vanilla_wizard.png
+
+.. image:: static/description/vanilla_wizard.png
+
 
 None of these options implies that after creating the invoice, the order will be considered as invoiced.
 
@@ -27,25 +29,25 @@ As ``Sale / User``, I go to a sale order.
 
 I click on ``Create Invoice``.
 
-.. image:: sale_whole_order_invoiced/static/description/sale_order_form.png
+.. image:: static/description/sale_order_form.png 
 
 In the invoicing wizard, I notice a new option ``Invoice whole order (deduct down payments)``.
 
-.. image:: sale_whole_order_invoiced/static/description/invoicing_wizard.png
+.. image:: static/description/invoicing_wizard.png 
 
 I select this option, then click on ``Create and View Invoices``.
 
-.. image:: sale_whole_order_invoiced/static/description/invoicing_wizard_validate.png
+.. image:: static/description/invoicing_wizard_validate.png
 
 A new draft invoice is created.
 
-.. image:: sale_whole_order_invoiced/static/description/draft_invoice.png
+.. image:: static/description/draft_invoice.png 
 
 Without validating the invoice, I go back to the sale order.
 
 I notice that the order is fully invoiced.
 
-.. image:: sale_whole_order_invoiced/static/description/sale_order_invoiced.png
+.. image:: static/description/sale_order_invoiced.png 
 
 Contributors
 ------------

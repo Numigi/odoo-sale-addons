@@ -24,6 +24,7 @@ COPY crm_lead_product /mnt/extra-addons/crm_lead_product
 COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
+COPY partner_sale_target_change_parent_binding /mnt/extra-addons/partner_sale_target_change_parent_binding
 COPY partner_sale_target /mnt/extra-addons/partner_sale_target
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
 COPY product_configurator_sale_ext /mnt/extra-addons/product_configurator_sale_ext
