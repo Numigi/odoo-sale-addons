@@ -49,6 +49,13 @@ I notice that the order is fully invoiced.
 
 .. image:: static/description/sale_order_invoiced.png 
 
+
+Release notes:
+--------------
+
+Since the version 1.1.0, the option `Invoice whole order (deduct down payments)` is selected by default when using this module.
+
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
