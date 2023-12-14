@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-    <record id="view_warranty_highest_parent_tree" model="ir.ui.view">
-        <field name="name">warranty.highest.parent.tree</field>
+    <record id="view_warranty_partner_highest_parent_tree" model="ir.ui.view">
+        <field name="name">warranty.partner.highest.parent.tree</field>
         <field name="model">sale.warranty</field>
         <field name="inherit_id" ref="sale_warranty.warranty_list" />
         <field name="arch" type="xml">

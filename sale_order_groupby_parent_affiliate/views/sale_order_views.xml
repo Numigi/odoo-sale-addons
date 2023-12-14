@@ -2,8 +2,8 @@
 <odoo>
 
     <!-- QUOTATION LIST -->
-    <record id="view_quotation_highest_parent_tree" model="ir.ui.view">
-        <field name="name">quotation.highest.parent.tree</field>
+    <record id="view_quotation_partner_highest_parent_tree" model="ir.ui.view">
+        <field name="name">quotation.partner.highest.parent.tree</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_quotation_tree" />
         <field name="arch" type="xml">
@@ -14,8 +14,8 @@
     </record>
 
     <!-- ORDER LIST -->
-    <record id="view_order_highest_parent_tree" model="ir.ui.view">
-        <field name="name">order.highest.parent.tree</field>
+    <record id="view_order_partner_highest_parent_tree" model="ir.ui.view">
+        <field name="name">order.partner.highest.parent.tree</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree" />
         <field name="arch" type="xml">
