@@ -12,6 +12,7 @@
     'summary': 'Modify the available quantity popover widget in sale order lines',
     'depends': [
         'sale_stock',
+        'sale_management',
     ],
     'data': [
         "views/sale_order.xml",

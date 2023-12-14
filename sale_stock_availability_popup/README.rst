@@ -2,30 +2,51 @@
 Sale Stock Availability Popup
 =============================
 
-This module extends the functionality of 'Sale Stock Info Popup' module
-to add the a new availability level : available partially ( yellow color)
-to the pop-up that show stock information at sales order line level.
+This module extends the functionality of 'sale_stock' module.
+It changes the widget "QtyDetailPopOver" behaviour to provide more detailed information about stock.
+
 
 **Table of contents**
 
 .. contents::
    :local:
 
+Context
+=======
+
+When I create a Sale Order, the widget "QtyDetailPopOver" indicates the `Forcasted stock` and `Available Stock` in status `Quotation` and `Quotation Sent`.
+When I confirm the Sale Order, the widget shows the `Reserved` stock of the current sale order.
+When I confirm the delivery order the widget "QtyDetailPopOver" desapear.
+we would like to show the widget in all sale order status.
+
+I also notice that the color of the chart icon is Green if the available qty is greater than the qty requested or 
+Red if the qty requested is greater than the available qty. 
+There is no option to indicate that the requested qty is partially available.
+
+
+Description
+===========
+
+The module adds yellow color of the chart icon to indicate that the requested qty is partially available.
+It displays the "QtyDetailPopOver" widget in all sale order status. 
+It adds `On Hand Stock`, `Delivered`, `To deliver` informations in the "QtyDetailPopOver" widget.
+It shows the reserved quantity of all stock operations instead of the reserved quantity of the current sele order.
+
 Usage
 =====
 
-To use this module, you need to:
+As a user with access to Sale App, I create a new sale order:
+I can see in this exemple that the requested quantity is partially available, the chart icon is turned to yellow
 
-#. Go to *Sales > Orders > quotations* and create a new one.
-#. Add a sale order line with a storable product
-#. On the icon popover in the line you will see the popover color of the
-   corresponding product :
+.. image:: static/description/qty_partially_available_in_yellow.png
 
-- Green if the ordered quantity is available in the stock
-- Yellow if the ordered quantity is partially available in the stock
-- Red if the ordered quantity is not available in the stock
+I can see also information about `On Hand Stock`, `Delivered`, `To deliver` quantities in the wiget popover.
 
-Note: The available quantity is displayed in the popup even if the sale order is confirmed.
+.. image:: static/description/qty_detailed_popover_info.png
+
+I confirm my Order, I notice that the widget "QtyDetailPopOver" still shows all stock availability information.
+
+.. image:: static/description/qty_detailed_popover_sale_order.png
 
 
 Since the version 1.1.3 :
