@@ -14,8 +14,8 @@ class SaleOrderLine(models.Model):
     qty_available_color = fields.Char(
         "Qty Available Color",
         compute="_compute_qty_available_color",
-        help="​Green == Only available in the default warehouse"
-        "Yellow == Partially available in the warehouse by default"
+        help="​Green == Only available in the default warehouse "
+        "Yellow == Partially available in the warehouse by default "
         "​Red == Not available in warehouse by default"
         )
     qty_reserved = fields.Float(

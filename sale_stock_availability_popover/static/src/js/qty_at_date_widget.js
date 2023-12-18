@@ -1,7 +1,7 @@
 /* Copyright 2023 Numigi
  * License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
  */
-odoo.define('sale_stock_availability_popup.QtyAtDateWidget', function (require) {
+odoo.define('sale_stock_availability_popover.QtyAtDateWidget', function (require) {
     "use strict";
 
     var core = require('web.core');
