@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale_warranty.warranty_list" />
         <field name="arch" type="xml">
                 <field name="partner_id" position="after">
-                    <field name="partner_highest_parent_id"/>
+                    <field name="partner_highest_parent_id" optional="show"/>
                 </field>
         </field>
     </record>
