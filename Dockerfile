@@ -47,6 +47,7 @@ COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
+COPY sale_order_groupby_parent_affiliate /mnt/extra-addons/sale_order_groupby_parent_affiliate
 COPY sale_order_line_checkbox /mnt/extra-addons/sale_order_line_checkbox
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
@@ -77,6 +78,7 @@ COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_subscription_extended /mnt/extra-addons/sale_subscription_extended
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
+COPY sale_warranty_groupby_parent_affiliate /mnt/extra-addons/sale_warranty_groupby_parent_affiliate
 COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
