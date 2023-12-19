@@ -41,8 +41,6 @@
         "sale_invoice_no_follow",
         "sale_kit",
         "sale_minimum_margin",
-        "sale_order_available_qty_popover",
-        "sale_order_available_qty_popover_rental",
         "sale_order_default_taxes",
         "sale_order_groupby_parent_affiliate",
         "sale_order_line_margin_amount",
