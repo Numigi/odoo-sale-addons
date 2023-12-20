@@ -1,14 +1,15 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
     advance_payment_method = fields.Selection(
-        selection_add=[("whole_order", "Invoice whole order (deduct down payments)")],
+        selection_add=[("whole_order",
+                        _("Invoice whole order (deduct down payments)"))],
         ondelete={"whole_order": "cascade"},
     )
 

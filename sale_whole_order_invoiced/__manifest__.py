@@ -3,7 +3,7 @@
 
 {
     "name": "Sale Whole Order Invoiced",
-    "version": "14.0.1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -11,6 +11,8 @@
     "category": "Sales",
     "summary": "Add an option to invoice a sale order entirely",
     "depends": ["sale"],
-    "data": [],
+    "data": [
+        'views/sale_order.xml',
+    ],
     "installable": True,
 }
