@@ -76,6 +76,7 @@ COPY sale_report_partner /mnt/extra-addons/sale_report_partner
 COPY sale_stock_availability_popup /mnt/extra-addons/sale_stock_availability_popup
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_subscription_extended /mnt/extra-addons/sale_subscription_extended
+COPY sale_target_margin /mnt/extra-addons/sale_target_margin
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_groupby_parent_affiliate /mnt/extra-addons/sale_warranty_groupby_parent_affiliate

@@ -70,6 +70,7 @@
         "sale_stock_availability_popup",
         "sale_stock_move_no_merge",
         "sale_subscription_extended",
+        "sale_target_margin",
         "sale_warranty",
         "sale_warranty_groupby_parent_affiliate",
         "sale_warranty_extension",
