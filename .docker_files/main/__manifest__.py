@@ -68,7 +68,7 @@
         "sale_rental_pricelist",
         "sale_rental_status",
         "sale_report_partner",
-        "sale_stock_availability_popup",
+        "sale_stock_availability_popover",
         "sale_stock_move_no_merge",
         "sale_subscription_extended",
         "sale_warranty",
