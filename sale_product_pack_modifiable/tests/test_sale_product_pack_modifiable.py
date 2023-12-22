@@ -139,11 +139,16 @@ class TestSaleProductPackModifiable(SavepointCase):
         self.env["res.currency.rate"].create(
             {
                 "name": "2020-12-10",
-                "rate": 2,  # 1.30813
+                "rate": 2,
                 "currency_id": my_currency.id,
                 "company_id": self.env.company.id,
             }
         )
+        # Make sure that rate will be using as it is
+        # In other case it will interfering on other module test
+        self.env["res.currency.rate"].search(
+            [("currency_id", "=", self.env.company.currency_id.id)]
+        ).unlink()
         new_simple_pricelist = self.env["product.pricelist"].create(
             {
                 "name": "New pricelist",
@@ -159,12 +164,12 @@ class TestSaleProductPackModifiable(SavepointCase):
         self._generate_sale_order_line()
 
         self.assertEqual(self.sale_order.currency_id, my_currency)
-
+        self.assertEqual(self.sale_order.currency_rate, 2)
         self.assertEqual(len(self.sale_order.order_line), 4)
 
         # Parent pack price: total of price on child pack
         # Child pack price with currency rate linked to order pricelist
-        self.assertEqual(self._get_parent_pack_price_unit(), 95.5)
+        self.assertEqual(self._get_parent_pack_price_unit(), 146.0)
 
         component_2_line = self.sale_order.order_line.filtered(
             lambda line: line.product_id == self.product_24
@@ -174,7 +179,7 @@ class TestSaleProductPackModifiable(SavepointCase):
         self.sale_order.write({"order_line": [(2, component_2_line.id, False)]})
 
         # Main pack price unit with pricelist currency
-        self.assertEqual(self._get_parent_pack_price_unit(), 52.33)
+        self.assertEqual(self._get_parent_pack_price_unit(), 80)
 
         # Then removing the whole child pack
         child_pack_line = self.sale_order.order_line.filtered(
