@@ -129,3 +129,8 @@
   includes:
     - product_configurator
     - product_configurator_sale
+
+- url: https://github.com/OCA/web
+  branch: "14.0"
+  includes:
+    - web_tree_dynamic_colored_field
