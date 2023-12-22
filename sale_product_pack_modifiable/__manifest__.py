@@ -3,13 +3,13 @@
 
 {
     "name": "Sale Product Pack Modifiable",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "AGPL-3",
     "category": "Sale",
-    "depends": ["sale_product_pack"],
+    "depends": ["sale_product_pack", "product_pack_ext"],
     "summary": "Recompute the total price of a quotation when removing pack line.",
     "data": [],
     "installable": True,
