@@ -29,6 +29,7 @@ COPY partner_sale_target /mnt/extra-addons/partner_sale_target
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
 COPY product_configurator_sale_ext /mnt/extra-addons/product_configurator_sale_ext
 COPY product_pack_ext /mnt/extra-addons/product_pack_ext
+COPY sale_product_pack_modifiable /mnt/extra-addons/sale_product_pack_modifiable
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
 COPY sale_coupon_apply_on_domain /mnt/extra-addons/sale_coupon_apply_on_domain
@@ -73,7 +74,7 @@ COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status
 COPY sale_report_partner /mnt/extra-addons/sale_report_partner
-COPY sale_stock_availability_popup /mnt/extra-addons/sale_stock_availability_popup
+COPY sale_stock_availability_popover /mnt/extra-addons/sale_stock_availability_popover
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_subscription_extended /mnt/extra-addons/sale_subscription_extended
 COPY sale_target_margin /mnt/extra-addons/sale_target_margin
