@@ -3,6 +3,7 @@
 
 import logging
 from odoo import models
+from odoo.tools.misc import get_lang
 
 
 _logger = logging.getLogger(__name__)
@@ -23,19 +24,22 @@ class SaleOrder(models.Model):
                 super_parent = self.env["sale.order.line"].search(
                     [("id", "parent_of", line.id)], limit=1
                 )
-                main_parent = super_parent if (
-                    super_parent.pack_component_price == 'totalized') else (
-                        line.pack_parent_line_id)
+                main_parent = (
+                    super_parent
+                    if (super_parent.pack_component_price == "totalized")
+                    else (line.pack_parent_line_id)
+                )
 
                 # Divide by main_parent.product_uom_qty because initial
                 # quantities on product_id.pack_line_ids may be multiplied
                 # if the price unit of main parent pack was changed
 
-                if main_parent.pack_component_price == 'totalized':
+                if main_parent.pack_component_price == "totalized":
+                    new_price_unit = main_parent.price_unit
                     # For line which is not a pack
                     if not line.product_id.pack_ok:
                         new_price_unit = main_parent.price_unit - (
-                            line.product_id.list_price
+                            self._get_product_taxed_price(line)
                             * line.product_uom_qty
                             / main_parent.product_uom_qty
                         )
@@ -50,7 +54,60 @@ class SaleOrder(models.Model):
                                 pack_price_left += (
                                     pack_child_line.product_uom_qty
                                     / main_parent.product_uom_qty
-                                ) * pack_child_line.product_id.product_tmpl_id.lst_price
+                                ) * self._get_product_taxed_price(
+                                    pack_child_line, is_pack=True
+                                )
                             new_price_unit = main_parent.price_unit - pack_price_left
                     main_parent.price_unit = new_price_unit
         return super().write(vals)
+
+    def _convert_price_unit(self, price):
+        return price * self.currency_rate
+
+    def _get_product_taxed_price(self, order_line, is_pack=False):
+        """
+        Send on context all information needed to compute for price.
+        Then, get the price unit with all sale parameter included :
+
+        """
+        lang = get_lang(self.env, order_line.order_id.partner_id.lang).code
+
+        order_line._compute_tax_id()
+
+        product = order_line.product_id.with_context(
+            lang=lang,
+            partner=order_line.order_id.partner_id,
+            quantity=order_line.product_uom_qty,
+            date=order_line.order_id.date_order,
+            pricelist=order_line.order_id.pricelist_id.id,
+            uom=order_line.product_uom.id,
+        )
+        if order_line.order_id.pricelist_id and order_line.order_id.partner_id:
+            unit_price = product._get_tax_included_unit_price(
+                order_line.company_id,
+                order_line.order_id.currency_id,
+                order_line.order_id.date_order,
+                "sale",
+                fiscal_position=order_line.order_id.fiscal_position_id,
+                product_price_unit=order_line._get_display_price(product),
+                product_currency=order_line.order_id.currency_id,
+            )
+        else:
+            # Not using pricelist, so just convert if needed
+            unit_price = (
+                order_line.order_id.currency_id._convert(
+                    order_line.product_id.product_tmpl_id.lst_price,
+                    order_line.order_id.currency_id,
+                    order_line.company_id,
+                    order_line.order_id.date_order,
+                )
+                if is_pack
+                else order_line.order_id.currency_id._convert(
+                    order_line.product_id.list_price,
+                    order_line.order_id.currency_id,
+                    order_line.company_id,
+                    order_line.order_id.date_order,
+                )
+            )
+
+        return unit_price

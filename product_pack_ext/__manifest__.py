@@ -3,7 +3,7 @@
 {
     "name": "Product Pack Extended",
     "summary": "Product Pack Extended",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
