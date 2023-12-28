@@ -2,54 +2,56 @@
 Sale Stock Availability Popover
 ===============================
 
-This module extends the functionality of the 'sale_stock' module. 
-It changes the widget "QtyDetailPopOver" behavior to provide more detailed information about stock.
+This module extends the functionality of the 'sale_stock' module, modifying the behavior of the "QtyDetailPopOver" widget to provide more detailed information about stock.
 
-**Table of contents**
-
-.. contents::
-   :local:
+Table of Contents
+-----------------
+- :ref:`Context`
+- :ref:`Description`
+- :ref:`Usage`
+- :ref:`Contributors`
+- :ref:`More Information`
 
 Context
 -------
 
-When I create a Sale Order, the widget "QtyDetailPopOver" indicates the `Forecasted stock` and `Available Stock` in statuses `Quotation` and `Quotation Sent`. 
-When I confirm the Sale Order, the widget shows the `Reserved` stock of the current sale order. 
-When I confirm the delivery order, the widget "QtyDetailPopOver" disappears. 
-We would like to show the widget in all sale order statuses with all information stock.
+When creating a Sale Order, the "QtyDetailPopOver" widget indicates the `Forecasted stock` and `Available Stock` in statuses `Quotation` and `Quotation Sent`. 
+Upon confirming the Sale Order, the widget displays the `Reserved` stock of the current sale order. Once the delivery order is confirmed, the widget disappears. 
+The goal is to show the widget in all sale order statuses with comprehensive stock information.
 
-I also noticed that the color of the chart icon is green if the available quantity is greater than the quantity requested or red if the quantity requested is greater than the available quantity. 
-There is no option to indicate that the requested quantity is partially available.
+Additionally, the color of the chart icon is green when the available quantity is greater than the quantity requested, red when the quantity requested is greater, but there's no indication for partially available quantities.
 
 Description
 ------------
 
-The module adds a yellow color to the chart icon to indicate that the requested quantity is partially available. 
-It displays the "QtyDetailPopOver" widget in all sale order statuses. 
-It adds `On Hand Stock`, `Delivered`, and `To deliver` information in the "QtyDetailPopOver" widget. 
-It shows the reserved quantity of all stock operations instead of the reserved quantity of the current sale order.
-It displays the widget in the right of the icon chart.
+This module introduces a yellow color to the chart icon, indicating a partially available requested quantity. 
+It ensures the display of the "QtyDetailPopOver" widget in all sale order statuses, adding information on `On Hand Stock` and `Delivered` quantities. 
+The widget now shows the reserved quantity of all stock operations instead of just the current sale order, and it is positioned to the right of the chart icon.
 
 Usage
 -----
 
-As a user with access to the `Sale` App, I create a new sale order:
-I can see in this example that the requested quantity is partially available, and the chart icon is turned yellow.
+As a user with access to the `Sale` App, create a new sale order:
 
 .. image:: static/description/qty_partially_available_in_yellow.png
+   :alt: Qty Partially Available
 
-I can also see information about `On Hand Stock`, `Delivered`, and `To deliver` quantities in the widget popover.
+View detailed information about `On Hand Stock` and `Delivered` quantities in the widget popover:
 
 .. image:: static/description/qty_detailed_popover_info.png
+   :alt: Qty Detailed Popover Info
 
-I confirm my Order, and I notice that the widget "QtyDetailPopOver" still shows all stock availability information.
+After confirming the order, the "QtyDetailPopOver" widget continues to display all stock availability information:
 
 .. image:: static/description/qty_detailed_popover_sale_order.png
+   :alt: Qty Detailed Popover Sale Order
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 
-More information
+- Numigi (tm) and all its contributors :numigi:`Numigi Contributors <https://bit.ly/numigiens>`
+
+More Information
 ----------------
-* Meet us at https://bit.ly/numigi-com
+
+Visit us at :numigi:`Numigi <https://bit.ly/numigi-com>`
