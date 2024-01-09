@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="change_parent_warning_wizard_form" model="ir.ui.view">
+        <field name="name">Change Parent Warning</field>
+        <field name="model">change.parent.warning.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="partner_id" invisible="1"/>
+                    <div class="alert alert-danger" role="alert">
+                        Please note that the Sales Targets will be deleted, Sales Targets will be managed on the commercial entity.
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_confirm" class="oe_highlight" string="Confirm" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

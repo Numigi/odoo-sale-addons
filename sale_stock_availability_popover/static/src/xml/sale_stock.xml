@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+
+    <div t-extend="sale_stock.qtyAtDate">
+        <t t-jquery="a" t-operation="replace">
+            <a tabindex="0" t-attf-class="fa fa-area-chart {{widget.data.qty_available_color}}"/>
+        </t>
+    </div>
+    <div t-extend="sale_stock.QtyDetailPopOver">
+        <t t-jquery="table" t-operation="replace">
+            <table class="table table-borderless table-sm oe-right">
+                <tbody>
+                    <t t-if="!data.is_mto and ['draft', 'sent', 'sale'].includes(data.state)">
+                        <tr>
+                            <td><strong>Forecasted Stock</strong><br /><small>On <span t-esc="data.delivery_date"/></small></td>
+                            <td><b t-esc='data.virtual_available_at_date'/>
+                            <t t-esc='data.product_uom.data.display_name'/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>On hand Stock</strong><br /><small></small></td>
+                            <td><b t-esc='data.qty_available_today'/>
+                            <t t-esc='data.product_uom.data.display_name'/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Available</strong><br /><small>All planned operations included</small></td>
+                            <td><b t-esc='data.free_qty_today' t-attf-class="{{data.qty_available_color}}"/>
+                            <t t-esc='data.product_uom.data.display_name'/></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Reserved</strong><br/>
+                            </td>
+                            <td>
+                                <b t-esc='data.qty_reserved'/> <t t-esc='data.product_uom.data.display_name'/>
+                            </td>
+                        </tr>
+                        <t t-if="data.state == 'sale'">
+                            <tr t-if="data.qty_available_today &lt; data.qty_to_deliver">
+                                <td>
+                                    <span t-if="data.will_be_fulfilled and data.forecast_expected_date_str">
+                                        Remaining demand available at <b t-esc="data.forecast_expected_date_str" t-att-class="data.scheduled_date &lt; data.forecast_expected_date ? 'text-danger' : ''"/>
+                                    </span>
+                                    <span t-elif="!data.will_be_fulfilled and data.forecast_expected_date_str" class="text-danger">
+                                        No enough future availaibility
+                                    </span>
+                                    <span t-elif="!data.will_be_fulfilled" class="text-danger">
+                                        No future availaibility
+                                    </span>
+                                    <span t-else="">
+                                        Available in stock
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td>
+                                <strong>Delivered</strong><br/>
+                            </td>
+                            <td>
+                                <b t-esc='data.qty_delivered'/> <t t-esc='data.product_uom.data.display_name'/>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-elif="data.is_mto and ['draft', 'sent', 'sale'].includes(data.state)">
+                        <tr>
+                            <td><strong>Expected Delivery</strong></td>
+                            <td class="oe-right"><span t-esc="data.delivery_date"/></td>
+                        </tr>
+                        <tr>
+                            <p>This product is replenished on demand.</p>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Reserved</strong><br/>
+                            </td>
+                            <td class="oe-right">
+                                <b t-esc='data.qty_reserved'/> <t t-esc='data.product_uom.data.display_name'/>
+                            </td>
+                        </tr>
+                        <tr t-if="data.qty_available_today &lt; data.qty_to_deliver">
+                            <td>
+                                <span t-if="data.will_be_fulfilled and data.forecast_expected_date_str">
+                                    Remaining demand available at <b t-esc="data.forecast_expected_date_str" t-att-class="data.scheduled_date &lt; data.forecast_expected_date ? 'text-danger' : ''"/>
+                                </span>
+                                <span t-elif="!data.will_be_fulfilled and data.forecast_expected_date_str" class="text-danger">
+                                    No enough future availaibility
+                                </span>
+                                <span t-elif="!data.will_be_fulfilled" class="text-danger">
+                                    No future availaibility
+                                </span>
+                                <span t-else="">
+                                    Available in stock
+                                </span>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </t>
+    </div>
+</templates>

@@ -44,7 +44,7 @@ def price_compute(self, price_type, uom=False, currency=False, company=False):
                   pricelist.currency_id != product.currency_id:
                 pack_price = pricelist.currency_id._convert(
                     pack_price,
-                    product.currency_id,
+                    pricelist.currency_id,
                     self.company_id or self.env.company,
                     fields.Date.today(),
                 )
