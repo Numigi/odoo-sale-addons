@@ -1,7 +1,9 @@
 # © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+import logging
 import werkzeug
+
+_logger = logging.getLogger(__name__)
 
 from odoo import api, models, _
 
@@ -24,6 +26,8 @@ class CrmLead(models.Model):
         email = is_public and post.get("email") or user.partner_id.email
         phone = is_public and post.get("phone") or user.partner_id.phone
         sale_team_id = self._get_wsrp_sale_team_id()
+        sale_team = self.env['crm.team'].sudo().browse(sale_team_id)
+        team_user = sale_team.user_id.id
         lead = self.sudo().create(
             {
                 "name": "eCom {}".format(product.display_name),
@@ -32,6 +36,7 @@ class CrmLead(models.Model):
                 "email_from": email,
                 "phone": phone,
                 "team_id": sale_team_id,
+                "user_id": team_user or self.env.ref('base.public_user').id,
                 "description": post.get("additional_information"),
                 "contact_name": is_public and post.get("name"),
                 "brand_ids": product_brand,
