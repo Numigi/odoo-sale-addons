@@ -24,6 +24,7 @@
         "payment_auto_confirm_sale_order",
         "product_configurator_sale_ext",
         "product_pack_ext",
+        "sale_order_portal_hide_invoices",
         "sale_commitment_date_update",
         "sale_commitment_date_update_mrp",
         "sale_coupon_apply_on_domain",
