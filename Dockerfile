@@ -65,6 +65,7 @@ COPY sale_privilege_level_payment /mnt/extra-addons/sale_privilege_level_payment
 COPY sale_privilege_level_pricelist /mnt/extra-addons/sale_privilege_level_pricelist
 COPY sale_privilege_level_rental_pricelist /mnt/extra-addons/sale_privilege_level_rental_pricelist
 COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
+COPY sale_product_configurator_img_width /mnt/extra-addons/sale_product_configurator_img_width
 COPY sale_product_pack_configurator_binding /mnt/extra-addons/sale_product_pack_configurator_binding
 COPY sale_product_pack_ext /mnt/extra-addons/sale_product_pack_ext
 COPY sale_project_milestone /mnt/extra-addons/sale_project_milestone
