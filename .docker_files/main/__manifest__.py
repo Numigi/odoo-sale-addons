@@ -58,6 +58,7 @@
         "sale_privilege_level_pricelist",
         "sale_privilege_level_rental_pricelist",
         "sale_privilege_level_website",
+        "sale_product_configurator_img_width",
         "sale_product_pack_configurator_binding",
         "sale_product_pack_ext",
         "sale_product_pack_modifiable",
