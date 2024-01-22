@@ -3,6 +3,7 @@
 
 import logging
 from odoo import models
+from odoo.tools import float_round
 from odoo.tools.misc import get_lang
 
 
@@ -58,7 +59,9 @@ class SaleOrder(models.Model):
                                     pack_child_line, is_pack=True
                                 )
                             new_price_unit = main_parent.price_unit - pack_price_left
-                    main_parent.price_unit = new_price_unit
+                    main_parent.price_unit = float_round(
+                        new_price_unit, precision_digits=2
+                    )
         return super().write(vals)
 
     def _convert_price_unit(self, price):
