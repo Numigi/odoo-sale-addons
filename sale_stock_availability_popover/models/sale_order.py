@@ -17,11 +17,11 @@ class SaleOrderLine(models.Model):
         help="​Green == Only available in the default warehouse "
         "Yellow == Partially available in the warehouse by default "
         "​Red == Not available in warehouse by default"
-        )
+    )
     qty_reserved = fields.Float(
         "Qty Reserved",
         compute="_get_reserved_qty"
-        )
+    )
     virtual_available_at_date = fields.Float(compute='_compute_qty_at_date_2',
                                              digits='Product Unit of Measure')
     scheduled_date = fields.Datetime(compute='_compute_qty_at_date_2')
@@ -35,6 +35,7 @@ class SaleOrderLine(models.Model):
             rec.qty_reserved = rec.qty_available_today -\
                 rec.free_qty_today
 
+    @api.depends('free_qty_today', 'qty_to_deliver')
     def _compute_qty_available_color(self):
         for rec in self:
             color = 'text-danger'
@@ -60,6 +61,10 @@ class SaleOrderLine(models.Model):
             else:
                 line.display_qty_widget = False
 
+    @api.depends(
+        'product_id', 'customer_lead', 'product_uom_qty', 'product_uom',
+        'order_id.commitment_date',
+        'move_ids', 'move_ids.forecast_expected_date', 'move_ids.forecast_availability')
     def _compute_qty_at_date_2(self):
         """ Rewrite the methode _compute_qty_at_date to reuse the simple
         forcasted quantity instead of the forecasted data of the
@@ -101,10 +106,14 @@ class SaleOrderLine(models.Model):
                 line.forecast_expected_date = False
                 product_qty = line.product_uom_qty
                 if line.product_uom and line.product_id.uom_id and line.product_uom != line.product_id.uom_id:
-                    line.qty_available_today = line.product_id.uom_id._compute_quantity(line.qty_available_today, line.product_uom)
-                    line.free_qty_today = line.product_id.uom_id._compute_quantity(line.free_qty_today, line.product_uom)
-                    line.virtual_available_at_date = line.product_id.uom_id._compute_quantity(line.virtual_available_at_date, line.product_uom)
-                    product_qty = line.product_uom._compute_quantity(product_qty, line.product_id.uom_id)
+                    line.qty_available_today = line.product_id.uom_id._compute_quantity(
+                        line.qty_available_today, line.product_uom)
+                    line.free_qty_today = line.product_id.uom_id._compute_quantity(
+                        line.free_qty_today, line.product_uom)
+                    line.virtual_available_at_date = line.product_id.uom_id._compute_quantity(
+                        line.virtual_available_at_date, line.product_uom)
+                    product_qty = line.product_uom._compute_quantity(
+                        product_qty, line.product_id.uom_id)
                 qty_processed_per_product[line.product_id.id] += product_qty
             treated |= lines
         remaining = (self - treated)

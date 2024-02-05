@@ -3,7 +3,7 @@
 
 {
     'name': 'Sale Stock Availability Popover',
-    'version': '1.2.0',
+    'version': '1.2.1',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
@@ -15,8 +15,8 @@
         'sale_management',
     ],
     'data': [
-        "views/sale_order.xml",
         "views/assets.xml",
+        "views/sale_order.xml",
     ],
     "qweb": [
         "static/src/xml/sale_stock.xml",
