@@ -3,7 +3,7 @@
 
     <div t-extend="sale_stock.qtyAtDate">
         <t t-jquery="a" t-operation="replace">
-            <a tabindex="0" t-attf-class="fa fa-area-chart {{widget.data.qty_available_color}}"/>
+            <a tabindex="0" t-attf-class="fa fa-area-chart {{widget.data.qty_available_color ? widget.data.qty_available_color : 'text-primary'}}"/>
         </t>
     </div>
     <div t-extend="sale_stock.QtyDetailPopOver">
