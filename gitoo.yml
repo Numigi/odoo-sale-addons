@@ -52,49 +52,15 @@
     - web_list_column_width
     - web_trash_condition
 
-
-#- url: https://github.com/OCA/multi-company
-#  branch: "14.0"
-#  includes:
-#    - account_invoice_inter_company
-#    - purchase_sale_inter_company
-
 - url: https://github.com/OCA/brand
   branch: "14.0"
   includes:
     - product_brand
 
-- url: https://github.com/OCA/project
+- url: https://github.com/OCA/crm
   branch: "14.0"
   includes:
-    - project_milestone
-
-- url: https://github.com/OCA/product-attribute
-  branch: "14.0"
-  includes:
-    - product_secondary_unit
-
-- url: https://github.com/OCA/stock-logistics-workflow.git
-  branch: "14.0"
-  includes:
-    - sale_order_global_stock_route
-
-- url: https://github.com/OCA/server-ux.git
-  branch: "14.0"
-  includes:
-    - date_range
-
-#- url: https://github.com/Numigi/odoo-timesheet-addons
-#  branch: "14.0"
-#  includes:
-#     - payroll_period
-#     - payroll_preparation
-
-- url: https://github.com/OCA/sale-workflow
-  branch: "14.0"
-  includes:
-    - sale_order_tag
-    - sale_order_partner_restrict
+    - crm_industry
 
 - url: https://github.com/oca/partner-contact
   branch: "14.0"
@@ -102,20 +68,16 @@
     - partner_industry_secondary
     - partner_affiliate
 
-- url: https://github.com/oca/queue
+- url: https://github.com/OCA/product-attribute
   branch: "14.0"
   includes:
-    - queue_job
+    - product_secondary_unit
 
-- url: https://github.com/OCA/crm.git
+- url: https://github.com/OCA/product-configurator
   branch: "14.0"
   includes:
-    - crm_industry
-
-- url: https://github.com/OCA/stock-logistics-warehouse
-  branch: "14.0"
-  includes:
-    - stock_secondary_unit
+    - product_configurator
+    - product_configurator_sale
 
 - url: https://github.com/OCA/product-pack
   branch: "14.0"
@@ -123,12 +85,37 @@
     - product_pack
     - sale_product_pack
 
-
-- url: https://github.com/OCA/product-configurator
+- url: https://github.com/OCA/project
   branch: "14.0"
   includes:
-    - product_configurator
-    - product_configurator_sale
+    - project_milestone
+
+- url: https://github.com/oca/queue
+  branch: "14.0"
+  includes:
+    - queue_job
+
+- url: https://github.com/OCA/sale-workflow
+  branch: "14.0"
+  includes:
+    - sale_order_tag
+    - sale_order_partner_restrict
+    - sale_product_multi_add
+
+- url: https://github.com/OCA/stock-logistics-workflow
+  branch: "14.0"
+  includes:
+    - sale_order_global_stock_route
+
+- url: https://github.com/OCA/stock-logistics-warehouse
+  branch: "14.0"
+  includes:
+    - stock_secondary_unit
+
+- url: https://github.com/OCA/server-ux
+  branch: "14.0"
+  includes:
+    - date_range
 
 - url: https://github.com/OCA/web
   branch: "14.0"
