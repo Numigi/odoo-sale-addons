@@ -15,6 +15,7 @@
         "crm_assign_by_area",
         "crm_assign_in_house",
         "crm_brand",
+        "crm_kanban_prorated_revenue",
         "crm_lead_product",
         "crm_team_by_industry",
         "delivery_carrier_fixed_over",
