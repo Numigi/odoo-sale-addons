@@ -20,6 +20,7 @@ USER odoo
 COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
 COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
+COPY crm_kanban_prorated_revenue /mnt/extra-addons/crm_kanban_prorated_revenue
 COPY crm_lead_product /mnt/extra-addons/crm_lead_product
 COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
