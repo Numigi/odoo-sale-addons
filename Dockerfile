@@ -70,6 +70,7 @@ COPY sale_product_configurator_img_width /mnt/extra-addons/sale_product_configur
 COPY sale_product_pack_configurator_binding /mnt/extra-addons/sale_product_pack_configurator_binding
 COPY sale_product_pack_ext /mnt/extra-addons/sale_product_pack_ext
 COPY sale_project_milestone /mnt/extra-addons/sale_project_milestone
+COPY sale_qweb_report_website_desc /mnt/extra-addons/sale_qweb_report_website_desc
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_app /mnt/extra-addons/sale_rental_app
 # COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
