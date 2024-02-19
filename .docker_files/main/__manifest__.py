@@ -63,6 +63,7 @@
         "sale_product_pack_configurator_binding",
         "sale_product_pack_ext",
         "sale_product_pack_modifiable",
+        "sale_project_description",
         "sale_project_milestone",
         "sale_qweb_report_website_desc",
         "sale_rental",
