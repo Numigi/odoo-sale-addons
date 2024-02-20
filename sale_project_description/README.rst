@@ -10,13 +10,20 @@ The possibility to add a description to a sale order that can be passed on to th
 
 Description
 -----------
-This module adds the `Project Description` field in Sale Order Form View.
+This module adds the `Project Description` field in Sale Order Form View and Tree View.
 
 .. image:: static/description/project_description_field.png
 
+.. image:: static/description/sale_order_tree_view.png
+
+
+From the search bar, I can search the project description in Order:
+
+.. image:: static/description/sale_order_search_bar.png
+
+
 Usage
 -----
-
 Create a new service article with `Service Tracking` set to "Create a task in sales order's project" ou "Create a new project but no task".
 
 .. image:: static/description/article_configuration.png
