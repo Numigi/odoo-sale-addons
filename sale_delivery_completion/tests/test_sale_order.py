@@ -67,3 +67,9 @@ class TestSaleOrder(SavepointCase):
         self.product_1.type = "service"
         self.product_2.type = "service"
         assert self.sale_order.completion_rate == "100%"
+
+    def test_product_returned(self):
+        self.line_1.qty_delivered = 10
+        self.line_2.qty_delivered = 8
+        self.line_2.qty_returned = 2
+        assert self.sale_order.completion_rate == "100%"
