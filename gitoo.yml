@@ -105,6 +105,7 @@
 - url: https://github.com/OCA/stock-logistics-workflow
   branch: "14.0"
   includes:
+    - sale_line_returned_qty
     - sale_order_global_stock_route
 
 - url: https://github.com/OCA/stock-logistics-warehouse

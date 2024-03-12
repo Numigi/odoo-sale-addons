@@ -16,9 +16,10 @@ class SaleOrder(models.Model):
 
     def _get_completion_rate(self):
         lines_without_services = self.order_line.filtered(
-            lambda l: l.product_id.type in ("product", "consu")
+            lambda line: line.product_id.type in ("product", "consu")
         )
-        delivered = sum(lines_without_services.mapped(lambda l: l.qty_delivered))
-        total_qty = sum(lines_without_services.mapped(lambda l: l.product_uom_qty))
-        completion = (delivered / total_qty) if total_qty else 1
+        delivered = sum(lines_without_services.mapped(lambda line: line.qty_delivered))
+        returned = sum(lines_without_services.mapped(lambda line: line.qty_returned))
+        total_qty = sum(lines_without_services.mapped(lambda line: line.product_uom_qty))
+        completion = ((delivered + returned) / total_qty) if total_qty else 1
         return "{}%".format(int(completion * 100))
