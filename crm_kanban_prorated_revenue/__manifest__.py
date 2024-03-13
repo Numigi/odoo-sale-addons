@@ -4,7 +4,7 @@
 {
     "name": "CRM Kanban Prorated Revenue",
     "summary": "Display Proreted Revenue In CRM Kanban View",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",
     "maintainer": "Numigi",
