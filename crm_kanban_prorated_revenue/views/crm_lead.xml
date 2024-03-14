@@ -10,9 +10,7 @@
                 <field name="prorated_revenue"/>
             </field>
             <xpath expr="//t[@t-if='record.expected_revenue.raw_value']" position="before">
-                <t t-if="record.prorated_revenue.raw_value">
-                    <field name="prorated_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/> /
-                </t>
+                <field name="prorated_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/> /
             </xpath>
             <xpath expr="//progressbar" position="attributes">
                 <attribute name="sum_field">prorated_revenue</attribute>
