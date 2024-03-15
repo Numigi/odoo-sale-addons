@@ -208,7 +208,7 @@ class TestSaleOrderLine(SaleOrderLineCase):
         assert k1.kit_previous_quantity == 1
 
     def test_change_kit_quantity__if_not_changed__price_not_updated(self):
-        k1 = self.add_kit_on_sale_order()
+        self.add_kit_on_sale_order()
         lines = self.order.order_line
         lines[1].price_unit = 999
         self.order.update_kit_component_quantities()

@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime, timedelta
-from odoo import api, fields, models, _
+from odoo import fields, models, _
 from .common import DEFAULT_DELAY_BETWEEN_LEADS
 
 
@@ -58,8 +58,8 @@ class Warranty(models.Model):
         delay_in_days = self._get_delay_between_leads()
         previous_lead = self._find_last_generated_lead_for_partner()
         return (
-            not previous_lead or
-            previous_lead.create_date.date() + timedelta(delay_in_days) <= today
+            not previous_lead
+            or previous_lead.create_date.date() + timedelta(delay_in_days) <= today
         )
 
     def _bind_warranty_to_last_generated_lead(self):
@@ -78,8 +78,8 @@ class Warranty(models.Model):
         :rtype: int
         """
         return (
-            self.env.user.company_id.warranty_delay_between_leads or
-            DEFAULT_DELAY_BETWEEN_LEADS
+            self.env.user.company_id.warranty_delay_between_leads
+            or DEFAULT_DELAY_BETWEEN_LEADS
         )
 
     def _find_last_generated_lead_for_partner(self):

@@ -27,6 +27,8 @@ def round_price(price: float, rounding: str) -> str:
     :param rounding: the rounding amount to apply
     :return: the rounded price
     """
-    factor = (Decimal(price) / Decimal(rounding)).quantize(Decimal('1.'), rounding=ROUND_HALF_UP)
+    factor = (Decimal(price) / Decimal(rounding)).quantize(
+        Decimal("1."), rounding=ROUND_HALF_UP
+    )
     result_decimal = factor * Decimal(rounding)
     return float(result_decimal)

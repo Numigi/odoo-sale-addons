@@ -1,7 +1,7 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import models, fields, _, api
+from odoo import models, fields
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -34,10 +34,10 @@ class ResPartner(models.Model):
         """ Target calculated only on an Individual contact not associated with
           a parent contact of type Company, or on a contact of type Company."""
         for rec in self:
-            if (rec.company_type == 'person' and
-                (not rec.parent_id or
-                 rec.parent_id.company_type != 'company')) or \
-                    rec.company_type == 'company':
+            if (
+                rec.company_type == "person"
+                and (not rec.parent_id or rec.parent_id.company_type != "company")
+            ) or rec.company_type == "company":
                 rec.is_sale_target_allowed_contact = True
             else:
                 rec.is_sale_target_allowed_contact = False
@@ -45,8 +45,9 @@ class ResPartner(models.Model):
     def get_current_sale_targets(self):
         self.ensure_one()
         return self.sale_target_ids.filtered(
-                lambda o: o.date_start <= fields.Date.today() and
-                o.date_end >= fields.Date.today())
+            lambda o: o.date_start <= fields.Date.today()
+            and o.date_end >= fields.Date.today()
+        )
 
     def _compute_current_sale_target(self):
         for rec in self:
@@ -57,7 +58,10 @@ class ResPartner(models.Model):
 
     def write(self, vals):
         if "parent_id" in vals and vals["parent_id"]:
-            if not self.parent_id and self.sale_target_ids and\
-                            self.company_type == 'person':
+            if (
+                not self.parent_id
+                and self.sale_target_ids
+                and self.company_type == "person"
+            ):
                 self.sale_target_ids.unlink()
         return super().write(vals)

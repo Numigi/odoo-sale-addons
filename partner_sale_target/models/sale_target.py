@@ -12,37 +12,28 @@ class SaleTarget(models.Model):
     _rec_name = 'date_start'
     _order = 'date_start desc'
 
-    date_start = fields.Date('Start date', required=True)
-    date_end = fields.Date('End date', required=True)
+    date_start = fields.Date("Start date", required=True)
+    date_end = fields.Date("End date", required=True)
     company_currency_id = fields.Many2one(
-        'res.currency',
-        string='Company Currency',
+        "res.currency",
+        string="Company Currency",
         readonly=True,
-        default=lambda self: self.env.company.currency_id.id
-        )
+        default=lambda self: self.env.company.currency_id.id,
+    )
     sale_target = fields.Monetary(
-        'Sale target',
-        currency_field='company_currency_id',
-        required=True
-        )
+        "Sale target", currency_field="company_currency_id", required=True
+    )
     realized_target = fields.Monetary(
-        'Realized target',
-        currency_field='company_currency_id',
-        compute='_compute_realized_target'
-        )
-    realized = fields.Float(
-        'Realized %',
-        compute='_compute_realized'
-        )
+        "Realized target",
+        currency_field="company_currency_id",
+        compute="_compute_realized_target",
+    )
+    realized = fields.Float("Realized %", compute="_compute_realized")
     partner_id = fields.Many2one(
-        string='Partner',
-        comodel_name='res.partner',
-        ondelete='cascade',
-        required=True
+        string="Partner", comodel_name="res.partner", ondelete="cascade", required=True
     )
     is_old_sale_target = fields.Boolean(
-        'Is old sale target',
-        compute='_compute_is_old_sale_target'
+        "Is old sale target", compute="_compute_is_old_sale_target"
     )
 
     _sql_constraints = [
@@ -82,11 +73,11 @@ class SaleTarget(models.Model):
                 datetime_start = fields.Datetime.to_datetime(rec.date_start)
                 datetime_end = fields.Datetime.to_datetime(rec.date_end)
                 confirmed_orders = rec.partner_id.sale_order_ids.filtered(
-                    lambda o: o.state in ('sale', 'done') and
-                    o.date_order <= datetime_end and
-                    o.date_order >= datetime_start
+                    lambda o: o.state in ("sale", "done")
+                    and o.date_order <= datetime_end
+                    and o.date_order >= datetime_start
                 )
-                amount_untaxed = sum(confirmed_orders.mapped('amount_untaxed'))
+                amount_untaxed = sum(confirmed_orders.mapped("amount_untaxed"))
             rec.realized_target = amount_untaxed
 
     def _compute_realized(self):

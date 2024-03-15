@@ -6,7 +6,6 @@ from odoo.http import request
 from odoo.addons.portal.controllers.portal import (
     CustomerPortal,
     pager as portal_pager,
-    get_records_pager,
 )
 
 
@@ -35,11 +34,18 @@ class SaleRentalPortal(CustomerPortal):
         values = super(SaleRentalPortal, self)._prepare_portal_layout_values()
         return self._prepare_portal_layout_values_inherit(values)
 
-    @http.route(['/my/orders', '/my/orders/page/<int:page>'], type='http', auth="user", website=True)
-    def portal_my_orders(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
+    @http.route(
+        ["/my/orders", "/my/orders/page/<int:page>"],
+        type="http",
+        auth="user",
+        website=True,
+    )
+    def portal_my_orders(
+        self, page=1, date_begin=None, date_end=None, sortby=None, **kw
+    ):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
-        SaleOrder = request.env['sale.order']
+        SaleOrder = request.env["sale.order"]
 
         domain = [
             ('message_partner_ids', 'child_of', [partner.commercial_partner_id.id]),
@@ -74,8 +80,10 @@ class SaleRentalPortal(CustomerPortal):
             step=self._items_per_page
         )
         # content according to pager
-        orders = SaleOrder.search(domain, order=sort_order, limit=self._items_per_page, offset=pager['offset'])
-        request.session['my_orders_history'] = orders.ids[:100]
+        orders = SaleOrder.search(
+            domain, order=sort_order, limit=self._items_per_page, offset=pager["offset"]
+        )
+        request.session["my_orders_history"] = orders.ids[:100]
 
         values.update({
             'date': date_begin,

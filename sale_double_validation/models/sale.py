@@ -1,7 +1,7 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, models, fields
+from odoo import api, models, fields
 from odoo.tools import float_compare
 
 

@@ -108,10 +108,12 @@ class TestMinimumMarginConstrains(SavepointCase):
         assert new_product.price_type == 'fixed'
 
     @data(0.30, 0.31)
-    def test_on_create__if_margin_not_lower_and_not_sale_manager__error_not_raised(self, margin):
+    def test_on_create__if_margin_not_lower_and_not_sale_manager__error_not_raised(
+        self, margin
+    ):
         self.category.minimum_margin = 0.30
         values = self._get_product_vals()
-        values['margin'] = margin
+        values["margin"] = margin
         product_obj = self.env[self.product._name]
         new_product = product_obj.sudo(self.stock_manager).create(values)
         assert new_product.margin == margin
