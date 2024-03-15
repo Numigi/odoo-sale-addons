@@ -39,9 +39,9 @@ def _get_minimum_margin_bypass_message(product: models.Model, context: dict) -> 
     :return: the message content
     """
     return _(
-        'The margin rate ({margin:.2f}%) was saved even though '
-        'it is lower than the minimum margin ({minimum_margin:.2f}%) of the product category '
-        '({category}).'
+        "The margin rate ({margin:.2f}%) was saved even though "
+        "it is lower than the minimum margin ({minimum_margin:.2f}%) of "
+        "the product category ({category})."
     ).format(
         margin=product.margin * 100,
         minimum_margin=product.minimum_margin * 100,
@@ -97,9 +97,10 @@ class Product(models.Model):
         the user is member of `Sales / Manager`, a non-blocking message
         will be displayed in the mail thread of the record.
         """
-        is_sale_manager = self.env.user.has_group('sales_team.group_sale_manager')
+        is_sale_manager = self.env.user.has_group("sales_team.group_sale_manager")
         products_with_lower_margin = self.filtered(
-            lambda p: p.price_type == "dynamic" and _is_product_margin_lower_than_minimum_margin(p)
+            lambda p: p.price_type == "dynamic"
+            and _is_product_margin_lower_than_minimum_margin(p)
         )
         for product in products_with_lower_margin:
             if is_sale_manager:
@@ -118,8 +119,10 @@ class ProductTemplate(models.Model):
         Product._check_margin_is_not_lower_than_minimum_margin
     )
 
-    @api.constrains('margin', 'categ_id')
+    @api.constrains("margin", "categ_id")
     def _constraint_margin_not_lower_than_minimum_margin(self):
-        templates_with_one_variant = self.filtered(lambda p: len(p.product_variant_ids) == 1)
+        templates_with_one_variant = self.filtered(
+            lambda p: len(p.product_variant_ids) == 1
+        )
         for template in templates_with_one_variant:
             Product._constraint_margin_not_lower_than_minimum_margin(template)

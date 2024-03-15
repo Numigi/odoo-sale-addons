@@ -5,7 +5,6 @@ from odoo import fields
 from odoo.addons.product_pack.models.product_product import ProductProduct
 
 
-
 def price_compute(self, price_type, uom=False, currency=False, company=False):
     packs, no_packs = self.split_pack_products()
     prices = super(ProductProduct, no_packs).price_compute(
@@ -32,16 +31,25 @@ def price_compute(self, price_type, uom=False, currency=False, company=False):
                         [pricelist_name_search[0][0]]
                     )
             elif isinstance(pricelist_id_or_name, int):
-                pricelist = self.env["product.pricelist"].browse(
-                    pricelist_id_or_name
-                )
+                pricelist = self.env["product.pricelist"].browse(pricelist_id_or_name)
             # Add condition to not apply conversion for a pricelist with an article of the pack
-            not_product_pack_in_pricelist = all(p not in product.sudo().pack_line_ids.mapped('product_id.id')
-                                                for p in pricelist.item_ids.mapped('product_id.id'))
-            not_product_tmplt_pack_in_pricelist = all(p not in product.sudo().pack_line_ids.mapped('product_id.product_tmpl_id.id') 
-                                                        for p in pricelist.item_ids.mapped('product_tmpl_id.id'))
-            if pricelist and not_product_pack_in_pricelist and not_product_tmplt_pack_in_pricelist and\
-                  pricelist.currency_id != product.currency_id:
+            not_product_pack_in_pricelist = all(
+                p not in product.sudo().pack_line_ids.mapped("product_id.id")
+                for p in pricelist.item_ids.mapped("product_id.id")
+            )
+            not_product_tmplt_pack_in_pricelist = all(
+                p
+                not in product.sudo().pack_line_ids.mapped(
+                    "product_id.product_tmpl_id.id"
+                )
+                for p in pricelist.item_ids.mapped("product_tmpl_id.id")
+            )
+            if (
+                pricelist
+                and not_product_pack_in_pricelist
+                and not_product_tmplt_pack_in_pricelist
+                and pricelist.currency_id != product.currency_id
+            ):
                 pack_price = pricelist.currency_id._convert(
                     pack_price,
                     pricelist.currency_id,
@@ -50,5 +58,6 @@ def price_compute(self, price_type, uom=False, currency=False, company=False):
                 )
         prices[product.id] = pack_price
     return prices
+
 
 ProductProduct.price_compute = price_compute

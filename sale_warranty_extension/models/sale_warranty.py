@@ -21,7 +21,8 @@ class SaleWarranty(models.Model):
 
     @api.onchange("activation_date", "type_id", "use_warranty_extension")
     def _onchange_activation_date_set_extension_dates(self):
-        """When the activation date is manually set, compute automatically the extension dates."""
+        """When the activation date is manually set,
+        compute automatically the extension dates."""
         if self.activation_date and self.type_id and self.use_warranty_extension:
             extension_start = self.activation_date + relativedelta(
                 months=self.type_id.duration_in_months

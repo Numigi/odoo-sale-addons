@@ -9,7 +9,9 @@ class TestVariantSpecificPrice(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.product_template = cls.env['product.template'].create({'name': 'Product Template 1',})
+        cls.product_template = cls.env['product.template'].create({
+            'name': 'Product Template 1'
+        })
 
         cls.attribute = cls.env['product.attribute'].create({'name': 'Attr', 'sequence': 1})
         cls.value_1 = cls.env['product.attribute.value'].create({

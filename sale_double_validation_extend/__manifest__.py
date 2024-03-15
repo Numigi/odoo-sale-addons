@@ -2,7 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Sale Double Validation Extend",
-    "summary": "Extend the module Sale Double Validation to blocks user confirming in the creation of Sale Order",
+    "summary": """Extend the module Sale Double Validation to blocks user
+    confirming in the creation of Sale Order""",
     "version": "1.0.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",

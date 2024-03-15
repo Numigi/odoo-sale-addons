@@ -80,7 +80,7 @@ class TestProductFields(SavepointCase):
 
     def test_sale_availability__dropship(self):
         self._add_stock_quant(2, self.stock_location)
-        move = self._add_stock_move(1, self.supplier_location, self.customer_location)
+        self._add_stock_move(1, self.supplier_location, self.customer_location)
         self.product.compute_availability()
         assert self.product.sale_availability == 2
 

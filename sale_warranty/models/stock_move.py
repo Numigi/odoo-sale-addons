@@ -8,7 +8,7 @@ class StockMove(models.Model):
 
     _inherit = 'stock.move'
 
-    def _action_done(self,cancel_backorder=False):
+    def _action_done(self, cancel_backorder=False):
         """On delivery, activate the waranties for the delivered products.
 
         Warranties are activated with sudo because stock users should not have

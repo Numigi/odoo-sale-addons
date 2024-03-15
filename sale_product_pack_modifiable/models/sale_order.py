@@ -1,13 +1,9 @@
 # © 2023 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import logging
 from odoo import models
 from odoo.tools import float_round
 from odoo.tools.misc import get_lang
-
-
-_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -47,9 +43,9 @@ class SaleOrder(models.Model):
                     else:
                         # In case it's a pack so it may contain some child lines
                         if line.pack_child_line_ids:
-                            # we compute with pack_child_line_ids instead of product_id.pack_line_ids
-                            # to handle case if some child line is previously removed
-                            # avoid using lst_price on pack
+                            # we compute with pack_child_line_ids instead of
+                            # product_id.pack_line_ids to handle case if some child
+                            # line is previously removed avoid using lst_price on pack.
                             pack_price_left = 0
                             for pack_child_line in line.pack_child_line_ids:
                                 pack_price_left += (

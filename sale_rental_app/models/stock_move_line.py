@@ -6,7 +6,7 @@ from odoo import models, fields
 
 class StockMoveLine(models.Model):
 
-	_inherit = "stock.move.line"
+    _inherit = "stock.move.line"
 
-	partner_id = fields.Many2one(related="move_id.partner_id", store=True)
-	origin = fields.Char(store=True)
+    partner_id = fields.Many2one(related="move_id.partner_id", store=True)
+    origin = fields.Char(store=True)

@@ -35,7 +35,7 @@ class TestKitComponentSorting(SaleOrderLineCase):
         self.other_line_1.sequence = 2
         self.other_line_2.sequence = 4
         self.order.update_kit_component_sequences()
-        assert [l for l in self.order.order_line] == [
+        assert [line for line in self.order.order_line] == [
             self.k1,
             self.k1_1,
             self.k1_2,
@@ -53,7 +53,7 @@ class TestKitComponentSorting(SaleOrderLineCase):
         self.other_line_2.sequence = 2
 
         self.order.update_kit_component_sequences()
-        assert [l for l in self.order.order_line] == [
+        assert [line for line in self.order.order_line] == [
             self.k2,
             self.k2_1,
             self.k2_2,
@@ -72,7 +72,7 @@ class TestKitComponentSorting(SaleOrderLineCase):
         self.other_line_2.sequence = 3
 
         self.order.update_kit_component_sequences()
-        assert [l for l in self.order.order_line] == [
+        assert [line for line in self.order.order_line] == [
             self.k1,
             self.k1_1,
             self.k1_2,

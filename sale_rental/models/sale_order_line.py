@@ -87,18 +87,22 @@ class SaleOrderLine(models.Model):
         )
 
     def _action_launch_stock_rule(self, previous_product_uom_qty=False):
-        rental_lines = self.filtered(lambda l: l.order_id.is_rental)
+        rental_lines = self.filtered(lambda line: line.order_id.is_rental)
         rental_orders = rental_lines.mapped("order_id")
 
         for order in rental_orders:
             rental_location = order.get_rental_customer_location()
-            lines = rental_lines.filtered(lambda l: l.order_id == order).with_context(
+            lines = rental_lines.filtered(lambda line: line.order_id == order).with_context(
                 force_rental_customer_location=rental_location
             )
-            super(SaleOrderLine, lines)._action_launch_stock_rule(previous_product_uom_qty=previous_product_uom_qty)
+            super(SaleOrderLine, lines)._action_launch_stock_rule(
+                previous_product_uom_qty=previous_product_uom_qty
+            )
 
         other_lines = self - rental_lines
-        super(SaleOrderLine, other_lines)._action_launch_stock_rule(previous_product_uom_qty=previous_product_uom_qty)
+        super(SaleOrderLine, other_lines)._action_launch_stock_rule(
+            previous_product_uom_qty=previous_product_uom_qty
+        )
         return True
 
     def initialize_kit(self):
@@ -259,21 +263,21 @@ class SaleOrderLineWithReturnedQty(models.Model):
 
     @api.depends("kit_line_ids.rental_returned_qty", "move_ids.state")
     def _compute_rental_returned_qty(self):
-        kits = self.filtered(lambda l: l.product_id.type == "service" and l.is_kit)
+        kits = self.filtered(lambda line: line.product_id.type == "service" and line.is_kit)
         for line in kits:
             line.rental_returned_qty = line._get_kit_rental_returned_qty()
 
         physical_products = self.filtered(
-            lambda l: l.product_id.type in ("product", "consu")
+            lambda line: line.product_id.type in ("product", "consu")
         )
         for line in physical_products:
             line.rental_returned_qty = self._get_product_rental_returned_qty()
 
     def _get_kit_rental_returned_qty(self):
         all_important_components_returned = all(
-            l.rental_returned_qty >= l.product_uom_qty
-            for l in self.kit_line_ids
-            if l.is_important_kit_component
+            line.rental_returned_qty >= line.product_uom_qty
+            for line in self.kit_line_ids
+            if line.is_important_kit_component
         )
         return 1 if all_important_components_returned else 0
 

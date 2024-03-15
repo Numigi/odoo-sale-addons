@@ -10,7 +10,8 @@
     "license": "AGPL-3",
     "category": "Sale",
     "depends": ["sale"],
-    "summary": "Removes the section which displays the list of associated invoices and credit notes.",
+    "summary": """Removes the section which displays the list of associated
+    invoices and credit notes.""",
     "data": [
         "views/sale_portal_templates.xml",
     ],

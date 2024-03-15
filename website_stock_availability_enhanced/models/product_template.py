@@ -1,7 +1,7 @@
 # © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
@@ -22,12 +22,11 @@ class ProductTemplate(models.Model):
         default="replenishment_availability",
     )
     inventory_availability = fields.Selection(
-        selection_add=[
-            (
-                "threshold_warning",
-                "Indicate if the inventory is below a threshold and allow sales if not enough stock",
-            ),
-        ]
+        selection_add=[(
+            "threshold_warning",
+            """Indicate if the inventory is below a threshold and
+            allow sales if not enough stock""",
+        )]
     )
     replenishment_delay = fields.Integer(
         related="product_variant_ids.replenishment_delay",

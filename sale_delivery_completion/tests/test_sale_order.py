@@ -41,7 +41,6 @@ class TestSaleOrder(SavepointCase):
         cls.line_1 = cls.sale_order.order_line[0]
         cls.line_2 = cls.sale_order.order_line[1]
 
-
     @classmethod
     def _get_so_line_vals(cls, product, unit, qty):
         return {

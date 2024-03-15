@@ -14,9 +14,13 @@ class TestExtensionOnWarrantyActivation(WarrantyActivationCase):
         cls.extension_template = cls.env['sale.subscription.template'].create({
             'name': 'Warranty extension on parts',
         })
-        cls.stage_draft = cls.env.ref('sale_subscription.sale_subscription_stage_draft')
-        cls.stage_in_progress = cls.env.ref('sale_subscription.sale_subscription_stage_in_progress')
-        cls.stage_closed = cls.env.ref('sale_subscription.sale_subscription_stage_closed')
+        cls.stage_draft = cls.env.ref("sale_subscription.sale_subscription_stage_draft")
+        cls.stage_in_progress = cls.env.ref(
+            "sale_subscription.sale_subscription_stage_in_progress"
+        )
+        cls.stage_closed = cls.env.ref(
+            "sale_subscription.sale_subscription_stage_closed"
+        )
         cls.subscription = cls.env['sale.subscription'].create({
             'partner_id': cls.customer.id,
             'template_id': cls.extension_template.id,
