@@ -9,7 +9,11 @@ class SaleReport(models.Model):
 
     is_rental = fields.Boolean()
 
-    def _query(self, with_clause, fields, groupby, from_clause):
+    def _group_by_sale(self, groupby=""):
+        res = super()._group_by_sale(groupby)
+        res += """,s.is_rental"""
+        return res
+
+    def _select_additional_fields(self, fields):
         fields["is_rental"] = ", s.is_rental as is_rental"
-        groupby += ", s.is_rental"
-        return super()._query(with_clause, fields, groupby, from_clause)
+        return super()._select_additional_fields(fields)
