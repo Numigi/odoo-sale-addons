@@ -1,0 +1,66 @@
+name: Deploy Preevy environment
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+permissions:
+  id-token: write
+  contents: read
+
+  # Needed to use GHCR
+  # packages: write
+
+  # Needed to write a PR comment with the environment URLs
+  pull-requests: write
+jobs:
+  deploy:
+    timeout-minutes: 15
+    concurrency: preevy-${{ github.event.number }}
+
+    environment:
+      # An environment needs to be created at https://github.com/YOUR-ORG/YOUR-REPO/settings/environments
+      name: preview
+      # Change `frontend` and `3000` to the service and port whos URL should be used for the deployment
+      url: ${{ fromJson(steps.preevy.outputs.urls-map).frontend[3000] }}
+
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Authenticate to Google Cloud'
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          token_format: access_token
+
+          # Create a key according to https://github.com/google-github-actions/auth#service-account-key-json
+          credentials_json: '${{ secrets.GCLOUD_ISIDOR_CREDENTIALS }}'
+
+ #     - name: Set up Docker Buildx
+ #       id: buildx_setup
+ #       uses: docker/setup-buildx-action@v3
+
+      - name: Login to Quay.io
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_ROBOT_TOKEN }}
+
+      - uses: livecycle/preevy-up-action@v2.4.0
+        id: preevy_up
+        with:
+          profile-url: "${{ secrets.PREEVY_PROFILE_URL }}"
+          # Specify the GHCR registry and the builder created above
+          args: --registry quay.io/numigi
+          install: gh-release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          # Only required if the Compose file(s) are not in the default locations
+          # https://docs.docker.com/compose/reference/#specifying-multiple-compose-files
+          # docker-compose-yaml-paths: "./docker/docker-compose.yaml"
