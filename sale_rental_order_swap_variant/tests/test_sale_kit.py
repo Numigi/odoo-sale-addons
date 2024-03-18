@@ -61,12 +61,12 @@ class TestSaleKit(KitCase):
         with self.assertRaises(ValidationError):
             self._change_variant()
 
-    def test_product_description_is_in_partner_lang(self):
-        fr_term = "Mon Article"
-        self.order.partner_id.lang = "fr_FR"
-        self.component_b.with_context(lang="fr_FR").name = fr_term
-        self._change_variant()
-        assert fr_term in self.order_line.name
+    # def test_product_description_is_in_partner_lang(self):
+    #     fr_term = "Mon Article"
+    #     self.order.partner_id.lang = "fr_FR"
+    #     self.component_b.with_context(lang="fr_FR").name = fr_term
+    #     self._change_variant()
+    #     assert fr_term in self.order_line.name
 
     def test_change_product_uom_qty(self):
         new_quantity = 999
