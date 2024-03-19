@@ -16,7 +16,6 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
-# COPY commission /mnt/extra-addons/commission
 COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
 COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
@@ -25,13 +24,11 @@ COPY crm_lead_product /mnt/extra-addons/crm_lead_product
 COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
-COPY partner_sale_target_change_parent_binding /mnt/extra-addons/partner_sale_target_change_parent_binding
 COPY partner_sale_target /mnt/extra-addons/partner_sale_target
+COPY partner_sale_target_change_parent_binding /mnt/extra-addons/partner_sale_target_change_parent_binding
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
 COPY product_configurator_sale_ext /mnt/extra-addons/product_configurator_sale_ext
 COPY product_pack_ext /mnt/extra-addons/product_pack_ext
-COPY sale_order_portal_hide_invoices /mnt/extra-addons/sale_order_portal_hide_invoices
-COPY sale_product_pack_modifiable /mnt/extra-addons/sale_product_pack_modifiable
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
 COPY sale_coupon_apply_on_domain /mnt/extra-addons/sale_coupon_apply_on_domain
@@ -56,6 +53,7 @@ COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amou
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_partner_restrict_affiliates /mnt/extra-addons/sale_order_partner_restrict_affiliates
+COPY sale_order_portal_hide_invoices /mnt/extra-addons/sale_order_portal_hide_invoices
 COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
 COPY sale_partner_authorized_company /mnt/extra-addons/sale_partner_authorized_company
@@ -69,12 +67,13 @@ COPY sale_privilege_level_website /mnt/extra-addons/sale_privilege_level_website
 COPY sale_product_configurator_img_width /mnt/extra-addons/sale_product_configurator_img_width
 COPY sale_product_pack_configurator_binding /mnt/extra-addons/sale_product_pack_configurator_binding
 COPY sale_product_pack_ext /mnt/extra-addons/sale_product_pack_ext
+COPY sale_product_pack_modifiable /mnt/extra-addons/sale_product_pack_modifiable
 COPY sale_project_description /mnt/extra-addons/sale_project_description
 COPY sale_project_milestone /mnt/extra-addons/sale_project_milestone
 COPY sale_qweb_report_website_desc /mnt/extra-addons/sale_qweb_report_website_desc
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_app /mnt/extra-addons/sale_rental_app
-# COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
+COPY sale_rental_order_swap_variant /mnt/extra-addons/sale_rental_order_swap_variant
 COPY sale_rental_portal /mnt/extra-addons/sale_rental_portal
 COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_rental_status /mnt/extra-addons/sale_rental_status

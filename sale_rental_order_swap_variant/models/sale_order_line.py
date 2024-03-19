@@ -38,6 +38,7 @@ class SaleOrderLine(models.Model):
         self._cancel_all_stock_moves()
         self.product_id = product
         product_with_lang = product.with_context(lang=self.order_id.partner_id.lang)
+
         self.name = self.get_sale_order_line_multiline_description_sale(
             product_with_lang
         )
