@@ -3,13 +3,13 @@
 
 {
     "name": "Sale Project Description",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Project",
-    "summary": "Add project descriptiom from sale order",
+    "summary": "Add project description from sale order",
     "depends": [
         "sale_project",
     ],
