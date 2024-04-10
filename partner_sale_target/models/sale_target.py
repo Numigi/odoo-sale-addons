@@ -14,11 +14,14 @@ class SaleTarget(models.Model):
 
     date_start = fields.Date("Start date", required=True)
     date_end = fields.Date("End date", required=True)
+    partner_id = fields.Many2one(
+        string="Partner", comodel_name="res.partner", ondelete="cascade", required=True
+    )
     company_currency_id = fields.Many2one(
         "res.currency",
         string="Company Currency",
         readonly=True,
-        default=lambda self: self.env.company.currency_id.id,
+        related="partner_id.currency_id",
     )
     sale_target = fields.Monetary(
         "Sale target", currency_field="company_currency_id", required=True
@@ -29,9 +32,6 @@ class SaleTarget(models.Model):
         compute="_compute_realized_target",
     )
     realized = fields.Float("Realized %", compute="_compute_realized")
-    partner_id = fields.Many2one(
-        string="Partner", comodel_name="res.partner", ondelete="cascade", required=True
-    )
     is_old_sale_target = fields.Boolean(
         "Is old sale target", compute="_compute_is_old_sale_target"
     )
