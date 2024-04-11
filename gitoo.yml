@@ -1,6 +1,3 @@
-- url: https://{{GIT_TOKEN}}@github.com/Numigi/odoo-enterprise
-  branch: "14.0"
-
 - url: https://github.com/gityopie/odoo-addons
   branch: "14.0"
   includes:
