@@ -9,7 +9,8 @@ class SaleOrder(models.Model):
 
     def _find_mail_template(self, force_confirmation_template=False):
         self.ensure_one()
-        if self.type_id.mail_template and not force_confirmation_template:
+        if (self.type_id and self.type_id.mail_template
+                and not force_confirmation_template):
             return self.type_id.mail_template.id
         return super(SaleOrder, self)._find_mail_template(
             force_confirmation_template=force_confirmation_template
