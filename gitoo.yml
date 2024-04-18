@@ -40,6 +40,11 @@
   includes:
     - product_supplier_info_helpers
 
+- url: https://github.com/Numigi/odoo-sale-addons
+  branch: "14.0"
+  includes:
+    - sale_rental
+
 - url: https://github.com/Numigi/odoo-stock-addons
   branch: "14.0"
   includes:
