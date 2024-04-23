@@ -3,7 +3,7 @@
 
 {
     "name": "Sale Privilege Level Pricelist",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -13,4 +13,5 @@
     "depends": ["sale_privilege_level", "product"],
     "data": ["views/sale_privilege_level.xml", "security/ir.model.access.csv"],
     "installable": True,
+    "post_init_hook": "_post_init_hook",
 }
