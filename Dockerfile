@@ -54,6 +54,7 @@ COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_reado
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_partner_restrict_affiliates /mnt/extra-addons/sale_order_partner_restrict_affiliates
 COPY sale_order_portal_hide_invoices /mnt/extra-addons/sale_order_portal_hide_invoices
+COPY sale_order_type_email_template /mnt/extra-addons/sale_order_type_email_template
 COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
 COPY sale_partner_authorized_company /mnt/extra-addons/sale_partner_authorized_company

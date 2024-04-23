@@ -99,6 +99,7 @@
   branch: "14.0"
   includes:
     - sale_order_tag
+    - sale_order_type
     - sale_order_partner_restrict
     - sale_product_multi_add
 

@@ -49,6 +49,7 @@
         "sale_order_margin_percent",
         "sale_order_partner_restrict_affiliates",
         "sale_order_portal_hide_invoices",
+        "sale_order_type_email_template",
         "sale_order_url_tracking",
         "sale_order_weight",
         "sale_partner_authorized_company",
