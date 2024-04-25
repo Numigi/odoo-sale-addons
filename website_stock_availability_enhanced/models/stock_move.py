@@ -9,9 +9,8 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def write(self, vals):
-        super().write(vals)
-
-        if "state" in vals or "date" in vals:
-            self.mapped("product_id").schedule_compute_availability()
-
-        return True
+        res = super().write(vals)
+        for rec in self:
+            if "state" in vals or "date" in vals:
+                rec.mapped("product_id").schedule_compute_availability()
+        return res
