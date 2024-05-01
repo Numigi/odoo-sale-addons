@@ -8,7 +8,7 @@
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
-    "depends": ["sale_kit", "sale_stock", "sale_rental"],
+    "depends": ["sale_rental"],
     "data": [
         "security/ir.model.access.csv",
         "wizard/sale_rental_order_swap_variant.xml",
