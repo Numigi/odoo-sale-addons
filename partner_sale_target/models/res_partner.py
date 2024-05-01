@@ -1,9 +1,7 @@
 # © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import models, fields
-import logging
-_logger = logging.getLogger(__name__)
+from odoo import models, fields, api
 
 
 class ResPartner(models.Model):
@@ -17,19 +15,23 @@ class ResPartner(models.Model):
     current_sale_target = fields.Monetary(
         string='Current Sale target',
         currency_field='currency_id',
-        compute='_compute_current_sale_target'
+        compute='_compute_current_sale_target',
+        store=True
     )
     current_realized_target = fields.Float(
-        string='% Realized current period',
-        currency_field='currency_id',
-        compute='_compute_current_sale_target'
+        string="% Realized current period",
+        currency_field="currency_id",
+        compute="_compute_current_sale_target",
+        store=True,
     )
 
     is_sale_target_allowed_contact = fields.Boolean(
         'Is sale target allowed contact',
-        compute='_compute_is_sale_target_allowed_contact'
+        compute='_compute_is_sale_target_allowed_contact',
+        store=True,
     )
 
+    @api.depends("company_type", "parent_id")
     def _compute_is_sale_target_allowed_contact(self):
         """ Target calculated only on an Individual contact not associated with
           a parent contact of type Company, or on a contact of type Company."""
@@ -49,11 +51,17 @@ class ResPartner(models.Model):
             and o.date_end >= fields.Date.today()
         )
 
+    @api.depends(
+        "sale_target_ids",
+        "sale_target_ids.date_start",
+        "sale_target_ids.date_end",
+        "sale_target_ids.sale_target",
+        "sale_target_ids.realized",
+    )
     def _compute_current_sale_target(self):
         for rec in self:
             target_ids = rec.get_current_sale_targets()
             rec.current_sale_target = sum(target_ids.mapped('sale_target'))
-            _logger.info(target_ids.mapped('realized'))
             rec.current_realized_target = sum(target_ids.mapped('realized'))
 
     def write(self, vals):
