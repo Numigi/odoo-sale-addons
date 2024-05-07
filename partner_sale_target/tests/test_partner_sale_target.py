@@ -111,7 +111,7 @@ class TestPartnerSaleTarget(SavepointCase):
         # that are active today or have an end date greater than today
         # so even having old sale targets, the current sale must be the same
         self.assertEqual(partner.current_sale_target, 500)
-        self.assertEqual(partner.current_realized_target, 0.2)  # 100/800
+        self.assertEqual(partner.current_realized_target, 0.2)
 
         # Create sale target line with overlapping dates and check
         # if it raises a validation error
