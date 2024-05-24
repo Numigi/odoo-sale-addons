@@ -8,6 +8,15 @@ class RentalCase(KitCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        # Set queue job to no delay for testing
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                test_queue_job_no_delay=True,
+            )
+        )
+
         cls.stock_user = cls.env.ref("base.user_demo")
         cls.stock_user.groups_id = cls.env.ref("stock.group_stock_user")
 
