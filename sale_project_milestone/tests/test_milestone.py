@@ -13,7 +13,6 @@ class TestMilestone(SavepointCase):
                 "name": "My Project",
                 "use_milestones": True,
                 "allow_timesheets": True,
-                "allow_timesheet_timer": True,
                 "allow_subtasks": True,
             }
         )
@@ -21,7 +20,6 @@ class TestMilestone(SavepointCase):
             {
                 "name": "My Template Project 1",
                 "allow_timesheets": True,
-                "allow_timesheet_timer": True,
                 "allow_subtasks": True,
                 "allow_billable": True,
                 "bill_type": "customer_project",
@@ -31,7 +29,6 @@ class TestMilestone(SavepointCase):
             {
                 "name": "My Template Project 2",
                 "allow_timesheets": True,
-                "allow_timesheet_timer": True,
                 "allow_subtasks": True,
                 "allow_billable": True,
                 "bill_type": "customer_project",
