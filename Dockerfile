@@ -70,7 +70,6 @@ COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_timesheet_invoicing_period /mnt/extra-addons/sale_timesheet_invoicing_period
 COPY sale_warranty /mnt/extra-addons/sale_warranty
-COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY web_view_google_map_itinerary /mnt/extra-addons/web_view_google_map_itinerary
 COPY website_event_message_unpublished /mnt/extra-addons/website_event_message_unpublished
