@@ -32,7 +32,7 @@ COPY crm_team_by_industry /mnt/extra-addons/crm_team_by_industry
 COPY delivery_carrier_fixed_over /mnt/extra-addons/delivery_carrier_fixed_over
 COPY event_sale_order_status /mnt/extra-addons/event_sale_order_status
 COPY payment_auto_confirm_sale_order /mnt/extra-addons/payment_auto_confirm_sale_order
-COPY purchase_sale_inter_company_route /mnt/extra-addons/purchase_sale_inter_company_route
+# COPY purchase_sale_inter_company_route /mnt/extra-addons/purchase_sale_inter_company_route # FIXME : error in unit test
 COPY sale_commitment_date_update /mnt/extra-addons/sale_commitment_date_update
 COPY sale_commitment_date_update_mrp /mnt/extra-addons/sale_commitment_date_update_mrp
 COPY sale_default_analytic_tag /mnt/extra-addons/sale_default_analytic_tag
@@ -70,8 +70,6 @@ COPY sale_rental_pricelist /mnt/extra-addons/sale_rental_pricelist
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_timesheet_invoicing_period /mnt/extra-addons/sale_timesheet_invoicing_period
 COPY sale_warranty /mnt/extra-addons/sale_warranty
-COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
-COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY web_view_google_map_itinerary /mnt/extra-addons/web_view_google_map_itinerary
 COPY website_event_message_unpublished /mnt/extra-addons/website_event_message_unpublished

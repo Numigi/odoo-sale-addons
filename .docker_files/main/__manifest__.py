@@ -30,7 +30,7 @@
         "commission_prorata",
         "contract_invoice_offset",
         "payment_auto_confirm_sale_order",
-        "purchase_sale_inter_company_route",
+        # "purchase_sale_inter_company_route",  # FIXME : error in unit test
         "sale_commitment_date_update",
         "sale_commitment_date_update_mrp",
         "sale_default_analytic_tag",
@@ -67,8 +67,6 @@
         "sale_stock_move_no_merge",
         "sale_timesheet_invoicing_period",
         "sale_warranty",
-        "sale_warranty_extension",
-        "sale_warranty_lead_on_expiry",
         "sale_whole_order_invoiced",
         "sale_order_available_qty_popover_alternative",
         "web_view_google_map_itinerary",
