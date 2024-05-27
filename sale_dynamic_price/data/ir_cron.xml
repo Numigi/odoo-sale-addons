@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo noupdate="1">
 
+    <record model="queue.job.channel" id="channel_product_product_ir_cron">
+        <field name="name">product_product.ir_cron</field>
+        <field name="parent_id" ref="queue_job.channel_root" />
+    </record>
+
     <record id="sale_price_update_cron" model="ir.cron">
         <field name="name">Update dynamic sale prices on products</field>
         <field name="model_id" ref="product.model_product_product"/>
@@ -9,6 +14,9 @@
         <field name="user_id" ref="base.user_root"/>
         <field name="interval_number">1</field>
         <field name="interval_type">weeks</field>
+        <field name="run_as_queue_job" eval="True"/>
+        <field name="no_parallel_queue_job_run" eval="True"/>
+        <field name="channel_id" ref="channel_product_product_ir_cron"/>
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
     </record>

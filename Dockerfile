@@ -54,6 +54,7 @@ COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_reado
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_partner_restrict_affiliates /mnt/extra-addons/sale_order_partner_restrict_affiliates
 COPY sale_order_portal_hide_invoices /mnt/extra-addons/sale_order_portal_hide_invoices
+COPY sale_order_type_email_template /mnt/extra-addons/sale_order_type_email_template
 COPY sale_order_url_tracking /mnt/extra-addons/sale_order_url_tracking
 COPY sale_order_weight /mnt/extra-addons/sale_order_weight
 COPY sale_partner_authorized_company /mnt/extra-addons/sale_partner_authorized_company
@@ -83,9 +84,7 @@ COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
 COPY sale_subscription_extended /mnt/extra-addons/sale_subscription_extended
 COPY sale_target_margin /mnt/extra-addons/sale_target_margin
 COPY sale_warranty /mnt/extra-addons/sale_warranty
-COPY sale_warranty_extension /mnt/extra-addons/sale_warranty_extension
 COPY sale_warranty_groupby_parent_affiliate /mnt/extra-addons/sale_warranty_groupby_parent_affiliate
-COPY sale_warranty_lead_on_expiry /mnt/extra-addons/sale_warranty_lead_on_expiry
 COPY sale_whole_order_invoiced /mnt/extra-addons/sale_whole_order_invoiced
 COPY sale_xmlrpc_compatible /mnt/extra-addons/sale_xmlrpc_compatible
 COPY web_view_google_map_itinerary /mnt/extra-addons/web_view_google_map_itinerary

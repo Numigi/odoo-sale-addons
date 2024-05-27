@@ -12,50 +12,65 @@ class LeadOnExpiryCronCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        # Set queue job to no delay for testing
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                test_queue_job_no_delay=True,
+            )
+        )
+
         cls.env.user.company_id.warranty_delay_between_leads = LEAD_DELAY
 
-        cls.customer = cls.env['res.partner'].create({
-            'name': 'My Customer'
-        })
+        cls.customer = cls.env["res.partner"].create({"name": "My Customer"})
 
-        cls.team = cls.env['crm.team'].create({'name': 'Team A'})
+        cls.team = cls.env["crm.team"].create({"name": "Team A"})
 
-        cls.warranty_6_months = cls.env['sale.warranty.type'].create({
-            'name': '6 Months Parts',
-            'duration_in_months': 6,
-            'description': 'Warranted 6 months on parts',
-            'automated_action': True,
-            'sales_team_id': cls.team.id,
-            'automated_action_delay': 0,
-        })
+        cls.warranty_6_months = cls.env["sale.warranty.type"].create(
+            {
+                "name": "6 Months Parts",
+                "duration_in_months": 6,
+                "description": "Warranted 6 months on parts",
+                "automated_action": True,
+                "sales_team_id": cls.team.id,
+                "automated_action_delay": 0,
+            }
+        )
 
-        cls.product_a = cls.env['product.product'].create({
-            'name': 'My Product',
-            'tracking': 'serial',
-            'type': 'product',
-        })
+        cls.product_a = cls.env["product.product"].create(
+            {
+                "name": "My Product",
+                "tracking": "serial",
+                "type": "product",
+            }
+        )
 
         cls.warranty = cls._create_warranty()
 
     @classmethod
     def _find_lead(cls):
-        return cls.env['crm.lead'].search([('partner_id', '=', cls.customer.id)])
+        return cls.env["crm.lead"].search([("partner_id", "=", cls.customer.id)])
 
     @classmethod
     def _run_cron(cls):
-        cls.env.ref('sale_warranty_lead_on_expiry.lead_on_expiry_cron').method_direct_trigger()
+        cls.env.ref(
+            "sale_warranty_lead_on_expiry.lead_on_expiry_cron"
+        ).method_direct_trigger()
 
     @classmethod
     def _create_warranty(cls):
         today = datetime.now().date()
-        return cls.env['sale.warranty'].create({
-            'partner_id': cls.customer.id,
-            'product_id': cls.product_a.id,
-            'type_id': cls.warranty_6_months.id,
-            'state': 'active',
-            'activation_date': today - timedelta(90),
-            'expiry_date': today - timedelta(30),
-        })
+        return cls.env["sale.warranty"].create(
+            {
+                "partner_id": cls.customer.id,
+                "product_id": cls.product_a.id,
+                "type_id": cls.warranty_6_months.id,
+                "state": "active",
+                "activation_date": today - timedelta(90),
+                "expiry_date": today - timedelta(30),
+            }
+        )
 
 
 class TestLeadOnExpiryCron(LeadOnExpiryCronCase):
@@ -99,7 +114,7 @@ class TestLeadOnExpiryCron(LeadOnExpiryCronCase):
     def test_generated_lead_type_is_opportunity(self):
         self._run_cron()
         lead = self._find_lead()
-        assert lead.type == 'opportunity'
+        assert lead.type == "opportunity"
 
 
 class TestWarrantiesWithExtension(LeadOnExpiryCronCase):
@@ -113,12 +128,14 @@ class TestWarrantiesWithExtension(LeadOnExpiryCronCase):
     def setUpClass(cls):
         super().setUpClass()
         today = datetime.now().date()
-        cls.warranty.write({
-            'activation_date': today - timedelta(150),
-            'expiry_date': today - timedelta(120),
-            'extension_start_date': today + timedelta(60),
-            'extension_expiry_date': today + timedelta(90),
-        })
+        cls.warranty.write(
+            {
+                "activation_date": today - timedelta(150),
+                "expiry_date": today - timedelta(120),
+                "extension_start_date": today + timedelta(60),
+                "extension_expiry_date": today + timedelta(90),
+            }
+        )
 
     def test_if_days_to_trigger_not_reached__no_lead_created(self):
         self.warranty_6_months.automated_action_delay = 89
