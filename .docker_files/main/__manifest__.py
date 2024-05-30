@@ -82,6 +82,7 @@
         "sale_warranty_groupby_parent_affiliate",
         "sale_whole_order_invoiced",
         "sale_xmlrpc_compatible",
+        "sales_team_account_journal",
         "web_view_google_map_itinerary",
         "website_payment_message_enhanced",
         "website_sale_request_price",

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="crm_team_salesteams_view_form_inherit" model="ir.ui.view">
+        <field name="name">CRM Team : add sales journal on crm team form view</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sale.crm_team_salesteams_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoiced_target']" position="after">
+                <field name="journal_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
