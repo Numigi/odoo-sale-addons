@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale.crm_team_salesteams_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoiced_target']" position="after">
-                <field name="journal_id"/>
+                <field name="sales_journal_id"/>
             </xpath>
         </field>
     </record>
