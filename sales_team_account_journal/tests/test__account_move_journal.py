@@ -19,7 +19,7 @@ class AccountMoveJournal(SavepointCase):
         cls.team_id = cls.env["crm.team"].create(
             {
                 "name": "Super Sales Team",
-                "sales_journal_id": cls.journal.id,
+                "journal_id": cls.journal.id,
             }
         )
 
@@ -33,7 +33,7 @@ class AccountMoveJournal(SavepointCase):
         self.assertEqual(move.journal_id.name, self.journal.name)
 
     def test__02_team_journal_not_exists(self):
-        self.team_id.sales_journal_id = False
+        self.team_id.journal_id = False
         move = self.env["account.move"].create(
             {
                 "currency_id": self.env.ref("base.USD").id,

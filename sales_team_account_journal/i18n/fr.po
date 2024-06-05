@@ -39,7 +39,7 @@ msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: sales_team_account_journal
-#: model:ir.model.fields,field_description:sales_team_account_journal.field_crm_team__sales_journal_id
+#: model:ir.model.fields,field_description:sales_team_account_journal.field_crm_team__journal_id
 msgid "Sales Journal"
 msgstr "Journal de ventes"
 
@@ -49,7 +49,7 @@ msgid "Sales Team"
 msgstr "Équipe commerciale"
 
 #. module: sales_team_account_journal
-#: model:ir.model.fields,help:sales_team_account_journal.field_crm_team__sales_journal_id
+#: model:ir.model.fields,help:sales_team_account_journal.field_crm_team__journal_id
 msgid ""
 "This Sales Journal will be set as default on all Sales related             "
 "to this Sales Team. Only Sales type journals can be selected."

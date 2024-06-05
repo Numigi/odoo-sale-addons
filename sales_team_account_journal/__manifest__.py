@@ -11,7 +11,7 @@
     "category": "Sale",
     "depends": [
         "account",
-        "sale_management",
+        "sales_team",
     ],
     "summary": "Add a default sales journal on a sales team for invoices",
     "data": [

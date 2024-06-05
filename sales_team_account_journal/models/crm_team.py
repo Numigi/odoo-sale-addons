@@ -7,10 +7,12 @@ from odoo import models, fields
 class CrmTeam(models.Model):
     _inherit = "crm.team"
 
-    sales_journal_id = fields.Many2one(
+    journal_id = fields.Many2one(
         "account.journal",
         string="Sales Journal",
+        ondelete="restrict",
         domain=[("type", "=", "sale")],
+        check_company=True,
         help=(
             "This Sales Journal will be set as default on all Sales related \
             to this Sales Team. Only Sales type journals can be selected.",
