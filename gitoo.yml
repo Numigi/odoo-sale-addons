@@ -116,12 +116,6 @@
   includes:
     - date_range
 
-- url: https://github.com/OCA/queue
-  branch: "14.0"
-  includes:
-  - queue_job
-  - queue_job_cron
-
 - url: https://github.com/OCA/web
   branch: "14.0"
   includes:
