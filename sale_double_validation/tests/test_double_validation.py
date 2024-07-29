@@ -192,7 +192,7 @@ class TestSaleDoubleValidation(SavepointCase):
         # self.assertTrue(so.is_amount_to_approve()) #TODO: FIX ME
 
         # state must be set to `to_approve` if condition above is satisfied
-        state = "to_approve"
+        # state = "to_approve"
         # self.assertEqual(so.state, state)  #TODO: FIX ME
 
     def test_two_steps_above_limit(self):
