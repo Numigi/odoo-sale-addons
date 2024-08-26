@@ -6,6 +6,9 @@
         <field name="model_id" ref="model_sale_warranty"/>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
+        <field name="run_as_queue_job" eval="True"/>
+        <field name="no_parallel_queue_job_run" eval="True"/>
+        <field name="channel_id" ref="sale_warranty.channel_sale_warranty_ir_cron"/>
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
         <field name="state">code</field>

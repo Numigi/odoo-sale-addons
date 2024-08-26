@@ -11,6 +11,15 @@ class TestDynamicPrice(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        # Set queue job to no delay for testing
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                test_queue_job_no_delay=True,
+            )
+        )
+
         vals_list = {
             "name": "Product A",
             "type": "product",
@@ -73,7 +82,7 @@ class TestDynamicPrice(SavepointCase):
     )
     @unpack
     def test_update_sale_price_from_cost(
-            self, cost, margin, rounding, surcharge, expected_price
+        self, cost, margin, rounding, surcharge, expected_price
     ):
         self.product.write(
             {

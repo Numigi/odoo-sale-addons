@@ -13,7 +13,6 @@ class TestMilestone(SavepointCase):
                 "name": "My Project",
                 "use_milestones": True,
                 "allow_timesheets": True,
-                "allow_timesheet_timer": True,
                 "allow_subtasks": True,
             }
         )
@@ -21,7 +20,6 @@ class TestMilestone(SavepointCase):
             {
                 "name": "My Template Project 1",
                 "allow_timesheets": True,
-                "allow_timesheet_timer": True,
                 "allow_subtasks": True,
                 "allow_billable": True,
                 "bill_type": "customer_project",
@@ -31,7 +29,6 @@ class TestMilestone(SavepointCase):
             {
                 "name": "My Template Project 2",
                 "allow_timesheets": True,
-                "allow_timesheet_timer": True,
                 "allow_subtasks": True,
                 "allow_billable": True,
                 "bill_type": "customer_project",
@@ -234,7 +231,7 @@ class TestMilestone(SavepointCase):
         # it makes assertion failed on line_2.milestone_id
         line_2 = self.order_line.copy(
             {
-                'name': self.product_2.name,
+                "name": self.product_2.name,
                 "order_id": self.order.id,
                 "product_id": self.product_2.id,
             }
@@ -278,7 +275,7 @@ class TestMilestone(SavepointCase):
         # it makes assertion failed on line_2.milestone_id
         line_2 = self.order_line.copy(
             {
-                'name': self.product_2.name,
+                "name": self.product_2.name,
                 "order_id": self.order.id,
                 "product_id": self.product_2.id,
             }
