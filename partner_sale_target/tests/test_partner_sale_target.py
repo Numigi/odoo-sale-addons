@@ -15,11 +15,10 @@ class TestPartnerSaleTarget(SavepointCase):
         partner = self.env["res.partner"].create(
             {
                 "name": "Test Partner",
-                "company_type": "company",
+                "company_type": "person",
             }
         )
-        partner._compute_is_sale_target_allowed_contact()
-
+        partner.write({"company_type": "company"})
         self.assertTrue(partner.is_sale_target_allowed_contact)
 
         target_1 = self.env["sale.target"].create(
@@ -60,12 +59,9 @@ class TestPartnerSaleTarget(SavepointCase):
         self.assertTrue(target_1.partner_id.sale_order_ids)
         self.assertEqual(target_1.partner_id.sale_order_ids[0].state, "sale")
 
-        target_1._compute_realized_target()
-        target_1._compute_realized()
         self.assertEqual(target_1.realized_target, 100)
 
         # Check the current sale target and current realized target
-        partner._compute_current_sale_target()
         self.assertEqual(partner.current_sale_target, 500)
         self.assertEqual(partner.current_realized_target, 0.2)  # 100/500
 
@@ -100,13 +96,8 @@ class TestPartnerSaleTarget(SavepointCase):
         sale_order_2.action_confirm()
         sale_order_2.write({"date_order": "2022-02-20"})
 
-        partner.sale_target_ids._compute_realized_target()
-        partner.sale_target_ids._compute_realized()
-
         self.assertEqual(target_2.realized_target, 200)
 
-        # Check again the current sale target and current realized target
-        partner._compute_current_sale_target()
         # Keep in mind that the current sale target is the sum of all sale targets
         # that are active today or have an end date greater than today
         # so even having old sale targets, the current sale must be the same
