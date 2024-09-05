@@ -3,7 +3,7 @@
 
 {
     "name": "Sales Team Account Journal",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
@@ -11,6 +11,7 @@
     "category": "Sale",
     "depends": [
         "account",
+        "sale",
         "sales_team",
     ],
     "summary": "Add a default sales journal on a sales team for invoices",
