@@ -100,6 +100,16 @@
     - sale_order_partner_restrict
     - sale_product_multi_add
 
+- url: https://github.com/oca/server-tools
+  branch: "14.0"
+  includes:
+    - base_view_inheritance_extension
+
+- url: https://github.com/OCA/server-ux
+  branch: "14.0"
+  includes:
+    - date_range
+    
 - url: https://github.com/OCA/stock-logistics-workflow
   branch: "14.0"
   includes:
@@ -110,11 +120,6 @@
   branch: "14.0"
   includes:
     - stock_secondary_unit
-
-- url: https://github.com/OCA/server-ux
-  branch: "14.0"
-  includes:
-    - date_range
 
 - url: https://github.com/OCA/queue
   branch: "14.0"
