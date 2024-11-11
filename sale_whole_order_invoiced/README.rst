@@ -54,7 +54,11 @@ Release notes:
 --------------
 
 Since the version 1.1.0, the option `Invoice whole order (deduct down payments)` is selected by default when using this module.
+Even when creating invoice(s) from list view, using the `Create Invoice`.
 
+.. image:: static/description/sale_order_list_view.png 
+
+.. image:: static/description/create_invoice_wizard.png 
 
 Contributors
 ------------

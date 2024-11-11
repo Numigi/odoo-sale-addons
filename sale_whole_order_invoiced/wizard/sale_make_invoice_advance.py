@@ -8,9 +8,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
     advance_payment_method = fields.Selection(
-        selection_add=[("whole_order",
-                        _("Invoice whole order (deduct down payments)"))],
+        selection_add=[
+            ("whole_order", _("Invoice whole order (deduct down payments)"))
+        ],
         ondelete={"whole_order": "cascade"},
+        default="whole_order",
     )
 
     def create_invoices(self):

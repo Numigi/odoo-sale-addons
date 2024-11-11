@@ -89,3 +89,18 @@ class TestSaleOrder(SavepointCase):
         self.sale_order.whole_order_invoiced = True
         new_order = self.sale_order.copy()
         assert not new_order.whole_order_invoiced
+
+    def test_wizard_default_whole_order_invoiced(self):
+        def check_advance_payment_method(order_ids):
+            wizard_obj = self.env["sale.advance.payment.inv"].with_context(
+                active_ids=order_ids
+            )
+            wizard = wizard_obj.create(wizard_obj.default_get(list(wizard_obj._fields)))
+            assert wizard.advance_payment_method == "whole_order"
+
+        # Check on one record
+        check_advance_payment_method([self.sale_order.id])
+
+        # Check on more than one record
+        new_order = self.sale_order.copy()
+        check_advance_payment_method([self.sale_order.id, new_order.id])
