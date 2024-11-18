@@ -96,7 +96,7 @@
   includes:
   - mail_improved_tracking_value
 
-- url: https://github.com/OCA/stock-logistics-workflow.git
+- url: https://github.com/OCA/stock-logistics-workflow
   branch: "12.0"
   includes:
     - sale_order_global_stock_route
@@ -106,7 +106,7 @@
   includes:
     - base_view_inheritance_extension
 
-- url: https://github.com/OCA/server-ux.git
+- url: https://github.com/OCA/server-ux
   branch: "12.0"
   includes:
     - date_range
