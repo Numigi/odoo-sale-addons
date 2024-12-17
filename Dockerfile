@@ -81,7 +81,6 @@ COPY sale_rental_status /mnt/extra-addons/sale_rental_status
 COPY sale_report_partner /mnt/extra-addons/sale_report_partner
 COPY sale_stock_availability_popover /mnt/extra-addons/sale_stock_availability_popover
 COPY sale_stock_move_no_merge /mnt/extra-addons/sale_stock_move_no_merge
-COPY sale_subscription_extended /mnt/extra-addons/sale_subscription_extended
 COPY sale_target_margin /mnt/extra-addons/sale_target_margin
 COPY sale_warranty /mnt/extra-addons/sale_warranty
 COPY sale_warranty_groupby_parent_affiliate /mnt/extra-addons/sale_warranty_groupby_parent_affiliate
