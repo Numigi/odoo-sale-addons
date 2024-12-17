@@ -9,7 +9,7 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     milestone_ids = fields.One2many(
-        "project.milestone", "order_id", sting="Milestones")
+        "project.milestone", "order_id", string="Milestones")
 
     milestone_count = fields.Integer(
         compute="_get_milestone_count", string="Milestone Count", readonly=True
