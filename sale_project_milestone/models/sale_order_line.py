@@ -1,7 +1,8 @@
 # Copyright 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
+from odoo.osv import expression
 
 
 class SaleOrderLine(models.Model):
@@ -128,3 +129,26 @@ class SaleOrderLine(models.Model):
                 == self.product_id.project_template_id
             ):
                 return line.project_id
+
+    @api.model
+    def _name_search(
+        self, name, args=None, operator='ilike', limit=100, name_get_uid=None
+    ):
+        filter_sale_line_id = self.env.context.get('filter_sale_line_id')
+        if filter_sale_line_id:
+            sale_line_id_domain = self.env.context.get('sale_line_id_domain') or []
+            domain = expression.AND([args, eval(sale_line_id_domain)])
+            return super()._name_search(
+                name=name,
+                args=domain,
+                operator=operator,
+                limit=limit,
+                name_get_uid=name_get_uid,
+            )
+        return super()._name_search(
+            name=name,
+            args=args,
+            operator=operator,
+            limit=limit,
+            name_get_uid=name_get_uid,
+        )

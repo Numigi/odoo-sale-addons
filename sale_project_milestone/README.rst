@@ -90,6 +90,8 @@ After clicking on the button, two milestones are shown.
 
 Also, I have a smart button ``Tasks`` that shows all tasks linked to each milestone.
 
+.. image:: static/description/smart_button_tasks.png
+
 .. image:: static/description/milestone_tasks_list.png
 
 After clicking on the first milestone, the related tasks are displayed.

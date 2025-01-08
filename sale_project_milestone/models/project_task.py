@@ -1,26 +1,16 @@
 # Copyright 2023-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models
+from odoo import fields, api, models
 
 
 class ProjectTask(models.Model):
 
     _inherit = "project.task"
 
-    sale_line_domain = fields.Char(
-        compute="_compute_sale_line_domain",
+    sale_line_id_domain = fields.Char(
         string="Sale Line Domain",
-        store=True,
     )
-
-    @api.depends("project_id","milestone_id")
-    def _compute_sale_line_domain(self):
-        # method to compute sale_line_id domain instead of using onchange and return domain
-        # then use the field in the view to set domain
-
-
-        """ NEED TO CONTINUE HERE """
 
     def _compute_sol_ids(self, condition=False):
         domain = [
@@ -31,7 +21,7 @@ class ProjectTask(models.Model):
         if condition:
             domain += condition
         sale_line_ids = self.env['sale.order.line'].search(domain)
-        return {'domain': {'sale_line_id': [('id', 'in', sale_line_ids.ids)]}}
+        return [('id', 'in', sale_line_ids.ids)]
 
     @api.onchange("milestone_id")
     def _onchange_milestone_id_set_sale_order_line(self):
@@ -42,24 +32,20 @@ class ProjectTask(models.Model):
 
     @api.onchange("milestone_id")
     def _onchange_domain_sale_line_id(self):
-        # Compute sale_line_id domain using project's sale order
         if self.milestone_id:
-            return {
-                'domain': {
-                    'sale_line_id': [('milestone_id', '=', self.milestone_id.id)]
-                }
-            }
+            domain = [('milestone_id', '=', self.milestone_id.id)]
         elif not self.milestone_id and self.project_id.sale_order_id:
             condition = [('order_id', '=', self.project_id.sale_order_id.id)]
-            return self._compute_sol_ids(condition=condition)
-
+            domain = self._compute_sol_ids(condition=condition)
         else:
-            return self._compute_sol_ids()
+            domain = self._compute_sol_ids()
+        self.sale_line_id_domain = str(domain)
 
     @api.onchange("project_id")
     def _onchange_project_id_domain_sale_line_id(self):
         if self.project_id.sale_order_id:
             condition = [('order_id', '=', self.project_id.sale_order_id.id)]
-            return self._compute_sol_ids(condition=condition)
+            domain = self._compute_sol_ids(condition=condition)
         else:
-            return self._compute_sol_ids()
+            domain = self._compute_sol_ids()
+        self.sale_line_id_domain = str(domain)

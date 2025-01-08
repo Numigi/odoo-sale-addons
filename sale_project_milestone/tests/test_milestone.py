@@ -22,7 +22,6 @@ class TestMilestone(SavepointCase):
                 "allow_timesheets": True,
                 "allow_subtasks": True,
                 "allow_billable": True,
-                "bill_type": "customer_project",
             }
         )
         cls.project_template_2 = cls.env["project.project"].create(
@@ -31,7 +30,6 @@ class TestMilestone(SavepointCase):
                 "allow_timesheets": True,
                 "allow_subtasks": True,
                 "allow_billable": True,
-                "bill_type": "customer_project",
             }
         )
 
