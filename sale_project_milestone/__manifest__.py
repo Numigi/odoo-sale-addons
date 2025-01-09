@@ -16,9 +16,8 @@
     ],
     "data": [
         "views/product_template.xml",
-        "views/project_milestone.xml",
-        "views/project_task.xml",
-        "views/sale_order.xml",
+        "views/project_milestone_views.xml",
+        "views/project_task_views.xml",
     ],
     "installable": True,
 }

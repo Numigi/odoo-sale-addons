@@ -8,12 +8,17 @@ class TestMilestone(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # Set the Project Time Unit of the company to the same as product UOM
+        cls.uom_hour = cls.env.ref("uom.product_uom_hour")
+        # cls.env.company.project_time_mode_id = cls.uom_hour
+
         cls.project = cls.env["project.project"].create(
             {
                 "name": "My Project",
                 "allow_milestones": True,
                 "allow_timesheets": True,
                 "allow_subtasks": True,
+                "allow_billable": False,
             }
         )
         cls.project_template = cls.env["project.project"].create(
@@ -33,8 +38,6 @@ class TestMilestone(SavepointCase):
             }
         )
 
-        cls.uom_hour = cls.env.ref("uom.product_uom_hour")
-
         cls.milestone_template = cls.env["project.milestone"].create(
             {
                 "name": "My Milestone 1",
@@ -46,6 +49,7 @@ class TestMilestone(SavepointCase):
             {
                 "name": "My Task",
                 "project_id": cls.project.id,
+                "company_id": cls.env.company.id,
             }
         )
 
@@ -54,6 +58,7 @@ class TestMilestone(SavepointCase):
                 "name": "My Subtask",
                 "project_id": cls.project.id,
                 "parent_id": cls.task.id,
+                "company_id": cls.env.company.id,
             }
         )
         cls.product_uom_unit = cls.env.ref("uom.product_uom_unit")
@@ -293,7 +298,7 @@ class TestMilestone(SavepointCase):
         self.product.write(
             {
                 "service_tracking": "milestone_new_project",
-                "project_id": self.project.id,
+                # "project_id": self.project.id,
                 "milestone_template_id": self.milestone_template.id,
             }
         )
@@ -315,6 +320,7 @@ class TestMilestone(SavepointCase):
         subtask = task.child_ids
         assert subtask
         assert subtask != self.subtask
+        assert subtask.mapped("name") == self.subtask.mapped("name")
         assert subtask.name == self.subtask.name
         assert subtask.sale_line_id == self.order_line
         assert subtask.milestone_id == milestone

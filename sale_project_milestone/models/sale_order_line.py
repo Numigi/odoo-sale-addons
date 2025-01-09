@@ -25,18 +25,21 @@ class SaleOrderLine(models.Model):
 
     def _update_milestone_estimated_hours(self):
         for line in self.filtered("milestone_id"):
+            # INFO migrating to v16 : adding `or self.env.company` because of the function
+            # _convert_qty_company_hours in sale_timesheet that changed in v16.
+            # Forcing planned_hours to 0 when no company_id is set
             line.milestone_id.estimated_hours = line._convert_qty_company_hours(
-                self.task_id.company_id
+                self.task_id.company_id or self.env.company
             )
 
     def _timesheet_service_generation(self):
         lines_existing_project = self.filtered(
-            lambda l: l.is_service
-            and l.product_id.service_tracking == "milestone_existing_project"
+            lambda line: line.is_service
+            and line.product_id.service_tracking == "milestone_existing_project"
         )
         lines_new_project = self.filtered(
-            lambda l: l.is_service
-            and l.product_id.service_tracking == "milestone_new_project"
+            lambda line: line.is_service
+            and line.product_id.service_tracking == "milestone_new_project"
         )
         other_lines = self - lines_existing_project - lines_new_project
 
@@ -76,7 +79,12 @@ class SaleOrderLine(models.Model):
     def _get_milestone_common_vals(self):
         return {
             "name": self.product_id.display_name,
-            "estimated_hours": self._convert_qty_company_hours(self.task_id.company_id),
+            # INFO migrating to v16 : Adding `or self.env.company` because of the function
+            # _convert_qty_company_hours in sale_timesheet that changed in v16.
+            # Forcing planned_hours to 0 when no company_id is set
+            "estimated_hours": self._convert_qty_company_hours(
+                self.task_id.company_id or self.env.company
+            ),
             "sale_line_id": self.id,
         }
 
@@ -93,6 +101,8 @@ class SaleOrderLine(models.Model):
     def _copy_milestone_task(self, template_task):
         vals = self._get_milestone_task_vals(template_task)
         task = template_task.copy(vals)
+        # Cleaned up the child tasks to avoid duplicates
+        task.child_ids.unlink()
 
         for template_subtask in template_task.child_ids:
             vals = self._get_milestone_task_vals(template_subtask)
@@ -132,11 +142,11 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def _name_search(
-        self, name, args=None, operator='ilike', limit=100, name_get_uid=None
+        self, name, args=None, operator="ilike", limit=100, name_get_uid=None
     ):
-        filter_sale_line_id = self.env.context.get('filter_sale_line_id')
+        filter_sale_line_id = self.env.context.get("filter_sale_line_id")
         if filter_sale_line_id:
-            sale_line_id_domain = self.env.context.get('sale_line_id_domain') or []
+            sale_line_id_domain = self.env.context.get("sale_line_id_domain") or []
             domain = expression.AND([args, eval(sale_line_id_domain)])
             return super()._name_search(
                 name=name,

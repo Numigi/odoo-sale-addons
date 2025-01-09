@@ -14,14 +14,14 @@ class ProjectTask(models.Model):
 
     def _compute_sol_ids(self, condition=False):
         domain = [
-            ('is_service', '=', True),
-            ('is_expense', '=', False),
-            ('state', 'in', ['sale', 'done']),
+            ("is_service", "=", True),
+            ("is_expense", "=", False),
+            ("state", "in", ["sale", "done"]),
         ]
         if condition:
             domain += condition
-        sale_line_ids = self.env['sale.order.line'].search(domain)
-        return [('id', 'in', sale_line_ids.ids)]
+        sale_line_ids = self.env["sale.order.line"].search(domain)
+        return [("id", "in", sale_line_ids.ids)]
 
     @api.onchange("milestone_id")
     def _onchange_milestone_id_set_sale_order_line(self):
@@ -33,9 +33,9 @@ class ProjectTask(models.Model):
     @api.onchange("milestone_id")
     def _onchange_domain_sale_line_id(self):
         if self.milestone_id:
-            domain = [('milestone_id', '=', self.milestone_id.id)]
+            domain = [("milestone_id", "=", self.milestone_id.id)]
         elif not self.milestone_id and self.project_id.sale_order_id:
-            condition = [('order_id', '=', self.project_id.sale_order_id.id)]
+            condition = [("order_id", "=", self.project_id.sale_order_id.id)]
             domain = self._compute_sol_ids(condition=condition)
         else:
             domain = self._compute_sol_ids()
@@ -44,7 +44,7 @@ class ProjectTask(models.Model):
     @api.onchange("project_id")
     def _onchange_project_id_domain_sale_line_id(self):
         if self.project_id.sale_order_id:
-            condition = [('order_id', '=', self.project_id.sale_order_id.id)]
+            condition = [("order_id", "=", self.project_id.sale_order_id.id)]
             domain = self._compute_sol_ids(condition=condition)
         else:
             domain = self._compute_sol_ids()

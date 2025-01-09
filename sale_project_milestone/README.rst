@@ -22,13 +22,13 @@ In the form view of a product of type service, I find new options under ``Servic
 * Create milestone in existing project
 * Create milestone in new project
 
-.. image:: static/description/product_service_tracking.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/product_service_tracking.png
 
 Create milestone in existing project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 When selecting this option, a project must be selected.
 
-.. image:: static/description/product_milestone_existing_project.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/product_milestone_existing_project.png
 
 Each sales order line will generate a new milestone in the selected project.
 
@@ -38,7 +38,7 @@ Create milestone in new project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 When selecting this option, you may select a project template and / or a milestone template.
 
-.. image:: static/description/product_milestone_new_project.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/product_milestone_new_project.png
 
 Each sales order line will generate a new milestone in a project.
 
@@ -65,46 +65,46 @@ I create a new product with the option ``Create milestone in new project``.
 I select a milestone template for this product and choose service policy ``Based on Milestones``.
 I have set in advance tasks linked to the milestone template.
 
-.. image:: static/description/product_with_milestone_template.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/product_with_milestone_template.png
 
-.. image:: static/description/milestone_template_service_A_tasks.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/milestone_template_service_A_tasks.png
 
 I create a second product with a different milestone template and choose service policy ``Based on Milestones``.
 I have set in advance tasks linked to the milestone template.
 
-.. image:: static/description/product_2_with_milestone_template.png*
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/product_2_with_milestone_template.png
 
-.. image:: static/description/milestone_template_service_B_tasks.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/milestone_template_service_B_tasks.png
 
 I create a sales order with the two products.
 
-.. image:: static/description/sales_order_new.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/sales_order_new.png
 
 After confirming the sales order, I notice a smart button ``Milestones``.
 
-.. image:: static/description/sales_order_milestones_button.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/sales_order_milestones_button.png
 
 After clicking on the button, two milestones are shown.
 
-.. image:: static/description/milestones_list.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/milestones_list.png
 
 Also, I have a smart button ``Tasks`` that shows all tasks linked to each milestone.
 
-.. image:: static/description/smart_button_tasks.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/smart_button_tasks.png
 
-.. image:: static/description/milestone_tasks_list.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/milestone_tasks_list.png
 
 After clicking on the first milestone, the related tasks are displayed.
 
-.. image:: static/description/milestone_form.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/milestone_form.png
 
 In the form view of a task, if I change the milestone, the related sales order line is updated.
 
-.. image:: static/description/task_form_milestone_changed.png
+.. image:: https://raw.githubusercontent.com/Numigi/odoo-sale-addons/16.0/sale_project_milestone/static/description/task_form_milestone_changed.png
 
-Release
--------
-Since version ``1.2.0`` of the module, we set False in the field sale order line if the milestone is removed from the task.
+Notice
+------
+We set False in the field sale order line if the milestone is removed from the task.
 Also the filter on the sale order line field is improved according to the project and the milestone associated with the task.
 
 Contributors
