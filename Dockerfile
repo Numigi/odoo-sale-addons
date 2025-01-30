@@ -46,12 +46,12 @@ COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
 COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
+COPY sale_order_customer_ref /mnt/extra-addons/sale_order_customer_ref
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
 COPY sale_order_groupby_parent_affiliate /mnt/extra-addons/sale_order_groupby_parent_affiliate
 COPY sale_order_line_checkbox /mnt/extra-addons/sale_order_line_checkbox
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
-COPY sale_order_list_with_customer_reference /mnt/extra-addons/sale_order_list_with_customer_reference
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_partner_restrict_affiliates /mnt/extra-addons/sale_order_partner_restrict_affiliates
 COPY sale_order_portal_hide_invoices /mnt/extra-addons/sale_order_portal_hide_invoices
