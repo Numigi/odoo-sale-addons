@@ -51,6 +51,7 @@ COPY sale_order_groupby_parent_affiliate /mnt/extra-addons/sale_order_groupby_pa
 COPY sale_order_line_checkbox /mnt/extra-addons/sale_order_line_checkbox
 COPY sale_order_line_margin_amount /mnt/extra-addons/sale_order_line_margin_amount
 COPY sale_order_line_readonly_conditions /mnt/extra-addons/sale_order_line_readonly_conditions
+COPY sale_order_list_with_client_order_ref /mnt/extra-addons/sale_order_list_with_client_order_ref
 COPY sale_order_margin_percent /mnt/extra-addons/sale_order_margin_percent
 COPY sale_order_partner_restrict_affiliates /mnt/extra-addons/sale_order_partner_restrict_affiliates
 COPY sale_order_portal_hide_invoices /mnt/extra-addons/sale_order_portal_hide_invoices

@@ -46,6 +46,7 @@
         "sale_order_line_checkbox",
         "sale_order_line_margin_amount",
         "sale_order_line_readonly_conditions",
+        "sale_order_list_with_client_order_ref",
         "sale_order_margin_percent",
         "sale_order_partner_restrict_affiliates",
         "sale_order_portal_hide_invoices",
