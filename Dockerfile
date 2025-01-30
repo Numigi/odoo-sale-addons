@@ -46,6 +46,7 @@ COPY sale_invoice_group_by_order /mnt/extra-addons/sale_invoice_group_by_order
 COPY sale_invoice_no_follow /mnt/extra-addons/sale_invoice_no_follow
 COPY sale_kit /mnt/extra-addons/sale_kit
 COPY sale_minimum_margin /mnt/extra-addons/sale_minimum_margin
+COPY sale_order_customer_ref /mnt/extra-addons/sale_order_customer_ref
 COPY sale_order_default_taxes /mnt/extra-addons/sale_order_default_taxes
 COPY sale_order_groupby_parent_affiliate /mnt/extra-addons/sale_order_groupby_parent_affiliate
 COPY sale_order_line_checkbox /mnt/extra-addons/sale_order_line_checkbox
