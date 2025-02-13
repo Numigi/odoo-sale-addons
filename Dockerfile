@@ -72,6 +72,7 @@ COPY sale_product_pack_ext /mnt/extra-addons/sale_product_pack_ext
 COPY sale_product_pack_modifiable /mnt/extra-addons/sale_product_pack_modifiable
 COPY sale_project_description /mnt/extra-addons/sale_project_description
 COPY sale_project_milestone /mnt/extra-addons/sale_project_milestone
+COPY sale_purchase_procurement_link /mnt/extra-addons/sale_purchase_procurement_link
 COPY sale_qweb_report_website_desc /mnt/extra-addons/sale_qweb_report_website_desc
 COPY sale_rental /mnt/extra-addons/sale_rental
 COPY sale_rental_app /mnt/extra-addons/sale_rental_app
