@@ -67,6 +67,7 @@
         "sale_product_pack_modifiable",
         "sale_project_description",
         "sale_project_milestone",
+        "sale_purchase_procurement_link",
         "sale_qweb_report_website_desc",
         "sale_rental",
         "sale_rental_app",

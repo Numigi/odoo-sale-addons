@@ -36,6 +36,7 @@
   branch: "14.0"
   includes:
     - product_supplier_info_helpers
+    - purchase_line_procurement_no_grouping
 
 - url: https://github.com/Numigi/odoo-stock-addons
   branch: "14.0"
