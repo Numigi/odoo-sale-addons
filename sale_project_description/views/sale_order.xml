@@ -1,0 +1,46 @@
+<odoo>
+
+    <record id="view_sale_order_project_desc_form" model="ir.ui.view">
+        <field name="name">Sale Order Form: Add Project Description</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
+        <field name="arch" type="xml">
+            <field name="sale_order_template_id" position="after">
+                <field name="project_description"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sale_quot_project_desc_tree" model="ir.ui.view">
+        <field name="name">Sale Quotation Tree: Add Project Description</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="project_description"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sale_order_project_desc_tree" model="ir.ui.view">
+        <field name="name">Sale Order Tree: Add Project Description</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="project_description"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sale_order_project_desc_search" model="ir.ui.view">
+        <field name="name">Sale Order Search: Add Project Description</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="filter_domain"> ['|', '|', '|', ('name', 'ilike', self), ('client_order_ref', 'ilike', self), ('partner_id', 'child_of', self), ('project_description', 'ilike', self)] </attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

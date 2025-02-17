@@ -3,7 +3,7 @@
 
 from datetime import datetime
 from odoo.http import request
-from odoo import api, fields, models, _
+from odoo import fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.addons.product_supplier_info_helpers.helpers import (
     get_supplier_info_from_product,

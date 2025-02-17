@@ -9,11 +9,13 @@ from odoo.addons.product_configurator_sale.models.sale import SaleOrderLine
 @api.onchange("product_uom", "product_uom_qty")
 def product_uom_change(self):
     # Rewrite the onchange of product configurator to add the condition related to the pack
-    # When the product is a pack with price totalized in the pack we don't nead to calculate 
+    # When the product is a pack with price totalized in the pack we don't nead to calculate
     # the price from the config_session
-    is_pack_totalised_price = self.product_id.pack_ok and\
-        self.product_id.pack_type == 'detailed' and\
-            self.product_id.pack_component_price in ['totalized', 'ignored']
+    is_pack_totalised_price = (
+        self.product_id.pack_ok
+        and self.product_id.pack_type == "detailed"
+        and self.product_id.pack_component_price in ["totalized", "ignored"]
+    )
     if self.config_session_id and not is_pack_totalised_price:
         account_tax_obj = self.env["account.tax"]
         self.price_unit = account_tax_obj._fix_tax_included_price_company(
@@ -24,5 +26,6 @@ def product_uom_change(self):
         )
     else:
         super(SaleOrderLine, self).product_uom_change()
+
 
 SaleOrderLine.product_uom_change = product_uom_change

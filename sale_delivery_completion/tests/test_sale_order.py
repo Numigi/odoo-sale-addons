@@ -41,7 +41,6 @@ class TestSaleOrder(SavepointCase):
         cls.line_1 = cls.sale_order.order_line[0]
         cls.line_2 = cls.sale_order.order_line[1]
 
-
     @classmethod
     def _get_so_line_vals(cls, product, unit, qty):
         return {
@@ -66,4 +65,10 @@ class TestSaleOrder(SavepointCase):
     def test_if_no_stockable_product__then_fully_delivered(self):
         self.product_1.type = "service"
         self.product_2.type = "service"
+        assert self.sale_order.completion_rate == "100%"
+
+    def test_product_returned(self):
+        self.line_1.qty_delivered = 10
+        self.line_2.qty_delivered = 8
+        self.line_2.qty_returned = 2
         assert self.sale_order.completion_rate == "100%"

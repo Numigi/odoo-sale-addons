@@ -1,0 +1,13 @@
+<odoo>
+
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <br/>
+            <div class="oe_structure mt32 mb32" id="website_description">
+                <div t-field="doc.website_description" t-options="{'widget': 'html'}"/>
+            </div>
+            <br/>
+        </xpath>
+    </template>
+
+</odoo>

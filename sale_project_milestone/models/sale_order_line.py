@@ -95,7 +95,7 @@ class SaleOrderLine(models.Model):
         for template_subtask in template_task.child_ids:
             vals = self._get_milestone_task_vals(template_subtask)
             vals["parent_id"] = task.id
-            subtask = template_subtask.copy(vals)
+            template_subtask.copy(vals)
 
         return task
 

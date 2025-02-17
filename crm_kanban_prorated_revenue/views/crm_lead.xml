@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="crm_lead_view_kanban" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.prorated_revenue</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="expected_revenue" position="after">
+                <field name="prorated_revenue"/>
+            </field>
+            <xpath expr="//t[@t-if='record.expected_revenue.raw_value']" position="before">
+                <t t-if="record.expected_revenue.raw_value">
+                    <field name="prorated_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/> /
+                </t>
+            </xpath>
+            <xpath expr="//progressbar" position="attributes">
+                <attribute name="sum_field">prorated_revenue</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -13,4 +13,5 @@ def create(self, vals):
         record.expand_pack_line()
     return record
 
+
 SaleOrderLine.create = create

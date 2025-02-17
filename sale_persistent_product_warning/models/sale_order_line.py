@@ -1,7 +1,7 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, api
+from odoo import fields, models
 
 
 class SaleOrderLine(models.Model):
@@ -12,6 +12,7 @@ class SaleOrderLine(models.Model):
         "Product Warning Message",
         compute='_compute_product_warning',
     )
+
     def _compute_product_warning(self):
         product_warning = False
         for line in self:

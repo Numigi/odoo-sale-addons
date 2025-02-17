@@ -141,7 +141,7 @@ class SaleOrderLine(models.Model):
             next_sequence += 1
 
     def recompute_kit_sequences(self, kits):
-        kit_sequences = {l.kit_reference: l.sequence for l in kits}
+        kit_sequences = {line.kit_reference: line.sequence for line in kits}
         next_sequences = defaultdict(lambda: 1)
 
         for line in self:
@@ -151,22 +151,22 @@ class SaleOrderLine(models.Model):
             next_sequences[kit_ref] += 1
 
     def sorted_by_sequence(self):
-        return self.sorted(key=lambda l: l.sequence)
+        return self.sorted(key=lambda line: line.sequence)
 
     def sorted_by_kit_sequence(self):
-        return self.sorted(key=lambda l: l.kit_sequence)
+        return self.sorted(key=lambda line: line.kit_sequence)
 
     def _get_kit_line(self):
         if self.is_kit or not self.kit_reference:
             return None
 
         return self.order_id.order_line.filtered(
-            lambda l: l.is_kit and l.kit_reference == self.kit_reference
+            lambda line: line.is_kit and line.kit_reference == self.kit_reference
         )[0:1]
 
     def _get_kit_component_lines(self):
         return self.order_id.order_line.filtered(
-            lambda l: not l.is_kit and l.kit_reference == self.kit_reference
+            lambda line: not line.is_kit and line.kit_reference == self.kit_reference
         )
 
     @api.depends("kit_reference")
@@ -185,7 +185,7 @@ class SaleOrderLine(models.Model):
     @api.depends("product_uom_qty", "kit_line_ids", "kit_line_ids.qty_delivered")
     def _compute_qty_delivered(self):
         super()._compute_qty_delivered()
-        kit_lines = self.filtered(lambda l: l.qty_delivered_method == "kit")
+        kit_lines = self.filtered(lambda line: line.qty_delivered_method == "kit")
         kit_lines._compute_kit_qty_delivered()
 
     def _compute_kit_qty_delivered(self):

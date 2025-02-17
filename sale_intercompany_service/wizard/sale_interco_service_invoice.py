@@ -1,7 +1,7 @@
 # © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from odoo import api, fields, models
-from odoo.exceptions import AccessError
+
 
 class SaleIntercoServiceInvoice(models.TransientModel):
     _name = "sale.interco.service.invoice"
@@ -243,8 +243,8 @@ class SaleIntercoServiceInvoice(models.TransientModel):
 
     def _get_supplier_invoice_line_vals(self, invoice):
         return [
-            self._get_single_supplier_invoice_line_vals(l)
-            for l in invoice.invoice_line_ids
+            self._get_single_supplier_invoice_line_vals(line)
+            for line in invoice.invoice_line_ids
         ]
 
     def _get_single_supplier_invoice_line_vals(self, invoice_line):
@@ -316,8 +316,8 @@ class SaleIntercoServiceInvoice(models.TransientModel):
 
     def _get_customer_invoice_line_vals(self, invoice):
         return [
-            self._get_single_customer_invoice_line_vals(l)
-            for l in invoice.invoice_line_ids
+            self._get_single_customer_invoice_line_vals(line)
+            for line in invoice.invoice_line_ids
         ]
 
     def _get_single_customer_invoice_line_vals(self, invoice_line):

@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* sale_target_margin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-06 09:56+0000\n"
+"PO-Revision-Date: 2022-07-06 09:56+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_target_margin
+#: model_terms:ir.ui.view,arch_db:sale_target_margin.product_category_form_with_target_margin
+msgid "<span class=\"oe_inline\">%</span> to"
+msgstr "<span class=\"oe_inline\">%</span> à"
+
+#. module: sale_target_margin
+#: model:ir.model.fields,help:sale_target_margin.field_product_category__target_margin_min
+#: model:ir.model.fields,help:sale_target_margin.field_sale_order_line__target_margin_min
+msgid "Allows you to set a minimum and maximum target margin for the sale of items in this category. \n"
+" If the margin % on the sale order lines is below the minimum margin, it is displayed in red. \n"
+" If it is within the defined range, it is displayed in yellow. \n"
+" If it exceeds the maximum margin, it is displayed in green."
+msgstr "Permet de définir une marge minimale et maximale cible pour la vente des articles de cette catégorie d’articles. \n"
+" Si la marge % sur les lignes de vente est sous la marge minimale, elle s’affiche en rouge. \n"
+" Si elle se trouve à l’intérieur de l’interval défini, elle s’affiche en jaune. \n"
+" Si elle dépasse la marge maximale, elle s'affiche en vert."
+
+#. module: sale_target_margin
+#: model:ir.model.fields,field_description:sale_target_margin.field_product_category__target_margin_max
+#: model:ir.model.fields,field_description:sale_target_margin.field_sale_order_line__target_margin_max
+msgid "Max. Target Margin"
+msgstr "Marge cible max."
+
+#. module: sale_target_margin
+#: model:ir.model.fields,field_description:sale_target_margin.field_product_category__target_margin_min
+#: model:ir.model.fields,field_description:sale_target_margin.field_sale_order_line__target_margin_min
+msgid "Min. Target Margin"
+msgstr "Marge cible min."
+
+#. module: sale_target_margin
+#: model:ir.model,name:sale_target_margin.model_product_category
+msgid "Product Category"
+msgstr "Catégory de produit"
+
+#. module: sale_target_margin
+#: model_terms:ir.ui.view,arch_db:sale_target_margin.product_category_form_with_target_margin
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: sale_target_margin
+#: model:ir.model,name:sale_target_margin.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bon de commande"
+
+#. module: sale_target_margin
+#: model_terms:ir.ui.view,arch_db:sale_target_margin.product_category_form_with_target_margin
+msgid "Target Margin"
+msgstr "Marge cible"
+
+#. module: sale_target_margin
+#: code:addons/sale_target_margin/models/product_category.py:29
+#, python-format
+msgid "The set minimum margin must be lower than the set maximum margin."
+msgstr "La marge minimale définie doit être inférieure à la marge maximale définie."
+

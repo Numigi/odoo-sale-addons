@@ -38,6 +38,7 @@ class SaleOrderLine(models.Model):
         self._cancel_all_stock_moves()
         self.product_id = product
         product_with_lang = product.with_context(lang=self.order_id.partner_id.lang)
+
         self.name = self.get_sale_order_line_multiline_description_sale(
             product_with_lang
         )
@@ -97,8 +98,8 @@ class SaleOrderLine(models.Model):
         if done_move:
             raise ValidationError(
                 _(
-                    "The variant swap can not be done since the sale order line with product {} is "
-                    "linked to a stock move that is already done ({})."
+                    "The variant swap can not be done since the sale order line "
+                    "with product {} is linked to a stock move that is already done ({})."
                 ).format(self.product_id.display_name, done_move[0].reference)
             )
 

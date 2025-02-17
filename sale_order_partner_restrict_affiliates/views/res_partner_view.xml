@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Set default affiliate type to contact instead of other -->
+    <record id="view_partner_form_affiliate_contact_type" model="ir.ui.view">
+        <field name="name">Affiliate: Default Type Contact</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_affiliate.view_partner_form_add_affiliate" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='affiliate_ids']" position="attributes">
+                <attribute name="context">{'default_parent_id': active_id, 'default_is_company': True, 'default_type':'contact'}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

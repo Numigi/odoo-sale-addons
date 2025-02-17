@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import threading
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class ResPartner(models.Model):

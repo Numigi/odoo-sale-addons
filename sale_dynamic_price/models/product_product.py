@@ -106,7 +106,7 @@ class Product(models.Model):
         ])
         return products_with_dynamic_price.filtered(
             lambda p: (
-                p.margin_amount != p._compute_margin_amount() or
-                p.lst_price != p._compute_sale_price_from_cost()
+                p.margin_amount != p._compute_margin_amount()
+                or p.lst_price != p._compute_sale_price_from_cost()
             )
         )

@@ -1,0 +1,191 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_stock_availability_popover
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-18 18:55+0000\n"
+"PO-Revision-Date: 2023-12-18 18:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "All planned operations included"
+msgstr "Toutes opérations planifiées incluses"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/js/qty_at_date_widget.js:0
+#, python-format
+msgid "Availability"
+msgstr "Disponibilité"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "Available"
+msgstr "Disponible"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "Available in stock"
+msgstr "Disponible en stock"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "Delivered"
+msgstr "Livré"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "Expected Delivery"
+msgstr "Livraison prévue"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__forecast_expected_date
+msgid "Forecast Expected Date"
+msgstr "Date Prévue Espérée"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "Forecasted Stock"
+msgstr "Stock planifié"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__free_qty_today
+msgid "Free Qty Today"
+msgstr "Qté Disponible aujourd'hui"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "No enough future availaibility"
+msgstr "Pas assez de disponibilité future"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "No future availaibility"
+msgstr "Pas de disponibilité future"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "On"
+msgstr "à"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "On hand Stock"
+msgstr "En stock"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__qty_available_color
+msgid "Qty Available Color"
+msgstr "Qté disponible couleur"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__qty_available_today
+msgid "Qty Available Today"
+msgstr "Qté disponible aujourd'hui"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__qty_reserved
+msgid "Qty Reserved"
+msgstr "Qté réservée"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "Remaining demand available at"
+msgstr "Demande restante disponible à"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "Reserved"
+msgstr "Réservé"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model,name:sale_stock_availability_popover.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__scheduled_date
+msgid "Scheduled Date"
+msgstr "Date prévue"
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "This product is replenished on demand."
+msgstr "Ce produit est réapprovisionné à la demande."
+
+#. module: sale_stock_availability_popover
+#. openerp-web
+#: code:addons/sale_stock_availability_popover/static/src/xml/sale_stock.xml:0
+#, python-format
+msgid "To deliver"
+msgstr "À livrer"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,field_description:sale_stock_availability_popover.field_sale_order_line__virtual_available_at_date
+msgid "Virtual Available At Date"
+msgstr "Virtuellement disponible à date"
+
+#. module: sale_stock_availability_popover
+#: model:ir.model.fields,help:sale_stock_availability_popover.field_sale_order_line__qty_available_color
+msgid ""
+"​Green == Only available in the default warehouse Yellow == Partially "
+"available in the warehouse by default ​Red == Not available in warehouse by "
+"default"
+msgstr "​Vert == Uniquement disponible dans l'entrepôt par défaut Jaune == Partiellement "
+"disponible dans l'entrepôt par défaut ​Rouge == Non disponible dans l'entrepôt par "
+"défaut"

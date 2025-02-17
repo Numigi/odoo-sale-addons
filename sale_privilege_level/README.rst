@@ -137,6 +137,20 @@ From the list view of the contacts or if I export the ``Privilege Level`` field,
 NOTICE : If I update the privilege level of the parent, all privilege level of child contact linked to it
 will be changed too.
 
+
+Releases:
+---------
+
+Since the version 2.2.0 this module adds the privilage level in `Sales > Reporting > Sales > pivot view`.
+
+.. image:: static/description/sale_report_privilege_level.png
+
+We can also filter by `Privilege Level` in the Pivot View:
+
+.. image:: static/description/sale_report_privilege_level_filter.png
+
+
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

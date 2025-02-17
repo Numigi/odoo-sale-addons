@@ -38,6 +38,13 @@ In the payment step, I see only delivery methods enabled for my privilege level.
 
 .. image:: static/description/website_shop_payment.png
 
+Releases:
+---------
+
+Since version 1.1.0, the module allows you to define a default delivery method at the privilege level
+
+.. image:: static/description/default_delivery_method.png
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

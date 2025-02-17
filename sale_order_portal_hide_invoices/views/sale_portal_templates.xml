@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="sale_order_portal_hidden_invoices" name="Sales Order Portal Hidden Invoices" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//div[@t-if='invoices']" position="before">
+            <t t-set="invoices" t-value="False"/>
+        </xpath>
+    </template>
+
+</odoo>

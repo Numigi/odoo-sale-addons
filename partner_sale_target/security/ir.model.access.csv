@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_target_user,partner_sale_target_user,model_sale_target,,1,0,0,0
+access_sale_target_manager,partner_sale_target_manager,model_sale_target,partner_sale_target.group_sale_target_manager,1,1,1,1

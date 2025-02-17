@@ -1,7 +1,6 @@
 # © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from ddt import ddt, data
 from odoo.http import request
 from odoo.tests.common import SavepointCase
 from odoo.addons.test_http_request.common import mock_odoo_request

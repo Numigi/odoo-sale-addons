@@ -75,14 +75,12 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
             }
         )
 
-
         cls.line = cls.sale_order.order_line
         cls.line.flush()
         cls.env.cache.invalidate()
 
     def test_currency_rate_applied_to_product_price(self):
         self.product.update_sale_price_from_cost()
-        print("====================lst_price==================",self.product.lst_price)
         self.sale_order.order_line.product_uom_change()
         self.sale_order.order_line.refresh()
         assert self.sale_order.order_line.price_unit == 150  # (70 / (1 - 0.30)) * 1.5
@@ -102,7 +100,7 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
         self.line.product_uom_change()
         self.line.refresh()
         assert (
-                self.line.price_unit == expected_price
+            self.line.price_unit == expected_price
         )  # (70 / (1 - 0.30)) * currency_rate
 
     @data((0, 150.00), (False, 150.00), (-0.01, 149.99), (-0.03, 149.97))

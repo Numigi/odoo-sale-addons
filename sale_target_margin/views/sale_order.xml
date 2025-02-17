@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_line_tree_with_colored_margin" model="ir.ui.view">
+        <field name="name">Sale Order Line List: add color to margin in percent</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_margin_percent.sale_order_line_list_with_percent_margin"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='margin_percent']" position="after">
+                <field name="target_margin_min" invisible="1"/>
+                <field name="target_margin_max" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='margin_percent']" position="attributes">
+                <attribute name="options">{"fg_color": "green:target_margin_max/100 &lt;= margin_percent; red:target_margin_min/100 &gt;= margin_percent; orange:(target_margin_min/100 &lt;= margin_percent and target_margin_max/100 &gt;= margin_percent)"}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -5,8 +5,11 @@
 from odoo.addons.sale_product_pack.models.sale_order import SaleOrder
 
 
-def copy(self, default=None):
-    sale_copy = super(SaleOrder, self.with_context(from_copy=True)).copy(default)
-    return sale_copy
+class SaleOrderOverride(SaleOrder):
+    def copy(self, default=None):
+        sale_copy = super(SaleOrder,
+                          self.with_context(from_copy=True)).copy(default)
+        return sale_copy
 
-SaleOrder.copy = copy
+
+SaleOrder.copy = SaleOrderOverride.copy

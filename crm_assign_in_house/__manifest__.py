@@ -3,7 +3,8 @@
 
 {
     "name": "CRM Assign In House",
-    "summary": "This module assigns customer's salesperson to CRM when select In-house customer",
+    "summary": """This module assigns customer's salesperson to
+    CRM when select In-house customer""",
     "version": "14.0.1.0.0",
     "website": "https://bit.ly/numigi-com",
     "author": "Numigi",

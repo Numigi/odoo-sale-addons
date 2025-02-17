@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_whole_order_invoiced
+# 	* sale_whole_order_invoiced
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0+e\n"
+"Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 18:49+0000\n"
-"PO-Revision-Date: 2019-10-21 18:49+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-12-11 16:09+0000\n"
+"PO-Revision-Date: 2023-12-11 16:09+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,44 +16,63 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_whole_order_invoiced
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Down payment (fixed amount)"
+#: model:ir.model.fields,help:sale_whole_order_invoiced.field_sale_advance_payment_inv__advance_payment_method
+msgid ""
+"A standard invoice is issued with all the order lines ready for invoicing,"
+"         according to their invoicing policy (based on ordered or delivered "
+"quantity)."
+msgstr ""
+"Une facture standard est émise avec toutes les lignes de commande prêtes à "
+"être facturées,         according to their invoicing policy (based on "
+"ordered or delivered quantity)."
+
+#. module: sale_whole_order_invoiced
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_advance_payment_inv__advance_payment_method
+msgid "Create Invoice"
+msgstr "Créer une facture"
+
+#. module: sale_whole_order_invoiced
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_advance_payment_inv__display_name
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: sale_whole_order_invoiced
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_advance_payment_inv__id
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_order_line__id
+msgid "ID"
 msgstr ""
 
 #. module: sale_whole_order_invoiced
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Down payment (percentage)"
-msgstr ""
-
-#. module: sale_whole_order_invoiced
-#: selection:sale.advance.payment.inv,advance_payment_method:0
+#: code:addons/sale_whole_order_invoiced/wizard/sale_make_invoice_advance.py:0
+#: model:ir.model.fields.selection,name:sale_whole_order_invoiced.selection__sale_advance_payment_inv__advance_payment_method__whole_order
+#, python-format
 msgid "Invoice whole order (deduct down payments)"
-msgstr "Facturation unique (acomptes déduits)"
+msgstr "Facturer la totalité de la commande (déduire les acomptes)"
 
 #. module: sale_whole_order_invoiced
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Invoiceable lines"
-msgstr ""
-
-#. module: sale_whole_order_invoiced
-#: selection:sale.advance.payment.inv,advance_payment_method:0
-msgid "Invoiceable lines (deduct down payments)"
-msgstr ""
-
-#. module: sale_whole_order_invoiced
-#: model:ir.model,name:sale_whole_order_invoiced.model_sale_order
-msgid "Sale Order"
-msgstr ""
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_advance_payment_inv____last_update
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_order____last_update
+#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_order_line____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
 
 #. module: sale_whole_order_invoiced
 #: model:ir.model,name:sale_whole_order_invoiced.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr ""
+msgstr "Facture de paiement d'avance"
 
 #. module: sale_whole_order_invoiced
-#: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_advance_payment_inv__advance_payment_method
-msgid "What do you want to invoice?"
-msgstr ""
+#: model:ir.model,name:sale_whole_order_invoiced.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_whole_order_invoiced
+#: model:ir.model,name:sale_whole_order_invoiced.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
 
 #. module: sale_whole_order_invoiced
 #: model:ir.model.fields,field_description:sale_whole_order_invoiced.field_sale_order__whole_order_invoiced

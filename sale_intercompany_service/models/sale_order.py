@@ -30,7 +30,7 @@ class SaleOrder(models.Model):
         )
         action = wizard.get_formview_action()
         action["views"] = [
-            (self.env.ref(f"sale_intercompany_service.seller_wizard").id, "form")
+            (self.env.ref("sale_intercompany_service.seller_wizard").id, "form")
         ]
         action["res_id"] = wizard.id
         action["target"] = "new"
@@ -58,11 +58,11 @@ class SaleOrder(models.Model):
             if not company:
                 raise ValidationError(
                     _(
-                        "The invoicing address ({partner}) selected on the sale order ({order}) "
-                        "is not linked to a company. "
+                        "The invoicing address ({partner}) selected on the sale order "
+                        "({order}) is not linked to a company. "
                         "\n\n"
-                        "You must select an invoicing address related to a company in order "
-                        "to allow the intercompany service."
+                        "You must select an invoicing address related to a company in "
+                        "order to allow the intercompany service."
                     ).format(
                         partner=order.partner_invoice_id.display_name,
                         order=order.display_name,
@@ -96,4 +96,3 @@ class SaleOrder(models.Model):
                         partners=", ".join(partners_not_shared.mapped("display_name"))
                     )
                 )
-

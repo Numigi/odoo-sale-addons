@@ -20,7 +20,9 @@ class SaleOrder(models.Model):
     @api.depends("order_line", "order_line.kit_reference")
     def _compute_available_kit_references(self):
         for order in self:
-            references = {l.kit_reference for l in self.order_line if l.kit_reference}
+            references = {
+                line.kit_reference for line in self.order_line if line.kit_reference
+            }
             sorted_refs = sorted(list(references))
             order.available_kit_references = ",".join(sorted_refs)
 
@@ -76,17 +78,21 @@ class SaleOrder(models.Model):
         sorted_components.recompute_kit_sequences(kits)
 
         all_lines = kits | components | other_lines
-        all_lines_sorted = all_lines.sorted(lambda l: (l.sequence, l.kit_sequence))
+        all_lines_sorted = all_lines.sorted(
+            lambda line: (line.sequence, line.kit_sequence)
+        )
         all_lines_sorted.recompute_sequences()
 
     def get_kits_per_reference(self):
-        return {l.kit_reference: l for l in self.get_kits()}
+        return {line.kit_reference: line for line in self.get_kits()}
 
     def get_kits(self):
-        return self.order_line.filtered(lambda l: l.is_kit)
+        return self.order_line.filtered(lambda line: line.is_kit)
 
     def get_kit_components(self):
-        return self.order_line.filtered(lambda l: not l.is_kit and l.kit_reference)
+        return self.order_line.filtered(
+            lambda line: not line.is_kit and line.kit_reference
+        )
 
 
 def extract_kit_number(ref: str) -> int:

@@ -20,13 +20,13 @@ Products
 --------
 This module adds 4 extra fields on products.
 
-.. image:: website_stock_availability_enhanced/static/description/product_form.png
+.. image:: static/description/product_form.png
 
 1 - Prevent Sales Base On
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 In vanilla Odoo, sales are blocked if stock levels are below the ``Forecasted Quantity``.
 
-.. image:: website_stock_availability_enhanced/static/description/product_virtual_available_qty.png
+.. image:: static/description/product_virtual_available_qty.png
 
 When this module is installed, the ``Forecasted Quantity`` is never used to block a website sale.
 
@@ -55,15 +55,15 @@ This metric indicates the expected number of days until the next replenishment a
 If at least one replenishment shipment is scheduled for this product,
 the expected date of this shipment is used.
 
-.. image:: website_stock_availability_enhanced/static/description/stock_picking_scheduled_date.png
+.. image:: static/description/stock_picking_scheduled_date.png
 
 Otherwise, the delay computed based on:
 
 * The lead time defined on the main supplier for this product.
 * Plus the sales and purchase lead time defined for the company.
 
-.. image:: website_stock_availability_enhanced/static/description/product_first_vendor_delay.png
-.. image:: website_stock_availability_enhanced/static/description/company_lead_times.png
+.. image:: static/description/product_first_vendor_delay.png
+.. image:: static/description/company_lead_times.png
 
 In the above example, the estimated lead time would be:
 
@@ -71,7 +71,7 @@ In the above example, the estimated lead time would be:
 
 	13 days = 8 days + 2 days + 3 days
 
-.. image:: website_stock_availability_enhanced/static/description/product_replenishment_delay.png
+.. image:: static/description/product_replenishment_delay.png
 
 Computation
 ~~~~~~~~~~~
@@ -98,20 +98,20 @@ One case that is not covered by the choices is to show the stock levels without 
 
 The module adds the option to show inventory below a threshold and allow sales.
 
-.. image:: website_stock_availability_enhanced/static/description/product_availability_threshold_warning.png
+.. image:: static/description/product_availability_threshold_warning.png
 
 Replenishment Delay Message
 ---------------------------
 In the website form of the product, when the quantity available (minus the requested quantity)
 is below the threshold defined on the product, a message special message is shown to the user.
 
-.. image:: website_stock_availability_enhanced/static/description/product_availability_threshold.png
+.. image:: static/description/product_availability_threshold.png
 
-.. image:: website_stock_availability_enhanced/static/description/website_product_replenishment_message.png
+.. image:: static/description/website_product_replenishment_message.png
 
 After checking out the order, the delay displayed to the customer is written on the sale order line.
 
-.. image:: website_stock_availability_enhanced/static/description/sale_order_line_delay.png
+.. image:: static/description/sale_order_line_delay.png
 
 Contributors
 ------------

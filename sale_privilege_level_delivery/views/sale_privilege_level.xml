@@ -8,6 +8,9 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="carriers" string="Delivery Methods">
+                    <group>
+                        <field name ="default_delivery_carrier_id" domain="[('id','in',delivery_carrier_ids)]" />
+                    </group>
                     <field name="delivery_carrier_ids" colspan="2"/>
                 </page>
             </notebook>

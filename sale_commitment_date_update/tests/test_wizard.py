@@ -64,7 +64,7 @@ class TestWizard(SaleCommitmentDateCase):
 
     def test_two_sale_order_lines_with_two_steps(self):
         self.sale_order.warehouse_id.delivery_steps = "pick_ship"
-        new_line = self.sale_order_line.copy(
+        self.sale_order_line.copy(
             {
                 "order_id": self.sale_order.id,
             }

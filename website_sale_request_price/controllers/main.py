@@ -3,7 +3,7 @@
 
 import werkzeug
 
-from odoo import _, http, models
+from odoo import http
 from odoo.http import request
 
 

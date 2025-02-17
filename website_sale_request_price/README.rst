@@ -100,6 +100,11 @@ Roadmap
 --------
 - Add the support for the Comparison List: As admin in the website (Customize > Comparison List)
 
+Release Note:
+-------------
+Since the version 1.1.0:
+- when we confirm the price request, we force the team leder or the public user as the Salesperson of the created opportunity. 
+
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

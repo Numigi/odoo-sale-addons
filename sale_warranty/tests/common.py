@@ -134,8 +134,10 @@ class SaleWarrantyCase(SavepointCase):
 
 
 class WarrantyActivationCase(SaleWarrantyCase):
+
+    @classmethod
     def validate_picking(cls, picking):
-        picking.sudo(cls.stock_user)._action_done()
+        picking.with_user(cls.stock_user)._action_done()
 
     @classmethod
     def select_serial_numbers_on_picking(cls, picking, serial_numbers):

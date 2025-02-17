@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_category_form_with_target_margin" model="ir.ui.view">
+        <field name="name">Product Category: add target margin in percent</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <group name="first" position="after">
+                    <group string="Sales">
+                        <label for="target_margin_min" string="Target Margin"/>
+                        <div>
+                            <field name="target_margin_min" class="oe_inline" string="Target Margin"/> <span class="oe_inline">%</span> to
+                            <field name="target_margin_max" class="oe_inline"/> <span class="oe_inline">%</span>
+                        </div>
+                    </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>
