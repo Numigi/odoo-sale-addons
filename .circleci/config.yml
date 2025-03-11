@@ -57,10 +57,10 @@ workflows:
       - tests:
           context: quay.io
 
-      # - auto-tag:
-      #     context: nws
-      #     requires:
-      #       - tests
-      #     filters:
-      #       branches:
-      #         only: /^1\d\.0/
+       - auto-tag:
+           context: nws
+           requires:
+             - tests
+           filters:
+             branches:
+               only: /^1\d\.0/
