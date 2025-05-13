@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "contract_invoice_offset",
         "sale_management",
         "sale_product_extra_views",
         "sale_project_milestone",

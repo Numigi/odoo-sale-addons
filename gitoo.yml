@@ -20,6 +20,17 @@
   includes:
     - crm_industry
 
+- url: https://github.com/oca/account-closing
+  branch: "16.0"
+  includes:
+    - account_invoice_start_end_dates
+
+- url: https://github.com/oca/contract
+  branch: "16.0"
+  includes:
+    - contract
+    - contract_invoice_start_end_dates
+
 - url: https://github.com/OCA/partner-contact
   branch: "16.0"
   includes:
