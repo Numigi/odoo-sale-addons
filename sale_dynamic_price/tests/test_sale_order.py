@@ -86,17 +86,19 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
         assert self.sale_order.order_line.price_unit == 150  # (70 / (1 - 0.30)) * 1.5
 
     @data(
-        ("0.01", 123.46),
-        ("0.05", 123.45),
-        ("0.1", 123.50),
-        ("1", 123.00),
-        ("10", 120.00),
+        ("0.01", 20.82),
+        ("0.05", 20.80),
+        ("0.1", 20.80),
+        ("1", 21.00),
+        ("10", 20.00),
     )
     @unpack
     def test_price_rounding_applied_to_sale_order_line(self, rounding, expected_price):
+        self.product.standard_price = 10.41
+        self.product.margin = 0.50
+        self.currency_rate.rate = 1
         self.product.price_rounding = rounding
         self.product.update_sale_price_from_cost()
-        self.currency_rate.rate = 1.23456
         self.line.product_uom_change()
         self.line.refresh()
         assert (
@@ -106,7 +108,7 @@ class TestSaleOrderInForeignCurrency(SavepointCase):
     @data((0, 150.00), (False, 150.00), (-0.01, 149.99), (-0.03, 149.97))
     @unpack
     def test_price_surcharge_applied_to_sale_order_line(
-            self, surcharge, expected_price
+        self, surcharge, expected_price
     ):
         self.product.price_surcharge = surcharge
         self.product.update_sale_price_from_cost()
