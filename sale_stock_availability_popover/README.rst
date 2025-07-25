@@ -49,9 +49,5 @@ After confirming the order, the "QtyDetailPopOver" widget continues to display a
 Contributors
 ------------
 
-- Numigi (tm) and all its contributors :numigi:`Numigi Contributors <https://bit.ly/numigiens>`
+The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
 
-More Information
-----------------
-
-Visit us at :numigi:`Numigi <https://bit.ly/numigi-com>`

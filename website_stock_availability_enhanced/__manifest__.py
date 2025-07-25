@@ -1,10 +1,10 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Website Stock Availability Enhanced",
     "summary": "Enhance the display of product availability on the website",
     "version": "14.0.1.0.2",
-    "website": "https://bit.ly/numigi-com",
+    "website": "https://numigi.com/r/home",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "LGPL-3",

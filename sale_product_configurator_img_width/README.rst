@@ -30,9 +30,5 @@ The product image will now fit within the popup:
 Contributors
 ------------
 
-- Numigi™ and all its contributors (https://bit.ly/numigiens)
+The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
 
-More Information
-----------------
-
-- Visit us at https://bit.ly/numigi-com

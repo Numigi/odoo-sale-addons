@@ -21,9 +21,7 @@ Since version 1.1.0, the module changes the type of affiliate to contact upon cr
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+* The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
 
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com

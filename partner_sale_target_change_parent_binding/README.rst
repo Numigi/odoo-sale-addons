@@ -14,8 +14,6 @@ The module display a warning if I try to attach an “individual” type contact
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com
+* The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
+
