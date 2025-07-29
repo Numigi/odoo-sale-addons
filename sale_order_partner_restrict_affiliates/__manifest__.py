@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -7,7 +7,7 @@
     "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
-    "website": "https://bit.ly/numigi-com",
+    "website": "https://numigi.com/r/home",
     "license": "LGPL-3",
     "category": "Sales",
     "depends": ["sale_order_partner_restrict", "partner_affiliate"],
