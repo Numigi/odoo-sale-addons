@@ -12,5 +12,6 @@ To solve the issue we override the copy methode, to prevent expanding pack lines
 
 
 Contributors
-~~~~~~~~~~~~
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+------------
+
+The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
