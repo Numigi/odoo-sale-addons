@@ -11,7 +11,7 @@ class WebsiteSaleRequestPriceController(http.Controller):
     @http.route(
         ["/shop/product/request_price"],
         type="json",
-        auth="public",
+        auth="user",
         methods=["POST"],
         website=True,
     )
@@ -24,7 +24,7 @@ class WebsiteSaleRequestPriceController(http.Controller):
     @http.route(
         ["/shop/product/request_price/confirm"],
         type="http",
-        auth="public",
+        auth="user",
         methods=["POST"],
         website=True,
     )
