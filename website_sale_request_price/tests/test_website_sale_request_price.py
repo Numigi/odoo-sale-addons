@@ -4,7 +4,6 @@
 from ddt import ddt, data
 from odoo.tests.common import SavepointCase
 from odoo.exceptions import ValidationError
-import json
 
 
 @ddt
@@ -13,26 +12,29 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.mail_template = cls.env["mail.template"].create(
-            {"name": "mail template", "model_id": cls.env.ref("crm.model_crm_lead").id})
+            {"name": "mail template", "model_id": cls.env.ref("crm.model_crm_lead").id}
+        )
         cls.sale_team = cls.env["crm.team"].create({"name": "team"})
         cls._set_config_param("website_sale_request_price", True)
         cls._set_config_param("website_sale_request_price_threshold", 500)
-        cls._set_config_param("website_sale_request_price_mail_template",
-            cls.mail_template.id)
+        cls._set_config_param(
+            "website_sale_request_price_mail_template", cls.mail_template.id
+        )
         cls._set_config_param("website_sale_request_price_sales_team", cls.sale_team.id)
         cls.lead_env = cls.env["crm.lead"]
         cls.brand = cls.env["product.brand"].create({"name": "brand A"})
         cls.product_template = cls.env["product.template"].create(
-            {"name": "product A", "product_brand_id": cls.brand.id, "list_price": 1000})
+            {"name": "product A", "product_brand_id": cls.brand.id, "list_price": 1000}
+        )
         cls.product = cls.product_template.product_variant_ids[0]
 
         cls.normal_product_template = cls.env["product.template"].create(
-            {"name": "product B", "list_price": 100})
+            {"name": "product B", "list_price": 100}
+        )
         cls.normal_product = cls.normal_product_template.product_variant_ids[0]
 
-        # Setup for wesite controllers
+        # Setup for website controllers
         cls.website = cls.env['website'].get_current_website()
-        cls.controller = cls.env['website.sale'].with_context(website_id=cls.website.id)
 
     @classmethod
     def _set_config_param(cls, key, value):
@@ -62,7 +64,8 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
         assert line.product_qty == 1
 
         mail = self.env["mail.mail"].search(
-            [("res_id", "=", lead.id), ("model", "=", "crm.lead"), ])
+            [("res_id", "=", lead.id), ("model", "=", "crm.lead")]
+        )
         self.assertEquals(len(mail), 1)
 
     def test_create_request__with_float_product_id(self):
@@ -72,7 +75,8 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
 
     def _get_lead(self):
         return self.lead_env.search(
-            [("lead_line_ids.product_id", "=", self.product.id), ], )
+            [("lead_line_ids.product_id", "=", self.product.id)]
+        )
 
     def test_cart_update_blocked_for_request_price_product(self):
         """Test that cart_update blocks products requiring price request"""
@@ -82,16 +86,17 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
 
     def test_cart_update_allowed_for_normal_product(self):
         """Test that cart_update allows normal products"""
-        result = self.env['sale.order']._cart_update(product_id=self.normal_product.id,
-            add_qty=1)
+        result = self.env['sale.order']._cart_update(
+            product_id=self.normal_product.id, add_qty=1
+        )
         self.assertEqual(result['quantity'], 1)
         self.assertEqual(result['line_id'], result['line_id'])
-
 
     def test_cart_update_json_blocked_for_request_price_product(self):
         """Test that cart_update_json blocks products requiring price request"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         # Simulate JSON call
         with self.assertRaises(ValidationError):
@@ -100,16 +105,17 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def test_cart_update_json_allowed_for_normal_product(self):
         """Test that cart_update_json allows normal products"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         result = order._cart_update(product_id=self.normal_product.id, add_qty=1)
         self.assertEqual(result['quantity'], 1)
 
-
     def test_cart_options_update_blocked_for_request_price_product(self):
         """Test that options with high-priced products are blocked"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         product_options = [{'product_id': self.product.id, 'add_qty': 1}]
 
@@ -119,7 +125,8 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def test_cart_options_update_allowed_for_normal_products(self):
         """Test that options with normal products are allowed"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         product_options = [{'product_id': self.normal_product.id, 'add_qty': 1}]
 
@@ -130,21 +137,29 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def test_sale_order_line_creation_blocked_for_request_price_product(self):
         """Test that sale order line creation is blocked for hidden price products"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         with self.assertRaises(ValidationError):
-            self.env['sale.order.line'].create(
-                {'order_id': order.id, 'product_id': self.product.id,
-                    'product_uom_qty': 1, 'price_unit': 1000})
+            self.env['sale.order.line'].create({
+                'order_id': order.id,
+                'product_id': self.product.id,
+                'product_uom_qty': 1,
+                'price_unit': 1000
+            })
 
     def test_sale_order_line_creation_allowed_for_normal_product(self):
         """Test that sale order line creation is allowed for normal products"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
-        line = self.env['sale.order.line'].create(
-            {'order_id': order.id, 'product_id': self.normal_product.id,
-                'product_uom_qty': 1, 'price_unit': 100})
+        line = self.env['sale.order.line'].create({
+            'order_id': order.id,
+            'product_id': self.normal_product.id,
+            'product_uom_qty': 1,
+            'price_unit': 100
+        })
 
         self.assertEqual(line.product_id, self.normal_product)
         self.assertEqual(line.order_id, order)
@@ -152,20 +167,24 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def test_sale_order_line_modification_blocked_for_request_price_product(self):
         """Test that modifying lines to hidden price products is blocked"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
-        line = self.env['sale.order.line'].create(
-            {'order_id': order.id, 'product_id': self.normal_product.id,
-                'product_uom_qty': 1, 'price_unit': 100})
+        line = self.env['sale.order.line'].create({
+            'order_id': order.id,
+            'product_id': self.normal_product.id,
+            'product_uom_qty': 1,
+            'price_unit': 100
+        })
 
         with self.assertRaises(ValidationError):
             line.write({'product_id': self.product.id})
 
-    # Tests for mixed scenarios
     def test_mixed_cart_update_with_request_price_product(self):
         """Test behavior with a mix of normal and hidden price products"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         # First add a normal product
         order._cart_update(product_id=self.normal_product.id, add_qty=1)
@@ -181,15 +200,25 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def test_product_options_with_request_price_variant(self):
         """Test with options containing hidden price variants"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         # Create a product template with variants
-        variant_template = self.env['product.template'].create(
-            {'name': 'Configurable Product', 'list_price': 100, 'attribute_line_ids': [
-                (0, 0, {'attribute_id': self.env.ref('product.product_attribute_1').id,
-                    'value_ids': [(6, 0, [self.env.ref(
-                        'product.product_attribute_value_1').id,
-                        self.env.ref('product.product_attribute_value_2').id, ])]})]})
+        variant_template = self.env['product.template'].create({
+            'name': 'Configurable Product',
+            'list_price': 100,
+            'attribute_line_ids': [
+                (0, 0, {
+                    'attribute_id': self.env.ref('product.product_attribute_1').id,
+                    'value_ids': [
+                        (6, 0, [
+                            self.env.ref('product.product_attribute_value_1').id,
+                            self.env.ref('product.product_attribute_value_2').id,
+                        ])
+                    ]
+                })
+            ]
+        })
 
         # A normal variant
         normal_variant = variant_template.product_variant_ids[0]
@@ -199,8 +228,10 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
         high_price_variant = variant_template.product_variant_ids[1]
         high_price_variant.list_price = 1000
 
-        product_options = [{'product_id': normal_variant.id, 'add_qty': 1},
-            {'product_id': high_price_variant.id, 'add_qty': 1}]
+        product_options = [
+            {'product_id': normal_variant.id, 'add_qty': 1},
+            {'product_id': high_price_variant.id, 'add_qty': 1}
+        ]
 
         with self.assertRaises(ValidationError):
             order._cart_update(product_options=product_options)
@@ -208,13 +239,17 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
     def test_multiple_products_in_cart_update(self):
         """Test with multiple products to verify performance"""
         order = self.env['sale.order'].create(
-            {'partner_id': self.env.user.partner_id.id, })
+            {'partner_id': self.env.user.partner_id.id}
+        )
 
         # Create multiple normal products
         normal_products = self.env['product.product']
         for i in range(5):
-            product = self.env['product.product'].create(
-                {'name': f'Normal Product {i}', 'list_price': 100, 'type': 'product'})
+            product = self.env['product.product'].create({
+                'name': f'Normal Product {i}',
+                'list_price': 100,
+                'type': 'product'
+            })
             normal_products += product
 
         # Adding all normal products should work

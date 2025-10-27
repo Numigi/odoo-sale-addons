@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo import models, fields, api
+from odoo import models
 from odoo.exceptions import ValidationError
 
 
@@ -23,5 +23,6 @@ class SaleOrder(models.Model):
                 if option_product.is_request_price_required:
                     raise ValidationError(
                         "This product needs a price request")
-        return super(SaleOrder, self)._cart_update(product_id=product_id,
-            line_id=line_id, add_qty=add_qty, set_qty=set_qty, **kwargs)
+        return super(SaleOrder, self)._cart_update(
+            product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty,
+            **kwargs)
