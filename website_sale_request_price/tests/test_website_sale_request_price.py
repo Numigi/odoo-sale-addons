@@ -130,18 +130,13 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
         self.assertEqual(result['quantity'], 1)
 
     def test_sale_order_line_creation_blocked_for_request_price_product(self):
-        """Test that sale order line creation is blocked for hidden price products"""
         order = self._create_sale_order()
 
         with self.assertRaises(ValidationError):
-            self.env['sale.order.line'].create(
-                {
-                    'order_id': order.id,
-                    'product_id': self.product.id,
-                    'product_uom_qty': 1,
-                    'price_unit': 1000
-                }
-            )
+            # Ajouter le contexte website
+            self.env['sale.order.line'].with_context(website_id=self.website.id).create(
+                {'order_id': order.id, 'product_id': self.product.id,
+                    'product_uom_qty': 1, 'price_unit': 1000})
 
     def test_sale_order_line_creation_allowed_for_normal_product(self):
         """Test that sale order line creation is allowed for normal products"""
@@ -160,20 +155,15 @@ class TestWebsiteSaleRequestPrice(SavepointCase):
         self.assertEqual(line.order_id, order)
 
     def test_sale_order_line_modification_blocked_for_request_price_product(self):
-        """Test that modifying lines to hidden price products is blocked"""
         order = self._create_sale_order()
 
         line = self.env['sale.order.line'].create(
-            {
-                'order_id': order.id,
-                'product_id': self.normal_product.id,
-                'product_uom_qty': 1,
-                'price_unit': 100
-            }
-        )
+            {'order_id': order.id, 'product_id': self.normal_product.id,
+                'product_uom_qty': 1, 'price_unit': 100})
 
         with self.assertRaises(ValidationError):
-            line.write({'product_id': self.product.id})
+            line.with_context(website_id=self.website.id).write(
+                {'product_id': self.product.id})
 
     def test_mixed_cart_update_with_request_price_product(self):
         """Test behavior with a mix of normal and hidden price products"""
