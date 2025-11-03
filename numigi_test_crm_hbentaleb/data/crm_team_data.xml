@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record id="technical_support_team" model="crm.team">
+			<field name="name">Équipe Support Technique</field>
+			<field name="sequence">1</field>
+			<field name="use_opportunities">True</field>
+			<field name="alias_contact">everyone</field>
+			<field name="company_id" ref="base.main_company"/>
+		</record>
+		<record id="sales_team" model="crm.team">
+			<field name="name">Équipe ventes</field>
+			<field name="sequence">2</field>
+			<field name="use_opportunities">True</field>
+			<field name="use_leads">True</field>
+			<field name="alias_contact">everyone</field>
+			<field name="company_id" ref="base.main_company"/>
+		</record>
+		<record id="sav_team" model="crm.team">
+			<field name="name">Équipe SAV</field>
+			<field name="sequence">3</field>
+			<field name="use_opportunities">True</field>
+			<field name="alias_contact">partners</field>
+			<field name="company_id" ref="base.main_company"/>
+		</record>
+	</data>
+</odoo>

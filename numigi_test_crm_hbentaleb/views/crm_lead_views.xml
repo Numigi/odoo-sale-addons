@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="crm_lead_view_form_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.form.inherit</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+		<field name="arch" type="xml">
+			<field name="partner_id" position="after">
+				<field name="is_notification_created" invisible="1"/>
+			</field>
+			<xpath expr="//label[@for='expected_revenue']/parent::div/parent::h2" position="attributes">
+				<attribute name="groups">sales_team.group_sale_manager</attribute>
+			</xpath>
+		</field>
+	</record>
+	<record id="quick_create_opportunity_form_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.form.quick_create.inherit</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+		<field name="arch" type="xml">
+			<label for="expected_revenue" position="attributes">
+				<attribute name="groups">sales_team.group_sale_manager</attribute>
+			</label>
+			
+			<xpath expr="//field[@name='expected_revenue']/parent::div" position="attributes">
+				<attribute name="groups">sales_team.group_sale_manager</attribute>
+			</xpath>
+		</field>
+	</record>
+	
+	<record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.kanban.lead.inherit</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+		<field name="arch" type="xml">
+			<field name="activity_state" position="attributes">
+				<attribute name="groups">sales_team.group_sale_manager</attribute>
+			</field>
+			<field name="expected_revenue" position="attributes">
+				<attribute name="groups">sales_team.group_sale_manager</attribute>
+			</field>
+			
+			<xpath expr="//div[hasclass('o_kanban_record_subtitle')]/t/field[@name='expected_revenue']"
+			       position="attributes">
+				<attribute name="groups">sales_team.group_sale_manager</attribute>
+			</xpath>
+		
+		</field>
+	</record>
+	
+	<record id="crm_case_kanban_view_leads_inherit2" model="ir.ui.view">
+		<field name="name">crm.lead.kanban.lead.inherit2</field>
+		<field name="model">crm.lead</field>
+		<field name="priority">100</field>
+		<field name="mode">primary</field>
+		<field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+		<field name="arch" type="xml">
+			<xpath expr="//kanban/progressbar" position="replace"/>
+		</field>
+	</record>
+	
+	<record id="crm_lead_view_pivot_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.view.pivot.inherit</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_lead_view_pivot"/>
+		<field name="arch" type="xml">
+			<field name="expected_revenue" position="attributes">
+				<attribute name="groups">sales_team.group_sale_manager</attribute>
+			</field>
+		</field>
+	</record>
+</odoo>
