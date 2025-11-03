@@ -11,6 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
+        "numigi_test_crm_ouasmi",
         "crm_assign_by_area",
         "crm_assign_in_house",
         "crm_brand",
