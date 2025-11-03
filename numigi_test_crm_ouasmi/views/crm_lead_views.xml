@@ -1,0 +1,37 @@
+<odoo>
+    <!-- Formulaire -->
+    <record id="view_crm_lead_form_inherit_expected_revenue" model="ir.ui.view">
+        <field name="name">crm.lead.form.expected_revenue.group_restrict</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']/h2" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Liste -->
+    <record id="view_crm_lead_tree_inherit_expected_revenue" model="ir.ui.view">
+        <field name="name">crm.lead.tree.expected_revenue.group_restrict</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Kanban -->
+    <record id="view_crm_lead_kanban_inherit_expected_revenue" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.expected_revenue.group_restrict</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_kanban_record_subtitle']/t/field[@name='expected_revenue']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
