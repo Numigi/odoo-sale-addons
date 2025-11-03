@@ -15,7 +15,7 @@ COPY ./gitoo.yml /gitoo.yml
 RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS}"
 
 USER odoo
-COPY numigi_test_crm_ben_othmen_ichrak  /mnt/extra-addons/numigi_test_crm_ben_othmen_ichrak
+COPY numigi_test_crm_hbentaleb  /mnt/extra-addons/numigi_test_crm_hbentaleb
 COPY crm_assign_by_area /mnt/extra-addons/crm_assign_by_area
 COPY crm_assign_in_house /mnt/extra-addons/crm_assign_in_house
 COPY crm_brand /mnt/extra-addons/crm_brand
