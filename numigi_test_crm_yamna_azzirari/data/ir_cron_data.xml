@@ -1,0 +1,13 @@
+<odoo>
+    <!-- Send a notification to all team members associated with the opportunity
+    that exceeds 10 without changing status from draft-->
+    <record id="cron_check_opportunities_exceeding_ten_days" model="ir.cron">
+        <field name="name">Notify all team members of draft opportunities exceeding 10 days</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">model._ten_days_ago()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

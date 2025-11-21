@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <template id="assets_backend_hide_progressbar" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-            <script type="text/javascript" src="/numigi_test_crm_rabeb/static/src/js/kanban_progressbar_hide.js"/>
-        </xpath>
-    </template>
-</odoo>
