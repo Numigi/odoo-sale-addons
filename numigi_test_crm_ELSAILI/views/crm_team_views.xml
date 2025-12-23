@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_team_form_inherit" model="ir.ui.view">
+    <field name="name">crm.team.form.inherit.emails</field>
+    <field name="model">crm.team</field>
+    <field name="inherit_id" ref="crm.sales_team_form_view_in_crm"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='alias_contact']" position="after">
+            <field name="emails" readonly="1"/>
+        </xpath>
+    </field>
+    </record>
+</odoo>
