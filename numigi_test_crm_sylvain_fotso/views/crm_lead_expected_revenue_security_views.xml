@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <record id="crm_lead_kanban_hide_expected_revenue" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.hide.expected.revenue</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+
+          
+            <xpath expr="//field[@name='expected_revenue'][@widget='monetary']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="crm_lead_form_hide_expected_revenue" model="ir.ui.view">
+        <field name="name">crm.lead.form.hide.expected.revenue</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+          
+            <xpath expr="//label[@for='expected_revenue']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+
+           
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+   
+    <record id="crm_lead_all_leads_tree_hide_expected_revenue" model="ir.ui.view">
+        <field name="name">crm.lead.all.leads.tree.hide.expected.revenue</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="crm_lead_kanban_no_sum_field" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.no.sum.field</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <!--
+                Remplacer la progressbar existante par la même
+                SANS sum_field → supprime l'affichage du total
+            -->
+            <xpath expr="//progressbar[@field='activity_state']" position="replace">
+                <progressbar
+                    field="activity_state"
+                    colors='{"planned": "success", "today": "warning", "overdue": "danger"}'
+                    help="Cette barre permet de filtrer les opportunités selon les activités planifiées."
+                />
+            </xpath>
+        </field>
+    </record>
+
+     <record id="crm_lead_kanban_admin_sum_field" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.admin.sum.field</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="groups_id" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+        <field name="arch" type="xml">
+            <!--
+                Pour les administrateurs : remettre sum_field="expected_revenue"
+            -->
+            <xpath expr="//progressbar[@field='activity_state']" position="replace">
+                <progressbar
+                    field="activity_state"
+                    colors='{"planned": "success", "today": "warning", "overdue": "danger"}'
+                    sum_field="expected_revenue"
+                    help="Cette barre permet de filtrer les opportunités selon les activités planifiées."
+                />
+            </xpath>
+        </field>
+    </record>
+
+</data>
+</odoo>

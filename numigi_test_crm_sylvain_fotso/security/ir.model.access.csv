@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_numigi_test_crm_sylvain_fotso_numigi_test_crm_sylvain_fotso,numigi_test_crm_sylvain_fotso.numigi_test_crm_sylvain_fotso,model_numigi_test_crm_sylvain_fotso_numigi_test_crm_sylvain_fotso,base.group_user,1,1,1,1

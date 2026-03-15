@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <data noupdate="1">
+
+      
+        <record id="base.group_user" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('crm.group_use_lead'))]"/>
+        </record>
+
+    
+        <record id="crm_generate_lead_from_alias_param" model="ir.config_parameter">
+            <field name="key">crm.generate_lead_from_alias</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="crm_setting_alias_prefix" model="ir.config_parameter">
+            <field name="key">crm.alias_prefix</field>
+            <field name="value">contact</field>
+        </record>
+
+    </data>
+
+

@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="numigi_test_crm_sylvain_fotso.list">
+      <field name="name">numigi_test_crm_sylvain_fotso list</field>
+      <field name="model">numigi_test_crm_sylvain_fotso.numigi_test_crm_sylvain_fotso</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="numigi_test_crm_sylvain_fotso.action_window">
+      <field name="name">numigi_test_crm_sylvain_fotso window</field>
+      <field name="res_model">numigi_test_crm_sylvain_fotso.numigi_test_crm_sylvain_fotso</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="numigi_test_crm_sylvain_fotso.action_server">
+      <field name="name">numigi_test_crm_sylvain_fotso server</field>
+      <field name="model_id" ref="model_numigi_test_crm_sylvain_fotso_numigi_test_crm_sylvain_fotso"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="numigi_test_crm_sylvain_fotso" id="numigi_test_crm_sylvain_fotso.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="numigi_test_crm_sylvain_fotso.menu_1" parent="numigi_test_crm_sylvain_fotso.menu_root"/>
+    <menuitem name="Menu 2" id="numigi_test_crm_sylvain_fotso.menu_2" parent="numigi_test_crm_sylvain_fotso.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="numigi_test_crm_sylvain_fotso.menu_1_list" parent="numigi_test_crm_sylvain_fotso.menu_1"
+              action="numigi_test_crm_sylvain_fotso.action_window"/>
+    <menuitem name="Server to list" id="numigi_test_crm_sylvain_fotso" parent="numigi_test_crm_sylvain_fotso.menu_2"
+              action="numigi_test_crm_sylvain_fotso.action_server"/>
+-->
+  </data>
+</odoo>
