@@ -48,12 +48,3 @@ class WebsiteSaleRequestPriceExtended(WebsiteSale):
         return super(WebsiteSaleRequestPriceExtended, self).cart_options_update_json(
             product_and_options=product_and_options, goto_shop=goto_shop, lang=lang,
             **post)
-
-    @http.route('/shop/product/<model("product.template"):product>', type='http',
-                auth="public", website=True)
-    def product(self, product, category='', search='', **kwargs):
-        """Override to check product access"""
-        if product.is_request_price_required:
-            pass
-        return super(WebsiteSaleRequestPriceExtended, self).product(
-            product, category, search, **kwargs)
