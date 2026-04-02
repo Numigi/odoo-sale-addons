@@ -2,15 +2,19 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     qty_popup_color = fields.Char(compute='_compute_qty_popup_color')
 
-
-    @api.depends('qty_available_today', 'product_uom_qty', 'state', 'product_id.qty_available')
+    @api.depends('qty_available_today',
+                 'product_uom_qty',
+                 'state',
+                 'product_id.qty_available'
+                 )
     def _compute_qty_popup_color(self):
         for rec in self:
             if rec.state in ('draft', 'sent'):
@@ -28,4 +32,3 @@ class SaleOrderLine(models.Model):
                     rec.qty_popup_color = "text-danger"
                 else:
                     rec.qty_popup_color = "text-primary"
-
