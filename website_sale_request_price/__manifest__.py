@@ -4,7 +4,7 @@
     "name": "Website Sale Request Price",
     "summary": """Hide the price of a product when it reaches a threshold and allows
     the user to request for price""",
-    "version": "14.0.1.2.2",
+    "version": "14.0.1.2.1",
     "website": "https://numigi.com/r/home",
     "author": "Numigi",
     "maintainer": "Numigi",
