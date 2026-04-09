@@ -115,7 +115,7 @@
             <div class="modal-dialog modal-lg">
                 <form id="modal_request_price_form" t-attf-action="/shop/product/request_price/confirm" method="post" class="js_website_submit_form">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                    <div class="modal-content">git
+                    <div class="modal-content">
                         <header class="modal-header">
                             <h4 class="modal-title" id="myModalLabel">
                                 <strong>Request Price</strong>
