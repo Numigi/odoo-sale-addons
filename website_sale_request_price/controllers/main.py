@@ -73,3 +73,14 @@ class WebsiteSaleRequestPriceExtended(WebsiteSale):
         return super(WebsiteSaleRequestPriceExtended, self).cart_options_update_json(
             product_and_options=product_and_options, goto_shop=goto_shop, lang=lang, **post
         )
+
+    @http.route(
+        ["/shop/product/request_price/confirm"],
+        type="http",
+        auth="public",
+        methods=["POST"],
+        website=True,
+    )
+    def request_price_confirm(self, **post):
+        request.env["crm.lead"].create_website_sale_request(post)
+        return werkzeug.utils.redirect(request.httprequest.referrer)
