@@ -2,7 +2,6 @@ from odoo.tests.common import TransactionCase
 
 
 class TestSaleStockAvailability(TransactionCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -54,10 +53,14 @@ class TestSaleStockAvailability(TransactionCase):
 
     def _update_stock_quantity(self, quantity):
         location = self.env.ref("stock.stock_location_stock")
-        self.env["stock.quant"]._update_available_quantity(self.product, location, quantity)
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, location, quantity
+        )
         self.line.invalidate_recordset()
 
     def _reserve_stock_quantity(self, quantity):
         location = self.env.ref("stock.stock_location_stock")
-        self.env["stock.quant"]._update_reserved_quantity(self.product, location, quantity)
+        self.env["stock.quant"]._update_reserved_quantity(
+            self.product, location, quantity
+        )
         self.line.invalidate_recordset()
