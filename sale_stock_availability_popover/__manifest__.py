@@ -25,4 +25,3 @@
     },
     "installable": True,
 }
-
