@@ -116,9 +116,11 @@ class SaleOrderLine(models.Model):
             }
             for line in lines:
                 line.scheduled_date = scheduled_date
-                (qty_available_today, free_qty_today, virtual_available_at_date) = (
-                    qties_per_product[line.product_id.id]
-                )
+                (
+                    qty_available_today,
+                    free_qty_today,
+                    virtual_available_at_date,
+                ) = qties_per_product[line.product_id.id]
                 line.qty_available_today = (
                     qty_available_today - qty_processed_per_product[line.product_id.id]
                 )
