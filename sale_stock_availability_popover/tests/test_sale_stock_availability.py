@@ -18,7 +18,6 @@ class TestSaleStockAvailability(TransactionCase):
         assert self.line.qty_available_color == "text-warning"
 
     def test_not_available_color(self):
-        self._update_stock_quantity(0.0)
         assert self.line.qty_available_color == "text-danger"
 
     def test_reserved_qty_calculation(self):
@@ -58,9 +57,9 @@ class TestSaleStockAvailability(TransactionCase):
         )
         self.line.invalidate_recordset()
 
-    def _reserve_stock_quantity(self, quantity):
+    def _reserve_stock_quantity(self, reserved_quantity):
         location = self.env.ref("stock.stock_location_stock")
-        self.env["stock.quant"]._update_reserved_quantity(
-            self.product, location, quantity
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, location, reserved_quantity=reserved_quantity
         )
         self.line.invalidate_recordset()
