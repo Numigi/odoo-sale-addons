@@ -13,7 +13,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
-#COPY sale_stock_availability_popover /mnt/extra-addons/sale_stock_availability_popover
+COPY sale_stock_availability_popover /mnt/extra-addons/sale_stock_availability_popover
 
 
 COPY .docker_files/main /mnt/extra-addons/main

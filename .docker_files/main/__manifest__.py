@@ -11,8 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "sale",
-        # "sale_stock_availability_popover",
+        "sale_stock_availability_popover",
     ],
     "installable": True,
 }
