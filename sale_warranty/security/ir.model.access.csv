@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-sale_user_warranty_access,Salesman: Warranties,model_sale_warranty,sales_team.group_sale_salesman,1,0,0,0
-sale_user_warranty_type_access,Salesman: Warranty Types,model_sale_warranty_type,sales_team.group_sale_salesman,1,0,0,0
-warranty_user_warranty_access,Warranty / User: Warranties,model_sale_warranty,sales_team.group_sale_salesman,1,1,1,0
-warranty_user_warranty_type_access,Warranty / User: Warranty Types,model_sale_warranty_type,sales_team.group_sale_salesman,1,0,0,0
-warranty_manager_warranty_access,Warranty / Manager: Warranties,model_sale_warranty,sales_team.group_sale_salesman,1,1,1,1
-warranty_manager_warranty_type_access,Warranty / Manager: Warranty Types,model_sale_warranty_type,sales_team.group_sale_salesman,1,1,1,1

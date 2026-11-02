@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- 1. Override the chart icon color -->
+    <t t-inherit="sale_stock.QtyAtDate" t-inherit-mode="extension">
+        <xpath expr="//a" position="attributes">
+            <attribute name="t-attf-class">fa fa-area-chart cursor-pointer {{ props.record.data.qty_available_color || (calcData.forecasted_issue ? 'text-danger' : 'text-primary') }}</attribute>
+        </xpath>
+    </t>
+
+    <!-- 2. Extend the popover table with On Hand, custom Reserved, and Delivered -->
+    <t t-inherit="sale_stock.QtyAtDatePopover" t-inherit-mode="extension">
+        <xpath expr="//table/tbody" position="inside">
+            <tr>
+                <td><strong>On hand Stock</strong><br/></td>
+                <td class="text-end">
+                    <b t-out="props.record.data.qty_available_today"/>
+                    <t t-out="props.record.data.product_uom[1]"/>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Reserved (All Operations)</strong><br/></td>
+                <td class="text-end">
+                    <b t-out="props.record.data.qty_reserved"/>
+                    <t t-out="props.record.data.product_uom[1]"/>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Delivered</strong><br/></td>
+                <td class="text-end">
+                    <b t-out="props.record.data.qty_delivered"/>
+                    <t t-out="props.record.data.product_uom[1]"/>
+                </td>
+            </tr>
+        </xpath>
+
+        <!-- Optional: Hide the standard V18 Reserved row if it conflicts with the global Reserved logic -->
+        <xpath expr="//tr[td/strong[text()='Reserved']]" position="attributes">
+            <attribute name="t-if">false</attribute>
+        </xpath>
+    </t>
+
+</templates>
